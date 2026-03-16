@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────── */
+:root {
+  --gold:        #C9A84C;
+  --gold-dim:    rgba(201,168,76,0.15);
+  --gold-border: rgba(201,168,76,0.18);
+  --ink-900:     #12110F;
+  --ink-800:     #1A1814;
+  --ink-700:     #221F1A;
+  --parchment:   #E8E0D0;
+  --ember:       #C0392B;
+  --text-primary:   #E8E0D0;
+  --text-secondary: #8C7D65;
+  --text-muted:     #4A4640;
+}
+
+/* ─── Base ──────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0C0B09;
+  color: var(--parchment);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(201,168,76,0.2);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201,168,76,0.4);
+}
+
+/* ─── Typography ────────────────────────────────── */
+.font-display { font-family: 'Crimson Pro', serif; }
+.font-kanji   { font-family: 'Zen Kaku Gothic New', sans-serif; }
+.font-mono    { font-family: 'IBM Plex Mono', monospace; }
+
+/* ─── Gold divider ──────────────────────────────── */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gold-border);
+}
+
+/* ─── Card flip ─────────────────────────────────── */
+.card-scene { perspective: 1000px; }
+.card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+}
+.card-inner.flipped { transform: rotateY(180deg); }
+.card-face { backface-visibility: hidden; }
+.card-face-back { transform: rotateY(180deg); }
+
+/* ─── Blur reveal ───────────────────────────────── */
+.blur-reveal {
+  filter: blur(6px);
+  transition: filter 0.2s ease;
+  cursor: default;
+  user-select: none;
+}
+.blur-reveal:hover { filter: blur(0); }
+
+/* ─── Animations ────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-up { animation: fadeUp 0.35s ease forwards; }
+.animate-fade-in { animation: fadeIn 0.25s ease forwards; }
+
+/* ─── Stagger helpers ───────────────────────────── */
+.delay-100 { animation-delay: 0.1s; opacity: 0; }
+.delay-200 { animation-delay: 0.2s; opacity: 0; }
+.delay-300 { animation-delay: 0.3s; opacity: 0; }
+.delay-400 { animation-delay: 0.4s; opacity: 0; }
+.delay-500 { animation-delay: 0.5s; opacity: 0; }
