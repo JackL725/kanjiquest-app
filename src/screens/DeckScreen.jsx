@@ -108,6 +108,13 @@ export default function DeckScreen() {
       )
     }
 
+    // Sort by mastery stage: Kindled(1) → Familiar(2) → Tempered(3) → Mastered(4) → Engraved(5) → Unseen(0) last
+    result = [...result].sort((a, b) => {
+      const sa = a.mastery.stageIndex || 6  // Unseen (0) → 6, sorts to bottom
+      const sb = b.mastery.stageIndex || 6
+      return sa - sb
+    })
+
     return result
   }, [classifiedCards, filter, search])
 
@@ -299,11 +306,23 @@ export default function DeckScreen() {
         </div>
       ) : (
         <div className="space-y-2">
-          {visibleCards.map(({ card, p, mastery, isDue, isUnseen }, i) => (
-            <div key={card.id}
-              className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
-                         border border-gold-400/8 animate-fade-up"
-              style={{ animationDelay: `${Math.min(i, 20) * 0.03}s`, opacity: 0 }}>
+          {visibleCards.map(({ card, p, mastery, isDue, isUnseen }, i) => {
+            // Show a stage header when the stage changes
+            const prevStage = i > 0 ? visibleCards[i - 1].mastery.stageIndex : null
+            const curStage = mastery.stageIndex
+            const showHeader = prevStage !== curStage
+
+            return (
+              <div key={card.id}>
+                {showHeader && (
+                  <StageGroupHeader stage={mastery.stage} stageIndex={curStage}
+                    count={visibleCards.filter(c => c.mastery.stageIndex === curStage).length}
+                    isFirst={i === 0} />
+                )}
+                <div
+                  className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
+                             border border-gold-400/8 animate-fade-up"
+                  style={{ animationDelay: `${Math.min(i, 20) * 0.03}s`, opacity: 0 }}>
               <div className="flex items-center gap-3">
                 <span className="font-kanji text-xl text-parchment-200">{card.kanji}</span>
                 <div>
@@ -323,7 +342,8 @@ export default function DeckScreen() {
                 <StageMeter mastery={mastery} />
               </div>
             </div>
-          ))}
+          </div>
+        )})}
         </div>
       )}
     </div>
@@ -514,6 +534,32 @@ function StageRow({ stage, index }) {
           {stage.science}
         </p>
       </div>
+    </div>
+  )
+}
+// ─── Stage group header ───────────────────────────────────────────────────
+function StageGroupHeader({ stage, stageIndex, count, isFirst }) {
+  const textColors = {
+    'amber-500':     'text-amber-500/60',
+    'blue-400':      'text-blue-400/60',
+    'gold-400':      'text-gold-400/60',
+    'emerald-400':   'text-emerald-400/60',
+    'parchment-100': 'text-parchment-100/50',
+    'parchment-500/25': 'text-parchment-500/30',
+  }
+  const tc = textColors[stage.color] || 'text-parchment-500/40'
+  const isUnseen = stageIndex === 0
+
+  return (
+    <div className={`flex items-center gap-2.5 ${isFirst ? 'mb-2' : 'mt-4 mb-2'}`}>
+      <span className={`font-kanji text-sm ${tc}`}>{stage.kanji}</span>
+      <span className={`font-mono text-[9px] tracking-widest uppercase ${tc}`}>
+        {stage.label}
+      </span>
+      <div className="flex-1 h-px bg-gold-400/6" />
+      <span className="font-mono text-[9px] text-parchment-500/20 tabular-nums">
+        {count}
+      </span>
     </div>
   )
 }
