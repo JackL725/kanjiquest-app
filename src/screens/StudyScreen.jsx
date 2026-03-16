@@ -380,11 +380,50 @@ function CardBack({ card, mode, shouldFocusStory }) {
           </div>
         </BackSection>
 
-        {/* 5 — In-game context */}
-        <BackSection label="In-game context">
-          <p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p>
-          <p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p>
-        </BackSection>
+        {/* 5 — Readings */}
+        {(card.onyomi || card.kunyomi) && (
+          <>
+            <Divider />
+            {card.onyomi && (
+              <BackSection label="On'yomi">
+                <p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p>
+              </BackSection>
+            )}
+            {card.kunyomi && (
+              <BackSection label="Kun'yomi">
+                <p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p>
+              </BackSection>
+            )}
+            {card.nanori && (
+              <BackSection label="Nanori">
+                <p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p>
+              </BackSection>
+            )}
+          </>
+        )}
+
+        {/* 6 — In-game context */}
+        {card.context && (
+          <>
+            <Divider />
+            <BackSection label="In-game context">
+              <p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p>
+              <p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p>
+            </BackSection>
+          </>
+        )}
+
+        {/* 7 — JLPT Level (pinned to bottom) */}
+        {card.jlpt && (
+          <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
+            <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">
+              JLPT Level
+            </span>
+            <span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">
+              N{card.jlpt}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   )
