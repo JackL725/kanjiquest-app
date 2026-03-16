@@ -19,7 +19,7 @@ export default function DeckScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
-  const { getLearnedCount, getDueCount, getNewCount, getCardProgress, addBonusCards } = useSRS(id)
+  const { getLearnedCount, getDueCount, getNewCount, getCardProgress, addBonusCards, getStudyQueue } = useSRS(id)
 
   const [showPicker, setShowPicker] = useState(false)
   const [search, setSearch]         = useState('')
@@ -52,10 +52,21 @@ export default function DeckScreen() {
     const now = new Date()
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
 
+    // Get today's new card allocation so we know which unseen cards
+    // are queued for study today
+    const { newBatch } = getStudyQueue(deck.cards)
+    const queuedNewIds = new Set(newBatch.map(c => c.id))
+
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
       const isDue = p && new Date(p.next) <= now
-      const mastery = getMasteryStage(p, { isDue })
+      const isUnseen = !p
+      const isQueuedNew = isUnseen && queuedNewIds.has(card.id)
+
+      // Unseen cards that are in today's study queue show as Kindled
+      const mastery = isQueuedNew
+        ? { stage: STAGES[1], stageIndex: 1, progress: 0, stumbled: false }
+        : getMasteryStage(p)
 
       return {
         card,
@@ -63,8 +74,8 @@ export default function DeckScreen() {
         mastery,
         isNew:      p && p.firstStudied && new Date(p.firstStudied) >= oneDayAgo,
         isLearning: p?.graduated === true && isDue,
-        isDue:      !!isDue,
-        isUnseen:   !p,
+        isDue:      !!isDue || isQueuedNew,
+        isUnseen:   isUnseen && !isQueuedNew,
       }
     })
   }, [deck.cards, getCardProgress])
@@ -420,7 +431,7 @@ function MasteryGuide() {
             <StageRow key={s.id} stage={s} index={i} />
           ))}
 
-          {/* Due = Kindled rule */}
+          {/* Queued new cards rule */}
           <div className="pt-2 mt-2 border-t border-gold-400/8">
             <div className="flex items-start gap-3">
               <div className="w-7 h-7 rounded-lg bg-ink-700 border border-amber-500/15
@@ -428,10 +439,10 @@ function MasteryGuide() {
                 <span className="font-kanji text-xs text-amber-500/40">火</span>
               </div>
               <div>
-                <p className="font-mono text-[10px] text-parchment-200 tracking-wide">Due cards drop to Kindled</p>
+                <p className="font-mono text-[10px] text-parchment-200 tracking-wide">New cards in today's queue</p>
                 <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
-                  When a card is due for review, it drops back to Kindled until you prove
-                  you still know it. Answer Good or Easy to restore your earned stage.
+                  Unseen cards that are queued for today's study session
+                  show as Kindled — they're about to enter your memory.
                 </p>
               </div>
             </div>

@@ -98,16 +98,15 @@ const THRESHOLDS = [
 ]
 
 // ─── Compute a card's mastery stage ───────────────────────────────────────
-// Returns: { stage, stageIndex, progress, stumbled, actualStageIndex }
-//   stage            — the STAGES entry (display-adjusted)
-//   stageIndex       — 0–5 (display-adjusted)
-//   actualStageIndex — 0–5 (true earned stage, ignoring due/stumble)
-//   progress         — 0–100 within the current stage (toward next stage)
-//   stumbled         — true if stumbledDate is today (stage frozen)
+// Returns: { stage, stageIndex, progress, stumbled }
+//   stage      — the STAGES entry (display-adjusted)
+//   stageIndex — 0–5 (display-adjusted)
+//   progress   — 0–100 within the current stage (toward next stage)
+//   stumbled   — true if stumbledDate is today (stage frozen)
 
-export function getMasteryStage(p, { isDue = false } = {}) {
+export function getMasteryStage(p) {
   if (!p) {
-    return { stage: STAGES[0], stageIndex: 0, actualStageIndex: 0, progress: 0, stumbled: false }
+    return { stage: STAGES[0], stageIndex: 0, progress: 0, stumbled: false }
   }
 
   const today = new Date().toISOString().split('T')[0]
@@ -123,21 +122,13 @@ export function getMasteryStage(p, { isDue = false } = {}) {
     if (p.interval >= 90 && p.reps >= 7) stageIndex = 5 // Engraved
   }
 
-  const actualStageIndex = stageIndex
-
-  // If card is due, drop display back to Kindled — you haven't proven
-  // you still know it yet. Once you answer Good/Easy it advances again.
-  let displayIndex = stageIndex
-  if (isDue && stageIndex > 1) {
-    displayIndex = 1 // Kindled
-  } else if (stumbled && stageIndex > 1) {
-    displayIndex = stageIndex - 1
-  }
+  // If stumbled today, cap display at one stage below actual
+  const displayIndex = stumbled && stageIndex > 1 ? stageIndex - 1 : stageIndex
 
   // Calculate progress toward NEXT stage (0–100)
   let progress = 0
   if (displayIndex < 5) {
-    progress = isDue ? 0 : calcProgress(p, displayIndex)
+    progress = calcProgress(p, displayIndex)
   } else {
     progress = 100 // Engraved is the final stage
   }
@@ -145,7 +136,6 @@ export function getMasteryStage(p, { isDue = false } = {}) {
   return {
     stage: STAGES[displayIndex],
     stageIndex: displayIndex,
-    actualStageIndex,
     progress,
     stumbled,
   }
