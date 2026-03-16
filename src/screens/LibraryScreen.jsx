@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getOwnedDecks } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
+import { readProfile } from '@/hooks/useOnboarding'
 
 // ─── Sync utility: read due count without hooks ───────────────────────────
 // Avoids calling useSRS inside a loop (Rules of Hooks violation).
@@ -338,6 +339,7 @@ export default function LibraryScreen() {
   const hasDecks           = decks.length > 0
   const totalDue           = useMemo(() => readTotalDue(decks), [])
   const { streak, last7 }  = useMemo(() => readStreakData(), [])
+  const profile            = useMemo(() => readProfile(), [])
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric',
@@ -350,7 +352,7 @@ export default function LibraryScreen() {
       <div className="animate-fade-up">
         <h1 className="font-display italic text-2xl text-parchment-100">
           {getGreeting()}{' '}
-          <em className="text-gold-400 not-italic">Learner</em>
+          <em className="text-gold-400 not-italic">{profile.displayName || 'Learner'}</em>
         </h1>
         <p className="font-mono text-[11px] text-parchment-500 tracking-widest uppercase mt-1">
           {today}

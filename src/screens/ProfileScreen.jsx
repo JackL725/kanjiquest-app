@@ -1,5 +1,7 @@
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSettings, DEFAULT_SETTINGS } from '@/hooks/useSettings'
+import { readProfile } from '@/hooks/useOnboarding'
 
 // ─── Achievements ─────────────────────────────────────────────────────────
 const ACHIEVEMENTS = [
@@ -117,8 +119,21 @@ function SettingsBlock({ settings, updateSetting, resetToDefaults }) {
 
 // ─── ProfileScreen ────────────────────────────────────────────────────────
 export default function ProfileScreen() {
-  const navigate                           = useNavigate()
+  const navigate                                    = useNavigate()
   const { settings, updateSetting, resetToDefaults } = useSettings()
+  const profile                                      = useMemo(() => readProfile(), [])
+
+  // Compute member-since from onboarding date
+  const memberSince = (() => {
+    try {
+      const raw = localStorage.getItem('kq-onboarding')
+      if (raw) {
+        const d = new Date(JSON.parse(raw).completedAt)
+        return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+      }
+    } catch {}
+    return new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  })()
 
   return (
     <div className="px-5 py-6 pb-10 space-y-6">
@@ -127,12 +142,14 @@ export default function ProfileScreen() {
       <div className="flex items-center gap-4 animate-fade-up">
         <div className="w-16 h-16 rounded-full border-2 border-gold-400/40
                         flex items-center justify-center font-kanji text-3xl text-gold-400">
-          侍
+          {profile.avatarKanji}
         </div>
         <div>
-          <h1 className="font-display italic text-2xl text-parchment-100">Phantom</h1>
+          <h1 className="font-display italic text-2xl text-parchment-100">
+            {profile.displayName || 'Phantom'}
+          </h1>
           <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mt-0.5">
-            Member since March 2026
+            Member since {memberSince}
           </p>
         </div>
       </div>
@@ -213,6 +230,18 @@ export default function ProfileScreen() {
               {label}
             </button>
           ))}
+          <button
+            onClick={() => {
+              if (window.confirm('Replay the intro guide? (Your study progress is kept.)')) {
+                try { localStorage.removeItem('kq-onboarding') } catch {}
+                window.location.href = '/onboarding'
+              }
+            }}
+            className="w-full text-left px-1 py-3 font-display italic text-parchment-500/50
+                       hover:text-parchment-400 transition-colors text-base"
+          >
+            Replay intro guide
+          </button>
         </div>
       </div>
     </div>
