@@ -14,10 +14,10 @@ export default function DeckScreen() {
     </div>
   )
 
-  const learned = getLearnedCount(deck.cards)
-  const due     = getDueCount(deck.cards)
-  const newCount = getNewCount(deck.cards)
-  const pct     = Math.round((learned / deck.cards.length) * 100)
+  const learned  = getLearnedCount(deck.cards)
+  const due      = getDueCount(deck.cards)   // reviews + today's new allotment
+  const newCount = getNewCount(deck.cards)   // total unseen (display only)
+  const pct      = Math.round((learned / deck.cards.length) * 100)
 
   return (
     <div className="px-5 py-6">
@@ -54,9 +54,9 @@ export default function DeckScreen() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6 animate-fade-up delay-100">
         {[
-          { num: learned,  lbl: 'Learned'  },
-          { num: due,      lbl: 'Due today' },
-          { num: newCount, lbl: 'New'       },
+          { num: learned,            lbl: 'Learned'   },
+          { num: due,                lbl: 'Due today'  },
+          { num: deck.cards.length,  lbl: 'Total'      },
         ].map(({ num, lbl }) => (
           <div key={lbl} className="bg-ink-800 rounded-xl p-3 text-center border border-gold-400/10">
             <p className="font-display italic text-2xl text-gold-400 leading-none">{num}</p>
@@ -87,10 +87,7 @@ export default function DeckScreen() {
                      font-display italic text-lg py-3 rounded-xl
                      hover:bg-gold-400/10 transition-colors duration-200"
         >
-          {due > 0 && newCount === 0 && `Study ${due} due card${due !== 1 ? 's' : ''}`}
-          {due === 0 && newCount > 0 && `Study ${newCount} new card${newCount !== 1 ? 's' : ''}`}
-          {due > 0 && newCount > 0 && `Study · ${due} due + ${newCount} new`}
-          {due === 0 && newCount === 0 && 'Review all cards'}
+          {due > 0 ? `Study ${due} card${due !== 1 ? 's' : ''} today` : 'All caught up'}
         </button>
         <button
           onClick={() => navigate(`/study/${id}?mode=all`)}

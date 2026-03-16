@@ -128,9 +128,12 @@ export function useSRS(deckId) {
     return cards.filter(c => (getCardProgress(c.id)?.reps ?? 0) > 0).length
   }
 
-  // Reviews due today (excludes brand-new cards)
+  // Cards to study today = reviews due + new cards up to daily limit
   function getDueCount(cards) {
-    return getDueCards(cards).length
+    const s        = readSettings()
+    const reviews  = getDueCards(cards).length
+    const newAvail = Math.min(getNewCards(cards).length, s.newCardsPerDay)
+    return reviews + newAvail
   }
 
   // New cards never seen before

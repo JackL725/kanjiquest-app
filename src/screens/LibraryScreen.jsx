@@ -7,17 +7,26 @@ import { useSRS } from '@/hooks/useSRS'
 // Avoids calling useSRS inside a loop (Rules of Hooks violation).
 function readTotalDue(decks) {
   try {
-    const raw  = localStorage.getItem('kq-srs-progress')
-    const prog = raw ? JSON.parse(raw) : {}
+    const raw      = localStorage.getItem('kq-srs-progress')
+    const prog     = raw ? JSON.parse(raw) : {}
+    const settings = (() => {
+      try {
+        const s = localStorage.getItem('kq-settings')
+        return s ? { newCardsPerDay: 20, maxReviewsPerDay: 200, ...JSON.parse(s) }
+                 : { newCardsPerDay: 20, maxReviewsPerDay: 200 }
+      } catch { return { newCardsPerDay: 20, maxReviewsPerDay: 200 } }
+    })()
+
     return decks.reduce((sum, deck) => {
       const dp = prog[deck.id] || {}
-      return sum + deck.cards.filter(c => {
+      const reviews = deck.cards.filter(c => {
         const p = dp[c.id]
-        // New cards (no progress) are not "due"
         if (!p) return false
-        // Cards with history: due if next date has passed
         return new Date(p.next) <= new Date()
       }).length
+      const newCards = deck.cards.filter(c => !dp[c.id]).length
+      const newAlloc = Math.min(newCards, settings.newCardsPerDay)
+      return sum + reviews + newAlloc
     }, 0)
   } catch { return 0 }
 }
