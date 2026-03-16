@@ -84,7 +84,7 @@ export default function DeckScreen() {
   const filterCounts = useMemo(() => ({
     all:      classifiedCards.length,
     new:      classifiedCards.filter(c => c.isNew).length,
-    learning: classifiedCards.filter(c => c.isLearning).length,
+    learning: classifiedCards.filter(c => !c.isUnseen).length,
     due:      classifiedCards.filter(c => c.isDue).length,
     mastered: classifiedCards.filter(c => c.mastery.stageIndex >= 4).length,
   }), [classifiedCards])
@@ -94,7 +94,7 @@ export default function DeckScreen() {
     let result = classifiedCards
 
     if (filter === 'new')      result = result.filter(c => c.isNew)
-    if (filter === 'learning') result = result.filter(c => c.isLearning)
+    if (filter === 'learning') result = result.filter(c => !c.isUnseen)
     if (filter === 'due')      result = result.filter(c => c.isDue)
     if (filter === 'mastered') result = result.filter(c => c.mastery.stageIndex >= 4)
 
