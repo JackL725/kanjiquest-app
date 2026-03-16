@@ -112,3 +112,12 @@ body {
 .animate-card-enter {
   animation: cardEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* ─── New card badge ─────────────────────────────── */
+@keyframes newCardBadge {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-new-card {
+  animation: newCardBadge 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}

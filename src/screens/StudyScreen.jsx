@@ -158,13 +158,28 @@ function WaitingScreen({ requeuePool, onCheckNow }) {
 }
 
 // ─── Card Front ───────────────────────────────────────────────────────────
-function CardFront({ card, mode, peekActive, onBurn }) {
+function CardFront({ card, mode, peekActive, onBurn, isNew }) {
   const isMeaningFirst = mode === 'kanji'   // Meaning → Kanji
 
   return (
     <div className="card-face absolute inset-0 bg-ink-800 border border-gold-400/15
                     rounded-2xl flex flex-col items-center justify-center p-7
                     cursor-pointer select-none">
+
+      {/* New card badge */}
+      {isNew && (
+        <div className="absolute top-4 left-4 flex items-center gap-1.5 animate-new-card">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full
+                             bg-gold-400 opacity-60" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-400" />
+          </span>
+          <span className="font-mono text-[9px] tracking-widest uppercase text-gold-400">
+            New
+          </span>
+        </div>
+      )}
+
       <p className="font-mono text-[9px] text-parchment-500/60 tracking-[3px] uppercase mb-8">
         {isMeaningFirst ? 'What is the kanji?' : 'What does this mean?'}
       </p>
@@ -194,7 +209,8 @@ function CardFront({ card, mode, peekActive, onBurn }) {
         </div>
       )}
 
-      {/* Already know this — stops propagation so it doesn't flip the card */}
+      {/* Already know this — only shown on new (never-seen) cards */}
+      {isNew && (
       <button
         onClick={e => { e.stopPropagation(); onBurn() }}
         className="absolute bottom-4 left-0 right-0 mx-auto w-fit
@@ -209,6 +225,7 @@ function CardFront({ card, mode, peekActive, onBurn }) {
         </svg>
         Already know this
       </button>
+      )}
     </div>
   )
 }
@@ -392,7 +409,7 @@ export default function StudyScreen() {
   const [params]        = useSearchParams()
   const navigate        = useNavigate()
   const deck            = getDeckById(id)
-  const { rate, getDueCards, getNewCards } = useSRS(id)
+  const { rate, getDueCards, getNewCards, getCardProgress } = useSRS(id)
   const { settings }    = useSettings()
 
   const [mode, setMode]         = useState('meaning')
@@ -673,7 +690,9 @@ export default function StudyScreen() {
           className="card-scene h-full animate-card-enter"
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
-            <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} />
+            <CardFront card={current} mode={mode} peekActive={peekActive}
+                             onBurn={handleBurn}
+                             isNew={!getCardProgress(current.id)} />
             <CardBack  card={current} mode={mode} shouldFocusStory={flipped ? storyFocusTick : 0} />
           </div>
         </div>
