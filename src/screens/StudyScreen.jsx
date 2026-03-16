@@ -490,7 +490,23 @@ export default function StudyScreen() {
 
     const undo = { label: RATING_META.find(r => r.q === q)?.label || '?', snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo } }
 
-    if (nextI >= cQ.length + dueNow.length) { if (requeuePool.current.length > 0) setWaiting(true); else setDone(true); setUndoToast(undo); return }
+    if (nextI >= cQ.length + dueNow.length) {
+      // Queue exhausted — if there are pending requeues, release them all
+      // immediately so the user can keep studying without waiting
+      if (requeuePool.current.length > 0) {
+        const pending = requeuePool.current.map(e => e.card)
+        requeuePool.current = []
+        setQueue(prev => {
+          const next = [...prev, ...pending]
+          queueRef.current = next
+          return next
+        })
+        qiRef.current = nextI; setQi(nextI); setFlipped(false)
+        setUndoToast(undo)
+        return
+      }
+      setDone(true); setUndoToast(undo); return
+    }
     qiRef.current = nextI; setQi(nextI); setFlipped(false); setUndoToast(undo)
   }, [rate, settings.hardIntervalMins, getCardProgress, combo, maxCombo])
 
