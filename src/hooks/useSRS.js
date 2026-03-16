@@ -51,7 +51,7 @@ function recordStudyDate() {
 //   REVIEW    — progress exists, graduated === true, next <= now (due review)
 //   MASTERED  — progress exists, graduated === true, next > now (not yet due)
 //
-function sm2(prev, q) {
+export function sm2(prev, q) {
   const s     = readSettings()
   const ef0   = s.startingEase / 100
   const efMin = s.minimumEase  / 100
