@@ -189,13 +189,7 @@ function UserStorySection({ cardId, shouldFocus }) {
     setEditing(false)
   }, [cardId])
 
-  // Auto-focus when card is flipped
-  useEffect(() => {
-    if (shouldFocus) {
-      setEditing(true)
-      setTimeout(() => textareaRef.current?.focus(), 320) // after flip animation
-    }
-  }, [shouldFocus])
+  // Auto-focus intentionally removed — user taps My Story to edit
 
   function handleChange(e) {
     setText(e.target.value)
