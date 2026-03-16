@@ -1,6 +1,22 @@
 import { useState, useEffect } from 'react'
 
-const STORAGE_KEY = 'kq-srs-progress'
+const STORAGE_KEY  = 'kq-srs-progress'
+const STREAK_KEY   = 'kq-study-dates'
+
+function recordStudyDate() {
+  try {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const iso   = today.toISOString().split('T')[0]
+    const raw   = localStorage.getItem(STREAK_KEY)
+    const dates = raw ? JSON.parse(raw) : []
+    if (!dates.includes(iso)) {
+      // Keep last 90 days to avoid unbounded growth
+      const updated = [...dates, iso].slice(-90)
+      localStorage.setItem(STREAK_KEY, JSON.stringify(updated))
+    }
+  } catch {}
+}
 
 function sm2(prev, q) {
   let { interval = 0, reps = 0, ef = 2.5 } = prev || {}
@@ -48,6 +64,7 @@ export function useSRS(deckId) {
   }, [progress])
 
   function rate(cardId, q) {
+    recordStudyDate()
     setProgress(prev => ({
       ...prev,
       [deckId]: {
