@@ -444,18 +444,25 @@ export default function StudyScreen() {
   const buildQueue = useCallback(() => {
     if (!deck) return
     requeuePool.current = []
-    const isAll = params.get('mode') === 'all'
+    const isAll   = params.get('mode') === 'all'
+    const group   = params.get('group')  // stroke count group for radicals
 
     const burned = burnedRef.current
 
+    // If group is specified, filter to that stroke count first
+    const sourceCards = group
+      ? deck.cards.filter(c => String(c.strokes) === group)
+      : deck.cards
+
     let cards
-    if (isAll) {
-      cards = deck.cards.filter(c => !burned.has(c.id))
+    if (isAll || group) {
+      // All mode or group mode: use all matching cards
+      cards = sourceCards.filter(c => !burned.has(c.id))
     } else {
-      const { newBatch, reviewBatch, learning } = getStudyQueue(deck.cards)
+      const { newBatch, reviewBatch, learning } = getStudyQueue(sourceCards)
       const filtered = [...newBatch, ...learning, ...reviewBatch].filter(c => !burned.has(c.id))
       cards = filtered
-      if (!cards.length) cards = deck.cards.filter(c => !burned.has(c.id))
+      if (!cards.length) cards = sourceCards.filter(c => !burned.has(c.id))
     }
 
     const shuffled = cards.sort(() => Math.random() - 0.5)
@@ -641,6 +648,7 @@ export default function StudyScreen() {
   if (waiting)       return <div className="h-full"><WaitingScreen requeuePool={requeuePool.current} onCheckNow={checkPoolNow} /></div>
 
   const current = queue[qi]
+  const groupParam = params.get('group')
   // How many unique cards left (excludes re-queued copies)
   const uniqueRemaining = queue.slice(qi).filter((c, i, arr) =>
     arr.findIndex(x => x.id === c.id) === i
@@ -659,6 +667,12 @@ export default function StudyScreen() {
         </button>
 
         <div className="flex items-center gap-2">
+          {groupParam && (
+            <span className="font-mono text-[9px] text-gold-400/50 tracking-widest border border-gold-400/15
+                             rounded-md px-1.5 py-0.5 leading-none">
+              {groupParam} stroke{groupParam !== '1' ? 's' : ''}
+            </span>
+          )}
           <span className="font-mono text-[10px] text-parchment-500/50 tracking-widest tabular-nums">
             {uniqueRemaining} left
           </span>
