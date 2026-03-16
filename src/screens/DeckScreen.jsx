@@ -279,6 +279,9 @@ export default function DeckScreen() {
         })}
       </div>
 
+      {/* Mastery guide (collapsible) */}
+      <MasteryGuide />
+
       {/* Card list */}
       {visibleCards.length === 0 ? (
         <div className="py-10 text-center">
@@ -300,25 +303,136 @@ export default function DeckScreen() {
                   <p className="font-mono text-[10px] text-parchment-500">{card.meaning}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 {card.jlpt && (
                   <span className="font-mono text-[8px] text-parchment-500/25 tracking-widest">
                     N{card.jlpt}
                   </span>
                 )}
-                <span className={`font-mono text-[9px] tracking-widest uppercase ${
-                  isMastered ? 'text-emerald-400/70' :
-                  isNew      ? 'text-blue-400/70' :
-                  isDue      ? 'text-gold-400' :
-                  isUnseen   ? 'text-parchment-500/30' :
-                               'text-parchment-500/40'
-                }`}>
-                  {isMastered ? `✓ ×${p.reps}` :
-                   isNew      ? 'new' :
-                   isDue      ? 'due' :
-                   isUnseen   ? 'unseen' :
-                   p          ? `×${p.reps}` : ''}
-                </span>
+                <MasteryMeter p={p} isDue={isDue} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── Mastery meter (3-milestone dots + status) ────────────────────────────
+// Milestones: 1) Graduate  2) 3 consecutive correct  3) 21-day interval
+function MasteryMeter({ p, isDue }) {
+  if (!p) {
+    return (
+      <span className="font-mono text-[9px] text-parchment-500/25 tracking-widest uppercase">
+        unseen
+      </span>
+    )
+  }
+
+  const m1 = p.graduated === true
+  const m2 = p.reps >= 3
+  const m3 = p.interval >= 21
+  const mastered = m1 && m2 && m3
+  const filled = (m1 ? 1 : 0) + (m2 ? 1 : 0) + (m3 ? 1 : 0)
+
+  return (
+    <div className="flex items-center gap-2">
+      {isDue && (
+        <span className="font-mono text-[9px] text-gold-400 tracking-widest uppercase">
+          due
+        </span>
+      )}
+      <div className="flex items-center gap-1" title={mastered ? 'Mastered' : `${filled}/3 milestones`}>
+        {/* 3 milestone segments */}
+        <div className="flex gap-[3px]">
+          {[m1, m2, m3].map((hit, i) => (
+            <div key={i}
+              className={`w-[14px] h-[4px] rounded-full transition-colors duration-300 ${
+                hit
+                  ? mastered ? 'bg-emerald-400' : 'bg-gold-400/70'
+                  : 'bg-parchment-500/12'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Mastery guide (collapsible) ──────────────────────────────────────────
+function MasteryGuide() {
+  const [open, setOpen] = useState(false)
+
+  const milestones = [
+    {
+      label: 'Graduate',
+      desc:  'Rate a card Good or Easy for the first time',
+      icon:  '一',
+    },
+    {
+      label: '3 in a row',
+      desc:  'Answer correctly 3 consecutive times',
+      icon:  '三',
+    },
+    {
+      label: '21-day interval',
+      desc:  'SRS pushes the card out to 21+ days between reviews',
+      icon:  '月',
+    },
+  ]
+
+  return (
+    <div className="mb-4">
+      <button onClick={() => setOpen(o => !o)}
+        className="flex items-center gap-2 group w-full">
+        <div className="flex gap-[3px]">
+          {[true, true, true].map((_, i) => (
+            <div key={i} className="w-[10px] h-[3px] rounded-full bg-emerald-400/50" />
+          ))}
+        </div>
+        <span className="font-mono text-[9px] text-parchment-500/40 tracking-widest uppercase
+                         group-hover:text-parchment-400 transition-colors">
+          How mastery works
+        </span>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+          className={`text-parchment-500/25 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+          <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div className="mt-3 bg-ink-800 border border-gold-400/10 rounded-xl p-4 space-y-3 animate-fade-up">
+          <p className="font-body text-[12px] text-parchment-400 leading-relaxed">
+            A card is mastered when it hits all three milestones. Each segment
+            in the meter fills gold as you progress, turning emerald when fully mastered.
+          </p>
+
+          {milestones.map((m, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-ink-700 border border-gold-400/10
+                              flex items-center justify-center shrink-0 mt-0.5">
+                <span className="font-kanji text-sm text-gold-400/50">{m.icon}</span>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-[3px]">
+                    {[0, 1, 2].map(j => (
+                      <div key={j}
+                        className={`w-[10px] h-[3px] rounded-full ${
+                          j <= i ? 'bg-gold-400/70' : 'bg-parchment-500/12'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-mono text-[10px] text-parchment-200 tracking-wide">
+                    {m.label}
+                  </span>
+                </div>
+                <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
+                  {m.desc}
+                </p>
               </div>
             </div>
           ))}
