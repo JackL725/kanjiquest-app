@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
+import { getMasteryStage } from '@/hooks/useMastery'
+
+const BLITZ_SIZE = 20
 
 // ─── Scoring constants ────────────────────────────────────────────────────
 const BASE_POINTS    = 100
@@ -88,14 +91,26 @@ export default function ComboBlitzScreen() {
   const wrongRef      = useRef(0)
   const deckCardCount = useRef(0) // original card count (for star calc)
 
+  // ── Build blitz pool: 20 random cards between Familiar (2) and Mastered (4) ──
+  function buildBlitzPool() {
+    if (!deck) return []
+    const eligible = deck.cards.filter(c => {
+      const p = getCardProgress(c.id)
+      if (!p) return false
+      const { stageIndex } = getMasteryStage(p)
+      return stageIndex >= 2 && stageIndex <= 4  // Familiar, Tempered, Mastered
+    })
+    const shuffled = [...eligible].sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, BLITZ_SIZE)
+  }
+
   // ── Build queue ──────────────────────────────────────────────────────
   useEffect(() => {
     if (!deck) return
-    const cards = deck.cards.filter(c => getCardProgress(c.id))
-    const shuffled = [...cards].sort(() => Math.random() - 0.5)
-    queueRef.current = shuffled
-    deckCardCount.current = shuffled.length
-    setQueue(shuffled)
+    const cards = buildBlitzPool()
+    queueRef.current = cards
+    deckCardCount.current = cards.length
+    setQueue(cards)
     setQi(0); qiRef.current = 0
     cardTimeRef.current = Date.now()
   }, [deck?.id])
@@ -220,9 +235,8 @@ export default function ComboBlitzScreen() {
 
   // ── Reset ────────────────────────────────────────────────────────────
   function resetGame() {
-    const cards = deck.cards.filter(c => getCardProgress(c.id))
-    const sh = [...cards].sort(() => Math.random() - 0.5)
-    queueRef.current = sh; deckCardCount.current = sh.length; setQueue(sh)
+    const cards = buildBlitzPool()
+    queueRef.current = cards; deckCardCount.current = cards.length; setQueue(cards)
     qiRef.current = 0; setQi(0); comboRef.current = 0; setCombo(0); setMaxCombo(0)
     scoreRef.current = 0; setScore(0); correctRef.current = 0; setCorrect(0)
     wrongRef.current = 0; setWrong(0)
@@ -238,8 +252,8 @@ export default function ComboBlitzScreen() {
     <div className="flex flex-col items-center justify-center h-full text-center px-8">
       <span className="font-kanji text-6xl text-amber-500/15 mb-6">連</span>
       <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards to blitz</p>
-      <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8">
-        Study some cards first to build your review pool
+      <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 max-w-[260px]">
+        You need cards at Familiar stage or above — keep studying to build your blitz pool
       </p>
       <button onClick={() => navigate(`/deck/${id}`)}
         className="border border-gold-400/30 text-gold-400 font-display italic text-base py-3 px-8 rounded-xl hover:bg-gold-400/10 transition-colors">
