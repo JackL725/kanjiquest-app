@@ -6,7 +6,7 @@ export default function DeckScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
-  const { getLearnedCount, getDueCount, getCardProgress } = useSRS(id)
+  const { getLearnedCount, getDueCount, getNewCount, getCardProgress } = useSRS(id)
 
   if (!deck) return (
     <div className="px-5 py-6 text-parchment-500 font-display italic text-lg">
@@ -16,6 +16,7 @@ export default function DeckScreen() {
 
   const learned = getLearnedCount(deck.cards)
   const due     = getDueCount(deck.cards)
+  const newCount = getNewCount(deck.cards)
   const pct     = Math.round((learned / deck.cards.length) * 100)
 
   return (
@@ -53,9 +54,9 @@ export default function DeckScreen() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6 animate-fade-up delay-100">
         {[
-          { num: deck.cards.length, lbl: 'Total cards' },
-          { num: learned,           lbl: 'Learned' },
-          { num: due,               lbl: 'Due today' },
+          { num: learned,  lbl: 'Learned'  },
+          { num: due,      lbl: 'Due today' },
+          { num: newCount, lbl: 'New'       },
         ].map(({ num, lbl }) => (
           <div key={lbl} className="bg-ink-800 rounded-xl p-3 text-center border border-gold-400/10">
             <p className="font-display italic text-2xl text-gold-400 leading-none">{num}</p>
@@ -86,7 +87,10 @@ export default function DeckScreen() {
                      font-display italic text-lg py-3 rounded-xl
                      hover:bg-gold-400/10 transition-colors duration-200"
         >
-          {due > 0 ? `Study ${due} due card${due !== 1 ? 's' : ''}` : 'Review all cards'}
+          {due > 0 && newCount === 0 && `Study ${due} due card${due !== 1 ? 's' : ''}`}
+          {due === 0 && newCount > 0 && `Study ${newCount} new card${newCount !== 1 ? 's' : ''}`}
+          {due > 0 && newCount > 0 && `Study · ${due} due + ${newCount} new`}
+          {due === 0 && newCount === 0 && 'Review all cards'}
         </button>
         <button
           onClick={() => navigate(`/study/${id}?mode=all`)}

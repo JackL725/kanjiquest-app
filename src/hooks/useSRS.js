@@ -75,8 +75,16 @@ function sm2(prev, q) {
 }
 
 function isDue(p) {
-  if (!p) return true
+  // No progress = new card, not a due review
+  if (!p) return false
+  // Again/Hard cards have reps=0 but a scheduled next time — they are due if that time has passed
+  if (p.reps === 0 && p.last) return new Date(p.next) <= new Date()
+  // Normal review cards
   return new Date(p.next) <= new Date()
+}
+
+function isNew(p) {
+  return !p
 }
 
 export function useSRS(deckId) {
@@ -113,16 +121,22 @@ export function useSRS(deckId) {
   }
 
   function getNewCards(cards) {
-    return cards.filter(c => !getCardProgress(c.id))
+    return cards.filter(c => isNew(getCardProgress(c.id)))
   }
 
   function getLearnedCount(cards) {
     return cards.filter(c => (getCardProgress(c.id)?.reps ?? 0) > 0).length
   }
 
+  // Reviews due today (excludes brand-new cards)
   function getDueCount(cards) {
     return getDueCards(cards).length
   }
 
-  return { rate, getCardProgress, getDueCards, getNewCards, getLearnedCount, getDueCount }
+  // New cards never seen before
+  function getNewCount(cards) {
+    return getNewCards(cards).length
+  }
+
+  return { rate, getCardProgress, getDueCards, getNewCards, getLearnedCount, getDueCount, getNewCount }
 }

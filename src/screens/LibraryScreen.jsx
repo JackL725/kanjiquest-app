@@ -13,7 +13,10 @@ function readTotalDue(decks) {
       const dp = prog[deck.id] || {}
       return sum + deck.cards.filter(c => {
         const p = dp[c.id]
-        return !p || p.reps === 0 || new Date(p.next) <= new Date()
+        // New cards (no progress) are not "due"
+        if (!p) return false
+        // Cards with history: due if next date has passed
+        return new Date(p.next) <= new Date()
       }).length
     }, 0)
   } catch { return 0 }
