@@ -55,7 +55,7 @@ export default function DeckScreen() {
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
       const isDue = p && new Date(p.next) <= now
-      const mastery = getMasteryStage(p)
+      const mastery = getMasteryStage(p, { isDue })
 
       return {
         card,
@@ -419,6 +419,23 @@ function MasteryGuide() {
           {STAGES.slice(1).map((s, i) => (
             <StageRow key={s.id} stage={s} index={i} />
           ))}
+
+          {/* Due = Kindled rule */}
+          <div className="pt-2 mt-2 border-t border-gold-400/8">
+            <div className="flex items-start gap-3">
+              <div className="w-7 h-7 rounded-lg bg-ink-700 border border-amber-500/15
+                              flex items-center justify-center shrink-0 mt-0.5">
+                <span className="font-kanji text-xs text-amber-500/40">火</span>
+              </div>
+              <div>
+                <p className="font-mono text-[10px] text-parchment-200 tracking-wide">Due cards drop to Kindled</p>
+                <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
+                  When a card is due for review, it drops back to Kindled until you prove
+                  you still know it. Answer Good or Easy to restore your earned stage.
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Stumble rule */}
           <div className="pt-2 mt-2 border-t border-gold-400/8">
