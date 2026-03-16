@@ -281,9 +281,23 @@ export function useSRS(deckId) {
     setBonus(prev => prev + count)
   }
 
+  // Restore a card's SRS state (used by undo)
+  function restoreCardProgress(cardId, snapshot) {
+    setProgress(prev => {
+      const deckProg = { ...(prev[deckId] || {}) }
+      if (snapshot === null || snapshot === undefined) {
+        delete deckProg[cardId]
+      } else {
+        deckProg[cardId] = snapshot
+      }
+      return { ...prev, [deckId]: deckProg }
+    })
+  }
+
   return {
     rate,
     getCardProgress,
+    restoreCardProgress,
     getDueReviews,
     getDueLearning,
     getNewCards,
