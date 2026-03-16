@@ -166,17 +166,45 @@ function CardFront({ card, mode, peekActive, onBurn, isNew }) {
                     rounded-2xl flex flex-col items-center justify-center p-7
                     cursor-pointer select-none">
 
-      {/* New card badge */}
+      {/* ── New card badge (top-left) + I know this button (top-right) ── */}
       {isNew && (
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 animate-new-card">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full
-                             bg-gold-400 opacity-60" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-400" />
-          </span>
-          <span className="font-mono text-[9px] tracking-widest uppercase text-gold-400">
-            New
-          </span>
+        <div className="absolute top-4 inset-x-4 flex items-center justify-between
+                        pointer-events-none">
+
+          {/* NEW pill — pops in with spring bounce + glow pulse */}
+          <div className="animate-new-card-pop pointer-events-none
+                          flex items-center gap-1.5
+                          bg-gold-400/15 border border-gold-400/40
+                          rounded-full px-3 py-1.5 animate-new-card-glow">
+            <span className="text-gold-400 text-[11px] leading-none select-none">✦</span>
+            <span className="font-mono text-[10px] tracking-[2px] uppercase
+                             font-medium text-gold-400 leading-none">
+              First look
+            </span>
+          </div>
+
+          {/* I already know this — top-right pill button */}
+          <button
+            onClick={e => { e.stopPropagation(); onBurn() }}
+            className="pointer-events-auto flex items-center gap-1.5
+                       border border-parchment-500/25 rounded-full px-3 py-1.5
+                       hover:border-gold-400/50 hover:bg-gold-400/8
+                       transition-all duration-200 touch-manipulation
+                       animate-new-card-pop"
+            style={{ animationDelay: '0.08s' }}
+          >
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" className="shrink-0 text-parchment-400">
+              <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.1"/>
+              <path d="M3.5 5.5l1.5 1.5 3-3" stroke="currentColor" strokeWidth="1.1"
+                    strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className="font-mono text-[10px] tracking-wide uppercase
+                             text-parchment-400 hover:text-parchment-200 leading-none
+                             whitespace-nowrap">
+              I know this
+            </span>
+          </button>
+
         </div>
       )}
 
@@ -209,23 +237,7 @@ function CardFront({ card, mode, peekActive, onBurn, isNew }) {
         </div>
       )}
 
-      {/* Already know this — only shown on new (never-seen) cards */}
-      {isNew && (
-      <button
-        onClick={e => { e.stopPropagation(); onBurn() }}
-        className="absolute bottom-4 left-0 right-0 mx-auto w-fit
-                   font-mono text-[9px] text-parchment-500/25 tracking-widest uppercase
-                   hover:text-gold-400/60 transition-colors duration-200 touch-manipulation
-                   flex items-center gap-1.5 px-3 py-1.5"
-      >
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0">
-          <circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="1"/>
-          <path d="M3 5l1.5 1.5L7 3.5" stroke="currentColor" strokeWidth="1"
-                strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        Already know this
-      </button>
-      )}
+
     </div>
   )
 }

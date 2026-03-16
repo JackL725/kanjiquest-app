@@ -114,10 +114,19 @@ body {
 }
 
 /* ─── New card badge ─────────────────────────────── */
-@keyframes newCardBadge {
-  from { opacity: 0; transform: translateX(-6px); }
-  to   { opacity: 1; transform: translateX(0); }
+@keyframes newCardPop {
+  0%   { opacity: 0; transform: scale(0.55) translateY(-3px); }
+  65%  { opacity: 1; transform: scale(1.10) translateY(0); }
+  82%  { transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
 }
-.animate-new-card {
-  animation: newCardBadge 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+@keyframes newCardGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+  50%       { box-shadow: 0 0 14px 3px rgba(201,168,76,0.22); }
+}
+.animate-new-card-pop {
+  animation: newCardPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-new-card-glow {
+  animation: newCardGlow 2.4s ease-in-out 0.6s infinite;
 }
