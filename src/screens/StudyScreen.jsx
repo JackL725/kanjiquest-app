@@ -227,6 +227,13 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
           <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-6">
             {card.kanji}
           </p>
+          {card.disambig && (
+            <span className="font-mono text-[9px] text-gold-400/70 tracking-[1.5px] uppercase
+                             border border-gold-400/20 rounded-full px-3 py-1 mb-4
+                             bg-gold-400/5 select-none">
+              {card.disambig}
+            </span>
+          )}
           {!hideHint && (
             <>
               <p className={`font-mono text-[11px] text-parchment-500/70 text-center

@@ -283,6 +283,7 @@ const radicalsDeck = {
       rtk2:      'A shape primitive — "box" is an abstract stroke pattern. It rarely stands alone, but it\'s a building block inside many compound kanji.',
       context:   '',
       contextEn: '',
+      disambig:  'container · open',
     },
     {
       id:        'rad-0023-hiding',
@@ -295,6 +296,7 @@ const radicalsDeck = {
       rtk2:      'A shape primitive — "hiding" is an abstract stroke pattern. It rarely stands alone, but it\'s a building block inside many compound kanji.',
       context:   '',
       contextEn: '',
+      disambig:  'container · concealed',
     },
     {
       id:        'rad-0024-ten',
@@ -415,6 +417,7 @@ const radicalsDeck = {
       rtk2:      'This body radical shows up in kanji about mouth / opening and physical actions. When you see it, think about the human body.',
       context:   '',
       contextEn: '',
+      disambig:  'body radical',
     },
     {
       id:        'rad-0034-enclosure',
@@ -427,6 +430,7 @@ const radicalsDeck = {
       rtk2:      'A shape primitive — "enclosure" is an abstract stroke pattern. It rarely stands alone, but it\'s a building block inside many compound kanji.',
       context:   '',
       contextEn: '',
+      disambig:  'shape radical',
     },
     {
       id:        'rad-0035-earth',
@@ -439,6 +443,7 @@ const radicalsDeck = {
       rtk2:      'As a nature radical, "earth" appears in kanji related to earth / soil / ground and the natural world. Look for it on the left side or bottom of compound kanji.',
       context:   '',
       contextEn: '',
+      disambig:  'nature · element',
     },
     {
       id:        'rad-0036-samurai',
@@ -451,6 +456,7 @@ const radicalsDeck = {
       rtk2:      'A people radical — "samurai" appears in kanji about scholar / samurai / gentleman and human roles or relationships.',
       context:   '',
       contextEn: '',
+      disambig:  'person · title',
     },
     {
       id:        'rad-0037-go',
@@ -463,6 +469,7 @@ const radicalsDeck = {
       rtk2:      'An action radical — "go" gives kanji the sense of go slowly / winter leg. It often appears on the left or bottom of characters.',
       context:   '',
       contextEn: '',
+      disambig:  'motion · arriving',
     },
     {
       id:        'rad-0038-go-slowly',
@@ -475,6 +482,7 @@ const radicalsDeck = {
       rtk2:      'An action radical — "go slowly" gives kanji the sense of go slowly / limp. It often appears on the left or bottom of characters.',
       context:   '',
       contextEn: '',
+      disambig:  'motion · trailing',
     },
     {
       id:        'rad-0039-evening',
@@ -979,6 +987,7 @@ const radicalsDeck = {
       rtk2:      'As a nature radical, "sun" appears in kanji related to sun / day / daytime and the natural world. Look for it on the left side or bottom of compound kanji.',
       context:   '',
       contextEn: '',
+      disambig:  'nature · celestial',
     },
     {
       id:        'rad-0081-say',
@@ -991,6 +1000,7 @@ const radicalsDeck = {
       rtk2:      'An action radical — "say" gives kanji the sense of say / speak. It often appears on the left or bottom of characters.',
       context:   '',
       contextEn: '',
+      disambig:  'action · speech',
     },
     {
       id:        'rad-0082-moon',
