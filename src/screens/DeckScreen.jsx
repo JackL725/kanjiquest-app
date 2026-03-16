@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
+import { STAGES, getMasteryStage } from '@/hooks/useMastery'
 
 const BONUS_OPTIONS = [5, 10, 15, 20]
 
@@ -50,25 +51,19 @@ export default function DeckScreen() {
   const classifiedCards = useMemo(() => {
     const now = new Date()
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
-    const todayStr = now.toISOString().split('T')[0]
 
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
       const isDue = p && new Date(p.next) <= now
-      const stumbledToday = p?.stumbledDate === todayStr
+      const mastery = getMasteryStage(p)
 
       return {
         card,
         p,
-        // Added to the deck within the last 24 hours
+        mastery,
         isNew:      p && p.firstStudied && new Date(p.firstStudied) >= oneDayAgo,
-        // Graduated cards that are due right now (active review work)
         isLearning: p?.graduated === true && isDue,
-        // Anything due right now (learning-phase + graduated reviews)
         isDue:      !!isDue,
-        // Well-retained AND clean today: graduated, 3+ correct, 21+ day interval, no stumble today
-        isMastered: p?.graduated === true && p.interval >= 21 && p.reps >= 3 && !stumbledToday,
-        // Never seen at all (no progress record)
         isUnseen:   !p,
       }
     })
@@ -80,7 +75,7 @@ export default function DeckScreen() {
     new:      classifiedCards.filter(c => c.isNew).length,
     learning: classifiedCards.filter(c => c.isLearning).length,
     due:      classifiedCards.filter(c => c.isDue).length,
-    mastered: classifiedCards.filter(c => c.isMastered).length,
+    mastered: classifiedCards.filter(c => c.mastery.stageIndex >= 4).length,
   }), [classifiedCards])
 
   // ── Filtered + searched cards ───────────────────────────────────────
@@ -90,7 +85,7 @@ export default function DeckScreen() {
     if (filter === 'new')      result = result.filter(c => c.isNew)
     if (filter === 'learning') result = result.filter(c => c.isLearning)
     if (filter === 'due')      result = result.filter(c => c.isDue)
-    if (filter === 'mastered') result = result.filter(c => c.isMastered)
+    if (filter === 'mastered') result = result.filter(c => c.mastery.stageIndex >= 4)
 
     if (search.trim()) {
       const q = search.trim().toLowerCase()
@@ -293,7 +288,7 @@ export default function DeckScreen() {
         </div>
       ) : (
         <div className="space-y-2">
-          {visibleCards.map(({ card, p, isNew, isLearning, isDue, isMastered, isUnseen }, i) => (
+          {visibleCards.map(({ card, p, mastery, isDue, isUnseen }, i) => (
             <div key={card.id}
               className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
                          border border-gold-400/8 animate-fade-up"
@@ -305,13 +300,16 @@ export default function DeckScreen() {
                   <p className="font-mono text-[10px] text-parchment-500">{card.meaning}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 {card.jlpt && (
                   <span className="font-mono text-[8px] text-parchment-500/25 tracking-widest">
                     N{card.jlpt}
                   </span>
                 )}
-                <MasteryMeter p={p} isDue={isDue} />
+                {isDue && (
+                  <span className="font-mono text-[8px] text-gold-400 tracking-widest uppercase">due</span>
+                )}
+                <StageMeter mastery={mastery} />
               </div>
             </div>
           ))}
@@ -321,88 +319,68 @@ export default function DeckScreen() {
   )
 }
 
-// ─── Mastery meter (3-milestone dots + status) ────────────────────────────
-// Milestones: 1) Graduate  2) 3 consecutive correct  3) 21-day interval
-// Frozen when the user rated Again or Hard today (stumbledDate = today)
-function MasteryMeter({ p, isDue }) {
-  if (!p) {
+// ─── Stage meter (compact, per-card-row) ──────────────────────────────────
+function StageMeter({ mastery }) {
+  const { stage, stageIndex, progress, stumbled } = mastery
+
+  if (stageIndex === 0) {
     return (
-      <span className="font-mono text-[9px] text-parchment-500/25 tracking-widest uppercase">
+      <span className="font-mono text-[8px] text-parchment-500/20 tracking-widest uppercase">
         unseen
       </span>
     )
   }
 
-  const today = new Date().toISOString().split('T')[0]
-  const stumbledToday = p.stumbledDate === today
+  // Stage color classes (can't use dynamic template strings in Tailwind)
+  const textColors = {
+    'amber-500':       'text-amber-500',
+    'blue-400':        'text-blue-400',
+    'gold-400':        'text-gold-400',
+    'emerald-400':     'text-emerald-400',
+    'parchment-100':   'text-parchment-100',
+  }
+  const bgColors = {
+    'bg-amber-500/60':       'bg-amber-500/60',
+    'bg-blue-400/60':        'bg-blue-400/60',
+    'bg-gold-400/60':        'bg-gold-400/60',
+    'bg-emerald-400/60':     'bg-emerald-400/60',
+    'bg-parchment-100/50':   'bg-parchment-100/50',
+  }
 
-  const m1 = p.graduated === true
-  const m2 = p.reps >= 3
-  const m3 = p.interval >= 21
-  const mastered = m1 && m2 && m3 && !stumbledToday
-  const filled = (m1 ? 1 : 0) + (m2 ? 1 : 0) + (m3 ? 1 : 0)
+  const tc = textColors[stage.color] || 'text-parchment-500'
+  const bc = bgColors[stage.barColor] || 'bg-parchment-500/30'
 
   return (
-    <div className="flex items-center gap-2">
-      {isDue && (
-        <span className="font-mono text-[9px] text-gold-400 tracking-widest uppercase">
-          due
-        </span>
+    <div className="flex items-center gap-2 min-w-[90px] justify-end">
+      {stumbled && (
+        <span className="font-mono text-[7px] text-ember/50 tracking-widest uppercase">⚠</span>
       )}
-      {stumbledToday && (
-        <span className="font-mono text-[8px] text-ember/50 tracking-widest uppercase">
-          stumbled
-        </span>
-      )}
-      <div className="flex items-center gap-1"
-           title={stumbledToday ? 'Paused — stumbled today' : mastered ? 'Mastered' : `${filled}/3 milestones`}>
-        <div className="flex gap-[3px]">
-          {[m1, m2, m3].map((hit, i) => (
-            <div key={i}
-              className={`w-[14px] h-[4px] rounded-full transition-colors duration-300 ${
-                stumbledToday
-                  ? hit ? 'bg-ember/30' : 'bg-parchment-500/8'
-                  : hit
-                    ? mastered ? 'bg-emerald-400' : 'bg-gold-400/70'
-                    : 'bg-parchment-500/12'
-              }`}
-            />
-          ))}
-        </div>
+      <span className={`font-mono text-[8px] tracking-widest uppercase ${stumbled ? 'text-ember/50' : tc}`}>
+        {stage.label}
+      </span>
+      {/* Progress bar within stage */}
+      <div className="w-[32px] h-[4px] bg-parchment-500/8 rounded-full overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all duration-500 ${stumbled ? 'bg-ember/30' : bc}`}
+          style={{ width: `${progress}%` }}
+        />
       </div>
     </div>
   )
 }
 
-// ─── Mastery guide (collapsible) ──────────────────────────────────────────
+// ─── Stage guide (collapsible, educational) ───────────────────────────────
 function MasteryGuide() {
   const [open, setOpen] = useState(false)
-
-  const milestones = [
-    {
-      label: 'Graduate',
-      desc:  'Rate a card Good or Easy for the first time',
-      icon:  '一',
-    },
-    {
-      label: '3 in a row',
-      desc:  'Answer correctly 3 consecutive times',
-      icon:  '三',
-    },
-    {
-      label: '21-day interval',
-      desc:  'SRS pushes the card out to 21+ days between reviews',
-      icon:  '月',
-    },
-  ]
 
   return (
     <div className="mb-4">
       <button onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-2 group w-full">
-        <div className="flex gap-[3px]">
-          {[true, true, true].map((_, i) => (
-            <div key={i} className="w-[10px] h-[3px] rounded-full bg-emerald-400/50" />
+        className="flex items-center gap-2.5 group w-full">
+        {/* Mini stage preview */}
+        <div className="flex gap-[2px]">
+          {STAGES.slice(1).map((s, i) => (
+            <div key={i} className={`w-[8px] h-[3px] rounded-full ${s.barColor}`} />
           ))}
         </div>
         <span className="font-mono text-[9px] text-parchment-500/40 tracking-widest uppercase
@@ -416,64 +394,98 @@ function MasteryGuide() {
       </button>
 
       {open && (
-        <div className="mt-3 bg-ink-800 border border-gold-400/10 rounded-xl p-4 space-y-3 animate-fade-up">
-          <p className="font-body text-[12px] text-parchment-400 leading-relaxed">
-            A card is mastered when it hits all three milestones. Each segment
-            in the meter fills gold as you progress, turning emerald when fully mastered.
+        <div className="mt-3 bg-ink-800 border border-gold-400/10 rounded-xl p-4 space-y-1 animate-fade-up">
+
+          {/* Intro */}
+          <p className="font-body text-[12px] text-parchment-400 leading-relaxed mb-3">
+            Every card progresses through six stages as the SRS confirms your memory is getting
+            stronger. Each stage maps to a real milestone in how your brain consolidates knowledge.
           </p>
 
-          {milestones.map((m, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-ink-700 border border-gold-400/10
-                              flex items-center justify-center shrink-0 mt-0.5">
-                <span className="font-kanji text-sm text-gold-400/50">{m.icon}</span>
+          {/* Journey visualization */}
+          <div className="flex items-center gap-[3px] mb-4 px-1">
+            {STAGES.map((s, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
+                <div className={`w-full h-[4px] rounded-full ${i === 0 ? 'bg-parchment-500/8' : s.barColor}`} />
+                <span className="font-kanji text-[11px] leading-none"
+                  style={{ opacity: i === 0 ? 0.15 : 0.5 }}>
+                  {s.kanji}
+                </span>
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-[3px]">
-                    {[0, 1, 2].map(j => (
-                      <div key={j}
-                        className={`w-[10px] h-[3px] rounded-full ${
-                          j <= i ? 'bg-gold-400/70' : 'bg-parchment-500/12'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="font-mono text-[10px] text-parchment-200 tracking-wide">
-                    {m.label}
-                  </span>
-                </div>
-                <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
-                  {m.desc}
-                </p>
-              </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Stage details */}
+          {STAGES.slice(1).map((s, i) => (
+            <StageRow key={s.id} stage={s} index={i} />
           ))}
 
           {/* Stumble rule */}
-          <div className="flex items-start gap-3 pt-1 border-t border-gold-400/8">
-            <div className="w-8 h-8 rounded-lg bg-ink-700 border border-ember/15
-                            flex items-center justify-center shrink-0 mt-0.5">
-              <span className="font-kanji text-sm text-ember/40">躓</span>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-[3px]">
-                  {[0, 1, 2].map(j => (
-                    <div key={j} className="w-[10px] h-[3px] rounded-full bg-ember/30" />
-                  ))}
-                </div>
-                <span className="font-mono text-[10px] text-parchment-200 tracking-wide">
-                  Stumbled today
-                </span>
+          <div className="pt-2 mt-2 border-t border-gold-400/8">
+            <div className="flex items-start gap-3">
+              <div className="w-7 h-7 rounded-lg bg-ink-700 border border-ember/15
+                              flex items-center justify-center shrink-0 mt-0.5">
+                <span className="font-kanji text-xs text-ember/40">躓</span>
               </div>
-              <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
-                Rating Again or Hard freezes mastery for the day. Answer Good or Easy to clear it.
-              </p>
+              <div>
+                <p className="font-mono text-[10px] text-parchment-200 tracking-wide">Stumble protection</p>
+                <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
+                  Rating Again or Hard pauses your progress for that card today.
+                  Answer Good or Easy to clear the pause and resume advancing.
+                </p>
+              </div>
             </div>
           </div>
+
         </div>
       )}
+    </div>
+  )
+}
+
+function StageRow({ stage, index }) {
+  // Requirements text
+  const reqs = [
+    'Study the card for the first time',
+    'Rate Good or Easy to graduate the card',
+    '7+ day interval and 2+ consecutive recalls',
+    '21+ day interval and 4+ consecutive recalls',
+    '90+ day interval and 7+ consecutive recalls',
+  ]
+
+  const textColors = {
+    'amber-500':     'text-amber-500/70',
+    'blue-400':      'text-blue-400/70',
+    'gold-400':      'text-gold-400/70',
+    'emerald-400':   'text-emerald-400/70',
+    'parchment-100': 'text-parchment-100/70',
+  }
+
+  return (
+    <div className="flex items-start gap-3 py-2">
+      <div className={`w-7 h-7 rounded-lg bg-ink-700 border ${stage.borderColor}
+                        flex items-center justify-center shrink-0 mt-0.5`}>
+        <span className={`font-kanji text-xs ${textColors[stage.color] || 'text-parchment-500/50'}`}>
+          {stage.kanji}
+        </span>
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className={`font-mono text-[10px] tracking-wide ${textColors[stage.color] || 'text-parchment-400'}`}>
+            {stage.label}
+          </span>
+          <span className="font-mono text-[8px] text-parchment-500/30">—</span>
+          <span className="font-mono text-[8px] text-parchment-500/30 tracking-wide">
+            {stage.desc}
+          </span>
+        </div>
+        <p className="font-mono text-[9px] text-parchment-500/40 mt-0.5 leading-snug">
+          {reqs[index]}
+        </p>
+        <p className="font-body text-[10px] text-parchment-500/30 mt-1 leading-snug italic">
+          {stage.science}
+        </p>
+      </div>
     </div>
   )
 }
