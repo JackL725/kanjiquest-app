@@ -103,3 +103,12 @@ body {
 .delay-300 { animation-delay: 0.3s; opacity: 0; }
 .delay-400 { animation-delay: 0.4s; opacity: 0; }
 .delay-500 { animation-delay: 0.5s; opacity: 0; }
+
+/* ─── Card entrance ─────────────────────────────── */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(18px) scale(0.975); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-card-enter {
+  animation: cardEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
