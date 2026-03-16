@@ -195,6 +195,7 @@ export default function DeckScreen() {
         {!needsGuide && (
           <div className="grid grid-cols-2 gap-3 pt-1">
             <button
+              onClick={() => navigate(`/combo-blitz/${id}`)}
               className="bg-ink-800 border border-amber-500/20 rounded-xl py-4 px-3
                          flex flex-col items-center gap-2
                          hover:border-amber-500/40 hover:bg-amber-500/5

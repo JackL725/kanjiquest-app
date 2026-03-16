@@ -226,3 +226,20 @@ body {
 .animate-perfect-burst {
   animation: perfectBurst 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* ─── Combo Blitz swipe ────────────────────────────── */
+@keyframes swipeRight {
+  0%   { transform: translateX(0) rotate(0); opacity: 1; }
+  100% { transform: translateX(120%) rotate(12deg); opacity: 0; }
+}
+@keyframes swipeLeft {
+  0%   { transform: translateX(0) rotate(0); opacity: 1; }
+  100% { transform: translateX(-120%) rotate(-12deg); opacity: 0; }
+}
+@keyframes swipeCardEnter {
+  0%   { transform: scale(0.92) translateY(12px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.animate-swipe-right { animation: swipeRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-swipe-left  { animation: swipeLeft  0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-swipe-enter { animation: swipeCardEnter 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards; }

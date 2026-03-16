@@ -8,6 +8,7 @@ import BrowseScreen        from '@/screens/BrowseScreen'
 import ProfileScreen       from '@/screens/ProfileScreen'
 import RadicalsScreen      from '@/screens/RadicalsScreen'
 import StudyScreen         from '@/screens/StudyScreen'
+import ComboBlitzScreen    from '@/screens/ComboBlitzScreen'
 import DeckScreen          from '@/screens/DeckScreen'
 import SettingsScreen      from '@/screens/SettingsScreen'
 
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="settings"  element={<SettingsScreen />} />
         <Route path="deck/:id"  element={<DeckScreen />} />
         <Route path="study/:id" element={<StudyScreen />} />
+        <Route path="combo-blitz/:id" element={<ComboBlitzScreen />} />
       </Route>
     </Routes>
   )
