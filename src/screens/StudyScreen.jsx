@@ -16,7 +16,27 @@ function writeUserStory(cardId, text) {
   } catch {}
 }
 
-// ─── Rating config ────────────────────────────────────────────────────────
+// ─── Burned cards (Already know this) ────────────────────────────────────
+const BURNED_KEY = 'kq-burned'
+
+function readBurned(deckId) {
+  try {
+    const raw = localStorage.getItem(BURNED_KEY)
+    const all = raw ? JSON.parse(raw) : {}
+    return new Set(all[deckId] ?? [])
+  } catch { return new Set() }
+}
+
+function writeBurned(deckId, burnedSet) {
+  try {
+    const raw = localStorage.getItem(BURNED_KEY)
+    const all = raw ? JSON.parse(raw) : {}
+    localStorage.setItem(BURNED_KEY, JSON.stringify({
+      ...all,
+      [deckId]: [...burnedSet],
+    }))
+  } catch {}
+}
 const RATING_META = [
   { q: 0, label: 'Again', color: 'text-ember',       border: 'border-ember/30',       bg: 'bg-ember/5 hover:bg-ember/12',        bar: 'bg-ember/70'         },
   { q: 2, label: 'Hard',  color: 'text-amber-500',   border: 'border-amber-500/30',   bg: 'bg-amber-500/5 hover:bg-amber-500/12',bar: 'bg-amber-500/70'     },
@@ -138,7 +158,7 @@ function WaitingScreen({ requeuePool, onCheckNow }) {
 }
 
 // ─── Card Front ───────────────────────────────────────────────────────────
-function CardFront({ card, mode, peekActive }) {
+function CardFront({ card, mode, peekActive, onBurn }) {
   const isMeaningFirst = mode === 'kanji'   // Meaning → Kanji
 
   return (
@@ -173,6 +193,22 @@ function CardFront({ card, mode, peekActive }) {
           </p>
         </div>
       )}
+
+      {/* Already know this — stops propagation so it doesn't flip the card */}
+      <button
+        onClick={e => { e.stopPropagation(); onBurn() }}
+        className="absolute bottom-4 left-0 right-0 mx-auto w-fit
+                   font-mono text-[9px] text-parchment-500/25 tracking-widest uppercase
+                   hover:text-gold-400/60 transition-colors duration-200 touch-manipulation
+                   flex items-center gap-1.5 px-3 py-1.5"
+      >
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0">
+          <circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="1"/>
+          <path d="M3 5l1.5 1.5L7 3.5" stroke="currentColor" strokeWidth="1"
+                strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        Already know this
+      </button>
     </div>
   )
 }
@@ -373,6 +409,7 @@ export default function StudyScreen() {
   const requeuePool = useRef([])   // [{ card, dueAt: ms timestamp }]
   const queueRef    = useRef([])   // mirror of queue state for use in intervals
   const qiRef       = useRef(0)
+  const burnedRef   = useRef(readBurned(id))  // Set of burned cardIds for this deck
 
   // ── Build initial queue ──────────────────────────────────────────────
   const buildQueue = useCallback(() => {
@@ -380,17 +417,19 @@ export default function StudyScreen() {
     requeuePool.current = []
     const isAll = params.get('mode') === 'all'
 
+    const burned = burnedRef.current
+
     let cards
     if (isAll) {
-      cards = [...deck.cards]
+      cards = deck.cards.filter(c => !burned.has(c.id))
     } else {
-      const due  = getDueCards(deck.cards)
-      const newC = getNewCards(deck.cards)
+      const due  = getDueCards(deck.cards).filter(c => !burned.has(c.id))
+      const newC = getNewCards(deck.cards).filter(c => !burned.has(c.id))
       const newBatch    = newC.slice(0, settings.newCardsPerDay)
       const reviewOnly  = due.filter(c => !newC.find(n => n.id === c.id))
       const reviewBatch = reviewOnly.slice(0, settings.maxReviewsPerDay)
       cards = [...newBatch, ...reviewBatch]
-      if (!cards.length) cards = [...deck.cards]
+      if (!cards.length) cards = deck.cards.filter(c => !burned.has(c.id))
     }
 
     const shuffled = cards.sort(() => Math.random() - 0.5)
@@ -507,6 +546,39 @@ export default function StudyScreen() {
     setFlipped(false)
   }, [rate, settings.hardIntervalMins])
 
+  // ── Burn card (Already know this) ───────────────────────────────────
+  const handleBurn = useCallback(() => {
+    const currentQ = queueRef.current
+    const currentI = qiRef.current
+    const card     = currentQ[currentI]
+    if (!card) return
+
+    // Persist to localStorage
+    burnedRef.current.add(card.id)
+    writeBurned(id, burnedRef.current)
+
+    // Find first replacement: a card not already in the queue and not burned
+    const queued  = new Set(currentQ.map(c => c.id))
+    const replacement = deck?.cards.find(
+      c => !queued.has(c.id) && !burnedRef.current.has(c.id)
+    )
+
+    // Remove current card from queue; splice replacement in at same position
+    setQueue(prev => {
+      const next = prev.filter((_, i) => i !== currentI)
+      if (replacement) next.splice(currentI, 0, replacement)
+      queueRef.current = next
+      return next
+    })
+
+    // If queue is now empty (nothing to replace with either), end session
+    const newLen = currentQ.length - 1 + (replacement ? 1 : 0)
+    if (newLen === 0) { setDone(true); return }
+
+    // Stay at same qi (the replacement card slides into the same slot)
+    setFlipped(false)
+  }, [deck, id])
+
   // Trigger My Story auto-focus on flip
   const handleFlip = useCallback(() => {
     setFlipped(f => {
@@ -601,7 +673,7 @@ export default function StudyScreen() {
           className="card-scene h-full animate-card-enter"
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
-            <CardFront card={current} mode={mode} peekActive={peekActive} />
+            <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} />
             <CardBack  card={current} mode={mode} shouldFocusStory={flipped ? storyFocusTick : 0} />
           </div>
         </div>
