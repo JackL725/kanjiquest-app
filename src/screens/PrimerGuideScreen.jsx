@@ -15,25 +15,25 @@ function markGuideComplete() {
 // ─── Tutorial card data (first 3 kanji) ──────────────────────────────────
 const TUTORIAL_CARDS = [
   {
-    kanji: '一', reading: 'イチ', romaji: 'ichi', meaning: 'one',
-    parts: ['一: one, one radical (no. 1)'],
-    story1: 'One down, thousands to go!',
-    story2: 'A single horizontal stroke — like one finger held up to say "just one."',
-    context: '一人（ひとり）', contextEn: 'one person',
+    kanji: '日', reading: 'ニチ', romaji: 'nichi', meaning: 'day / sun',
+    parts: ['日: sun, day, sun radical (no. 72)'],
+    story1: 'A window with the curtains open — sunlight streams in, marking the start of a new day.',
+    story2: 'The ancient pictograph was a circle with a dot inside — a picture of the sun itself.',
+    context: '日本（にほん）', contextEn: 'Japan (lit. "origin of the sun")',
   },
   {
-    kanji: '二', reading: 'ニ', romaji: 'ni', meaning: 'two',
-    parts: ['二: two, two radical (no. 7)'],
-    story1: 'Two horizontal lines — like a Roman numeral II lying on its side.',
-    story2: 'Picture two chopsticks laid flat on a table.',
-    context: '二（に）', contextEn: 'two',
+    kanji: '月', reading: 'ゲツ', romaji: 'getsu', meaning: 'month / moon',
+    parts: ['月: moon, month, moon radical (no. 74)'],
+    story1: 'A crescent moon with two horizontal lines — like the moon\'s surface marked by craters.',
+    story2: 'The moon goes through its cycle once a month — that\'s why this kanji means both "moon" and "month."',
+    context: '月曜日（げつようび）', contextEn: 'Monday (lit. "moon day")',
   },
   {
-    kanji: '三', reading: 'サン', romaji: 'san', meaning: 'three',
-    parts: ['一: one (×3)'],
-    story1: 'One + two = three. The pattern continues.',
-    story2: 'Three lines — like three floors in a building. Ground floor, second floor, roof.',
-    context: '三（さん）', contextEn: 'three',
+    kanji: '明', reading: 'メイ', romaji: 'mei', meaning: 'bright',
+    parts: ['日: day; sun', '月: month; moon'],
+    story1: 'The sun and the moon together — the two brightest things in the sky. Together they make "bright."',
+    story2: 'At dawn, the sun is rising on one side while the moon is still visible on the other — the sky is at its most brilliant.',
+    context: '明日（あした）', contextEn: 'tomorrow (lit. "bright day")',
   },
 ]
 
@@ -633,9 +633,9 @@ function PracticeStep({ onNext }) {
         </h2>
         <p className="font-body text-sm text-parchment-500 leading-relaxed max-w-[300px] mb-8
                       animate-fade-up delay-200">
-          You just studied your first three kanji: 一, 二, 三.
-          That's the pattern — flip, recall, rate, repeat.
-          The spaced repetition system handles the rest.
+          You just studied your first three kanji: 日, 月, 明.
+          That last one — 明 (bright) — was built from the first two.
+          That's the whole system in action. Flip, recall, rate, repeat.
         </p>
         <ContinueButton onClick={onNext} delay="delay-300" />
       </StepShell>

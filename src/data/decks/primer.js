@@ -1,4 +1,5 @@
 // How to Read Kanji — All RTK kanji, topologically sorted
+// First 3 cards: 日 (sun) → 月 (moon) → 明 (bright) to demonstrate primitives + composition
 // Building blocks always appear before the kanji that use them.
 // 3,000 kanji · Based on Heisig order with dependency-first reordering
 
@@ -21,6 +22,42 @@ const primerDeck = {
   coverKanji: '基',
   accentColor: '#C9A84C',
   cards: [
+    {
+      id:        'rtk-0012-day',
+      kanji:     '日',
+      reading:   'ニチ',
+      romaji:    'nichi',
+      meaning:   'day',
+      parts:     ['日: sun, day, sun radical (no. 72)'],
+      rtk1:      'Open the window, new day.',
+      rtk2:      'Picture two halves of a 24-hr period: Day & Night.',
+      context:   '明日(あした)',
+      contextEn: 'tomorrow',
+    },
+    {
+      id:        'rtk-0013-month',
+      kanji:     '月',
+      reading:   'ゲツ',
+      romaji:    'getsu',
+      meaning:   'month',
+      parts:     ['月: moon, month, moon radical (no. 74)'],
+      rtk1:      'A month is longer than a day.',
+      rtk2:      'Am I the only one who sees this as someone sticking their ass in the air "mooning" someone (two cheeks of the butt and the legs coming off of it)? The Moon meaning connects well to the meaning of month, considering that months were traditionally measured by the phases of the moon. Also, the mooning "ass" part of it connects well to Hesig´s seemingly unconnected "flesh" or "part of the body" meaning (when used in primitive form).',
+      context:   '年月(ねんげつ)',
+      contextEn: 'months and years',
+    },
+    {
+      id:        'rtk-0020-bright',
+      kanji:     '明',
+      reading:   'メイ',
+      romaji:    'mei',
+      meaning:   'bright',
+      parts:     ['日: day; sun; Japan; counter for days', '月: month; moon'],
+      rtk1:      'The sun makes the moon bright.',
+      rtk2:      'The sun and the moon are brightest objects in the day and night, respectively.',
+      context:   '明日(あした)',
+      contextEn: 'tomorrow',
+    },
     {
       id:        'rtk-0001-one',
       kanji:     '一',
@@ -130,30 +167,6 @@ const primerDeck = {
       contextEn: 'entrance; entry; gate; approach; mouth',
     },
     {
-      id:        'rtk-0012-day',
-      kanji:     '日',
-      reading:   'ニチ',
-      romaji:    'nichi',
-      meaning:   'day',
-      parts:     ['日: sun, day, sun radical (no. 72)'],
-      rtk1:      'Open the window, new day.',
-      rtk2:      'Picture two halves of a 24-hr period: Day & Night.',
-      context:   '明日(あした)',
-      contextEn: 'tomorrow',
-    },
-    {
-      id:        'rtk-0013-month',
-      kanji:     '月',
-      reading:   'ゲツ',
-      romaji:    'getsu',
-      meaning:   'month',
-      parts:     ['月: moon, month, moon radical (no. 74)'],
-      rtk1:      'A month is longer than a day.',
-      rtk2:      'Am I the only one who sees this as someone sticking their ass in the air "mooning" someone (two cheeks of the butt and the legs coming off of it)? The Moon meaning connects well to the meaning of month, considering that months were traditionally measured by the phases of the moon. Also, the mooning "ass" part of it connects well to Hesig´s seemingly unconnected "flesh" or "part of the body" meaning (when used in primitive form).',
-      context:   '年月(ねんげつ)',
-      contextEn: 'months and years',
-    },
-    {
       id:        'rtk-0014-rice-field',
       kanji:     '田',
       reading:   'デン',
@@ -212,18 +225,6 @@ const primerDeck = {
       rtk2:      'You´ll risk your eyesight if you look up at the sun.',
       context:   '冒頭(ぼうとう)',
       contextEn: 'beginning; start; outset',
-    },
-    {
-      id:        'rtk-0020-bright',
-      kanji:     '明',
-      reading:   'メイ',
-      romaji:    'mei',
-      meaning:   'bright',
-      parts:     ['日: day; sun; Japan; counter for days', '月: month; moon'],
-      rtk1:      'The sun makes the moon bright.',
-      rtk2:      'The sun and the moon are brightest objects in the day and night, respectively.',
-      context:   '明日(あした)',
-      contextEn: 'tomorrow',
     },
     {
       id:        'rtk-0022-sparkle',
