@@ -316,7 +316,7 @@ function CardBack({ card, mode, shouldFocusStory }) {
     <div className="card-face card-face-back absolute inset-0 bg-ink-800
                     border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none
-                       text-gold-400/[0.07] select-none pointer-events-none">
+                       text-parchment-100 select-none pointer-events-none">
         {card.kanji}
       </span>
 
