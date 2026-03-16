@@ -182,14 +182,6 @@ export default function DeckScreen() {
                      hover:bg-gold-400/10 transition-colors duration-200">
           {needsGuide ? 'Start learning →' : due > 0 ? `Study ${due} card${due !== 1 ? 's' : ''} today` : 'All caught up'}
         </button>
-        {!needsGuide && (
-          <button onClick={() => handleStudy('all')}
-            className="w-full bg-transparent border border-gold-400/10 text-parchment-500
-                       font-mono text-[11px] tracking-widest uppercase py-3 rounded-xl
-                       hover:border-gold-400/25 hover:text-parchment-400 transition-colors duration-200">
-            Practice all {deck.cards.length} cards
-          </button>
-        )}
         {isFoundation && !needsGuide && (
           <button onClick={() => navigate('/primer-guide')}
             className="w-full bg-transparent text-parchment-500/40
@@ -197,6 +189,36 @@ export default function DeckScreen() {
                        hover:text-parchment-400 transition-colors duration-200">
             Replay study guide
           </button>
+        )}
+
+        {/* Review games */}
+        {!needsGuide && (
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <button
+              className="bg-ink-800 border border-amber-500/20 rounded-xl py-4 px-3
+                         flex flex-col items-center gap-2
+                         hover:border-amber-500/40 hover:bg-amber-500/5
+                         transition-colors duration-200 touch-manipulation group">
+              <span className="font-kanji text-2xl text-amber-500/60 group-hover:text-amber-500/80
+                               transition-colors">連</span>
+              <span className="font-display italic text-sm text-parchment-200">Combo Blitz</span>
+              <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
+                Speed recall
+              </span>
+            </button>
+            <button
+              className="bg-ink-800 border border-blue-400/20 rounded-xl py-4 px-3
+                         flex flex-col items-center gap-2
+                         hover:border-blue-400/40 hover:bg-blue-400/5
+                         transition-colors duration-200 touch-manipulation group">
+              <span className="font-kanji text-2xl text-blue-400/60 group-hover:text-blue-400/80
+                               transition-colors">試</span>
+              <span className="font-display italic text-sm text-parchment-200">Memory Test</span>
+              <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
+                Deep recall
+              </span>
+            </button>
+          </div>
         )}
       </div>
 
