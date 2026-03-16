@@ -1,21 +1,7 @@
-import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
-
-// ─── Stroke group helper ─────────────────────────────────────────────────
-function getStrokeGroups(cards, getCardProgress) {
-  const groups = {}
-  cards.forEach(c => {
-    const s = c.strokes ?? 0
-    if (!groups[s]) groups[s] = { strokes: s, cards: [], learned: 0 }
-    groups[s].cards.push(c)
-    const p = getCardProgress(c.id)
-    if (p?.graduated) groups[s].learned++
-  })
-  return Object.values(groups).sort((a, b) => a.strokes - b.strokes)
-}
 
 export default function DeckScreen() {
   const { id } = useParams()
@@ -24,13 +10,7 @@ export default function DeckScreen() {
   const { getLearnedCount, getDueCount, getNewCount, getCardProgress } = useSRS(id)
 
   const isFoundation = id === 'primer' || id === 'radicals'
-  const isRadicals   = id === 'radicals'
-  const needsGuide   = isFoundation && !isPrimerGuideComplete()
-
-  const strokeGroups = useMemo(() => {
-    if (!isRadicals || !deck) return []
-    return getStrokeGroups(deck.cards, getCardProgress)
-  }, [isRadicals, deck?.id])
+  const needsGuide = isFoundation && !isPrimerGuideComplete()
 
   function handleStudy(mode) {
     if (needsGuide) {
@@ -42,14 +22,6 @@ export default function DeckScreen() {
     }
   }
 
-  function handleStudyGroup(strokeCount) {
-    if (needsGuide) {
-      navigate('/primer-guide')
-    } else {
-      navigate(`/study/${id}?group=${strokeCount}`)
-    }
-  }
-
   if (!deck) return (
     <div className="px-5 py-6 text-parchment-500 font-display italic text-lg">
       Deck not found.
@@ -57,12 +29,12 @@ export default function DeckScreen() {
   )
 
   const learned  = getLearnedCount(deck.cards)
-  const due      = getDueCount(deck.cards)
-  const newCount = getNewCount(deck.cards)
+  const due      = getDueCount(deck.cards)   // reviews + today's new allotment
+  const newCount = getNewCount(deck.cards)   // total unseen (display only)
   const pct      = Math.round((learned / deck.cards.length) * 100)
 
   return (
-    <div className="px-5 py-6 pb-10">
+    <div className="px-5 py-6">
 
       {/* Back */}
       <button
@@ -81,7 +53,7 @@ export default function DeckScreen() {
               {deck.title}
             </h1>
             <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mt-1">
-              {deck.genre} · {deck.developer}{deck.platforms.length ? ` · ${deck.platforms.join(' / ')}` : ''}
+              {deck.genre} · {deck.developer} · {deck.platforms.join(' / ')}
             </p>
           </div>
           <span className="font-kanji text-5xl text-gold-400/15 leading-none">
@@ -156,88 +128,6 @@ export default function DeckScreen() {
           </button>
         )}
       </div>
-
-      {/* ── Stroke Group Study (radicals only) ── */}
-      {isRadicals && !needsGuide && (
-        <>
-          <div className="gold-divider mb-4 animate-fade-up delay-400">
-            <span className="font-mono text-[9px] tracking-widest uppercase text-parchment-500">
-              Study by stroke count
-            </span>
-          </div>
-
-          <div className="space-y-2 mb-8">
-            {strokeGroups.map((g, i) => {
-              const gpct = g.cards.length > 0 ? Math.round((g.learned / g.cards.length) * 100) : 0
-              const complete = g.learned === g.cards.length
-
-              return (
-                <button
-                  key={g.strokes}
-                  onClick={() => handleStudyGroup(g.strokes)}
-                  className="w-full text-left bg-ink-800 border border-gold-400/8 rounded-xl
-                             px-4 py-3 hover:border-gold-400/25 hover:bg-ink-700/40
-                             transition-all duration-200 animate-fade-up group"
-                  style={{ animationDelay: `${0.4 + i * 0.03}s`, opacity: 0 }}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      {/* Stroke count badge */}
-                      <div className="w-9 h-9 rounded-lg bg-ink-700 border border-gold-400/12
-                                      flex items-center justify-center shrink-0">
-                        <span className="font-display italic text-lg text-gold-400/70 leading-none">
-                          {g.strokes}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-display italic text-sm text-parchment-200 leading-tight">
-                          {g.strokes} stroke{g.strokes !== 1 ? 's' : ''}
-                        </p>
-                        <p className="font-mono text-[9px] text-parchment-500/50">
-                          {g.cards.length} radical{g.cards.length !== 1 ? 's' : ''}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {/* Mini kanji preview */}
-                      <div className="flex gap-0.5">
-                        {g.cards.slice(0, 5).map(c => (
-                          <span key={c.id} className="font-kanji text-[11px] text-parchment-500/30">
-                            {c.kanji}
-                          </span>
-                        ))}
-                        {g.cards.length > 5 && (
-                          <span className="font-mono text-[8px] text-parchment-500/20">
-                            +{g.cards.length - 5}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Status */}
-                      {complete ? (
-                        <span className="font-mono text-[9px] text-gold-400/60 tracking-widest">✓</span>
-                      ) : (
-                        <span className="font-mono text-[9px] text-parchment-500/30 tabular-nums">
-                          {g.learned}/{g.cards.length}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Tiny progress bar */}
-                  <div className="h-[2px] bg-ink-600 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gold-400/50 rounded-full transition-all duration-500"
-                      style={{ width: `${gpct}%` }}
-                    />
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </>
-      )}
 
       {/* Gold divider */}
       <div className="gold-divider mb-4 animate-fade-up delay-400">

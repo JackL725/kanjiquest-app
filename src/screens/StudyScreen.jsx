@@ -157,51 +157,9 @@ function WaitingScreen({ requeuePool, onCheckNow }) {
   )
 }
 
-// ─── Stroke practice grid SVG ────────────────────────────────────────────
-function StrokeGrid() {
-  return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-      {/* Outer border */}
-      <rect x="10" y="10" width="180" height="180" rx="4" fill="none"
-            stroke="rgba(201,168,76,0.08)" strokeWidth="1.5" />
-      {/* Cross guides */}
-      <line x1="100" y1="10" x2="100" y2="190" stroke="rgba(201,168,76,0.06)"
-            strokeWidth="0.8" strokeDasharray="4 4" />
-      <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(201,168,76,0.06)"
-            strokeWidth="0.8" strokeDasharray="4 4" />
-      {/* Diagonal guides */}
-      <line x1="10" y1="10" x2="190" y2="190" stroke="rgba(201,168,76,0.03)"
-            strokeWidth="0.5" strokeDasharray="4 6" />
-      <line x1="190" y1="10" x2="10" y2="190" stroke="rgba(201,168,76,0.03)"
-            strokeWidth="0.5" strokeDasharray="4 6" />
-    </svg>
-  )
-}
-
-// ─── Animated stroke reveal wrapper ──────────────────────────────────────
-function StrokeRevealKanji({ kanji, strokes }) {
-  // Duration scales with stroke count
-  const dur = Math.max(0.8, strokes * 0.25)
-  return (
-    <div className="relative w-40 h-40 flex items-center justify-center">
-      <StrokeGrid />
-      <span
-        className="font-kanji text-[120px] leading-none text-parchment-100 relative z-10
-                   animate-stroke-reveal"
-        style={{ '--stroke-dur': `${dur}s` }}
-      >
-        {kanji}
-      </span>
-    </div>
-  )
-}
-
 // ─── Card Front ───────────────────────────────────────────────────────────
-function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
+function CardFront({ card, mode, peekActive, onBurn, isNew }) {
   const isMeaningFirst = mode === 'kanji'   // Meaning → Kanji
-  const isRadical      = deckId === 'radicals'
-  const strokes        = card.strokes ?? 0
-  const variant        = card.context // variant form stored in context field for radicals
 
   return (
     <div className="card-face absolute inset-0 bg-ink-800 border border-gold-400/15
@@ -250,34 +208,8 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
         </div>
       )}
 
-      {/* ── Radical-specific: stroke count badge (bottom-left) ── */}
-      {isRadical && !isMeaningFirst && strokes > 0 && (
-        <div className="absolute bottom-4 left-4 flex items-center gap-1.5">
-          <div className="flex items-center gap-1 bg-ink-700 border border-gold-400/15
-                          rounded-md px-2 py-1">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="text-gold-400/50">
-              <path d="M2 8L8 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
-            <span className="font-mono text-[10px] text-gold-400/70 leading-none tabular-nums">
-              {strokes} stroke{strokes !== 1 ? 's' : ''}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* ── Radical-specific: variant badge (bottom-right) ── */}
-      {isRadical && !isMeaningFirst && variant && (
-        <div className="absolute bottom-4 right-4">
-          <div className="bg-ink-700 border border-gold-400/12 rounded-md px-2 py-1">
-            <span className="font-kanji text-[11px] text-gold-400/50">{variant}</span>
-          </div>
-        </div>
-      )}
-
       <p className="font-mono text-[9px] text-parchment-500/60 tracking-[3px] uppercase mb-8">
-        {isRadical
-          ? (isMeaningFirst ? 'What is the radical?' : 'Name this radical')
-          : (isMeaningFirst ? 'What is the kanji?' : 'What does this mean?')}
+        {isMeaningFirst ? 'What is the kanji?' : 'What does this mean?'}
       </p>
 
       {isMeaningFirst ? (
@@ -287,25 +219,6 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
             {card.meaning}
           </p>
           <p className="font-mono text-sm text-parchment-500">{card.romaji}</p>
-          {isRadical && strokes > 0 && (
-            <p className="font-mono text-[10px] text-parchment-500/40 mt-2">
-              {strokes} stroke{strokes !== 1 ? 's' : ''}
-            </p>
-          )}
-        </div>
-      ) : isRadical ? (
-        /* Radical → Meaning: stroke grid + animated kanji */
-        <div className="flex flex-col items-center">
-          <StrokeRevealKanji kanji={card.kanji} strokes={strokes} />
-
-          <p className={`font-mono text-[11px] text-parchment-500/70 text-center
-                         leading-relaxed px-4 mt-4 transition-all duration-300
-                         ${peekActive ? '' : 'blur-reveal'}`}>
-            {card.parts.join(' · ')}
-          </p>
-          <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">
-            hover or shake to peek
-          </p>
         </div>
       ) : (
         /* Kanji → Meaning: show kanji with blurred hint */
@@ -531,24 +444,18 @@ export default function StudyScreen() {
   const buildQueue = useCallback(() => {
     if (!deck) return
     requeuePool.current = []
-    const isAll   = params.get('mode') === 'all'
-    const group   = params.get('group')  // stroke count group for radicals
+    const isAll = params.get('mode') === 'all'
 
     const burned = burnedRef.current
 
-    // If group is specified, filter cards to that stroke count first
-    const sourceCards = group
-      ? deck.cards.filter(c => String(c.strokes) === group)
-      : deck.cards
-
     let cards
-    if (isAll || group) {
-      cards = sourceCards.filter(c => !burned.has(c.id))
+    if (isAll) {
+      cards = deck.cards.filter(c => !burned.has(c.id))
     } else {
-      const { newBatch, reviewBatch, learning } = getStudyQueue(sourceCards)
+      const { newBatch, reviewBatch, learning } = getStudyQueue(deck.cards)
       const filtered = [...newBatch, ...learning, ...reviewBatch].filter(c => !burned.has(c.id))
       cards = filtered
-      if (!cards.length) cards = sourceCards.filter(c => !burned.has(c.id))
+      if (!cards.length) cards = deck.cards.filter(c => !burned.has(c.id))
     }
 
     const shuffled = cards.sort(() => Math.random() - 0.5)
@@ -734,7 +641,6 @@ export default function StudyScreen() {
   if (waiting)       return <div className="h-full"><WaitingScreen requeuePool={requeuePool.current} onCheckNow={checkPoolNow} /></div>
 
   const current = queue[qi]
-  const groupParam = params.get('group')
   // How many unique cards left (excludes re-queued copies)
   const uniqueRemaining = queue.slice(qi).filter((c, i, arr) =>
     arr.findIndex(x => x.id === c.id) === i
@@ -753,12 +659,6 @@ export default function StudyScreen() {
         </button>
 
         <div className="flex items-center gap-2">
-          {groupParam && (
-            <span className="font-mono text-[9px] text-gold-400/50 tracking-widest border border-gold-400/15
-                             rounded-md px-1.5 py-0.5 leading-none">
-              {groupParam}画
-            </span>
-          )}
           <span className="font-mono text-[10px] text-parchment-500/50 tracking-widest tabular-nums">
             {uniqueRemaining} left
           </span>
@@ -800,7 +700,7 @@ export default function StudyScreen() {
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
             <CardFront card={current} mode={mode} peekActive={peekActive}
-                             onBurn={handleBurn} deckId={id}
+                             onBurn={handleBurn}
                              isNew={!getCardProgress(current.id)} />
             <CardBack  card={current} mode={mode} shouldFocusStory={flipped ? storyFocusTick : 0} />
           </div>
