@@ -48,13 +48,27 @@ export default function DeckScreen() {
 
   // ── Card classification ─────────────────────────────────────────────
   const classifiedCards = useMemo(() => {
+    const now = new Date()
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
-      const isNew      = !p
-      const isLearning = p && !p.graduated
-      const isMastered = p?.graduated === true
-      const isDue      = p && new Date(p.next) <= new Date()
-      return { card, p, isNew, isLearning, isMastered, isDue }
+      const isDue = p && new Date(p.next) <= now
+
+      return {
+        card,
+        p,
+        // Added to the deck within the last 24 hours
+        isNew:      p && p.firstStudied && new Date(p.firstStudied) >= oneDayAgo,
+        // Graduated cards that are due right now (active review work)
+        isLearning: p?.graduated === true && isDue,
+        // Anything due right now (learning-phase + graduated reviews)
+        isDue:      !!isDue,
+        // Well-retained: graduated, 3+ consecutive correct, 21+ day interval
+        isMastered: p?.graduated === true && p.interval >= 21 && p.reps >= 3,
+        // Never seen at all (no progress record)
+        isUnseen:   !p,
+      }
     })
   }, [deck.cards, getCardProgress])
 
@@ -64,20 +78,18 @@ export default function DeckScreen() {
     new:      classifiedCards.filter(c => c.isNew).length,
     learning: classifiedCards.filter(c => c.isLearning).length,
     due:      classifiedCards.filter(c => c.isDue).length,
-    mastered: classifiedCards.filter(c => c.isMastered && !c.isDue).length,
+    mastered: classifiedCards.filter(c => c.isMastered).length,
   }), [classifiedCards])
 
   // ── Filtered + searched cards ───────────────────────────────────────
   const visibleCards = useMemo(() => {
     let result = classifiedCards
 
-    // Apply filter
     if (filter === 'new')      result = result.filter(c => c.isNew)
     if (filter === 'learning') result = result.filter(c => c.isLearning)
     if (filter === 'due')      result = result.filter(c => c.isDue)
-    if (filter === 'mastered') result = result.filter(c => c.isMastered && !c.isDue)
+    if (filter === 'mastered') result = result.filter(c => c.isMastered)
 
-    // Apply search
     if (search.trim()) {
       const q = search.trim().toLowerCase()
       result = result.filter(({ card }) =>
@@ -276,7 +288,7 @@ export default function DeckScreen() {
         </div>
       ) : (
         <div className="space-y-2">
-          {visibleCards.map(({ card, p, isNew, isLearning, isDue }, i) => (
+          {visibleCards.map(({ card, p, isNew, isLearning, isDue, isMastered, isUnseen }, i) => (
             <div key={card.id}
               className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
                          border border-gold-400/8 animate-fade-up"
@@ -295,15 +307,17 @@ export default function DeckScreen() {
                   </span>
                 )}
                 <span className={`font-mono text-[9px] tracking-widest uppercase ${
-                  isNew      ? 'text-parchment-500/40' :
-                  isLearning ? 'text-amber-500/70' :
+                  isMastered ? 'text-emerald-400/70' :
+                  isNew      ? 'text-blue-400/70' :
                   isDue      ? 'text-gold-400' :
+                  isUnseen   ? 'text-parchment-500/30' :
                                'text-parchment-500/40'
                 }`}>
-                  {isNew      ? 'new' :
-                   isLearning ? 'learning' :
+                  {isMastered ? `✓ ×${p.reps}` :
+                   isNew      ? 'new' :
                    isDue      ? 'due' :
-                                `×${p.reps}`}
+                   isUnseen   ? 'unseen' :
+                   p          ? `×${p.reps}` : ''}
                 </span>
               </div>
             </div>
