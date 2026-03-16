@@ -140,8 +140,10 @@ export default function DeckScreen() {
       <div className="space-y-2">
         {deck.cards.map((card, i) => {
           const p = getCardProgress(card.id)
-          const cardDue = !p || p.reps === 0 || new Date(p.next) <= new Date()
-          const cardLearned = (p?.reps ?? 0) > 0
+          const cardNew      = !p
+          const cardLearning = p && !p.graduated
+          const cardLearned  = p?.graduated === true
+          const cardDue      = p && new Date(p.next) <= new Date()
           return (
             <div
               key={card.id}
@@ -157,11 +159,15 @@ export default function DeckScreen() {
                 </div>
               </div>
               <span className={`font-mono text-[9px] tracking-widest uppercase ${
-                !cardLearned ? 'text-parchment-500/40' :
-                cardDue      ? 'text-gold-400' :
-                               'text-parchment-500/40'
+                cardNew        ? 'text-parchment-500/40' :
+                cardLearning   ? 'text-amber-500/70' :
+                cardDue        ? 'text-gold-400' :
+                                 'text-parchment-500/40'
               }`}>
-                {!cardLearned ? 'new' : cardDue ? 'due' : `×${p.reps}`}
+                {cardNew        ? 'new' :
+                 cardLearning   ? 'learning' :
+                 cardDue        ? 'due' :
+                                  `×${p.reps}`}
               </span>
             </div>
           )

@@ -21,7 +21,7 @@ function readStats() {
     for (const [deckId, cards] of Object.entries(prog)) {
       let deckLearned = 0
       for (const card of Object.values(cards)) {
-        if (card.reps > 0) { totalLearned++; deckLearned++ }
+        if (card.graduated) { totalLearned++; deckLearned++ }
         if (card.last) totalReviewed++
       }
       deckStats[deckId] = { learned: deckLearned }
@@ -36,7 +36,7 @@ function readStats() {
     }
 
     return { totalLearned, totalReviewed, streak, totalDays: dates.length,
-             activeDecks: Object.keys(prog).filter(id => Object.values(prog[id]).some(c => c.reps > 0)).length,
+             activeDecks: Object.keys(prog).filter(id => Object.values(prog[id]).some(c => c.graduated)).length,
              deckStats }
   } catch {
     return { totalLearned: 0, totalReviewed: 0, streak: 0, totalDays: 0, activeDecks: 0, deckStats: {} }

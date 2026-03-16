@@ -421,7 +421,7 @@ export default function StudyScreen() {
   const [params]        = useSearchParams()
   const navigate        = useNavigate()
   const deck            = getDeckById(id)
-  const { rate, getDueCards, getNewCards, getCardProgress } = useSRS(id)
+  const { rate, getStudyQueue, getNewCards, getCardProgress } = useSRS(id)
   const { settings }    = useSettings()
 
   const [mode, setMode]         = useState('meaning')
@@ -452,12 +452,9 @@ export default function StudyScreen() {
     if (isAll) {
       cards = deck.cards.filter(c => !burned.has(c.id))
     } else {
-      const due  = getDueCards(deck.cards).filter(c => !burned.has(c.id))
-      const newC = getNewCards(deck.cards).filter(c => !burned.has(c.id))
-      const newBatch    = newC.slice(0, settings.newCardsPerDay)
-      const reviewOnly  = due.filter(c => !newC.find(n => n.id === c.id))
-      const reviewBatch = reviewOnly.slice(0, settings.maxReviewsPerDay)
-      cards = [...newBatch, ...reviewBatch]
+      const { newBatch, reviewBatch, learning } = getStudyQueue(deck.cards)
+      const filtered = [...newBatch, ...learning, ...reviewBatch].filter(c => !burned.has(c.id))
+      cards = filtered
       if (!cards.length) cards = deck.cards.filter(c => !burned.has(c.id))
     }
 

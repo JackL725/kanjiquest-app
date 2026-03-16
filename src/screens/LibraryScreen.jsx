@@ -18,16 +18,37 @@ function readTotalDue(decks) {
       } catch { return { newCardsPerDay: 20, maxReviewsPerDay: 200 } }
     })()
 
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const todayStr = today.toISOString().split('T')[0]
+
     return decks.reduce((sum, deck) => {
       const dp = prog[deck.id] || {}
+
+      // Reviews: graduated cards that are due now
       const reviews = deck.cards.filter(c => {
         const p = dp[c.id]
-        if (!p) return false
+        if (!p || !p.graduated) return false
         return new Date(p.next) <= new Date()
       }).length
-      const newCards = deck.cards.filter(c => !dp[c.id]).length
-      const newAlloc = Math.min(newCards, settings.newCardsPerDay)
-      return sum + reviews + newAlloc
+
+      // Learning: non-graduated cards that are due now
+      const learning = deck.cards.filter(c => {
+        const p = dp[c.id]
+        if (!p || p.graduated) return false
+        return new Date(p.next) <= new Date()
+      }).length
+
+      // New card budget: daily limit minus cards already introduced today
+      const introducedToday = deck.cards.filter(c => {
+        const p = dp[c.id]
+        return p && p.firstStudied && p.firstStudied.startsWith(todayStr)
+      }).length
+      const newCards  = deck.cards.filter(c => !dp[c.id]).length
+      const remaining = Math.max(0, settings.newCardsPerDay - introducedToday)
+      const newAlloc  = Math.min(newCards, remaining)
+
+      return sum + reviews + learning + newAlloc
     }, 0)
   } catch { return 0 }
 }
