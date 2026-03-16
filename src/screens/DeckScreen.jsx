@@ -1,12 +1,26 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
+import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
 
 export default function DeckScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
   const { getLearnedCount, getDueCount, getNewCount, getCardProgress } = useSRS(id)
+
+  const isPrimer = id === 'primer'
+  const needsGuide = isPrimer && !isPrimerGuideComplete()
+
+  function handleStudy(mode) {
+    if (needsGuide) {
+      navigate('/primer-guide')
+    } else if (mode === 'all') {
+      navigate(`/study/${id}?mode=all`)
+    } else {
+      navigate(`/study/${id}`)
+    }
+  }
 
   if (!deck) return (
     <div className="px-5 py-6 text-parchment-500 font-display italic text-lg">
@@ -82,21 +96,37 @@ export default function DeckScreen() {
       {/* Study buttons */}
       <div className="space-y-3 mb-8 animate-fade-up delay-300">
         <button
-          onClick={() => navigate(`/study/${id}`)}
+          onClick={() => handleStudy('normal')}
           className="w-full bg-transparent border border-gold-400/40 text-gold-400
                      font-display italic text-lg py-3 rounded-xl
                      hover:bg-gold-400/10 transition-colors duration-200"
         >
-          {due > 0 ? `Study ${due} card${due !== 1 ? 's' : ''} today` : 'All caught up'}
+          {needsGuide
+            ? 'Start learning →'
+            : due > 0
+              ? `Study ${due} card${due !== 1 ? 's' : ''} today`
+              : 'All caught up'}
         </button>
-        <button
-          onClick={() => navigate(`/study/${id}?mode=all`)}
-          className="w-full bg-transparent border border-gold-400/10 text-parchment-500
-                     font-mono text-[11px] tracking-widest uppercase py-3 rounded-xl
-                     hover:border-gold-400/25 hover:text-parchment-400 transition-colors duration-200"
-        >
-          Practice all {deck.cards.length} cards
-        </button>
+        {!needsGuide && (
+          <button
+            onClick={() => handleStudy('all')}
+            className="w-full bg-transparent border border-gold-400/10 text-parchment-500
+                       font-mono text-[11px] tracking-widest uppercase py-3 rounded-xl
+                       hover:border-gold-400/25 hover:text-parchment-400 transition-colors duration-200"
+          >
+            Practice all {deck.cards.length} cards
+          </button>
+        )}
+        {isPrimer && !needsGuide && (
+          <button
+            onClick={() => navigate('/primer-guide')}
+            className="w-full bg-transparent text-parchment-500/40
+                       font-mono text-[10px] tracking-widest uppercase py-2
+                       hover:text-parchment-400 transition-colors duration-200"
+          >
+            Replay study guide
+          </button>
+        )}
       </div>
 
       {/* Gold divider */}

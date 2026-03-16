@@ -1,14 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { isOnboardingComplete } from '@/hooks/useOnboarding'
-import AppShell         from '@/components/layout/AppShell'
-import OnboardingScreen from '@/screens/OnboardingScreen'
-import LibraryScreen    from '@/screens/LibraryScreen'
-import BrowseScreen     from '@/screens/BrowseScreen'
-import ProfileScreen    from '@/screens/ProfileScreen'
-import RadicalsScreen   from '@/screens/RadicalsScreen'
-import StudyScreen      from '@/screens/StudyScreen'
-import DeckScreen       from '@/screens/DeckScreen'
-import SettingsScreen   from '@/screens/SettingsScreen'
+import AppShell            from '@/components/layout/AppShell'
+import OnboardingScreen    from '@/screens/OnboardingScreen'
+import PrimerGuideScreen   from '@/screens/PrimerGuideScreen'
+import LibraryScreen       from '@/screens/LibraryScreen'
+import BrowseScreen        from '@/screens/BrowseScreen'
+import ProfileScreen       from '@/screens/ProfileScreen'
+import RadicalsScreen      from '@/screens/RadicalsScreen'
+import StudyScreen         from '@/screens/StudyScreen'
+import DeckScreen          from '@/screens/DeckScreen'
+import SettingsScreen      from '@/screens/SettingsScreen'
 
 // ─── Guard: redirect to onboarding if not complete ───────────────────────
 function RequireOnboarding({ children }) {
@@ -23,6 +24,11 @@ export default function App() {
     <Routes>
       {/* Onboarding — no AppShell, full-screen experience */}
       <Route path="onboarding" element={<OnboardingScreen />} />
+
+      {/* Primer guide — full-screen, protected by onboarding */}
+      <Route path="primer-guide" element={
+        <RequireOnboarding><PrimerGuideScreen /></RequireOnboarding>
+      } />
 
       {/* Main app — protected by onboarding guard */}
       <Route
