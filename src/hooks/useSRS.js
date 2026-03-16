@@ -62,11 +62,17 @@ function sm2(prev, q) {
   let { interval = 0, reps = 0, ef = ef0, graduated = false } = prev || {}
   const now  = new Date()
   const next = new Date()
+  const todayDate = now.toISOString().split('T')[0]
+
+  // Track whether the user stumbled (Again/Hard) today.
+  // Cleared when they answer Good/Easy.
+  let stumbledDate = prev?.stumbledDate || null
 
   switch (q) {
     case 0: // Again — full reset to learning state
       reps     = 0
       interval = 0
+      stumbledDate = todayDate
       // graduated stays — you don't un-learn a card, you re-learn it
       next.setMinutes(next.getMinutes() + 10)
       break
@@ -74,12 +80,14 @@ function sm2(prev, q) {
     case 2: // Hard — stay in current phase, short delay
       // Don't reset reps (the effort still counts), but don't increment either
       // Preserve interval for the next Good calculation
+      stumbledDate = todayDate
       next.setMinutes(next.getMinutes() + s.hardIntervalMins)
       break
 
     case 4: { // Good — graduate or advance
       reps++
       graduated = true
+      stumbledDate = null
 
       if (reps === 1) {
         // First graduation: use the fixed "good" interval
@@ -101,6 +109,7 @@ function sm2(prev, q) {
     case 5: { // Easy — graduate with bonus
       reps++
       graduated = true
+      stumbledDate = null
 
       if (reps === 1) {
         interval = s.easyIntervalDays
@@ -128,6 +137,7 @@ function sm2(prev, q) {
     last:         now.toISOString(),
     firstStudied: prev?.firstStudied || now.toISOString(),
     graduated,
+    stumbledDate,
   }
 }
 

@@ -50,10 +50,12 @@ export default function DeckScreen() {
   const classifiedCards = useMemo(() => {
     const now = new Date()
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+    const todayStr = now.toISOString().split('T')[0]
 
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
       const isDue = p && new Date(p.next) <= now
+      const stumbledToday = p?.stumbledDate === todayStr
 
       return {
         card,
@@ -64,8 +66,8 @@ export default function DeckScreen() {
         isLearning: p?.graduated === true && isDue,
         // Anything due right now (learning-phase + graduated reviews)
         isDue:      !!isDue,
-        // Well-retained: graduated, 3+ consecutive correct, 21+ day interval
-        isMastered: p?.graduated === true && p.interval >= 21 && p.reps >= 3,
+        // Well-retained AND clean today: graduated, 3+ correct, 21+ day interval, no stumble today
+        isMastered: p?.graduated === true && p.interval >= 21 && p.reps >= 3 && !stumbledToday,
         // Never seen at all (no progress record)
         isUnseen:   !p,
       }
@@ -321,6 +323,7 @@ export default function DeckScreen() {
 
 // ─── Mastery meter (3-milestone dots + status) ────────────────────────────
 // Milestones: 1) Graduate  2) 3 consecutive correct  3) 21-day interval
+// Frozen when the user rated Again or Hard today (stumbledDate = today)
 function MasteryMeter({ p, isDue }) {
   if (!p) {
     return (
@@ -330,10 +333,13 @@ function MasteryMeter({ p, isDue }) {
     )
   }
 
+  const today = new Date().toISOString().split('T')[0]
+  const stumbledToday = p.stumbledDate === today
+
   const m1 = p.graduated === true
   const m2 = p.reps >= 3
   const m3 = p.interval >= 21
-  const mastered = m1 && m2 && m3
+  const mastered = m1 && m2 && m3 && !stumbledToday
   const filled = (m1 ? 1 : 0) + (m2 ? 1 : 0) + (m3 ? 1 : 0)
 
   return (
@@ -343,15 +349,22 @@ function MasteryMeter({ p, isDue }) {
           due
         </span>
       )}
-      <div className="flex items-center gap-1" title={mastered ? 'Mastered' : `${filled}/3 milestones`}>
-        {/* 3 milestone segments */}
+      {stumbledToday && (
+        <span className="font-mono text-[8px] text-ember/50 tracking-widest uppercase">
+          stumbled
+        </span>
+      )}
+      <div className="flex items-center gap-1"
+           title={stumbledToday ? 'Paused — stumbled today' : mastered ? 'Mastered' : `${filled}/3 milestones`}>
         <div className="flex gap-[3px]">
           {[m1, m2, m3].map((hit, i) => (
             <div key={i}
               className={`w-[14px] h-[4px] rounded-full transition-colors duration-300 ${
-                hit
-                  ? mastered ? 'bg-emerald-400' : 'bg-gold-400/70'
-                  : 'bg-parchment-500/12'
+                stumbledToday
+                  ? hit ? 'bg-ember/30' : 'bg-parchment-500/8'
+                  : hit
+                    ? mastered ? 'bg-emerald-400' : 'bg-gold-400/70'
+                    : 'bg-parchment-500/12'
               }`}
             />
           ))}
@@ -436,6 +449,29 @@ function MasteryGuide() {
               </div>
             </div>
           ))}
+
+          {/* Stumble rule */}
+          <div className="flex items-start gap-3 pt-1 border-t border-gold-400/8">
+            <div className="w-8 h-8 rounded-lg bg-ink-700 border border-ember/15
+                            flex items-center justify-center shrink-0 mt-0.5">
+              <span className="font-kanji text-sm text-ember/40">躓</span>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="flex gap-[3px]">
+                  {[0, 1, 2].map(j => (
+                    <div key={j} className="w-[10px] h-[3px] rounded-full bg-ember/30" />
+                  ))}
+                </div>
+                <span className="font-mono text-[10px] text-parchment-200 tracking-wide">
+                  Stumbled today
+                </span>
+              </div>
+              <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">
+                Rating Again or Hard freezes mastery for the day. Answer Good or Easy to clear it.
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
