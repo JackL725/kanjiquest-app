@@ -1,10 +1,11 @@
-import p5r from './p5r'
+import primer from './primer'
+import p5r    from './p5r'
 
-// All available decks in the store
-export const ALL_DECKS = [p5r]
+// Primer is always first — it's the default owned deck
+export const ALL_DECKS = [primer, p5r]
 
-// Decks the current user owns (will come from Supabase later)
-export const OWNED_DECK_IDS = ['p5r']
+// Primer is free and owned by everyone; P5R is also owned for now (dev mode)
+export const OWNED_DECK_IDS = ['primer', 'p5r']
 
 export function getDeckById(id) {
   return ALL_DECKS.find(d => d.id === id) ?? null

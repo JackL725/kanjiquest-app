@@ -205,7 +205,9 @@ function UserStorySection({ cardId, shouldFocus }) {
   const isEmpty = !text.trim()
 
   return (
-    <div className="mb-4">
+    // stopPropagation prevents any click inside this section from bubbling
+    // up to the card-scene onClick, which would flip the card.
+    <div className="mb-4" onClick={e => e.stopPropagation()}>
       <div className="flex items-center justify-between mb-2">
         <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase">My story</p>
         {!isEmpty && !editing && (
