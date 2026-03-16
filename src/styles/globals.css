@@ -130,3 +130,21 @@ body {
 .animate-new-card-glow {
   animation: newCardGlow 2.4s ease-in-out 0.6s infinite;
 }
+
+/* ─── Radical stroke reveal ──────────────────────── */
+@keyframes strokeReveal {
+  0%   {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.3;
+  }
+  10%  {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+}
+.animate-stroke-reveal {
+  animation: strokeReveal var(--stroke-dur, 1s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
