@@ -1,4 +1,4 @@
-import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 
 const NAV = [
   {
@@ -45,18 +45,34 @@ const NAV = [
 ]
 
 export default function AppShell() {
+  const navigate = useNavigate()
+
   return (
     <div className="flex flex-col h-full max-w-md mx-auto relative">
       {/* Top bar */}
       <header className="flex items-center justify-between px-5 py-4 border-b border-gold-400/10 shrink-0">
-        <div className="flex items-baseline gap-2">
+        <button
+          onClick={() => navigate('/library')}
+          className="flex items-baseline gap-2 touch-manipulation"
+        >
           <span className="font-display italic text-xl text-gold-400 tracking-wide">KanjiQuest</span>
           <span className="font-kanji text-xs text-gold-400/30">漢字</span>
-        </div>
-        <div className="w-8 h-8 rounded-full border border-gold-400/30 flex items-center justify-center
-                        font-kanji text-sm text-gold-400">
-          侍
-        </div>
+        </button>
+
+        {/* Settings gear */}
+        <button
+          onClick={() => navigate('/settings')}
+          className="w-8 h-8 rounded-full border border-gold-400/20 flex items-center justify-center
+                     text-parchment-500/50 hover:text-gold-400 hover:border-gold-400/40
+                     transition-colors duration-200 touch-manipulation"
+          title="Settings"
+        >
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <circle cx="7.5" cy="7.5" r="2.2" stroke="currentColor" strokeWidth="1.2"/>
+            <path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M2.87 2.87l1.06 1.06M11.07 11.07l1.06 1.06M11.07 3.93l-1.06 1.06M4.93 11.07l-1.06 1.06"
+                  stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+          </svg>
+        </button>
       </header>
 
       {/* Screen content */}
@@ -73,9 +89,7 @@ export default function AppShell() {
               to={to}
               className={({ isActive }) =>
                 `flex-1 flex flex-col items-center gap-1 py-3 transition-colors duration-200 ` +
-                (isActive
-                  ? 'text-gold-400'
-                  : 'text-parchment-500 hover:text-parchment-300')
+                (isActive ? 'text-gold-400' : 'text-parchment-500 hover:text-parchment-300')
               }
             >
               {icon}

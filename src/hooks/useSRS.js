@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import { readSettings } from './useSettings'
 
-const STORAGE_KEY  = 'kq-srs-progress'
-const STREAK_KEY   = 'kq-study-dates'
+const STORAGE_KEY = 'kq-srs-progress'
+const STREAK_KEY  = 'kq-study-dates'
 
 function recordStudyDate() {
   try {
@@ -11,44 +12,76 @@ function recordStudyDate() {
     const raw   = localStorage.getItem(STREAK_KEY)
     const dates = raw ? JSON.parse(raw) : []
     if (!dates.includes(iso)) {
-      // Keep last 90 days to avoid unbounded growth
-      const updated = [...dates, iso].slice(-90)
-      localStorage.setItem(STREAK_KEY, JSON.stringify(updated))
+      localStorage.setItem(STREAK_KEY, JSON.stringify([...dates, iso].slice(-90)))
     }
   } catch {}
 }
 
+// sm2 — KanjiQuest variant
+// Ease values in settings are stored as integer % (250 = 2.50×)
 function sm2(prev, q) {
-  let { interval = 0, reps = 0, ef = 2.5 } = prev || {}
-  if (q >= 3) {
-    if (reps === 0) interval = 1
-    else if (reps === 1) interval = 6
-    else interval = Math.round(interval * ef)
-    reps++
-  } else {
-    interval = 1
-    reps = 0
-  }
-  ef = Math.max(1.3, ef + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+  const s   = readSettings()
+  const ef0 = s.startingEase  / 100   // e.g. 2.50
+  const efMin = s.minimumEase / 100   // e.g. 1.30
+  const bonus = s.easyBonus   / 100   // e.g. 1.30
+  const mod   = s.intervalModifier / 100 // e.g. 1.00
+  const maxD  = s.maximumIntervalDays
+
+  let { interval = 0, reps = 0, ef = ef0 } = prev || {}
   const next = new Date()
-  next.setDate(next.getDate() + interval)
-  return {
-    interval,
-    reps,
-    ef,
-    next: next.toISOString(),
-    last: new Date().toISOString(),
+
+  switch (q) {
+    case 0:
+      // Again — full reset, show again in 10 min
+      reps     = 0
+      interval = 0
+      next.setMinutes(next.getMinutes() + 10)
+      break
+
+    case 2:
+      // Hard — +N minutes, no rep credit
+      interval = 0
+      next.setMinutes(next.getMinutes() + s.hardIntervalMins)
+      // Don't touch reps or ef
+      break
+
+    case 4:
+      // Good — +goodIntervalDays (new) or interval×ef (review)
+      reps++
+      interval = reps === 1
+        ? s.goodIntervalDays
+        : Math.max(Math.round(interval * ef * mod), s.goodIntervalDays)
+      interval = Math.min(interval, maxD)
+      ef = Math.max(efMin, ef + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+      next.setDate(next.getDate() + interval)
+      break
+
+    case 5:
+      // Easy — +easyIntervalDays (new) or interval×ef×bonus (review)
+      reps++
+      interval = reps === 1
+        ? s.easyIntervalDays
+        : Math.max(Math.round(interval * ef * mod * bonus), s.easyIntervalDays)
+      interval = Math.min(interval, maxD)
+      ef = Math.max(efMin, ef + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+      next.setDate(next.getDate() + interval)
+      break
+
+    default:
+      break
   }
+
+  return { interval, reps, ef, next: next.toISOString(), last: new Date().toISOString() }
 }
 
 function isDue(p) {
-  return !p || p.reps === 0 || new Date(p.next) <= new Date()
+  if (!p) return true
+  return new Date(p.next) <= new Date()
 }
 
 export function useSRS(deckId) {
   const [progress, setProgress] = useState({})
 
-  // Load from localStorage on mount
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
@@ -56,11 +89,8 @@ export function useSRS(deckId) {
     } catch {}
   }, [])
 
-  // Save whenever progress changes
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
-    } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)) } catch {}
   }, [progress])
 
   function rate(cardId, q) {
@@ -82,6 +112,10 @@ export function useSRS(deckId) {
     return cards.filter(c => isDue(getCardProgress(c.id)))
   }
 
+  function getNewCards(cards) {
+    return cards.filter(c => !getCardProgress(c.id))
+  }
+
   function getLearnedCount(cards) {
     return cards.filter(c => (getCardProgress(c.id)?.reps ?? 0) > 0).length
   }
@@ -90,5 +124,5 @@ export function useSRS(deckId) {
     return getDueCards(cards).length
   }
 
-  return { rate, getCardProgress, getDueCards, getLearnedCount, getDueCount }
+  return { rate, getCardProgress, getDueCards, getNewCards, getLearnedCount, getDueCount }
 }
