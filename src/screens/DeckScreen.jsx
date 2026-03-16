@@ -1,13 +1,18 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
 
+const BONUS_OPTIONS = [5, 10, 15, 20]
+
 export default function DeckScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
-  const { getLearnedCount, getDueCount, getNewCount, getCardProgress } = useSRS(id)
+  const { getLearnedCount, getDueCount, getNewCount, getCardProgress, addBonusCards } = useSRS(id)
+
+  const [showPicker, setShowPicker] = useState(false)
 
   const isFoundation = id === 'primer' || id === 'radicals'
   const needsGuide = isFoundation && !isPrimerGuideComplete()
@@ -29,9 +34,17 @@ export default function DeckScreen() {
   )
 
   const learned  = getLearnedCount(deck.cards)
-  const due      = getDueCount(deck.cards)   // reviews + today's new allotment
-  const newCount = getNewCount(deck.cards)   // total unseen (display only)
+  const due      = getDueCount(deck.cards)
+  const newCount = getNewCount(deck.cards)
   const pct      = Math.round((learned / deck.cards.length) * 100)
+
+  const caughtUp    = !needsGuide && due === 0
+  const hasMoreNew  = newCount > 0
+
+  function handleAddMore(count) {
+    addBonusCards(count)
+    setShowPicker(false)
+  }
 
   return (
     <div className="px-5 py-6">
@@ -128,6 +141,68 @@ export default function DeckScreen() {
           </button>
         )}
       </div>
+
+      {/* ── Add more cards (when caught up + unseen cards remain) ── */}
+      {caughtUp && hasMoreNew && !showPicker && (
+        <div className="mb-8 animate-fade-up delay-300">
+          <button
+            onClick={() => setShowPicker(true)}
+            className="w-full border border-dashed border-gold-400/20 text-parchment-500
+                       font-mono text-[11px] tracking-widest uppercase py-3 rounded-xl
+                       hover:border-gold-400/35 hover:text-parchment-300
+                       transition-colors duration-200"
+          >
+            + Add more cards for today
+          </button>
+          <p className="font-mono text-[9px] text-parchment-500/30 text-center mt-2">
+            {newCount.toLocaleString()} unseen card{newCount !== 1 ? 's' : ''} remaining
+          </p>
+        </div>
+      )}
+
+      {/* ── Bonus picker ── */}
+      {showPicker && (
+        <div className="mb-8 bg-ink-800 border border-gold-400/15 rounded-xl p-5 animate-fade-up">
+          <p className="font-display italic text-base text-parchment-200 mb-1">
+            How many extra cards?
+          </p>
+          <p className="font-mono text-[10px] text-parchment-500/50 mb-4">
+            These will be added to today's session only.
+          </p>
+
+          <div className="grid grid-cols-4 gap-2 mb-4">
+            {BONUS_OPTIONS.map(n => {
+              const capped = Math.min(n, newCount)
+              return (
+                <button
+                  key={n}
+                  onClick={() => handleAddMore(capped)}
+                  disabled={newCount === 0}
+                  className="bg-ink-700 border border-gold-400/15 rounded-lg py-3
+                             flex flex-col items-center gap-1
+                             hover:border-gold-400/40 hover:bg-ink-700/80
+                             transition-all duration-150 touch-manipulation"
+                >
+                  <span className="font-display italic text-xl text-gold-400 leading-none">
+                    {capped}
+                  </span>
+                  <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest">
+                    cards
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          <button
+            onClick={() => setShowPicker(false)}
+            className="w-full font-mono text-[10px] text-parchment-500/40 tracking-widest uppercase
+                       py-2 hover:text-parchment-400 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
 
       {/* Gold divider */}
       <div className="gold-divider mb-4 animate-fade-up delay-400">

@@ -17,6 +17,9 @@ function readTotalDue(decks) {
                  : { newCardsPerDay: 20, maxReviewsPerDay: 200 }
       } catch { return { newCardsPerDay: 20, maxReviewsPerDay: 200 } }
     })()
+    const bonusAll = (() => {
+      try { return JSON.parse(localStorage.getItem('kq-bonus-cards') || '{}') } catch { return {} }
+    })()
 
     const today = new Date()
     today.setHours(0, 0, 0, 0)
@@ -39,14 +42,19 @@ function readTotalDue(decks) {
         return new Date(p.next) <= new Date()
       }).length
 
-      // New card budget: daily limit minus cards already introduced today
+      // Bonus for today (auto-resets by date check)
+      const bonusEntry = bonusAll[deck.id]
+      const bonus = (bonusEntry && bonusEntry.date === todayStr) ? (bonusEntry.count || 0) : 0
+
+      // New card budget: daily limit + bonus, minus cards already introduced today
       const introducedToday = deck.cards.filter(c => {
         const p = dp[c.id]
         return p && p.firstStudied && p.firstStudied.startsWith(todayStr)
       }).length
-      const newCards  = deck.cards.filter(c => !dp[c.id]).length
-      const remaining = Math.max(0, settings.newCardsPerDay - introducedToday)
-      const newAlloc  = Math.min(newCards, remaining)
+      const newCards   = deck.cards.filter(c => !dp[c.id]).length
+      const todayLimit = settings.newCardsPerDay + bonus
+      const remaining  = Math.max(0, todayLimit - introducedToday)
+      const newAlloc   = Math.min(newCards, remaining)
 
       return sum + reviews + learning + newAlloc
     }, 0)

@@ -141,10 +141,34 @@ function isDueNow(p) {
   return new Date(p.next) <= new Date()
 }
 
+// ─── Bonus cards for today (per-deck, auto-resets daily) ─────────────────
+const BONUS_KEY = 'kq-bonus-cards'
+
+function readBonus(deckId) {
+  try {
+    const raw = localStorage.getItem(BONUS_KEY)
+    if (!raw) return 0
+    const all = JSON.parse(raw)
+    const entry = all[deckId]
+    if (!entry || entry.date !== todayISO()) return 0
+    return entry.count || 0
+  } catch { return 0 }
+}
+
+function writeBonus(deckId, count) {
+  try {
+    const raw = localStorage.getItem(BONUS_KEY)
+    const all = raw ? JSON.parse(raw) : {}
+    all[deckId] = { date: todayISO(), count }
+    localStorage.setItem(BONUS_KEY, JSON.stringify(all))
+  } catch {}
+}
+
 // ─── Hook ────────────────────────────────────────────────────────────────
 export function useSRS(deckId) {
   // Lazy init from localStorage — no race condition
   const [progress, setProgress] = useState(readProgress)
+  const [bonus, setBonus]       = useState(() => readBonus(deckId))
 
   // Persist on change — but skip the initial read
   const [ready, setReady] = useState(false)
@@ -152,6 +176,9 @@ export function useSRS(deckId) {
   useEffect(() => {
     if (ready) writeProgress(progress)
   }, [progress, ready])
+  useEffect(() => {
+    if (ready) writeBonus(deckId, bonus)
+  }, [bonus, ready])
 
   // ── Rate a card ────────────────────────────────────────────────────
   const rate = useCallback((cardId, q) => {
@@ -211,16 +238,17 @@ export function useSRS(deckId) {
     }).length
   }
 
-  // Total cards to study today: reviews + learning + new card allotment
+  // Total cards to study today: reviews + learning + new card allotment + bonus
   function getDueCount(cards) {
     const s = readSettings()
 
     const reviews  = getDueReviews(cards).length
     const learning = getDueLearning(cards).length
 
-    // New card budget: daily limit minus cards already introduced today
+    // New card budget: daily limit + bonus, minus cards already introduced today
     const alreadyIntroduced = getNewIntroducedToday(cards)
-    const remaining         = Math.max(0, s.newCardsPerDay - alreadyIntroduced)
+    const todayLimit        = s.newCardsPerDay + bonus
+    const remaining         = Math.max(0, todayLimit - alreadyIntroduced)
     const newAvail          = Math.min(getNewCards(cards).length, remaining)
 
     return reviews + learning + newAvail
@@ -239,12 +267,18 @@ export function useSRS(deckId) {
     const learning = getDueLearning(cards)
 
     const alreadyIntroduced = getNewIntroducedToday(cards)
-    const remaining         = Math.max(0, s.newCardsPerDay - alreadyIntroduced)
+    const todayLimit        = s.newCardsPerDay + bonus
+    const remaining         = Math.max(0, todayLimit - alreadyIntroduced)
     const newBatch          = getNewCards(cards).slice(0, remaining)
 
     const reviewBatch = reviews.slice(0, s.maxReviewsPerDay)
 
     return { newBatch, reviewBatch, learning }
+  }
+
+  // Add extra new cards for today
+  function addBonusCards(count) {
+    setBonus(prev => prev + count)
   }
 
   return {
@@ -258,6 +292,7 @@ export function useSRS(deckId) {
     getDueCount,
     getNewCount,
     getStudyQueue,
+    addBonusCards,
   }
 }
 
