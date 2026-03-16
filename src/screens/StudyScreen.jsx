@@ -73,39 +73,7 @@ function useSwipe({ onSwipeUp, onSwipeLeft, onSwipeRight }) {
   }, [onSwipeUp, onSwipeLeft, onSwipeRight])
 }
 
-// ─── XP Floater ───────────────────────────────────────────────────────────
-function XPFloater({ xp, color }) {
-  if (!xp) return null
-  return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 animate-xp-float">
-      <span className={`font-display italic text-2xl ${color} drop-shadow-lg`}>
-        +{xp} XP
-      </span>
-    </div>
-  )
-}
-
-// ─── Rating Feedback Overlay ──────────────────────────────────────────────
-function RatingFeedback({ q, msg, combo }) {
-  const fb = FEEDBACK[q]
-  return (
-    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none">
-      <p className={`font-display italic text-3xl ${fb.color} animate-fade-up drop-shadow-lg`}>
-        {msg}
-      </p>
-      {combo >= 2 && (
-        <div className="mt-2 animate-combo-pop">
-          <span className="font-mono text-[13px] text-gold-400 tracking-widest font-medium
-                           bg-gold-400/10 border border-gold-400/25 rounded-full px-4 py-1.5">
-            ×{combo} COMBO
-          </span>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ─── Stage-Up Celebration ─────────────────────────────────────────────────
+// ─── Feedback messages lookup (used by CardFront) ─────────────────────────
 function StageUpCelebration({ stage, onDone }) {
   useEffect(() => { const t = setTimeout(onDone, 2200); return () => clearTimeout(t) }, [])
   const colorMap = { 'amber-500': 'text-amber-500', 'blue-400': 'text-blue-400', 'gold-400': 'text-gold-400', 'emerald-400': 'text-emerald-400', 'parchment-100': 'text-parchment-100' }
@@ -257,7 +225,7 @@ function WaitingScreen({ requeuePool, onCheckNow }) {
 }
 
 // ─── Card components ──────────────────────────────────────────────────────
-function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
+function CardFront({ card, mode, peekActive, onBurn, isNew, deckId, feedback }) {
   const isMF = mode === 'kanji', hideHint = deckId === 'radicals'
   return (
     <div className="card-face absolute inset-0 bg-ink-800 border border-gold-400/15 rounded-2xl flex flex-col items-center justify-center p-7 cursor-pointer select-none">
@@ -273,6 +241,28 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
           </button>
         </div>
       )}
+
+      {/* ── Rating feedback (top-center, between First Look and prompt) ── */}
+      {feedback && (
+        <div className="absolute top-14 inset-x-0 flex flex-col items-center gap-1.5 pointer-events-none z-10">
+          <p className={`font-display italic text-2xl ${FEEDBACK[feedback.q].color} animate-fade-up drop-shadow-lg`}>
+            {feedback.msg}
+          </p>
+          {feedback.xp > 0 && (
+            <span className={`font-mono text-[11px] ${FEEDBACK[feedback.q].color} tracking-widest animate-fade-up`}
+                  style={{ animationDelay: '0.05s', opacity: 0 }}>
+              +{feedback.xp} XP
+            </span>
+          )}
+          {feedback.combo >= 2 && (
+            <span className="font-mono text-[11px] text-gold-400/70 tracking-widest animate-combo-pop"
+                  style={{ animationDelay: '0.1s' }}>
+              ×{feedback.combo} combo
+            </span>
+          )}
+        </div>
+      )}
+
       <p className="font-mono text-[9px] text-parchment-500/60 tracking-[3px] uppercase mb-8">{isMF ? 'What is the kanji?' : 'What does this mean?'}</p>
       {isMF ? (
         <div className="text-center">
@@ -583,20 +573,10 @@ export default function StudyScreen() {
           className={`card-scene h-full animate-card-enter ${cardAnimClass}`}
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
-            <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} deckId={id} isNew={!getCardProgress(current.id)} />
+            <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} deckId={id} isNew={!getCardProgress(current.id)} feedback={feedback} />
             <CardBack card={current} mode={mode} />
           </div>
         </div>
-
-        {/* Feedback overlay */}
-        {feedback && <RatingFeedback key={feedback.key} q={feedback.q} msg={feedback.msg} combo={feedback.combo} />}
-
-        {/* XP floater */}
-        {feedback && feedback.xp > 0 && (
-          <div key={'xp-' + feedback.key} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 animate-xp-float pointer-events-none">
-            <span className={`font-display italic text-xl ${FEEDBACK[feedback.q].color} drop-shadow-lg`}>+{feedback.xp} XP</span>
-          </div>
-        )}
       </div>
 
       {/* Combo counter (persistent, above rating buttons) */}
