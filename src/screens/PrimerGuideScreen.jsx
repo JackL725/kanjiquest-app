@@ -892,7 +892,7 @@ export default function PrimerGuideScreen() {
 
   function handleFinish() {
     markGuideComplete()
-    navigate('/study/primer', { replace: true })
+    navigate('/study/radicals', { replace: true })
   }
 
   return (

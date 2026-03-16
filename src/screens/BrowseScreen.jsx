@@ -260,10 +260,10 @@ function KanjiPrimerTile() {
           Kanji Primer
         </p>
         <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mt-0.5">
-          Radicals & Primitives · 214 cards
+          Radicals & Single Characters · Free
         </p>
         <p className="font-body text-[11px] text-parchment-500/70 mt-1.5 leading-snug">
-          The foundation. Learn the building blocks every kanji is made from.
+          The foundation. Learn the building blocks and all essential kanji.
         </p>
       </div>
 

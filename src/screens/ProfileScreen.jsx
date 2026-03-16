@@ -70,7 +70,11 @@ function computeAchievements(stats) {
 
     { id:'phantom',   icon:'仮',label:'Phantom Thief',      desc:'Complete the Persona 5 Royal deck',
       earned: (stats.deckStats['p5r']?.learned ?? 0) >= (ALL_DECKS.find(d => d.id === 'p5r')?.cards.length ?? 999) },
-    { id:'primer500', icon:'基',label:'Strong Foundation',   desc:'Learn 500 in How to Read Kanji',
+    { id:'radicals',  icon:'部',label:'Root Master',        desc:'Learn all Radicals & Primitives',
+      earned: (stats.deckStats['radicals']?.learned ?? 0) >= (ALL_DECKS.find(d => d.id === 'radicals')?.cards.length ?? 999),
+      progress: Math.min(stats.deckStats['radicals']?.learned ?? 0, ALL_DECKS.find(d => d.id === 'radicals')?.cards.length ?? 229),
+      target: ALL_DECKS.find(d => d.id === 'radicals')?.cards.length ?? 229 },
+    { id:'primer500', icon:'基',label:'Strong Foundation',   desc:'Learn 500 in Single Character Kanji 101',
       earned: (stats.deckStats['primer']?.learned ?? 0) >= 500,
       progress: Math.min(stats.deckStats['primer']?.learned ?? 0, 500), target: 500 },
 

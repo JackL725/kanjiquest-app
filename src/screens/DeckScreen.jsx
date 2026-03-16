@@ -9,8 +9,8 @@ export default function DeckScreen() {
   const deck = getDeckById(id)
   const { getLearnedCount, getDueCount, getNewCount, getCardProgress } = useSRS(id)
 
-  const isPrimer = id === 'primer'
-  const needsGuide = isPrimer && !isPrimerGuideComplete()
+  const isFoundation = id === 'primer' || id === 'radicals'
+  const needsGuide = isFoundation && !isPrimerGuideComplete()
 
   function handleStudy(mode) {
     if (needsGuide) {
@@ -117,7 +117,7 @@ export default function DeckScreen() {
             Practice all {deck.cards.length} cards
           </button>
         )}
-        {isPrimer && !needsGuide && (
+        {isFoundation && !needsGuide && (
           <button
             onClick={() => navigate('/primer-guide')}
             className="w-full bg-transparent text-parchment-500/40

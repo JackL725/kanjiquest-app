@@ -326,7 +326,7 @@ function EmptyState() {
 
       <p className="font-mono text-[9px] text-parchment-500/35 tracking-widest
                     uppercase mt-5">
-        Kanji Primer is free · No account required
+        Kanji Primer decks are free · No account required
       </p>
     </div>
   )

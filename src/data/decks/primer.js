@@ -1,12 +1,12 @@
-// How to Read Kanji — All RTK kanji, topologically sorted
+// Single Character Kanji 101 — All RTK kanji, topologically sorted
 // First 3 cards: 日 (sun) → 月 (moon) → 明 (bright) to demonstrate primitives + composition
 // Building blocks always appear before the kanji that use them.
 // 3,000 kanji · Based on Heisig order with dependency-first reordering
 
 const primerDeck = {
   id:         'primer',
-  title:      'How to Read Kanji',
-  subtitle:   'RTK 6th Edition · 3,000 Kanji',
+  title:      'Single Character Kanji 101',
+  subtitle:   '3,000 Essential Kanji',
   game:       null,
   platforms:  [],
   genre:      'Foundation',
@@ -16,8 +16,8 @@ const primerDeck = {
   price:      null,
   free:       true,
   description:
-    'Master all 3,000 kanji from Heisig\'s Remembering the Kanji, 6th edition. ' +
-    'Each card includes RTK keyword, readings, radical breakdown, and community mnemonic stories. ' +
+    'Master all 3,000 essential single-character kanji. ' +
+    'Each card includes keyword, readings, radical breakdown, and community mnemonic stories. ' +
     'Study these first and every kanji you encounter becomes recognizable.',
   coverKanji: '基',
   accentColor: '#C9A84C',

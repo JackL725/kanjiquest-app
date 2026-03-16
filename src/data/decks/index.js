@@ -1,12 +1,12 @@
-import primer from './primer'
-import p5r    from './p5r'
+import radicals from './radicals'
+import primer   from './primer'
+import p5r      from './p5r'
 
-// Primer is always first — it's the default owned deck
-export const ALL_DECKS = [primer, p5r]
+// Radicals first (building blocks), then Kanji 101 (single characters), then game decks
+export const ALL_DECKS = [radicals, primer, p5r]
 
-// Primer is free and owned by everyone; P5R is also owned for now (dev mode)
-// primer = free default for everyone. p5r = owned for dev/testing (will come from Supabase later)
-export const OWNED_DECK_IDS = ['primer', 'p5r']
+// Free decks owned by everyone; P5R also owned for dev/testing (will come from Supabase later)
+export const OWNED_DECK_IDS = ['radicals', 'primer', 'p5r']
 
 export function getDeckById(id) {
   return ALL_DECKS.find(d => d.id === id) ?? null

@@ -379,8 +379,8 @@ function ReadyStep({ profile, onFinish }) {
   // Determine recommended starting point
   const isNewToKanji = profile.experienceLevel === 'none' || profile.experienceLevel === 'kana'
   const recommendation = isNewToKanji
-    ? 'We recommend starting with How to Read Kanji — it teaches you the building blocks every kanji is made from.'
-    : 'You\'re ready to jump into a game deck. The How to Read Kanji deck is also available if you want to fill any gaps.'
+    ? 'We recommend starting with Radicals & Primitives — it teaches you the building blocks every kanji is made from. Then move on to Single Character Kanji 101.'
+    : 'You\'re ready to jump into a game deck. The Kanji Primer decks are also available if you want to fill any gaps.'
 
   return (
     <StepShell>
