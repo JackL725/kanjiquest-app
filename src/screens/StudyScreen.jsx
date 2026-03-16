@@ -158,8 +158,9 @@ function WaitingScreen({ requeuePool, onCheckNow }) {
 }
 
 // ─── Card Front ───────────────────────────────────────────────────────────
-function CardFront({ card, mode, peekActive, onBurn, isNew }) {
+function CardFront({ card, mode, peekActive, onBurn, isNew, deckId }) {
   const isMeaningFirst = mode === 'kanji'   // Meaning → Kanji
+  const hideHint       = deckId === 'radicals'
 
   return (
     <div className="card-face absolute inset-0 bg-ink-800 border border-gold-400/15
@@ -226,14 +227,18 @@ function CardFront({ card, mode, peekActive, onBurn, isNew }) {
           <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-6">
             {card.kanji}
           </p>
-          <p className={`font-mono text-[11px] text-parchment-500/70 text-center
-                         leading-relaxed px-4 transition-all duration-300
-                         ${peekActive ? '' : 'blur-reveal'}`}>
-            {card.parts.join(' · ')}
-          </p>
-          <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">
-            hover or shake to peek
-          </p>
+          {!hideHint && (
+            <>
+              <p className={`font-mono text-[11px] text-parchment-500/70 text-center
+                             leading-relaxed px-4 transition-all duration-300
+                             ${peekActive ? '' : 'blur-reveal'}`}>
+                {card.parts.join(' · ')}
+              </p>
+              <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">
+                hover or shake to peek
+              </p>
+            </>
+          )}
         </div>
       )}
 
@@ -714,7 +719,7 @@ export default function StudyScreen() {
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
             <CardFront card={current} mode={mode} peekActive={peekActive}
-                             onBurn={handleBurn}
+                             onBurn={handleBurn} deckId={id}
                              isNew={!getCardProgress(current.id)} />
             <CardBack  card={current} mode={mode} shouldFocusStory={flipped ? storyFocusTick : 0} />
           </div>
