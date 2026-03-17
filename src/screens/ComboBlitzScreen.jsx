@@ -404,9 +404,9 @@ export default function ComboBlitzScreen() {
   if (queue.length === 0) return (
     <div className="flex flex-col items-center justify-center h-full text-center px-8">
       <span className="font-kanji text-6xl text-amber-500/15 mb-6">連</span>
-      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards to blitz</p>
+      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards to test</p>
       <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 max-w-[260px]">
-        You need cards at Familiar stage or above — keep studying to build your blitz pool
+        You need cards at Familiar stage or above — keep studying to unlock Memory Test
       </p>
       <button onClick={() => navigate(`/deck/${id}`)}
         className="border border-gold-400/30 text-gold-400 font-display italic text-base py-3 px-8 rounded-xl hover:bg-gold-400/10 transition-colors">
@@ -443,13 +443,13 @@ export default function ComboBlitzScreen() {
           {isPerfect ? (
             <>
               <span className="font-kanji text-7xl text-amber-500/30 mb-3 animate-perfect-burst">連勝</span>
-              <h2 className="font-display italic text-3xl text-amber-500 mb-1 animate-fade-up delay-100">Flawless Blitz!</h2>
+              <h2 className="font-display italic text-3xl text-amber-500 mb-1 animate-fade-up delay-100">Perfect Recall!</h2>
               <p className="font-mono text-[10px] text-amber-500/60 tracking-widest uppercase mb-6 animate-fade-up delay-100">Not a single miss</p>
             </>
           ) : (
             <>
               <span className="font-kanji text-6xl text-amber-500/15 mb-3 animate-fade-up">連</span>
-              <h2 className="font-display italic text-3xl text-parchment-100 mb-1 animate-fade-up delay-100">Blitz complete</h2>
+              <h2 className="font-display italic text-3xl text-parchment-100 mb-1 animate-fade-up delay-100">Test complete</h2>
               <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-6 animate-fade-up delay-100">Speed × accuracy × combos</p>
             </>
           )}
@@ -527,7 +527,7 @@ export default function ComboBlitzScreen() {
           <div className="w-full space-y-3 animate-fade-up delay-300">
             <button onClick={resetGame}
               className="w-full border border-amber-500/30 text-amber-500 font-display italic text-lg py-4 rounded-xl hover:bg-amber-500/8 transition-colors">
-              Blitz again →
+              Test again →
             </button>
             <button onClick={() => navigate(`/deck/${id}`)}
               className="w-full border border-gold-400/35 text-gold-400 font-display italic text-lg py-4 rounded-xl hover:bg-gold-400/10 transition-colors">

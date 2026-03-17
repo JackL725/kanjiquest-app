@@ -196,19 +196,6 @@ export default function DeckScreen() {
           <div className="grid grid-cols-2 gap-3 pt-1">
             <button
               onClick={() => navigate(`/combo-blitz/${id}`)}
-              className="bg-ink-800 border border-amber-500/20 rounded-xl py-4 px-3
-                         flex flex-col items-center gap-2
-                         hover:border-amber-500/40 hover:bg-amber-500/5
-                         transition-colors duration-200 touch-manipulation group">
-              <span className="font-kanji text-2xl text-amber-500/60 group-hover:text-amber-500/80
-                               transition-colors">連</span>
-              <span className="font-display italic text-sm text-parchment-200">Combo Blitz</span>
-              <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
-                Speed recall
-              </span>
-            </button>
-            <button
-              onClick={() => navigate(`/memory-test/${id}`)}
               className="bg-ink-800 border border-blue-400/20 rounded-xl py-4 px-3
                          flex flex-col items-center gap-2
                          hover:border-blue-400/40 hover:bg-blue-400/5
@@ -217,7 +204,20 @@ export default function DeckScreen() {
                                transition-colors">試</span>
               <span className="font-display italic text-sm text-parchment-200">Memory Test</span>
               <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
-                Deep recall
+                Voice recall
+              </span>
+            </button>
+            <button
+              onClick={() => navigate(`/memory-test/${id}`)}
+              className="bg-ink-800 border border-amber-500/20 rounded-xl py-4 px-3
+                         flex flex-col items-center gap-2
+                         hover:border-amber-500/40 hover:bg-amber-500/5
+                         transition-colors duration-200 touch-manipulation group">
+              <span className="font-kanji text-2xl text-amber-500/60 group-hover:text-amber-500/80
+                               transition-colors">連</span>
+              <span className="font-display italic text-sm text-parchment-200">Combo Blitz</span>
+              <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
+                Speed match
               </span>
             </button>
           </div>
