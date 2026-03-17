@@ -553,15 +553,15 @@ export function useSRS(deckId) {
     })
   }
 
-  // Burn a card — mark as permanently mastered so it never comes up for review
+  // Burn a card — mark as Engraved so it graduates out of active study
   const burnCard = useCallback((cardId) => {
     const now = new Date()
     const cardData = {
-      due:            new Date(Date.now() + 365 * 100 * 86400000).toISOString(),
-      stability:      999,
+      due:            new Date(Date.now() + 90 * 86400000).toISOString(), // due in 90 days
+      stability:      90,
       difficulty:     1,
       elapsed_days:   0,
-      scheduled_days: 36500,
+      scheduled_days: 90,
       reps:           2,
       lapses:         0,
       learning_steps: 0,

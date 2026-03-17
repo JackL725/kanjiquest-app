@@ -493,7 +493,7 @@ export default function StudyScreen() {
 
       // Set undo toast for burn
       setUndoToast({
-        label: 'Mastered',
+        label: 'Engraved',
         snapshot,
         cardId: card.id,
         qi: cI,
@@ -709,7 +709,7 @@ export default function StudyScreen() {
       {burnAnim && (
         <div className="shrink-0 flex flex-col items-center gap-1 pb-2 pointer-events-none animate-fade-up">
           <span className="text-3xl text-gold-400">✦</span>
-          <span className="font-display italic text-xl text-gold-400 drop-shadow-lg">Mastered!</span>
+          <span className="font-display italic text-xl text-gold-400 drop-shadow-lg">Engraved!</span>
         </div>
       )}
 
@@ -753,7 +753,7 @@ export default function StudyScreen() {
           <div className="flex flex-col items-center justify-center py-3 gap-1">
             <p className="font-mono text-[10px] text-parchment-500/35 tracking-widest uppercase">Tap or Space to reveal</p>
             {showHints && current && !getCardProgress(current.id) && (
-              <p className="font-mono text-[8px] text-gold-400/30 tracking-widest uppercase">↑ Swipe up to master</p>
+              <p className="font-mono text-[8px] text-gold-400/30 tracking-widest uppercase">↑ Swipe up to engrave</p>
             )}
             {showHints && current && getCardProgress(current.id) && (
               <p className="font-mono text-[8px] text-parchment-500/20 tracking-widest uppercase">Swipe up to flip</p>
