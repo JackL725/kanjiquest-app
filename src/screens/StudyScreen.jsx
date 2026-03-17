@@ -692,6 +692,14 @@ export default function StudyScreen() {
       {/* Mode toggle */}
       <div className="shrink-0 px-5 pb-3"><ModeToggle mode={mode} onChange={m => { setMode(m); setFlipped(false) }} /></div>
 
+      {/* Mastered celebration — above card area */}
+      {burnAnim && (
+        <div className="shrink-0 flex flex-col items-center gap-1 pb-2 pointer-events-none animate-fade-up">
+          <span className="text-3xl text-gold-400">✦</span>
+          <span className="font-display italic text-xl text-gold-400 drop-shadow-lg">Mastered!</span>
+        </div>
+      )}
+
       {/* Card area */}
       <div className="flex-1 min-h-0 px-5 pb-3 relative">
         <div key={`${qi}-${current?.id}`}
@@ -702,15 +710,6 @@ export default function StudyScreen() {
             <CardBack card={current} mode={mode} deckId={id} />
           </div>
         </div>
-        {/* Mastered overlay during burn */}
-        {burnAnim && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <div className="flex flex-col items-center gap-2 animate-fade-up">
-              <span className="font-kanji text-5xl text-gold-400">✦</span>
-              <span className="font-display italic text-2xl text-gold-400 drop-shadow-lg">Mastered!</span>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Combo counter (persistent, above rating buttons) */}
