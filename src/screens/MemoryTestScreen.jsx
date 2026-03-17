@@ -46,13 +46,47 @@ function pickChoices(correctCard, pool) {
   return choices
 }
 
-// ─── MemoryTestScreen ─────────────────────────────────────────────────────
+// ─── Game modes ───────────────────────────────────────────────────────────
+function todayISO() {
+  const d = new Date(); d.setHours(0, 0, 0, 0)
+  return d.toISOString().split('T')[0]
+}
+
+const GAME_MODES = [
+  {
+    id: 'all',
+    label: 'All Learned',
+    kanji: '全',
+    desc: 'Familiar through Mastered cards',
+    color: 'amber-500',
+    minCards: 4,
+  },
+  {
+    id: 'today',
+    label: "Today's Cards",
+    kanji: '今',
+    desc: 'Cards studied today — fresh reinforcement',
+    color: 'blue-400',
+    minCards: 4,
+  },
+  {
+    id: 'weak',
+    label: 'Weak Spots',
+    kanji: '弱',
+    desc: 'High difficulty or lapsed cards',
+    color: 'ember',
+    minCards: 4,
+  },
+]
+
+// ─── Combo Blitz Screen (drag-drop) ─────────────────────────────────────
 export default function MemoryTestScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
   const { getCardProgress } = useSRS(id)
 
+  const [mode, setMode]           = useState(null) // null = show picker
   const [queue, setQueue]       = useState([])
   const [qi, setQi]             = useState(0)
   const [choices, setChoices]   = useState([])
@@ -64,7 +98,7 @@ export default function MemoryTestScreen() {
   const [combo, setCombo]       = useState(0)
   const [maxCombo, setMaxCombo] = useState(0)
   const [score, setScore]       = useState(0)
-  const [feedback, setFeedback] = useState(null) // { choiceId, isCorrect, points, speedLabel, mult, key }
+  const [feedback, setFeedback] = useState(null)
   const [dragging, setDragging] = useState(false)
   const [dragPos, setDragPos]   = useState({ x: 0, y: 0 })
   const [dragOrigin, setDragOrigin] = useState({ x: 0, y: 0 })
@@ -73,28 +107,46 @@ export default function MemoryTestScreen() {
   const timerRef     = useRef(null)
   const cardTimeRef  = useRef(null)
   const queueRef     = useRef([])
-  const poolRef      = useRef([]) // full eligible pool for distractor picking
+  const poolRef      = useRef([])
   const qiRef        = useRef(0)
   const comboRef     = useRef(0)
   const scoreRef     = useRef(0)
   const correctRef   = useRef(0)
   const wrongRef     = useRef(0)
   const cardCount    = useRef(0)
-  const choiceRefs   = useRef([]) // DOM refs for the 4 choice boxes
+  const choiceRefs   = useRef([])
 
-  // ── Build pool ───────────────────────────────────────────────────────
-  function buildPool() {
+  // ── Pool building by mode ─────────────────────────────────────────
+  function getPool(m) {
     if (!deck) return []
+    const today = todayISO()
     return deck.cards.filter(c => {
       const p = getCardProgress(c.id)
       if (!p) return false
       const { stageIndex } = getMasteryStage(p)
-      return stageIndex >= 2 && stageIndex <= 4
+      switch (m) {
+        case 'today':
+          return stageIndex >= 1 && p.firstStudied && p.firstStudied.startsWith(today)
+        case 'weak':
+          return stageIndex >= 1 && ((p.difficulty && p.difficulty >= 5) || (p.lapses && p.lapses > 0))
+        case 'all':
+        default:
+          return stageIndex >= 2 && stageIndex <= 4
+      }
     })
   }
 
-  function buildGame() {
-    const pool = buildPool()
+  function getModeCounts() {
+    return GAME_MODES.map(m => ({ ...m, count: getPool(m.id).length }))
+  }
+
+  function buildPool(m) {
+    return getPool(m || mode || 'all')
+  }
+
+  function buildGame(m) {
+    const selectedMode = m || mode || 'all'
+    const pool = buildPool(selectedMode)
     poolRef.current = pool
     const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, GAME_SIZE)
     queueRef.current = shuffled
@@ -113,7 +165,16 @@ export default function MemoryTestScreen() {
     cardTimeRef.current = Date.now()
   }
 
-  useEffect(() => { buildGame() }, [deck?.id])
+  function startWithMode(m) {
+    setMode(m)
+    buildGame(m)
+  }
+
+  function backToModePicker() {
+    setMode(null); setQueue([]); setDone(false); setStarted(false)
+    setElapsed(0); setScore(0); setCorrect(0); setWrong(0)
+    setCombo(0); setMaxCombo(0); setFeedback(null); setDragging(false)
+  }
 
   // ── Timer ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -251,16 +312,67 @@ export default function MemoryTestScreen() {
   // ── Guards ────────────────────────────────────────────────────────────
   if (!deck) return <div className="px-5 py-6 text-parchment-500">Deck not found.</div>
 
+  // ── Mode picker ───────────────────────────────────────────────────
+  if (!mode) {
+    const modes = getModeCounts()
+    return (
+      <div className="flex flex-col h-full">
+        <div className="shrink-0 flex items-center justify-between px-5 pt-5 pb-3">
+          <button onClick={() => navigate(`/deck/${id}`)}
+            className="font-mono text-[10px] text-parchment-500/50 tracking-widest uppercase hover:text-ember transition-colors touch-manipulation">
+            ← Back
+          </button>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center px-6 pb-10">
+          <span className="font-kanji text-5xl text-amber-500/20 mb-4 animate-fade-up">連</span>
+          <h2 className="font-display italic text-2xl text-parchment-100 mb-1 animate-fade-up">Combo Blitz</h2>
+          <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 animate-fade-up">Choose your challenge</p>
+
+          <div className="w-full max-w-sm space-y-3">
+            {modes.map((m, i) => {
+              const colorMap = { 'amber-500': 'border-amber-500/25 hover:border-amber-500/50 hover:bg-amber-500/5', 'blue-400': 'border-blue-400/25 hover:border-blue-400/50 hover:bg-blue-400/5', 'ember': 'border-ember/25 hover:border-ember/50 hover:bg-ember/5' }
+              const textMap = { 'amber-500': 'text-amber-500', 'blue-400': 'text-blue-400', 'ember': 'text-ember' }
+              const dimMap  = { 'amber-500': 'text-amber-500/50', 'blue-400': 'text-blue-400/50', 'ember': 'text-ember/50' }
+              const disabled = m.count < (m.minCards || 4)
+              return (
+                <button key={m.id}
+                  onClick={() => !disabled && startWithMode(m.id)}
+                  disabled={disabled}
+                  className={`w-full border rounded-xl px-5 py-4 flex items-center gap-4 transition-colors duration-200 touch-manipulation animate-fade-up
+                    ${disabled ? 'border-parchment-500/10 opacity-40 cursor-not-allowed' : colorMap[m.color]}`}
+                  style={{ animationDelay: `${i * 0.06}s` }}>
+                  <span className={`font-kanji text-2xl ${disabled ? 'text-parchment-500/30' : dimMap[m.color]}`}>{m.kanji}</span>
+                  <div className="flex-1 text-left">
+                    <p className={`font-display italic text-base ${disabled ? 'text-parchment-500/40' : 'text-parchment-200'}`}>{m.label}</p>
+                    <p className="font-mono text-[9px] text-parchment-500/50 tracking-wide mt-0.5">{m.desc}</p>
+                  </div>
+                  <span className={`font-mono text-[11px] tabular-nums ${disabled ? 'text-parchment-500/20' : textMap[m.color]}`}>
+                    {disabled ? `${m.count}/${m.minCards || 4}` : m.count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+          {modes.every(m => m.count < (m.minCards || 4)) && (
+            <p className="font-mono text-[9px] text-parchment-500/40 tracking-widest uppercase mt-6 text-center max-w-[260px]">
+              Combo Blitz needs at least 4 cards for distractors — keep studying!
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   if (queue.length === 0) return (
     <div className="flex flex-col items-center justify-center h-full text-center px-8">
-      <span className="font-kanji text-6xl text-blue-400/15 mb-6">試</span>
-      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards to blitz</p>
+      <span className="font-kanji text-6xl text-amber-500/15 mb-6">連</span>
+      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards available</p>
       <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 max-w-[260px]">
-        You need cards at Familiar stage or above — keep studying to unlock Combo Blitz
+        No cards match this mode yet — keep studying to build your pool
       </p>
-      <button onClick={() => navigate(`/deck/${id}`)}
+      <button onClick={backToModePicker}
         className="border border-gold-400/30 text-gold-400 font-display italic text-base py-3 px-8 rounded-xl hover:bg-gold-400/10 transition-colors">
-        Back to deck
+        Pick another mode
       </button>
     </div>
   )
@@ -359,9 +471,13 @@ export default function MemoryTestScreen() {
           <div className="gold-divider w-full mb-8 animate-fade-up delay-300"><span /></div>
 
           <div className="w-full space-y-3 animate-fade-up delay-300">
-            <button onClick={buildGame}
-              className="w-full border border-blue-400/30 text-blue-400 font-display italic text-lg py-4 rounded-xl hover:bg-blue-400/8 transition-colors">
+            <button onClick={() => buildGame(mode)}
+              className="w-full border border-amber-500/30 text-amber-500 font-display italic text-lg py-4 rounded-xl hover:bg-amber-500/8 transition-colors">
               Blitz again →
+            </button>
+            <button onClick={backToModePicker}
+              className="w-full border border-parchment-500/15 text-parchment-500 font-display italic text-base py-3 rounded-xl hover:bg-parchment-500/5 transition-colors">
+              Change mode
             </button>
             <button onClick={() => navigate(`/deck/${id}`)}
               className="w-full border border-gold-400/35 text-gold-400 font-display italic text-lg py-4 rounded-xl hover:bg-gold-400/10 transition-colors">

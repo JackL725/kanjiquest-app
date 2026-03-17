@@ -198,13 +198,44 @@ function useSpeechRecognition({ onResult, enabled }) {
 }
 
 
-// ─── Combo Blitz Screen ───────────────────────────────────────────────────
+// ─── Game modes ───────────────────────────────────────────────────────────
+function todayISO() {
+  const d = new Date(); d.setHours(0, 0, 0, 0)
+  return d.toISOString().split('T')[0]
+}
+
+const GAME_MODES = [
+  {
+    id: 'all',
+    label: 'All Learned',
+    kanji: '全',
+    desc: 'Familiar through Mastered cards',
+    color: 'blue-400',
+  },
+  {
+    id: 'today',
+    label: "Today's Cards",
+    kanji: '今',
+    desc: 'Cards studied today — fresh reinforcement',
+    color: 'amber-500',
+  },
+  {
+    id: 'weak',
+    label: 'Weak Spots',
+    kanji: '弱',
+    desc: 'High difficulty or lapsed cards',
+    color: 'ember',
+  },
+]
+
+// ─── Memory Test Screen ──────────────────────────────────────────────────
 export default function ComboBlitzScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
   const { getCardProgress } = useSRS(id)
 
+  const [mode, setMode]           = useState(null) // null = show picker
   const [queue, setQueue]       = useState([])
   const [qi, setQi]             = useState(0)
   const [started, setStarted]   = useState(false)
@@ -234,23 +265,39 @@ export default function ComboBlitzScreen() {
   const keywordsRef   = useRef([])
   const meaningRef    = useRef('')
 
-  // ── Build blitz pool ──────────────────────────────────────────────
-  function buildBlitzPool() {
+  // ── Pool building by mode ─────────────────────────────────────────
+  function getPool(m) {
     if (!deck) return []
-    const eligible = deck.cards.filter(c => {
+    const today = todayISO()
+    return deck.cards.filter(c => {
       const p = getCardProgress(c.id)
       if (!p) return false
       const { stageIndex } = getMasteryStage(p)
-      return stageIndex >= 2 && stageIndex <= 4
+      switch (m) {
+        case 'today':
+          return stageIndex >= 1 && p.firstStudied && p.firstStudied.startsWith(today)
+        case 'weak':
+          return stageIndex >= 1 && ((p.difficulty && p.difficulty >= 5) || (p.lapses && p.lapses > 0))
+        case 'all':
+        default:
+          return stageIndex >= 2 && stageIndex <= 4
+      }
     })
+  }
+
+  function getModeCounts() {
+    return GAME_MODES.map(m => ({ ...m, count: getPool(m.id).length }))
+  }
+
+  function buildBlitzPool(m) {
+    const eligible = getPool(m || mode || 'all')
     const shuffled = [...eligible].sort(() => Math.random() - 0.5)
     return shuffled.slice(0, BLITZ_SIZE)
   }
 
-  // ── Build queue ───────────────────────────────────────────────────
-  useEffect(() => {
-    if (!deck) return
-    const cards = buildBlitzPool()
+  function startWithMode(m) {
+    setMode(m)
+    const cards = buildBlitzPool(m)
     queueRef.current = cards
     deckCardCount.current = cards.length
     setQueue(cards)
@@ -260,7 +307,7 @@ export default function ComboBlitzScreen() {
       keywordsRef.current = extractKeywords(cards[0].meaning)
       meaningRef.current = cards[0].meaning.toLowerCase()
     }
-  }, [deck?.id])
+  }
 
   // Update keywords when card changes
   useEffect(() => {
@@ -422,7 +469,7 @@ export default function ComboBlitzScreen() {
 
   // ── Reset ─────────────────────────────────────────────────────────
   function resetGame() {
-    const cards = buildBlitzPool()
+    const cards = buildBlitzPool(mode)
     queueRef.current = cards; deckCardCount.current = cards.length; setQueue(cards)
     qiRef.current = 0; setQi(0); comboRef.current = 0; setCombo(0); setMaxCombo(0)
     scoreRef.current = 0; setScore(0); correctRef.current = 0; setCorrect(0)
@@ -436,6 +483,14 @@ export default function ComboBlitzScreen() {
       meaningRef.current = cards[0].meaning.toLowerCase()
     }
     setTimeout(startListening, 200)
+  }
+
+  function backToModePicker() {
+    stopListening()
+    setMode(null); setQueue([]); setDone(false); setStarted(false)
+    setElapsed(0); setScore(0); setCorrect(0); setWrong(0)
+    setCombo(0); setMaxCombo(0); setCardFeedback(null); setSpokenText('')
+    processingRef.current = false
   }
 
   // ── Guards ────────────────────────────────────────────────────────
@@ -455,16 +510,60 @@ export default function ComboBlitzScreen() {
     </div>
   )
 
+  // ── Mode picker ───────────────────────────────────────────────────
+  if (!mode) {
+    const modes = getModeCounts()
+    return (
+      <div className="flex flex-col h-full">
+        <div className="shrink-0 flex items-center justify-between px-5 pt-5 pb-3">
+          <button onClick={() => navigate(`/deck/${id}`)}
+            className="font-mono text-[10px] text-parchment-500/50 tracking-widest uppercase hover:text-ember transition-colors touch-manipulation">
+            ← Back
+          </button>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center px-6 pb-10">
+          <span className="font-kanji text-5xl text-blue-400/20 mb-4 animate-fade-up">試</span>
+          <h2 className="font-display italic text-2xl text-parchment-100 mb-1 animate-fade-up">Memory Test</h2>
+          <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 animate-fade-up">Choose your challenge</p>
+
+          <div className="w-full max-w-sm space-y-3">
+            {modes.map((m, i) => {
+              const colorMap = { 'blue-400': 'border-blue-400/25 hover:border-blue-400/50 hover:bg-blue-400/5', 'amber-500': 'border-amber-500/25 hover:border-amber-500/50 hover:bg-amber-500/5', 'ember': 'border-ember/25 hover:border-ember/50 hover:bg-ember/5' }
+              const textMap = { 'blue-400': 'text-blue-400', 'amber-500': 'text-amber-500', 'ember': 'text-ember' }
+              const dimMap  = { 'blue-400': 'text-blue-400/50', 'amber-500': 'text-amber-500/50', 'ember': 'text-ember/50' }
+              const disabled = m.count === 0
+              return (
+                <button key={m.id}
+                  onClick={() => !disabled && startWithMode(m.id)}
+                  disabled={disabled}
+                  className={`w-full border rounded-xl px-5 py-4 flex items-center gap-4 transition-colors duration-200 touch-manipulation animate-fade-up
+                    ${disabled ? 'border-parchment-500/10 opacity-40 cursor-not-allowed' : colorMap[m.color]}`}
+                  style={{ animationDelay: `${i * 0.06}s` }}>
+                  <span className={`font-kanji text-2xl ${disabled ? 'text-parchment-500/30' : dimMap[m.color]}`}>{m.kanji}</span>
+                  <div className="flex-1 text-left">
+                    <p className={`font-display italic text-base ${disabled ? 'text-parchment-500/40' : 'text-parchment-200'}`}>{m.label}</p>
+                    <p className="font-mono text-[9px] text-parchment-500/50 tracking-wide mt-0.5">{m.desc}</p>
+                  </div>
+                  <span className={`font-mono text-[11px] tabular-nums ${disabled ? 'text-parchment-500/20' : textMap[m.color]}`}>{m.count}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (queue.length === 0) return (
     <div className="flex flex-col items-center justify-center h-full text-center px-8">
-      <span className="font-kanji text-6xl text-amber-500/15 mb-6">連</span>
-      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards to test</p>
+      <span className="font-kanji text-6xl text-amber-500/15 mb-6">試</span>
+      <p className="font-display italic text-2xl text-parchment-200 mb-2">No cards available</p>
       <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mb-8 max-w-[260px]">
-        You need cards at Familiar stage or above — keep studying to unlock Memory Test
+        No cards match this mode yet — keep studying to build your pool
       </p>
-      <button onClick={() => navigate(`/deck/${id}`)}
+      <button onClick={backToModePicker}
         className="border border-gold-400/30 text-gold-400 font-display italic text-base py-3 px-8 rounded-xl hover:bg-gold-400/10 transition-colors">
-        Back to deck
+        Pick another mode
       </button>
     </div>
   )
@@ -582,6 +681,10 @@ export default function ComboBlitzScreen() {
             <button onClick={resetGame}
               className="w-full border border-amber-500/30 text-amber-500 font-display italic text-lg py-4 rounded-xl hover:bg-amber-500/8 transition-colors">
               Test again →
+            </button>
+            <button onClick={backToModePicker}
+              className="w-full border border-parchment-500/15 text-parchment-500 font-display italic text-base py-3 rounded-xl hover:bg-parchment-500/5 transition-colors">
+              Change mode
             </button>
             <button onClick={() => navigate(`/deck/${id}`)}
               className="w-full border border-gold-400/35 text-gold-400 font-display italic text-lg py-4 rounded-xl hover:bg-gold-400/10 transition-colors">
