@@ -357,7 +357,7 @@ function CardBack({ card, mode, deckId }) {
 
   return (
     <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
-      <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/25 select-none pointer-events-none">{card.kanji}</span>
+      <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
       <div className="h-full overflow-y-auto p-5">
         {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
         ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
