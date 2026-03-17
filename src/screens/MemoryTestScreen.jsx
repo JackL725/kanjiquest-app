@@ -57,7 +57,7 @@ const GAME_MODES = [
     id: 'all',
     label: 'All Learned',
     kanji: '全',
-    desc: 'Familiar through Mastered cards',
+    desc: 'Familiar and Tempered cards',
     color: 'amber-500',
     minCards: 4,
   },
@@ -131,7 +131,7 @@ export default function MemoryTestScreen() {
           return stageIndex >= 1 && ((p.difficulty && p.difficulty >= 5) || (p.lapses && p.lapses > 0))
         case 'all':
         default:
-          return stageIndex >= 2
+          return stageIndex >= 2 && stageIndex <= 3
       }
     })
   }
