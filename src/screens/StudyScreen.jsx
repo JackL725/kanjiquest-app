@@ -458,7 +458,7 @@ export default function StudyScreen() {
   // ── Requeue polling ──────────────────────────────────────────────────
   useEffect(() => { const iv = setInterval(() => { const now = Date.now(), due = requeuePool.current.filter(e => e.dueAt <= now); if (!due.length) return; requeuePool.current = requeuePool.current.filter(e => e.dueAt > now); setQueue(p => { const n = [...p]; due.forEach((e, i) => n.splice(qiRef.current+1+i, 0, e.card)); queueRef.current = n; return n }); setWaiting(false) }, 30000); return () => clearInterval(iv) }, [])
 
-  // ── Burn (mark as mastered, remove from queue, replace) ────────────
+  // ── Burn (mark as Engraved, remove from queue, replace) ────────────
   const [burnAnim, setBurnAnim] = useState(false)
 
   const handleBurn = useCallback(() => {
@@ -471,11 +471,25 @@ export default function StudyScreen() {
     // Trigger fly-up animation
     setBurnAnim(true)
 
-    // Mark as permanently mastered in FSRS
+    // Mark as Engraved in FSRS
     burnCard(card.id)
 
     // Add to burned list so it doesn't show in "All" mode
     burnedRef.current.add(card.id); writeBurned(id, burnedRef.current)
+
+    // Set undo toast immediately so it appears during/after animation
+    setUndoToast({
+      label: 'Engraved',
+      snapshot,
+      cardId: card.id,
+      qi: cI,
+      queueSnapshot,
+      isBurn: true,
+      statsDelta: { ok: 0, miss: 0 },
+      xpDelta: 0,
+      comboDelta: { prev: combo },
+      ts: Date.now(),
+    })
 
     // After animation, swap card in queue with next unseen card
     setTimeout(() => {
@@ -490,19 +504,6 @@ export default function StudyScreen() {
       })
       if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }
       setFlipped(false)
-
-      // Set undo toast for burn
-      setUndoToast({
-        label: 'Engraved',
-        snapshot,
-        cardId: card.id,
-        qi: cI,
-        queueSnapshot,
-        isBurn: true,
-        statsDelta: { ok: 0, miss: 0 },
-        xpDelta: 0,
-        comboDelta: { prev: combo },
-      })
     }, 350)
   }, [deck, id, burnCard, getCardProgress, combo])
 
@@ -621,7 +622,7 @@ export default function StudyScreen() {
     const nextI = cI + 1
     setQueue(p => { const n = [...p]; dueNow.forEach((e, i) => n.splice(nextI+i, 0, e.card)); queueRef.current = n; return n })
 
-    const undo = { label: `Rated ${RATING_META.find(r => r.q === q)?.label || '?'}`, snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo } }
+    const undo = { label: `Rated ${RATING_META.find(r => r.q === q)?.label || '?'}`, snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo }, ts: Date.now() }
 
     if (nextI >= cQ.length + dueNow.length) {
       if (requeuePool.current.length > 0) {
@@ -653,13 +654,13 @@ export default function StudyScreen() {
   if (done) return (
     <div className="h-full">
       <DoneScreen stats={stats} deckId={id} onRestart={buildQueue} troubleCards={troubleRef.current.map(t => t.card)} graduatedCards={graduatedRef.current} onReviewMistakes={startMistakesReview} sessionXP={sessionXP} maxCombo={maxCombo} stageUps={stageUps} isPerfect={isPerfect} />
-      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
+      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi+(undoToast.ts||0)} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
     </div>
   )
   if (waiting) return (
     <div className="h-full">
       <WaitingScreen requeuePool={requeuePool.current} onCheckNow={checkPoolNow} />
-      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
+      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi+(undoToast.ts||0)} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
     </div>
   )
 
@@ -705,7 +706,7 @@ export default function StudyScreen() {
       {/* Mode toggle */}
       <div className="shrink-0 px-5 pb-3"><ModeToggle mode={mode} onChange={m => { setMode(m); setFlipped(false) }} /></div>
 
-      {/* Mastered celebration — above card area */}
+      {/* Engraved celebration — above card area */}
       {burnAnim && (
         <div className="shrink-0 flex flex-col items-center gap-1 pb-2 pointer-events-none animate-fade-up">
           <span className="text-3xl text-gold-400">✦</span>
@@ -763,7 +764,7 @@ export default function StudyScreen() {
       </div>
 
       {/* Undo toast */}
-      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
+      {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi+(undoToast.ts||0)} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
     </div>
   )
 }
