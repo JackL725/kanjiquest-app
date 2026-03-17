@@ -80,11 +80,7 @@ export default function AppShell() {
 
     // Normal navigation when not on a protected route
     setOverlay(null)
-    if (to === '/library' && location.pathname !== '/library') {
-      navigate(-1)
-    } else {
-      navigate(to)
-    }
+    navigate(to)
   }
 
   return (
