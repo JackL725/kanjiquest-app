@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { isGuestMode, setGuestMode } from '@/screens/AuthScreen'
 import { syncProgress, syncStudyDates } from '@/lib/sync'
 import { ALL_DECKS } from '@/data/decks'
+import ReviewHeatmap from '@/components/ui/ReviewHeatmap'
 
 // ─── Read real stats from localStorage ───────────────────────────────────
 const SRS_KEY    = 'kq-srs-progress'
@@ -286,6 +287,9 @@ export default function ProfileScreen() {
           </div>
         ))}
       </div>
+
+      {/* ── Study Heatmap ── */}
+      <ReviewHeatmap />
 
       {/* ── Deck Progress ── */}
       {activeDecks.length > 0 && (

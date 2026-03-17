@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { getOwnedDecks } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { readProfile } from '@/hooks/useOnboarding'
+import ReviewForecast from '@/components/ui/ReviewForecast'
 
 // ─── Sync utility: read due count without hooks ───────────────────────────
 // Avoids calling useSRS inside a loop (Rules of Hooks violation).
@@ -425,6 +426,9 @@ export default function LibraryScreen() {
 
           {/* ── Streak Widget ── */}
           <StreakWidget streak={streak} last7={last7} />
+
+          {/* ── Review Forecast ── */}
+          <ReviewForecast />
         </>
       ) : (
         <EmptyState />

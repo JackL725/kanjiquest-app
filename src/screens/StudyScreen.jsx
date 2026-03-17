@@ -159,10 +159,11 @@ function UndoToast({ label, onUndo, onExpire }) {
 }
 
 // ─── Done screen (enhanced with XP + combo + stage-ups) ───────────────────
-function DoneScreen({ stats, deckId, onRestart, troubleCards, graduatedCards, onReviewMistakes, sessionXP, maxCombo, stageUps, isPerfect }) {
+function DoneScreen({ stats, deckId, onRestart, troubleCards, graduatedCards, onReviewMistakes, sessionXP, maxCombo, stageUps, isPerfect, sessionDuration }) {
   const navigate = useNavigate()
   const total = stats.ok + stats.miss, pct = total ? Math.round((stats.ok / total) * 100) : 0
   const forecast = getTomorrowForecast()
+  const timeStr = sessionDuration >= 60 ? `${Math.floor(sessionDuration / 60)}m ${sessionDuration % 60}s` : `${sessionDuration}s`
   return (
     <div className="h-full overflow-y-auto">
       <div className="flex flex-col items-center text-center px-8 py-10">
@@ -181,15 +182,16 @@ function DoneScreen({ stats, deckId, onRestart, troubleCards, graduatedCards, on
         )}
 
         {/* Stats grid */}
-        <div className="grid grid-cols-4 gap-3 mb-6 w-full animate-fade-up delay-200">
+        <div className="grid grid-cols-5 gap-2 mb-6 w-full animate-fade-up delay-200">
           {[
             { n: sessionXP, l: 'XP earned', c: 'text-gold-400' },
             { n: stats.ok,  l: 'Correct',   c: 'text-blue-400' },
             { n: maxCombo >= 3 ? `×${getComboMult(maxCombo)}` : maxCombo > 0 ? maxCombo : '—', l: maxCombo >= 3 ? 'Peak mult' : 'Best streak', c: 'text-amber-500' },
             { n: pct + '%', l: 'Accuracy',   c: 'text-parchment-100' },
+            { n: timeStr,   l: 'Time',       c: 'text-parchment-300' },
           ].map(({ n, l, c }) => (
             <div key={l} className="text-center">
-              <p className={`font-display italic text-2xl leading-none ${c}`}>{n}</p>
+              <p className={`font-display italic text-xl leading-none ${c}`}>{n}</p>
               <p className="font-mono text-[8px] text-parchment-500 tracking-widest uppercase mt-1.5">{l}</p>
             </div>
           ))}
@@ -438,6 +440,7 @@ export default function StudyScreen() {
   const [stageUps, setStageUps]     = useState(0)
   const [feedback, setFeedback]     = useState(null)    // { q, msg, xp, combo, key }
   const [stageUpEvent, setStageUpEvent] = useState(null)  // STAGES entry
+  const [sessionDuration, setSessionDuration] = useState(0)
 
   const troubleRef = useRef([])
   const graduatedRef = useRef([])
@@ -445,6 +448,30 @@ export default function StudyScreen() {
   const queueRef = useRef([])
   const qiRef = useRef(0)
   const burnedRef = useRef(readBurned(id))
+  const sessionStartRef = useRef(Date.now())
+
+  // ── Session logging (for heatmap) ──────────────────────────────────
+  const logSession = useCallback((finalStats, finalXP) => {
+    try {
+      const LOG_KEY = 'kq-session-logs'
+      const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]')
+      const now = new Date()
+      logs.push({
+        date:     now.toISOString().split('T')[0],
+        ts:       now.toISOString(),
+        deckId:   id,
+        reviewed: finalStats.ok + finalStats.miss,
+        correct:  finalStats.ok,
+        xp:       finalXP,
+        duration: Math.round((Date.now() - sessionStartRef.current) / 1000),
+      })
+      // Keep last 365 days of logs
+      const cutoff = new Date()
+      cutoff.setDate(cutoff.getDate() - 365)
+      const filtered = logs.filter(l => new Date(l.date) >= cutoff)
+      localStorage.setItem(LOG_KEY, JSON.stringify(filtered))
+    } catch {}
+  }, [id])
 
   // ── Build queue ──────────────────────────────────────────────────────
   const buildQueue = useCallback(() => {
@@ -459,6 +486,7 @@ export default function StudyScreen() {
     queueRef.current = shuffled; setQueue(shuffled); qiRef.current = 0; setQi(0)
     setFlipped(false); setDone(false); setWaiting(false); setStats({ ok: 0, miss: 0 })
     setCombo(0); setSessionXP(0); setMaxCombo(0); setStageUps(0); setUndoToast(null); setFeedback(null); setStageUpEvent(null)
+    sessionStartRef.current = Date.now()
   }, [deck?.id, settings.newCardsPerDay, settings.maxReviewsPerDay])
 
   useEffect(() => { buildQueue() }, [deck?.id])
@@ -519,7 +547,7 @@ export default function StudyScreen() {
         queueRef.current = n
         return n
       })
-      if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }
+      if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setSessionDuration(Math.round((Date.now() - sessionStartRef.current) / 1000)); logSession(stats, sessionXP); setDone(true); return }
       setFlipped(false)
     }, 550)
   }, [deck, id, burnCard, getCardProgress, combo])
@@ -654,10 +682,14 @@ export default function StudyScreen() {
         setUndoToast(undo)
         return
       }
+      const finalStats = { ok: stats.ok + statsDelta.ok, miss: stats.miss + statsDelta.miss }
+      const finalXP = sessionXP + earnedXP
+      setSessionDuration(Math.round((Date.now() - sessionStartRef.current) / 1000))
+      logSession(finalStats, finalXP)
       setDone(true); setUndoToast(undo); return
     }
     qiRef.current = nextI; setQi(nextI); setFlipped(false); setUndoToast(undo)
-  }, [rate, simulateRate, getCardProgress, combo, maxCombo])
+  }, [rate, simulateRate, getCardProgress, combo, maxCombo, logSession, stats, sessionXP])
 
   const handleFlip = useCallback(() => { setFlipped(f => !f) }, [])
   const checkPoolNow = useCallback(() => { const now = Date.now(), due = requeuePool.current.filter(e => e.dueAt <= now); if (!due.length) return; requeuePool.current = requeuePool.current.filter(e => e.dueAt > now); const nI = qiRef.current + 1; setQueue(p => { const n = [...p]; due.forEach((e, i) => n.splice(nI+i, 0, e.card)); queueRef.current = n; return n }); setWaiting(false); qiRef.current = nI; setQi(nI); setFlipped(false) }, [])
@@ -670,7 +702,7 @@ export default function StudyScreen() {
 
   if (done) return (
     <div className="h-full">
-      <DoneScreen stats={stats} deckId={id} onRestart={buildQueue} troubleCards={troubleRef.current.map(t => t.card)} graduatedCards={graduatedRef.current} onReviewMistakes={startMistakesReview} sessionXP={sessionXP} maxCombo={maxCombo} stageUps={stageUps} isPerfect={isPerfect} />
+      <DoneScreen stats={stats} deckId={id} onRestart={buildQueue} troubleCards={troubleRef.current.map(t => t.card)} graduatedCards={graduatedRef.current} onReviewMistakes={startMistakesReview} sessionXP={sessionXP} maxCombo={maxCombo} stageUps={stageUps} isPerfect={isPerfect} sessionDuration={sessionDuration} />
       {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi+(undoToast.ts||0)} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
     </div>
   )
