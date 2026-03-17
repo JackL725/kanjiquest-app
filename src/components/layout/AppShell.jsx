@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
+import RadicalsScreen from '@/screens/RadicalsScreen'
 
 const NAV = [
   {
@@ -44,20 +46,48 @@ const NAV = [
   },
 ]
 
-// Tab paths that are "top-level" — navigating between these should use history
-const TAB_PATHS = new Set(['/library', '/browse', '/radicals', '/profile'])
+// Routes where we should NOT navigate away — open tabs as overlays instead
+const PROTECTED_ROUTES = ['/study/', '/combo-blitz/', '/memory-test/']
+
+function isProtectedRoute(pathname) {
+  return PROTECTED_ROUTES.some(r => pathname.startsWith(r))
+}
 
 export default function AppShell() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [overlay, setOverlay] = useState(null) // 'radicals' | null
 
-  // When tapping Library from another tab, go back in history so the user
-  // returns to wherever they were (e.g. study session) instead of /library
-  function handleLibraryTap(e) {
-    e.preventDefault()
-    if (location.pathname === '/library') return
-    // If we're on a tab page, go back — this returns to the page before the tab switch
-    navigate(-1)
+  const onProtected = isProtectedRoute(location.pathname)
+
+  // Close overlay when route changes (user quits study, etc.)
+  // We track this by checking if we left the protected route
+
+  function handleTabClick(e, to) {
+    // If we're on a study screen, open tabs as overlays instead of navigating
+    if (onProtected) {
+      e.preventDefault()
+
+      if (to === '/radicals') {
+        setOverlay(prev => prev === 'radicals' ? null : 'radicals')
+      } else if (to === '/library') {
+        // "Library" while studying = close any overlay, stay on study screen
+        setOverlay(null)
+      } else {
+        // Other tabs: just close overlay and stay
+        setOverlay(null)
+      }
+      return
+    }
+
+    // Normal navigation when not on a protected route
+    if (to === '/library' && location.pathname !== '/library') {
+      // Already on a tab page, go back
+      e.preventDefault()
+      navigate(-1)
+      return
+    }
+    // Default: NavLink handles navigation normally
   }
 
   return (
@@ -65,7 +95,7 @@ export default function AppShell() {
       {/* Top bar */}
       <header className="flex items-center justify-between px-5 py-4 border-b border-gold-400/10 shrink-0">
         <button
-          onClick={() => navigate('/library')}
+          onClick={() => { setOverlay(null); navigate('/library') }}
           className="flex items-baseline gap-2 touch-manipulation"
         >
           <span className="font-display italic text-xl text-gold-400 tracking-wide">KanjiQuest</span>
@@ -89,28 +119,37 @@ export default function AppShell() {
       </header>
 
       {/* Screen content */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto relative">
         <Outlet />
+
+        {/* Radicals overlay — renders on TOP of the current screen without unmounting it */}
+        {overlay === 'radicals' && (
+          <div className="absolute inset-0 z-40 bg-ink-950 overflow-y-auto">
+            <RadicalsScreen />
+          </div>
+        )}
       </main>
 
       {/* Bottom nav */}
-      <nav className="shrink-0 border-t border-gold-400/10 bg-ink-900">
+      <nav className="shrink-0 border-t border-gold-400/10 bg-ink-900 relative z-50">
         <div className="flex">
           {NAV.map(({ to, label, icon }) => {
-            const isLibrary = to === '/library'
+            // Highlight logic: on protected route with overlay, highlight the overlay tab
+            const isActive = overlay
+              ? (to === '/radicals' && overlay === 'radicals')
+              : location.pathname === to || location.pathname.startsWith(to + '/')
+
             return (
-              <NavLink
+              <button
                 key={to}
-                to={to}
-                onClick={isLibrary ? handleLibraryTap : undefined}
-                className={({ isActive }) =>
-                  `flex-1 flex flex-col items-center gap-1 py-3 transition-colors duration-200 ` +
+                onClick={(e) => handleTabClick(e, to)}
+                className={`flex-1 flex flex-col items-center gap-1 py-3 transition-colors duration-200 touch-manipulation ` +
                   (isActive ? 'text-gold-400' : 'text-parchment-500 hover:text-parchment-300')
                 }
               >
                 {icon}
                 <span className="font-mono text-[9px] tracking-widest uppercase">{label}</span>
-              </NavLink>
+              </button>
             )
           })}
         </div>
