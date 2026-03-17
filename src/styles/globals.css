@@ -242,7 +242,7 @@ body {
 }
 .animate-swipe-right { animation: swipeRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 .animate-swipe-left  { animation: swipeLeft  0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.animate-swipe-enter { animation: swipeCardEnter 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-swipe-enter { animation: swipeCardEnter 0.12s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 
 /* ─── Voice Blitz shake + mic ─────────────────────── */
 @keyframes cardShake {
@@ -267,7 +267,7 @@ body {
   30%  { transform: scale(1.06); }
   100% { transform: scale(0.9) translateY(-30px); opacity: 0; }
 }
-.animate-voice-correct { animation: voiceCorrect 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-voice-correct { animation: voiceCorrect 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 
 /* ─── Memory Test ──────────────────────────────────── */
 @keyframes dropCorrect {

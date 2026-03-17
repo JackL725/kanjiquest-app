@@ -294,7 +294,7 @@ export default function ComboBlitzScreen() {
     setCardFeedback({ points: earnedPoints, speedLabel: speedTier.label, mult, isCorrect: true, key: Date.now() })
     setCardAnim('correct')
 
-    setTimeout(advanceCard, 500)
+    setTimeout(advanceCard, 300)
   }, [done, started, maxCombo, advanceCard])
 
   // ── Handle "I don't know" ─────────────────────────────────────────
@@ -613,11 +613,25 @@ export default function ComboBlitzScreen() {
           <div className="absolute inset-0 bg-ink-800 rounded-2xl flex flex-col items-center justify-center p-8 select-none
                            border border-gold-400/15 transition-colors duration-150">
 
-            {/* Per-card feedback overlay */}
-            {cardFeedback && (
-              <div className="absolute top-10 inset-x-0 flex flex-col items-center gap-1 pointer-events-none z-10">
-                {cardFeedback.isCorrect ? (
-                  <>
+            {/* ── Full-card answer reveal on "I don't know" ── */}
+            {cardFeedback && !cardFeedback.isCorrect ? (
+              <div className="flex flex-col items-center justify-center text-center gap-3 animate-fade-up">
+                <p className="font-kanji text-5xl text-parchment-100/25 leading-none">{current?.kanji}</p>
+                <p className="font-display italic text-4xl text-ember leading-tight drop-shadow-lg px-2">
+                  {cardFeedback.meaning || 'Missed'}
+                </p>
+                {current?.reading && (
+                  <p className="font-display italic text-lg text-parchment-300/70">{current.reading}</p>
+                )}
+                <p className="font-mono text-[9px] text-parchment-500/40 tracking-widest uppercase mt-2">
+                  Back of deck
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* Per-card correct feedback overlay */}
+                {cardFeedback && cardFeedback.isCorrect && (
+                  <div className="absolute top-10 inset-x-0 flex flex-col items-center gap-1 pointer-events-none z-10">
                     <span className="font-display italic text-xl text-emerald-400 animate-fade-up drop-shadow-lg">
                       +{cardFeedback.points}
                     </span>
@@ -633,22 +647,10 @@ export default function ComboBlitzScreen() {
                         ×{cardFeedback.mult} combo
                       </span>
                     )}
-                  </>
-                ) : (
-                  <>
-                    <span className="font-display italic text-xl text-ember animate-fade-up drop-shadow-lg">
-                      {cardFeedback.meaning || 'Missed'}
-                    </span>
-                    <span className="font-mono text-[9px] text-parchment-500/50 tracking-widest uppercase animate-fade-up"
-                          style={{ animationDelay: '0.08s', opacity: 0 }}>
-                      Back of deck
-                    </span>
-                  </>
+                  </div>
                 )}
-              </div>
-            )}
 
-            <p className="font-mono text-[9px] text-parchment-500/40 tracking-[3px] uppercase mb-6">
+                <p className="font-mono text-[9px] text-parchment-500/40 tracking-[3px] uppercase mb-6">
                   Say the meaning
                 </p>
                 <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-4">{current?.kanji}</p>
@@ -665,6 +667,8 @@ export default function ComboBlitzScreen() {
                     "{spokenText}"
                   </p>
                 )}
+              </>
+            )}
           </div>
         </div>
       </div>
