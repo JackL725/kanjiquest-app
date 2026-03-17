@@ -4,6 +4,7 @@ import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
 import { STAGES, getMasteryStage } from '@/hooks/useMastery'
+import { ComponentLibrary } from '@/screens/StudyScreen'
 
 const BONUS_OPTIONS = [5, 10, 15, 20]
 
@@ -24,6 +25,7 @@ export default function DeckScreen() {
   const [showPicker, setShowPicker] = useState(false)
   const [search, setSearch]         = useState('')
   const [filter, setFilter]         = useState('all')
+  const [showComponentLib, setShowComponentLib] = useState(false)
 
   const isFoundation = id === 'primer' || id === 'radicals'
   const needsGuide = isFoundation && !isPrimerGuideComplete()
@@ -192,6 +194,14 @@ export default function DeckScreen() {
                      hover:bg-gold-400/10 transition-colors duration-200">
           {needsGuide ? 'Start learning →' : due > 0 ? `Study ${due} card${due !== 1 ? 's' : ''} today` : 'All caught up'}
         </button>
+        {!isFoundation && (
+          <button onClick={() => setShowComponentLib(true)}
+            className="w-full border border-gold-400/12 text-parchment-500/50
+                       font-mono text-[10px] tracking-widest uppercase py-2.5 rounded-xl
+                       hover:border-gold-400/25 hover:text-parchment-400 transition-colors duration-200">
+            View component library
+          </button>
+        )}
         {isFoundation && !needsGuide && (
           <button onClick={() => navigate('/primer-guide')}
             className="w-full bg-transparent text-parchment-500/40
@@ -386,6 +396,13 @@ export default function DeckScreen() {
               Show more ({visibleCards.length - showCount} remaining)
             </button>
           )}
+        </div>
+      )}
+
+      {/* Component Library overlay */}
+      {showComponentLib && (
+        <div className="fixed inset-0 z-50">
+          <ComponentLibrary deckId={id} onClose={() => setShowComponentLib(false)} />
         </div>
       )}
     </div>

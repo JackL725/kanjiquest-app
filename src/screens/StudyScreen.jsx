@@ -353,7 +353,6 @@ function UserStorySection({ cardId }) {
 function CardBack({ card, mode, deckId }) {
   const isMF = mode === 'kanji'
   const isFoundationDeck = deckId === 'primer' || deckId === 'radicals'
-  const [showComponents, setShowComponents] = useState(false)
 
   return (
     <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
@@ -379,26 +378,10 @@ function CardBack({ card, mode, deckId }) {
           <div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div>
         </BSection>
 
-        {/* Component Library button — game decks only */}
-        {!isFoundationDeck && (
-          <button
-            onClick={(e) => { e.stopPropagation(); setShowComponents(true) }}
-            className="w-full border border-gold-400/15 rounded-lg py-2.5 mb-4
-                       font-mono text-[10px] text-gold-400/60 tracking-widest uppercase
-                       hover:border-gold-400/30 hover:text-gold-400/80 transition-colors">
-            View component library
-          </button>
-        )}
-
         {(card.onyomi || card.kunyomi) && (<><Div />{card.onyomi && <BSection label="On'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p></BSection>}{card.kunyomi && <BSection label="Kun'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p></BSection>}{card.nanori && <BSection label="Nanori"><p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p></BSection>}</>)}
         {card.context && (<><Div /><BSection label="In-game context"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p><p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p></BSection></>)}
         {card.jlpt > 0 && (<div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between"><span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span><span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span></div>)}
       </div>
-
-      {/* Component Library overlay */}
-      {showComponents && (
-        <ComponentLibrary deckId={deckId} onClose={() => setShowComponents(false)} />
-      )}
     </div>
   )
 }
@@ -786,7 +769,7 @@ export default function StudyScreen() {
 }
 
 // ─── Component Library overlay ───────────────────────────────────────────
-function ComponentLibrary({ deckId, onClose }) {
+export function ComponentLibrary({ deckId, onClose }) {
   const deck = getDeckById(deckId)
   const [search, setSearch] = useState('')
 
