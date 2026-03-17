@@ -314,10 +314,15 @@ export default function ComboBlitzScreen() {
       setQueue([...queueRef.current])
     }
 
+    // Phase 1: show answer on a still card
     setCardFeedback({ points: 0, speedLabel: '', mult: 1, isCorrect: false, meaning: cur?.meaning, key: Date.now() })
-    setCardAnim('wrong')
+    setCardAnim('reveal')
 
-    setTimeout(advanceCard, 1500)
+    // Phase 2: after 1.5s, swipe it away and advance
+    setTimeout(() => {
+      setCardAnim('wrong')
+      setTimeout(advanceCard, 350)
+    }, 1500)
   }, [done, started, advanceCard])
 
   // ── Handle wrong voice guess (shake) ──────────────────────────────
@@ -550,6 +555,7 @@ export default function ComboBlitzScreen() {
     cardAnim === 'correct' ? 'animate-voice-correct' :
     cardAnim === 'wrong'   ? 'animate-swipe-left' :
     cardAnim === 'shake'   ? 'animate-card-shake' :
+    cardAnim === 'reveal'  ? '' :
     'animate-swipe-enter'
 
   return (
