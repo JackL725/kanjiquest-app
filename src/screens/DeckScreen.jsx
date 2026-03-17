@@ -90,6 +90,8 @@ export default function DeckScreen() {
   }), [classifiedCards])
 
   // ── Filtered + searched cards ───────────────────────────────────────
+  const [showCount, setShowCount] = useState(50)
+
   const visibleCards = useMemo(() => {
     let result = classifiedCards
 
@@ -102,21 +104,25 @@ export default function DeckScreen() {
       const q = search.trim().toLowerCase()
       result = result.filter(({ card }) =>
         card.kanji.includes(q) ||
-        card.romaji.toLowerCase().includes(q) ||
-        card.meaning.toLowerCase().includes(q) ||
+        (card.romaji && card.romaji.toLowerCase().includes(q)) ||
+        (card.meaning && card.meaning.toLowerCase().includes(q)) ||
         (card.reading && card.reading.includes(q))
       )
     }
 
-    // Sort by mastery stage: Kindled(1) → Familiar(2) → Tempered(3) → Mastered(4) → Engraved(5) → Unseen(0) last
+    // Sort by mastery stage
     result = [...result].sort((a, b) => {
-      const sa = a.mastery.stageIndex || 6  // Unseen (0) → 6, sorts to bottom
+      const sa = a.mastery.stageIndex || 6
       const sb = b.mastery.stageIndex || 6
       return sa - sb
     })
 
     return result
   }, [classifiedCards, filter, search])
+
+  // Reset show count when filter/search changes
+  const displayCards = visibleCards.slice(0, showCount)
+  const hasMore = visibleCards.length > showCount
 
   function handleAddMore(count) {
     addBonusCards(count)
@@ -330,9 +336,8 @@ export default function DeckScreen() {
         </div>
       ) : (
         <div className="space-y-2">
-          {visibleCards.map(({ card, p, mastery, isDue, isUnseen }, i) => {
-            // Show a stage header when the stage changes
-            const prevStage = i > 0 ? visibleCards[i - 1].mastery.stageIndex : null
+          {displayCards.map(({ card, p, mastery, isDue, isUnseen }, i) => {
+            const prevStage = i > 0 ? displayCards[i - 1].mastery.stageIndex : null
             const curStage = mastery.stageIndex
             const showHeader = prevStage !== curStage
 
@@ -346,7 +351,7 @@ export default function DeckScreen() {
                 <div
                   className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
                              border border-gold-400/8 animate-fade-up"
-                  style={{ animationDelay: `${Math.min(i, 20) * 0.03}s`, opacity: 0 }}>
+                  style={i < 20 ? { animationDelay: `${i * 0.03}s`, opacity: 0 } : undefined}>
               <div className="flex items-center gap-3">
                 <span className="font-kanji text-xl text-parchment-200">{card.kanji}</span>
                 <div>
@@ -355,7 +360,7 @@ export default function DeckScreen() {
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
-                {card.jlpt && (
+                {card.jlpt > 0 && (
                   <span className="font-mono text-[8px] text-parchment-500/25 tracking-widest">
                     N{card.jlpt}
                   </span>
@@ -368,6 +373,15 @@ export default function DeckScreen() {
             </div>
           </div>
         )})}
+          {hasMore && (
+            <button
+              onClick={() => setShowCount(c => c + 50)}
+              className="w-full py-3 mt-2 border border-gold-400/12 rounded-lg
+                         font-mono text-[10px] text-parchment-500/60 tracking-widest uppercase
+                         hover:border-gold-400/30 hover:text-parchment-400 transition-colors">
+              Show more ({visibleCards.length - showCount} remaining)
+            </button>
+          )}
         </div>
       )}
     </div>
