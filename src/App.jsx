@@ -9,6 +9,7 @@ import ProfileScreen       from '@/screens/ProfileScreen'
 import RadicalsScreen      from '@/screens/RadicalsScreen'
 import StudyScreen         from '@/screens/StudyScreen'
 import ComboBlitzScreen    from '@/screens/ComboBlitzScreen'
+import MemoryTestScreen    from '@/screens/MemoryTestScreen'
 import DeckScreen          from '@/screens/DeckScreen'
 import SettingsScreen      from '@/screens/SettingsScreen'
 
@@ -48,6 +49,7 @@ export default function App() {
         <Route path="deck/:id"  element={<DeckScreen />} />
         <Route path="study/:id" element={<StudyScreen />} />
         <Route path="combo-blitz/:id" element={<ComboBlitzScreen />} />
+        <Route path="memory-test/:id" element={<MemoryTestScreen />} />
       </Route>
     </Routes>
   )

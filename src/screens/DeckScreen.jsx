@@ -208,6 +208,7 @@ export default function DeckScreen() {
               </span>
             </button>
             <button
+              onClick={() => navigate(`/memory-test/${id}`)}
               className="bg-ink-800 border border-blue-400/20 rounded-xl py-4 px-3
                          flex flex-col items-center gap-2
                          hover:border-blue-400/40 hover:bg-blue-400/5

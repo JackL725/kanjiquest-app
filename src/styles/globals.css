@@ -243,3 +243,24 @@ body {
 .animate-swipe-right { animation: swipeRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 .animate-swipe-left  { animation: swipeLeft  0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 .animate-swipe-enter { animation: swipeCardEnter 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* ─── Memory Test ──────────────────────────────────── */
+@keyframes dropCorrect {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.08); box-shadow: inset 0 0 0 2px rgba(52,211,153,0.6); }
+  100% { transform: scale(1); box-shadow: inset 0 0 0 2px rgba(52,211,153,0); }
+}
+@keyframes dropWrong {
+  0%, 100% { transform: translateX(0); }
+  20%  { transform: translateX(-5px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-3px); }
+  80%  { transform: translateX(2px); }
+}
+@keyframes kanjiReveal {
+  0%   { opacity: 0; transform: scale(0.85) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-drop-correct { animation: dropCorrect 0.45s ease both; }
+.animate-drop-wrong   { animation: dropWrong 0.4s ease both; }
+.animate-kanji-reveal { animation: kanjiReveal 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
