@@ -58,7 +58,7 @@ function writeHighScore(deckId, score) {
 }
 
 // ─── Voice matching helpers ───────────────────────────────────────────────
-const FILLER_WORDS = new Set(['to', 'a', 'an', 'the', 'of', 'in', 'on', 'is', 'be', 'no', 'not'])
+const FILLER_WORDS = new Set(['to', 'a', 'an', 'the', 'of', 'in', 'on', 'is', 'be', 'no', 'not', 'and', 'or', 'for', 'it', 'at'])
 
 function extractKeywords(meaning) {
   return meaning
@@ -68,13 +68,44 @@ function extractKeywords(meaning) {
     .filter(w => w.length > 1 && !FILLER_WORDS.has(w))
 }
 
+// Rough English stem: strip common suffixes to get a root form
+function stem(word) {
+  return word
+    .replace(/ing$/, '')
+    .replace(/tion$/, '')
+    .replace(/sion$/, '')
+    .replace(/ment$/, '')
+    .replace(/ness$/, '')
+    .replace(/ous$/, '')
+    .replace(/ive$/, '')
+    .replace(/able$/, '')
+    .replace(/ible$/, '')
+    .replace(/ful$/, '')
+    .replace(/less$/, '')
+    .replace(/ence$/, '')
+    .replace(/ance$/, '')
+    .replace(/ly$/, '')
+    .replace(/ed$/, '')
+    .replace(/er$/, '')
+    .replace(/es$/, '')
+    .replace(/s$/, '')
+}
+
 function checkVoiceMatch(transcript, keywords) {
   const spoken = transcript.toLowerCase().trim().split(/\s+/)
   return spoken.some(word => {
-    const base = word.replace(/s$/, '')
+    if (word.length < 2) return false
+    const wordStem = stem(word)
     return keywords.some(kw => {
-      const kwBase = kw.replace(/s$/, '')
-      return word === kw || base === kw || word === kwBase || base === kwBase
+      const kwStem = stem(kw)
+      // Exact match
+      if (word === kw) return true
+      // Stem match (e.g. "measurement" and "measure" both stem to "measur")
+      if (wordStem.length >= 3 && kwStem.length >= 3 && wordStem === kwStem) return true
+      // One contains the other (e.g. "close" in "to close", "change" in "alteration/change")
+      if (word.length >= 4 && kw.includes(word)) return true
+      if (kw.length >= 4 && word.includes(kw)) return true
+      return false
     })
   })
 }
@@ -201,6 +232,7 @@ export default function ComboBlitzScreen() {
   const deckCardCount = useRef(0)
   const processingRef = useRef(false)
   const keywordsRef   = useRef([])
+  const meaningRef    = useRef('')
 
   // ── Build blitz pool ──────────────────────────────────────────────
   function buildBlitzPool() {
@@ -224,13 +256,19 @@ export default function ComboBlitzScreen() {
     setQueue(cards)
     setQi(0); qiRef.current = 0
     cardTimeRef.current = Date.now()
-    if (cards.length > 0) keywordsRef.current = extractKeywords(cards[0].meaning)
+    if (cards.length > 0) {
+      keywordsRef.current = extractKeywords(cards[0].meaning)
+      meaningRef.current = cards[0].meaning.toLowerCase()
+    }
   }, [deck?.id])
 
   // Update keywords when card changes
   useEffect(() => {
     const cur = queue[qi]
-    if (cur) keywordsRef.current = extractKeywords(cur.meaning)
+    if (cur) {
+      keywordsRef.current = extractKeywords(cur.meaning)
+      meaningRef.current = cur.meaning.toLowerCase()
+    }
   }, [qi, queue])
 
   // ── Timer ─────────────────────────────────────────────────────────
@@ -343,7 +381,15 @@ export default function ComboBlitzScreen() {
     if (!started) { setStarted(true); startTimeRef.current = Date.now(); cardTimeRef.current = Date.now() }
 
     const keywords = keywordsRef.current
-    const matched = transcripts.some(t => checkVoiceMatch(t, keywords))
+    const fullMeaning = meaningRef.current
+
+    // Check extracted keywords first, then fall back to substring in full meaning
+    const matched = transcripts.some(t => {
+      if (checkVoiceMatch(t, keywords)) return true
+      // Fallback: any spoken word (4+ chars) found as substring in full meaning
+      const words = t.toLowerCase().trim().split(/\s+/)
+      return words.some(w => w.length >= 4 && fullMeaning.includes(w))
+    })
 
     if (matched) {
       setSpokenText('✓ ' + transcripts[0])
@@ -385,7 +431,10 @@ export default function ComboBlitzScreen() {
     setCardAnim('enter'); setCardFeedback(null)
     setSpokenText(''); processingRef.current = false
     cardTimeRef.current = Date.now()
-    if (cards.length > 0) keywordsRef.current = extractKeywords(cards[0].meaning)
+    if (cards.length > 0) {
+      keywordsRef.current = extractKeywords(cards[0].meaning)
+      meaningRef.current = cards[0].meaning.toLowerCase()
+    }
     setTimeout(startListening, 200)
   }
 
