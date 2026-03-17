@@ -148,10 +148,10 @@ function UndoToast({ label, onUndo, onExpire }) {
   const [pct, setPct] = useState(100)
   useEffect(() => { const d = 4000, s = Date.now(); let id; const t = () => { const p = Math.max(0, 100-((Date.now()-s)/d)*100); setPct(p); if (Date.now()-s < d) id = requestAnimationFrame(t); else onExpire() }; id = requestAnimationFrame(t); return () => cancelAnimationFrame(id) }, [])
   return (
-    <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-fade-up">
+    <div className="fixed bottom-24 left-4 z-50 animate-fade-up">
       <button onClick={onUndo} className="relative bg-ink-700 border border-gold-400/30 rounded-xl px-5 py-3 flex items-center gap-3 shadow-lg shadow-black/40 overflow-hidden hover:border-gold-400/50 transition-colors touch-manipulation">
         <div className="absolute bottom-0 left-0 h-[2px] bg-gold-400/50 transition-none" style={{ width: `${pct}%` }} />
-        <span className="font-mono text-[10px] text-parchment-400 tracking-wide">Rated <em className="not-italic text-parchment-200">{label}</em></span>
+        <span className="font-mono text-[10px] text-parchment-400 tracking-wide">{label}</span>
         <span className="font-mono text-[10px] text-gold-400 tracking-widest uppercase font-medium">Undo</span>
       </button>
     </div>
@@ -481,6 +481,10 @@ export default function StudyScreen() {
   const handleBurn = useCallback(() => {
     const cQ = queueRef.current, cI = qiRef.current, card = cQ[cI]; if (!card) return
 
+    // Save snapshot for undo (null = card was new/unseen)
+    const snapshot = getCardProgress(card.id) || null
+    const queueSnapshot = [...cQ]
+
     // Trigger fly-up animation
     setBurnAnim(true)
 
@@ -503,8 +507,21 @@ export default function StudyScreen() {
       })
       if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }
       setFlipped(false)
+
+      // Set undo toast for burn
+      setUndoToast({
+        label: 'Mastered',
+        snapshot,
+        cardId: card.id,
+        qi: cI,
+        queueSnapshot,
+        isBurn: true,
+        statsDelta: { ok: 0, miss: 0 },
+        xpDelta: 0,
+        comboDelta: { prev: combo },
+      })
     }, 350)
-  }, [deck, id, burnCard, getCardProgress])
+  }, [deck, id, burnCard, getCardProgress, combo])
 
   // ── Shake / Swipe / Keyboard ─────────────────────────────────────────
   useShake(useCallback(() => { if (!flipped) { setPeek(true); setTimeout(() => setPeek(false), 2000) } }, [flipped]))
@@ -537,8 +554,21 @@ export default function StudyScreen() {
   // ── Undo ─────────────────────────────────────────────────────────────
   const performUndo = useCallback(() => {
     if (!undoToast) return
-    const { snapshot, cardId, qi: pQi, statsDelta, requeueEntry, xpDelta, comboDelta } = undoToast
+    const { snapshot, cardId, qi: pQi, statsDelta, requeueEntry, xpDelta, comboDelta, isBurn, queueSnapshot } = undoToast
+
+    // Restore card progress (null snapshot = delete progress entirely)
     restoreCardProgress(cardId, snapshot)
+
+    // If this was a burn undo, also remove from burned set and restore the original queue
+    if (isBurn) {
+      burnedRef.current.delete(cardId)
+      writeBurned(id, burnedRef.current)
+      if (queueSnapshot) {
+        queueRef.current = queueSnapshot
+        setQueue(queueSnapshot)
+      }
+    }
+
     setStats(s => ({ ok: s.ok - (statsDelta.ok||0), miss: s.miss - (statsDelta.miss||0) }))
     setSessionXP(x => x - (xpDelta||0))
     setCombo(comboDelta?.prev ?? 0)
@@ -546,7 +576,7 @@ export default function StudyScreen() {
     graduatedRef.current = graduatedRef.current.filter(c => c.id !== cardId)
     if (requeueEntry) requeuePool.current = requeuePool.current.filter(e => e !== requeueEntry)
     qiRef.current = pQi; setQi(pQi); setFlipped(false); setDone(false); setWaiting(false); setUndoToast(null); setFeedback(null)
-  }, [undoToast, restoreCardProgress])
+  }, [undoToast, restoreCardProgress, id])
 
   // ── Rate (with combo, XP, stage-up detection) ────────────────────────
   const handleRate = useCallback((q) => {
@@ -608,7 +638,7 @@ export default function StudyScreen() {
     const nextI = cI + 1
     setQueue(p => { const n = [...p]; dueNow.forEach((e, i) => n.splice(nextI+i, 0, e.card)); queueRef.current = n; return n })
 
-    const undo = { label: RATING_META.find(r => r.q === q)?.label || '?', snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo } }
+    const undo = { label: `Rated ${RATING_META.find(r => r.q === q)?.label || '?'}`, snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo } }
 
     if (nextI >= cQ.length + dueNow.length) {
       if (requeuePool.current.length > 0) {
