@@ -314,10 +314,10 @@ export default function ComboBlitzScreen() {
       setQueue([...queueRef.current])
     }
 
-    setCardFeedback({ points: 0, speedLabel: '', mult: 1, isCorrect: false, key: Date.now() })
+    setCardFeedback({ points: 0, speedLabel: '', mult: 1, isCorrect: false, meaning: cur?.meaning, key: Date.now() })
     setCardAnim('wrong')
 
-    setTimeout(advanceCard, 500)
+    setTimeout(advanceCard, 1500)
   }, [done, started, advanceCard])
 
   // ── Handle wrong voice guess (shake) ──────────────────────────────
@@ -635,9 +635,15 @@ export default function ComboBlitzScreen() {
                     )}
                   </>
                 ) : (
-                  <span className="font-display italic text-xl text-ember animate-fade-up drop-shadow-lg">
-                    Back of deck
-                  </span>
+                  <>
+                    <span className="font-display italic text-xl text-ember animate-fade-up drop-shadow-lg">
+                      {cardFeedback.meaning || 'Missed'}
+                    </span>
+                    <span className="font-mono text-[9px] text-parchment-500/50 tracking-widest uppercase animate-fade-up"
+                          style={{ animationDelay: '0.08s', opacity: 0 }}>
+                      Back of deck
+                    </span>
+                  </>
                 )}
               </div>
             )}
