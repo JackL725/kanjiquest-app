@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { isOnboardingComplete } from '@/hooks/useOnboarding'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
@@ -17,9 +18,20 @@ import DeckScreen          from '@/screens/DeckScreen'
 import SettingsScreen      from '@/screens/SettingsScreen'
 
 // ─── Guard: redirect to auth if not signed in and not guest ──────────────
+// Existing users who completed onboarding before auth was added are treated
+// as implicit guests so they don't get locked out.
 function RequireAuth({ children }) {
   const { isAuthenticated, loading } = useAuth()
-  if (loading) return (
+  const [timedOut, setTimedOut] = useState(false)
+
+  // Don't hang forever if Supabase is unreachable
+  useEffect(() => {
+    if (!loading) return
+    const t = setTimeout(() => setTimedOut(true), 3000)
+    return () => clearTimeout(t)
+  }, [loading])
+
+  if (loading && !timedOut) return (
     <div className="flex items-center justify-center h-full bg-ink-950">
       <div className="flex flex-col items-center gap-4">
         <span className="w-6 h-6 border-2 border-gold-400/30 border-t-gold-400 rounded-full animate-spin" />
@@ -27,10 +39,18 @@ function RequireAuth({ children }) {
       </div>
     </div>
   )
-  if (!isAuthenticated && !isGuestMode()) {
-    return <Navigate to="/auth" replace />
-  }
-  return children
+
+  // If authenticated, always allow
+  if (isAuthenticated) return children
+
+  // If guest mode is set, allow
+  if (isGuestMode()) return children
+
+  // If onboarding was already completed, this is an existing user from before
+  // auth was added — treat as implicit guest so they don't get locked out
+  if (isOnboardingComplete()) return children
+
+  return <Navigate to="/auth" replace />
 }
 
 // ─── Guard: redirect to onboarding if not complete ───────────────────────
