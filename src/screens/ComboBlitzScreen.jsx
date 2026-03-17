@@ -188,7 +188,6 @@ export default function ComboBlitzScreen() {
   const [cardFeedback, setCardFeedback] = useState(null)
   const [spokenText, setSpokenText] = useState('')
   const [shakeKey, setShakeKey] = useState(0)
-  const [flipped, setFlipped]   = useState(false)
 
   const startTimeRef  = useRef(null)
   const timerRef      = useRef(null)
@@ -268,7 +267,6 @@ export default function ComboBlitzScreen() {
     setCardAnim('enter')
     setCardFeedback(null)
     setSpokenText('')
-    setFlipped(false)
     processingRef.current = false
   }, [id])
 
@@ -365,7 +363,6 @@ export default function ComboBlitzScreen() {
   // ── Keyboard ──────────────────────────────────────────────────────
   useEffect(() => {
     function onKey(e) {
-      if (e.code === 'Space') { e.preventDefault(); setFlipped(f => !f) }
       if (e.key === 'Enter' || e.key === 'Escape') handleDontKnow()
     }
     window.addEventListener('keydown', onKey)
@@ -380,7 +377,7 @@ export default function ComboBlitzScreen() {
     scoreRef.current = 0; setScore(0); correctRef.current = 0; setCorrect(0)
     wrongRef.current = 0; setWrong(0)
     setDone(false); setStarted(false); setElapsed(0)
-    setCardAnim('enter'); setFlipped(false); setCardFeedback(null)
+    setCardAnim('enter'); setCardFeedback(null)
     setSpokenText(''); processingRef.current = false
     cardTimeRef.current = Date.now()
     if (cards.length > 0) keywordsRef.current = extractKeywords(cards[0].meaning)
@@ -612,7 +609,6 @@ export default function ComboBlitzScreen() {
         <div
           key={cardAnim === 'shake' ? `${qi}-shake-${shakeKey}` : `${qi}-${current?.id}`}
           className={`w-full max-w-sm aspect-[3/4] relative touch-manipulation ${cardAnimClass}`}
-          onClick={() => setFlipped(f => !f)}
         >
           <div className="absolute inset-0 bg-ink-800 rounded-2xl flex flex-col items-center justify-center p-8 select-none
                            border border-gold-400/15 transition-colors duration-150">
@@ -646,9 +642,7 @@ export default function ComboBlitzScreen() {
               </div>
             )}
 
-            {!flipped ? (
-              <>
-                <p className="font-mono text-[9px] text-parchment-500/40 tracking-[3px] uppercase mb-6">
+            <p className="font-mono text-[9px] text-parchment-500/40 tracking-[3px] uppercase mb-6">
                   Say the meaning
                 </p>
                 <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-4">{current?.kanji}</p>
@@ -665,22 +659,6 @@ export default function ComboBlitzScreen() {
                     "{spokenText}"
                   </p>
                 )}
-                {!spokenText && (
-                  <p className="font-mono text-[9px] text-parchment-500/20 tracking-widest mt-6">
-                    tap to peek
-                  </p>
-                )}
-              </>
-            ) : (
-              <>
-                <p className="font-mono text-[9px] text-gold-400/50 tracking-[3px] uppercase mb-4">Answer</p>
-                <p className="font-kanji text-5xl text-parchment-100/30 leading-none mb-4">{current?.kanji}</p>
-                <p className="font-display italic text-2xl text-parchment-100 mb-2 text-center leading-tight">{current?.meaning}</p>
-                {current?.reading && <p className="font-display italic text-lg text-parchment-300">{current.reading}</p>}
-                <p className="font-mono text-[11px] text-parchment-500 mt-1">{current?.romaji}</p>
-                <p className="font-mono text-[9px] text-parchment-500/20 tracking-widest mt-6">say the meaning</p>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -692,7 +670,7 @@ export default function ComboBlitzScreen() {
           I don't know
         </button>
         <p className="font-mono text-[8px] text-parchment-500/25 tracking-widest uppercase text-center mt-2">
-          Space to peek · Enter to skip
+          Enter to skip
         </p>
       </div>
     </div>
