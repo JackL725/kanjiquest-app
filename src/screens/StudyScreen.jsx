@@ -379,7 +379,7 @@ export default function StudyScreen() {
     const src = group ? deck.cards.filter(c => String(c.strokes) === group) : deck.cards
     let cards
     if (isAll || group) { cards = src.filter(c => !burned.has(c.id)) }
-    else { const { newBatch, reviewBatch, learning } = getStudyQueue(src); cards = [...newBatch, ...learning, ...reviewBatch].filter(c => !burned.has(c.id)); if (!cards.length) cards = src.filter(c => !burned.has(c.id)) }
+    else { const { newBatch, reviewBatch, learning } = getStudyQueue(src); cards = [...learning, ...reviewBatch, ...newBatch].filter(c => !burned.has(c.id)); if (!cards.length) cards = src.filter(c => !burned.has(c.id)) }
     const shuffled = cards.sort(() => Math.random() - 0.5)
     queueRef.current = shuffled; setQueue(shuffled); qiRef.current = 0; setQi(0)
     setFlipped(false); setDone(false); setWaiting(false); setStats({ ok: 0, miss: 0 })

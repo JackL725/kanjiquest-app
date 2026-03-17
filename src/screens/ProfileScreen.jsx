@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSettings, DEFAULT_SETTINGS } from '@/hooks/useSettings'
+import { useSettings } from '@/hooks/useSettings'
 import { readProfile } from '@/hooks/useOnboarding'
 import { ALL_DECKS } from '@/data/decks'
 
@@ -85,68 +85,6 @@ function computeAchievements(stats) {
   ]
 }
 
-// ─── Shared SettingRow ───────────────────────────────────────────────────
-function SettingRow({ label, description, value, min, max, step = 1, unit = '', onChange, last = false }) {
-  const display = unit === '%' ? `${value}${unit}` : unit ? `${value} ${unit}` : `${value}`
-  return (
-    <div className={`flex items-center justify-between gap-4 px-4 py-3.5
-                     ${!last ? 'border-b border-gold-400/8' : ''}`}>
-      <div className="min-w-0 flex-1">
-        <p className="font-body text-sm text-parchment-200 leading-tight">{label}</p>
-        {description && <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5 leading-snug">{description}</p>}
-      </div>
-      <div className="flex items-center gap-1.5 shrink-0">
-        <button onClick={() => onChange(Math.max(min, +(value - step).toFixed(10)))}
-          className="w-8 h-8 rounded-lg bg-ink-700 border border-gold-400/12 text-parchment-400 font-mono text-lg leading-none
-                     hover:border-gold-400/30 hover:text-gold-400 transition-colors duration-150 flex items-center justify-center touch-manipulation">−</button>
-        <span className="font-mono text-[12px] text-parchment-100 w-[60px] text-center tabular-nums">{display}</span>
-        <button onClick={() => onChange(Math.min(max, +(value + step).toFixed(10)))}
-          className="w-8 h-8 rounded-lg bg-ink-700 border border-gold-400/12 text-parchment-400 font-mono text-lg leading-none
-                     hover:border-gold-400/30 hover:text-gold-400 transition-colors duration-150 flex items-center justify-center touch-manipulation">+</button>
-      </div>
-    </div>
-  )
-}
-
-function SettingsBlock({ settings, updateSetting, resetToDefaults }) {
-  const changed = JSON.stringify(settings) !== JSON.stringify(DEFAULT_SETTINGS)
-  const s = settings
-  return (
-    <div className="space-y-4">
-      <div>
-        <p className="font-mono text-[9px] text-parchment-500/60 tracking-widest uppercase px-1 mb-1.5">Daily limits</p>
-        <div className="bg-ink-800 border border-gold-400/8 rounded-xl overflow-hidden">
-          <SettingRow label="New cards / day" value={s.newCardsPerDay} min={1} max={9999} step={5} onChange={v => updateSetting('newCardsPerDay', v)} />
-          <SettingRow label="Max reviews / day" value={s.maxReviewsPerDay} min={10} max={9999} step={10} onChange={v => updateSetting('maxReviewsPerDay', v)} last />
-        </div>
-      </div>
-      <div>
-        <p className="font-mono text-[9px] text-parchment-500/60 tracking-widest uppercase px-1 mb-1.5">Intervals</p>
-        <div className="bg-ink-800 border border-gold-400/8 rounded-xl overflow-hidden">
-          <SettingRow label="Hard interval" value={s.hardIntervalMins} min={1} max={1440} step={5} unit="min" onChange={v => updateSetting('hardIntervalMins', v)} />
-          <SettingRow label="Good interval" value={s.goodIntervalDays} min={1} max={30} step={1} unit="days" onChange={v => updateSetting('goodIntervalDays', v)} />
-          <SettingRow label="Easy interval" value={s.easyIntervalDays} min={1} max={90} step={1} unit="days" onChange={v => updateSetting('easyIntervalDays', v)} />
-          <SettingRow label="Max interval" value={s.maximumIntervalDays} min={30} max={36500} step={30} unit="days" onChange={v => updateSetting('maximumIntervalDays', v)} last />
-        </div>
-      </div>
-      <div>
-        <p className="font-mono text-[9px] text-parchment-500/60 tracking-widest uppercase px-1 mb-1.5">Ease factor</p>
-        <div className="bg-ink-800 border border-gold-400/8 rounded-xl overflow-hidden">
-          <SettingRow label="Starting ease" value={s.startingEase} min={130} max={500} step={10} unit="%" onChange={v => updateSetting('startingEase', v)} />
-          <SettingRow label="Easy bonus" value={s.easyBonus} min={100} max={300} step={10} unit="%" onChange={v => updateSetting('easyBonus', v)} />
-          <SettingRow label="Interval modifier" value={s.intervalModifier} min={50} max={500} step={5} unit="%" onChange={v => updateSetting('intervalModifier', v)} />
-          <SettingRow label="Minimum ease" value={s.minimumEase} min={100} max={250} step={5} unit="%" onChange={v => updateSetting('minimumEase', v)} last />
-        </div>
-      </div>
-      {changed && (
-        <button onClick={() => { if (window.confirm('Reset all settings to defaults?')) resetToDefaults() }}
-          className="w-full border border-ember/20 text-ember/60 font-mono text-[10px] tracking-widest uppercase py-3 rounded-xl hover:border-ember/40 hover:text-ember transition-colors duration-200">
-          Reset to defaults
-        </button>
-      )}
-    </div>
-  )
-}
 
 // ─── Achievement tile ────────────────────────────────────────────────────
 function AchievementTile({ a, delay }) {
@@ -182,7 +120,7 @@ function AchievementTile({ a, delay }) {
 // ─── ProfileScreen ───────────────────────────────────────────────────────
 export default function ProfileScreen() {
   const navigate = useNavigate()
-  const { settings, updateSetting, resetToDefaults } = useSettings()
+  const { settings } = useSettings()
   const profile      = useMemo(() => readProfile(), [])
   const stats        = useMemo(() => readStats(), [])
   const achievements = useMemo(() => computeAchievements(stats), [stats])
@@ -250,10 +188,19 @@ export default function ProfileScreen() {
         <div className="gold-divider mb-4">
           <span className="font-mono text-[9px] tracking-widest uppercase text-parchment-500">Study settings</span>
         </div>
-        <SettingsBlock settings={settings} updateSetting={updateSetting} resetToDefaults={resetToDefaults} />
-        <p className="font-mono text-[9px] text-parchment-500/30 tracking-widest uppercase text-center mt-4">
-          Settings apply immediately · Progress is never deleted
-        </p>
+        <button
+          onClick={() => navigate('/settings')}
+          className="w-full bg-ink-800 border border-gold-400/10 rounded-xl px-4 py-4 flex items-center justify-between
+                     hover:border-gold-400/25 transition-colors group"
+        >
+          <div>
+            <p className="font-body text-sm text-parchment-200 text-left">FSRS Algorithm Settings</p>
+            <p className="font-mono text-[10px] text-parchment-500/50 mt-0.5">
+              Retention: {Math.round(settings.desiredRetention * 100)}% · {settings.newCardsPerDay} new/day · {settings.maxReviewsPerDay} max reviews
+            </p>
+          </div>
+          <span className="font-mono text-[10px] text-gold-400/50 group-hover:text-gold-400 transition-colors">→</span>
+        </button>
       </div>
 
       {/* ── Account ── */}
