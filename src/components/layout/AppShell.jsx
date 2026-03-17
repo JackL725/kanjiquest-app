@@ -1,4 +1,4 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 
 const NAV = [
   {
@@ -44,8 +44,21 @@ const NAV = [
   },
 ]
 
+// Tab paths that are "top-level" — navigating between these should use history
+const TAB_PATHS = new Set(['/library', '/browse', '/radicals', '/profile'])
+
 export default function AppShell() {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // When tapping Library from another tab, go back in history so the user
+  // returns to wherever they were (e.g. study session) instead of /library
+  function handleLibraryTap(e) {
+    e.preventDefault()
+    if (location.pathname === '/library') return
+    // If we're on a tab page, go back — this returns to the page before the tab switch
+    navigate(-1)
+  }
 
   return (
     <div className="flex flex-col h-full max-w-md mx-auto relative">
@@ -83,19 +96,23 @@ export default function AppShell() {
       {/* Bottom nav */}
       <nav className="shrink-0 border-t border-gold-400/10 bg-ink-900">
         <div className="flex">
-          {NAV.map(({ to, label, icon }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                `flex-1 flex flex-col items-center gap-1 py-3 transition-colors duration-200 ` +
-                (isActive ? 'text-gold-400' : 'text-parchment-500 hover:text-parchment-300')
-              }
-            >
-              {icon}
-              <span className="font-mono text-[9px] tracking-widest uppercase">{label}</span>
-            </NavLink>
-          ))}
+          {NAV.map(({ to, label, icon }) => {
+            const isLibrary = to === '/library'
+            return (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={isLibrary ? handleLibraryTap : undefined}
+                className={({ isActive }) =>
+                  `flex-1 flex flex-col items-center gap-1 py-3 transition-colors duration-200 ` +
+                  (isActive ? 'text-gold-400' : 'text-parchment-500 hover:text-parchment-300')
+                }
+              >
+                {icon}
+                <span className="font-mono text-[9px] tracking-widest uppercase">{label}</span>
+              </NavLink>
+            )
+          })}
         </div>
       </nav>
     </div>
