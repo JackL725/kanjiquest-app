@@ -506,7 +506,7 @@ export default function MemoryTestScreen() {
             key={`kanji-${qi}-${current?.id}`}
             style={dragging ? {
               left: dragPos.x - 56,
-              top: dragPos.y - 64,
+              top: dragPos.y - 120,
               width: 112,
               height: 128,
             } : undefined}
