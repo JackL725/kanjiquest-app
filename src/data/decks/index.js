@@ -5,12 +5,13 @@ import zeldaAlttp from './zelda-alttp'
 import yotsuba from './yotsuba'
 import chronoTrigger from './chrono-trigger'
 import ninoKuni from './ni-no-kuni'
+import ff6 from './ff6'
 
 // Radicals first (building blocks), then Kanji 101 (single characters), then content decks
-export const ALL_DECKS = [radicals, primer, p5r, zeldaAlttp, chronoTrigger, ninoKuni, yotsuba]
+export const ALL_DECKS = [radicals, primer, p5r, zeldaAlttp, chronoTrigger, ninoKuni, ff6, yotsuba]
 
 // Free decks owned by everyone; content decks also owned for dev/testing (will come from Supabase later)
-export const OWNED_DECK_IDS = ['radicals', 'primer', 'p5r', 'zelda-alttp', 'chrono-trigger', 'ni-no-kuni', 'yotsuba']
+export const OWNED_DECK_IDS = ['radicals', 'primer', 'p5r', 'zelda-alttp', 'chrono-trigger', 'ni-no-kuni', 'ff6', 'yotsuba']
 
 export function getDeckById(id) {
   return ALL_DECKS.find(d => d.id === id) ?? null
