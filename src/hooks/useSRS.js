@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   FSRS,
   createEmptyCard,
@@ -7,6 +7,8 @@ import {
   State,
 } from 'ts-fsrs'
 import { readSettings } from './useSettings'
+import { supabase } from '@/lib/supabase'
+import { isGuestMode } from '@/screens/AuthScreen'
 
 // Re-export for consumers
 export { Rating, State }
@@ -33,7 +35,7 @@ function writeProgress(progress) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)) } catch {}
 }
 
-function recordStudyDate() {
+function recordStudyDate(userId) {
   try {
     const iso   = todayISO()
     const raw   = localStorage.getItem(STREAK_KEY)
@@ -41,7 +43,102 @@ function recordStudyDate() {
     if (!dates.includes(iso)) {
       localStorage.setItem(STREAK_KEY, JSON.stringify([...dates, iso].slice(-365)))
     }
+    // Also save to Supabase for logged-in users
+    if (userId) {
+      supabase.from('study_dates')
+        .upsert({ user_id: userId, date: iso }, { onConflict: 'user_id,date' })
+        .then(() => {})
+        .catch(() => {})
+    }
   } catch {}
+}
+
+// ─── Supabase: upsert a single card's progress ──────────────────────────
+function upsertCardToCloud(userId, deckId, cardId, cardData) {
+  supabase.from('srs_progress')
+    .upsert({
+      user_id:        userId,
+      deck_id:        deckId,
+      card_id:        cardId,
+      due:            cardData.due,
+      stability:      cardData.stability,
+      difficulty:     cardData.difficulty,
+      elapsed_days:   cardData.elapsed_days || 0,
+      scheduled_days: cardData.scheduled_days || 0,
+      reps:           cardData.reps || 0,
+      lapses:         cardData.lapses || 0,
+      learning_steps: cardData.learning_steps || 0,
+      state:          cardData.state || 0,
+      last_review:    cardData.last_review || null,
+      first_studied:  cardData.firstStudied || null,
+    }, { onConflict: 'user_id,deck_id,card_id' })
+    .then(() => {})
+    .catch(err => console.warn('Cloud save failed:', err.message))
+}
+
+// ─── Supabase: fetch all progress for a user ─────────────────────────────
+async function fetchCloudProgress(userId) {
+  try {
+    const { data, error } = await supabase
+      .from('srs_progress')
+      .select('*')
+      .eq('user_id', userId)
+
+    if (error) throw error
+    if (!data || data.length === 0) return null
+
+    // Convert rows into our nested { deckId: { cardId: {...} } } format
+    const progress = {}
+    for (const row of data) {
+      if (!progress[row.deck_id]) progress[row.deck_id] = {}
+      progress[row.deck_id][row.card_id] = {
+        due:            row.due,
+        stability:      row.stability,
+        difficulty:     row.difficulty,
+        elapsed_days:   row.elapsed_days,
+        scheduled_days: row.scheduled_days,
+        reps:           row.reps,
+        lapses:         row.lapses,
+        learning_steps: row.learning_steps,
+        state:          row.state,
+        last_review:    row.last_review,
+        firstStudied:   row.first_studied,
+      }
+    }
+    return progress
+  } catch (err) {
+    console.warn('Cloud fetch failed:', err.message)
+    return null
+  }
+}
+
+// ─── Merge cloud + local progress (cloud wins on conflict) ───────────────
+function mergeProgress(local, cloud) {
+  if (!cloud) return local
+  const merged = { ...local }
+
+  for (const deckId of Object.keys(cloud)) {
+    if (!merged[deckId]) {
+      merged[deckId] = cloud[deckId]
+      continue
+    }
+    for (const cardId of Object.keys(cloud[deckId])) {
+      const cloudCard = cloud[deckId][cardId]
+      const localCard = merged[deckId]?.[cardId]
+
+      if (!localCard) {
+        merged[deckId][cardId] = cloudCard
+      } else {
+        // Most recent last_review wins
+        const cloudTime = cloudCard.last_review ? new Date(cloudCard.last_review).getTime() : 0
+        const localTime = localCard.last_review ? new Date(localCard.last_review).getTime() : 0
+        if (cloudTime > localTime) {
+          merged[deckId][cardId] = cloudCard
+        }
+      }
+    }
+  }
+  return merged
 }
 
 // ─── Create FSRS scheduler from settings ─────────────────────────────────
@@ -55,8 +152,6 @@ function createScheduler() {
 }
 
 // ─── SM-2 → FSRS migration ──────────────────────────────────────────────
-// Runs once on first load after upgrade. Converts old progress records to
-// FSRS card format with reasonable approximations.
 function migrateIfNeeded() {
   try {
     const ver = parseInt(localStorage.getItem(MIGRATION_KEY) || '0', 10)
@@ -74,28 +169,21 @@ function migrateIfNeeded() {
         const old = deckProg[cardId]
         if (!old) continue
 
-        // Already FSRS format? (has 'stability' field)
         if ('stability' in old) {
           migrated[deckId][cardId] = old
           continue
         }
 
-        // Old SM-2 format → FSRS card
         const wasGraduated = old.graduated === true
         const oldInterval  = old.interval || 0
         const oldEf        = old.ef || 2.5
         const oldReps      = old.reps || 0
 
-        // Map ease factor to FSRS difficulty (1-10 scale)
-        // ef=2.5 (easy) → D≈3, ef=1.3 (hard) → D≈8
         const difficulty = Math.max(1, Math.min(10,
           10 - ((oldEf - 1.3) / (2.5 - 1.3)) * 7
         ))
-
-        // Map interval to stability (they're roughly equivalent)
         const stability = wasGraduated ? Math.max(1, oldInterval) : 0.5
 
-        // Map state
         let state = State.New
         if (wasGraduated && oldInterval > 0) state = State.Review
         else if (oldReps > 0) state = State.Learning
@@ -111,7 +199,6 @@ function migrateIfNeeded() {
           learning_steps: wasGraduated ? 0 : (oldReps > 0 ? 1 : 0),
           state,
           last_review:    old.last || null,
-          // KQ metadata
           firstStudied:   old.firstStudied || null,
         }
       }
@@ -142,7 +229,6 @@ export function formatInterval(card) {
   if (!card) return ''
   const days = card.scheduled_days
   if (days === 0) {
-    // Intra-day: compute minutes from due
     const now = new Date()
     const due = new Date(card.due)
     const mins = Math.max(1, Math.round((due - now) / 60000))
@@ -177,12 +263,45 @@ function writeBonus(deckId, count) {
   } catch {}
 }
 
+// ─── Get current Supabase user ID (null if guest) ────────────────────────
+function useUserId() {
+  const [userId, setUserId] = useState(null)
+  useEffect(() => {
+    if (isGuestMode()) { setUserId(null); return }
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id ?? null)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUserId(session?.user?.id ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+  return userId
+}
+
 // ─── Hook ────────────────────────────────────────────────────────────────
 export function useSRS(deckId) {
   const [progress, setProgress] = useState(readProgress)
   const [bonus, setBonus]       = useState(() => readBonus(deckId))
+  const userId = useUserId()
+  const cloudLoaded = useRef(false)
 
-  // Persist on change
+  // ── On mount / auth change: fetch from Supabase and merge ────────
+  useEffect(() => {
+    if (!userId || cloudLoaded.current) return
+    cloudLoaded.current = true
+
+    fetchCloudProgress(userId).then(cloudProgress => {
+      if (!cloudProgress) return
+      setProgress(prev => {
+        const merged = mergeProgress(prev, cloudProgress)
+        writeProgress(merged)  // update localStorage cache
+        return merged
+      })
+    })
+  }, [userId])
+
+  // Persist to localStorage on change
   const [ready, setReady] = useState(false)
   useEffect(() => { setReady(true) }, [])
   useEffect(() => {
@@ -193,16 +312,14 @@ export function useSRS(deckId) {
   }, [bonus, ready])
 
   // ── Rate a card (FSRS) ─────────────────────────────────────────────
-  // rating: Rating.Again(1), Rating.Hard(2), Rating.Good(3), Rating.Easy(4)
   const rate = useCallback((cardId, rating) => {
-    recordStudyDate()
+    recordStudyDate(userId)
     setProgress(prev => {
       const deckProg = prev[deckId] || {}
       const existing = deckProg[cardId]
       const scheduler = createScheduler()
       const now = new Date()
 
-      // Build FSRS card object from stored progress (or create new)
       let card
       if (existing && 'stability' in existing) {
         card = {
@@ -221,38 +338,42 @@ export function useSRS(deckId) {
         card = createEmptyCard(now)
       }
 
-      // Schedule
       const result = scheduler.repeat(card, now)
       const outcome = result[rating]
       const newCard = outcome.card
+
+      const cardData = {
+        due:            newCard.due.toISOString ? newCard.due.toISOString() : new Date(newCard.due).toISOString(),
+        stability:      newCard.stability,
+        difficulty:     newCard.difficulty,
+        elapsed_days:   newCard.elapsed_days,
+        scheduled_days: newCard.scheduled_days,
+        reps:           newCard.reps,
+        lapses:         newCard.lapses,
+        learning_steps: newCard.learning_steps ?? 0,
+        state:          newCard.state,
+        last_review:    newCard.last_review
+          ? (newCard.last_review.toISOString ? newCard.last_review.toISOString() : new Date(newCard.last_review).toISOString())
+          : now.toISOString(),
+        firstStudied:   existing?.firstStudied || now.toISOString(),
+      }
+
+      // Fire-and-forget upsert to Supabase for logged-in users
+      if (userId) {
+        upsertCardToCloud(userId, deckId, cardId, cardData)
+      }
 
       return {
         ...prev,
         [deckId]: {
           ...deckProg,
-          [cardId]: {
-            due:            newCard.due.toISOString ? newCard.due.toISOString() : new Date(newCard.due).toISOString(),
-            stability:      newCard.stability,
-            difficulty:     newCard.difficulty,
-            elapsed_days:   newCard.elapsed_days,
-            scheduled_days: newCard.scheduled_days,
-            reps:           newCard.reps,
-            lapses:         newCard.lapses,
-            learning_steps: newCard.learning_steps ?? 0,
-            state:          newCard.state,
-            last_review:    newCard.last_review
-              ? (newCard.last_review.toISOString ? newCard.last_review.toISOString() : new Date(newCard.last_review).toISOString())
-              : now.toISOString(),
-            // KQ metadata
-            firstStudied:   existing?.firstStudied || now.toISOString(),
-          },
+          [cardId]: cardData,
         },
       }
     })
-  }, [deckId])
+  }, [deckId, userId])
 
   // ── Get scheduling preview (for button labels) ─────────────────────
-  // Returns { [Rating.Again]: { card, interval }, ... } for all 4 ratings
   function getSchedulingPreview(cardId) {
     const existing = (progress[deckId] || {})[cardId]
     const scheduler = createScheduler()
@@ -334,7 +455,6 @@ export function useSRS(deckId) {
     return (progress[deckId] || {})[cardId] ?? null
   }
 
-  // Reviews due: graduated cards (state=Review) whose due time has passed
   function getDueReviews(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
@@ -342,7 +462,6 @@ export function useSRS(deckId) {
     })
   }
 
-  // Learning: cards in learning/relearning phase that are due now
   function getDueLearning(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
@@ -350,12 +469,10 @@ export function useSRS(deckId) {
     })
   }
 
-  // Cards never seen before
   function getNewCards(cards) {
     return cards.filter(c => isNew(getCardProgress(c.id)))
   }
 
-  // Cards that have graduated at least once (state=Review, even if lapsed)
   function getLearnedCount(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
@@ -363,7 +480,6 @@ export function useSRS(deckId) {
     }).length
   }
 
-  // How many new cards were first introduced TODAY in this deck
   function getNewIntroducedToday(cards) {
     const today = todayISO()
     return cards.filter(c => {
@@ -372,7 +488,6 @@ export function useSRS(deckId) {
     }).length
   }
 
-  // Total cards to study today
   function getDueCount(cards) {
     const s = readSettings()
     const reviews  = getDueReviews(cards).length
@@ -388,7 +503,6 @@ export function useSRS(deckId) {
     return getNewCards(cards).length
   }
 
-  // Build study queue: learning first (time-sensitive), then reviews, then new
   function getStudyQueue(cards) {
     const s = readSettings()
 
@@ -409,7 +523,6 @@ export function useSRS(deckId) {
     setBonus(prev => prev + count)
   }
 
-  // Restore a card's SRS state (used by undo)
   function restoreCardProgress(cardId, snapshot) {
     setProgress(prev => {
       const deckProg = { ...(prev[deckId] || {}) }
@@ -418,6 +531,21 @@ export function useSRS(deckId) {
       } else {
         deckProg[cardId] = snapshot
       }
+
+      // Sync restore to cloud too
+      if (userId) {
+        if (snapshot) {
+          upsertCardToCloud(userId, deckId, cardId, snapshot)
+        } else {
+          // Delete from cloud
+          supabase.from('srs_progress')
+            .delete()
+            .match({ user_id: userId, deck_id: deckId, card_id: cardId })
+            .then(() => {})
+            .catch(() => {})
+        }
+      }
+
       return { ...prev, [deckId]: deckProg }
     })
   }
