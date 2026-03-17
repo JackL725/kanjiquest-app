@@ -354,9 +354,10 @@ function SectionDivider({ label, delay = 0 }) {
 export default function BrowseScreen() {
   const navigate  = useNavigate()
 
-  const freeDecks = ALL_DECKS.filter(d => d.free)
-  const gameDecks = ALL_DECKS.filter(d => !d.free)
-  const featured  = gameDecks[0]  // P5R is the hero for now
+  const freeDecks  = ALL_DECKS.filter(d => d.free)
+  const gameDecks  = ALL_DECKS.filter(d => !d.free && d.genre !== 'Manga')
+  const mangaDecks = ALL_DECKS.filter(d => !d.free && d.genre === 'Manga')
+  const featured   = gameDecks[0]  // P5R is the hero for now
 
   return (
     <div className="px-5 py-6 pb-10 space-y-5">
@@ -389,22 +390,28 @@ export default function BrowseScreen() {
         ))}
       </div>
 
-      {/* ── JRPG ── */}
+      {/* ── Games ── */}
       {gameDecks.length > 0 && (
         <>
-          <SectionDivider label="JRPG" delay={0.2} />
+          <SectionDivider label="Games" delay={0.2} />
           <div className="space-y-3">
             {gameDecks.map((deck, i) => (
-              <div
-                key={deck.id}
-                className="animate-fade-up"
-                style={{ animationDelay: `${0.22 + i * 0.07}s` }}
-              >
-                <DeckTile
-                  deck={deck}
-                  owned={OWNED_DECK_IDS.includes(deck.id)}
-                  onPress={() => navigate(`/deck/${deck.id}`)}
-                />
+              <div key={deck.id} className="animate-fade-up" style={{ animationDelay: `${0.22 + i * 0.07}s` }}>
+                <DeckTile deck={deck} owned={OWNED_DECK_IDS.includes(deck.id)} onPress={() => navigate(`/deck/${deck.id}`)} />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Manga ── */}
+      {mangaDecks.length > 0 && (
+        <>
+          <SectionDivider label="Manga" delay={0.25} />
+          <div className="space-y-3">
+            {mangaDecks.map((deck, i) => (
+              <div key={deck.id} className="animate-fade-up" style={{ animationDelay: `${0.27 + i * 0.07}s` }}>
+                <DeckTile deck={deck} owned={OWNED_DECK_IDS.includes(deck.id)} onPress={() => navigate(`/deck/${deck.id}`)} />
               </div>
             ))}
           </div>
