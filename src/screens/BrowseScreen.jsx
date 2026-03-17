@@ -248,22 +248,26 @@ function DeckTile({ deck, owned, onPress }) {
   )
 }
 
-// ─── Kanji Primer Tile (free, special) ───────────────────────────────────
-function KanjiPrimerTile() {
+// ─── Free Deck Tile ──────────────────────────────────────────────────────
+function FreeDeckTile({ deck, onPress }) {
   return (
-    <div className="w-full text-left bg-ink-800 border border-gold-400/15 rounded-xl
-                    p-4 flex items-center gap-4 cursor-default">
-      <ArtworkBox kanji="基" accentColor={null} size="lg" />
+    <button
+      onClick={onPress}
+      className="w-full text-left bg-ink-800 border border-gold-400/15 rounded-xl
+                 p-4 flex items-center gap-4 hover:border-gold-400/30 hover:bg-ink-700/40
+                 transition-all duration-200 group"
+    >
+      <ArtworkBox kanji={deck.coverKanji} accentColor={deck.accentColor} size="lg" />
 
       <div className="flex-1 min-w-0">
-        <p className="font-display italic text-parchment-100 text-base leading-tight">
-          Kanji Primer
+        <p className="font-display italic text-parchment-100 text-base leading-tight truncate">
+          {deck.title}
         </p>
         <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mt-0.5">
-          Radicals & Single Characters · Free
+          {deck.cards.length} cards · {deck.subtitle}
         </p>
-        <p className="font-body text-[11px] text-parchment-500/70 mt-1.5 leading-snug">
-          The foundation. Learn the building blocks and all essential kanji.
+        <p className="font-body text-[11px] text-parchment-500/70 mt-1.5 leading-snug line-clamp-2">
+          {deck.description}
         </p>
       </div>
 
@@ -276,7 +280,7 @@ function KanjiPrimerTile() {
           included
         </span>
       </div>
-    </div>
+    </button>
   )
 }
 
@@ -349,7 +353,10 @@ function SectionDivider({ label, delay = 0 }) {
 // ─── BrowseScreen ─────────────────────────────────────────────────────────
 export default function BrowseScreen() {
   const navigate  = useNavigate()
-  const featured  = ALL_DECKS[0]   // P5R is the hero for now
+
+  const freeDecks = ALL_DECKS.filter(d => d.free)
+  const gameDecks = ALL_DECKS.filter(d => !d.free)
+  const featured  = gameDecks[0]  // P5R is the hero for now
 
   return (
     <div className="px-5 py-6 pb-10 space-y-5">
@@ -373,26 +380,36 @@ export default function BrowseScreen() {
 
       {/* ── Free ── */}
       <SectionDivider label="Free" delay={0.15} />
-      <KanjiPrimerTile />
-
-      {/* ── JRPG ── */}
-      <SectionDivider label="JRPG" delay={0.2} />
 
       <div className="space-y-3">
-        {ALL_DECKS.map((deck, i) => (
-          <div
-            key={deck.id}
-            className="animate-fade-up"
-            style={{ animationDelay: `${0.22 + i * 0.07}s` }}
-          >
-            <DeckTile
-              deck={deck}
-              owned={OWNED_DECK_IDS.includes(deck.id)}
-              onPress={() => navigate(`/deck/${deck.id}`)}
-            />
+        {freeDecks.map((deck, i) => (
+          <div key={deck.id} className="animate-fade-up" style={{ animationDelay: `${0.17 + i * 0.06}s` }}>
+            <FreeDeckTile deck={deck} onPress={() => navigate(`/deck/${deck.id}`)} />
           </div>
         ))}
       </div>
+
+      {/* ── JRPG ── */}
+      {gameDecks.length > 0 && (
+        <>
+          <SectionDivider label="JRPG" delay={0.2} />
+          <div className="space-y-3">
+            {gameDecks.map((deck, i) => (
+              <div
+                key={deck.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${0.22 + i * 0.07}s` }}
+              >
+                <DeckTile
+                  deck={deck}
+                  owned={OWNED_DECK_IDS.includes(deck.id)}
+                  onPress={() => navigate(`/deck/${deck.id}`)}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* ── Coming Soon ── */}
       <SectionDivider label="Coming soon" delay={0.28} />
