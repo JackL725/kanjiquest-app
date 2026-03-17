@@ -5,6 +5,8 @@ import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
 import { STAGES, getMasteryStage } from '@/hooks/useMastery'
 import { ComponentLibrary } from '@/screens/StudyScreen'
+import { readHighScore as readVoiceHS } from '@/screens/ComboBlitzScreen'
+import { readMemTestHighScore as readDragHS } from '@/screens/MemoryTestScreen'
 
 const BONUS_OPTIONS = [5, 10, 15, 20]
 
@@ -226,6 +228,11 @@ export default function DeckScreen() {
               <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
                 Voice recall
               </span>
+              {readVoiceHS(id) > 0 && (
+                <span className="font-mono text-[9px] text-blue-400/50 tracking-wider">
+                  Best: {readVoiceHS(id).toLocaleString()}
+                </span>
+              )}
             </button>
             <button
               onClick={() => navigate(`/memory-test/${id}`)}
@@ -239,6 +246,11 @@ export default function DeckScreen() {
               <span className="font-mono text-[8px] text-parchment-500/40 tracking-widest uppercase">
                 Speed match
               </span>
+              {readDragHS(id) > 0 && (
+                <span className="font-mono text-[9px] text-amber-500/50 tracking-wider">
+                  Best: {readDragHS(id).toLocaleString()}
+                </span>
+              )}
             </button>
           </div>
         )}

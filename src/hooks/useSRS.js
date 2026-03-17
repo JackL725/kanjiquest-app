@@ -7,6 +7,7 @@ import {
   State,
 } from 'ts-fsrs'
 import { readSettings } from './useSettings'
+import { getMasteryStage } from './useMastery'
 import { supabase } from '@/lib/supabase'
 import { isGuestMode } from '@/screens/AuthScreen'
 
@@ -476,7 +477,9 @@ export function useSRS(deckId) {
   function getLearnedCount(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
-      return p && (p.state === State.Review || (p.reps > 0 && p.state !== undefined))
+      if (!p) return false
+      const { stageIndex } = getMasteryStage(p)
+      return stageIndex >= 2
     }).length
   }
 

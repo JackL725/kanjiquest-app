@@ -34,7 +34,7 @@ function getStars(score, n) {
 }
 
 const HS_KEY = 'kq-memtest-highscores'
-function readHS(id) { try { return JSON.parse(localStorage.getItem(HS_KEY) || '{}')[id] || 0 } catch { return 0 } }
+export function readMemTestHighScore(id) { try { return JSON.parse(localStorage.getItem(HS_KEY) || '{}')[id] || 0 } catch { return 0 } }
 function writeHS(id, s) { try { const a = JSON.parse(localStorage.getItem(HS_KEY) || '{}'); a[id] = Math.max(a[id] || 0, s); localStorage.setItem(HS_KEY, JSON.stringify(a)) } catch {} }
 
 // ─── Pick 3 random distractors ───────────────────────────────────────────
@@ -131,7 +131,7 @@ export default function MemoryTestScreen() {
           return stageIndex >= 1 && ((p.difficulty && p.difficulty >= 5) || (p.lapses && p.lapses > 0))
         case 'all':
         default:
-          return stageIndex >= 2 && stageIndex <= 4
+          return stageIndex >= 2
       }
     })
   }
@@ -383,7 +383,7 @@ export default function MemoryTestScreen() {
     const accuracy = totalAnswers ? Math.round((correctRef.current / totalAnswers) * 100) : 0
     const isPerfect = wrongRef.current === 0
     const stars = getStars(score, cardCount.current)
-    const highScore = readHS(id)
+    const highScore = readMemTestHighScore(id)
     const isNewHS = score >= highScore && score > 0
     const accInfo = getAccuracyMult(correctRef.current, totalAnswers)
 

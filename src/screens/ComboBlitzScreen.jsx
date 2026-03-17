@@ -50,7 +50,7 @@ function getStars(score, cardCount) {
 
 // ─── High score persistence ───────────────────────────────────────────────
 const HS_KEY = 'kq-blitz-highscores'
-function readHighScore(deckId) {
+export function readHighScore(deckId) {
   try { const all = JSON.parse(localStorage.getItem(HS_KEY) || '{}'); return all[deckId] || 0 } catch { return 0 }
 }
 function writeHighScore(deckId, score) {
@@ -280,7 +280,7 @@ export default function ComboBlitzScreen() {
           return stageIndex >= 1 && ((p.difficulty && p.difficulty >= 5) || (p.lapses && p.lapses > 0))
         case 'all':
         default:
-          return stageIndex >= 2 && stageIndex <= 4
+          return stageIndex >= 2
       }
     })
   }
