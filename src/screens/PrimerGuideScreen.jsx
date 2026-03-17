@@ -784,6 +784,11 @@ function TipsStep({ onFinish }) {
       body: 'Even 5 minutes a day beats one long session a week. Consistency is everything with spaced repetition.',
     },
     {
+      icon: '⬆️',
+      title: 'Swipe up to master',
+      body: 'Already know a card? Swipe up on new cards to instantly master them. A fresh card takes its place — so you only study what you don\'t know.',
+    },
+    {
       icon: '🔄',
       title: 'Reviews first, then new cards',
       body: 'Always clear your due reviews before learning new cards. Don\'t let the review pile grow.',

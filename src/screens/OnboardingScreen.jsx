@@ -314,6 +314,11 @@ function HowItWorksStep({ onNext }) {
       body:    'Cards show you kanji, readings, meanings, and mnemonic stories. Tap to flip, then rate how well you knew it.',
     },
     {
+      kanji:   '速',
+      title:   'Swipe up to master',
+      body:    'Already know a card? Swipe up to instantly master it. A new card takes its place — so you only study what you need to learn.',
+    },
+    {
       kanji:   '繰',
       title:   'Spaced repetition does the rest',
       body:    'Cards you know well come back less often. Cards you struggle with come back sooner. Over time, everything sticks.',
@@ -326,7 +331,7 @@ function HowItWorksStep({ onNext }) {
         How KanjiQuest works
       </h2>
       <p className="font-body text-sm text-parchment-500 mb-8 animate-fade-up delay-100">
-        Three simple steps to reading Japanese.
+        Four steps to reading Japanese in your favorite games.
       </p>
 
       <div className="w-full max-w-[320px] space-y-4 mb-8">
