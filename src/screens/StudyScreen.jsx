@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { getDeckById, getOwnedDecks } from '@/data/decks'
-import { useSRS, sm2 } from '@/hooks/useSRS'
+import { useSRS, Rating } from '@/hooks/useSRS'
 import { useSettings } from '@/hooks/useSettings'
 import { getMasteryStage, STAGES } from '@/hooks/useMastery'
 
@@ -24,28 +24,28 @@ function getTomorrowForecast() {
     const decks = getOwnedDecks()
     const tm = new Date(); tm.setDate(tm.getDate() + 1); tm.setHours(23, 59, 59, 999)
     let c = 0
-    for (const d of decks) { const dp = prog[d.id] || {}; for (const card of d.cards) { const p = dp[card.id]; if (p?.graduated && new Date(p.next) <= tm) c++ } }
+    for (const d of decks) { const dp = prog[d.id] || {}; for (const card of d.cards) { const p = dp[card.id]; if (p?.state >= 2 && new Date(p.due) <= tm) c++ } }
     return c
   } catch { return 0 }
 }
 
-// ─── XP values ────────────────────────────────────────────────────────────
-const XP_VALUES = { 0: 0, 2: 1, 4: 5, 5: 8 }
+// ─── XP values (keyed by FSRS Rating: Again=1, Hard=2, Good=3, Easy=4) ──
+const XP_VALUES = { 1: 0, 2: 1, 3: 5, 4: 8 }
 
 // ─── Rating feedback messages ─────────────────────────────────────────────
 const FEEDBACK = {
-  0: { msgs: ['Keep going!', 'You\'ll get it!', 'Almost there!', 'Stay with it!'], color: 'text-ember' },
+  1: { msgs: ['Keep going!', 'You\'ll get it!', 'Almost there!', 'Stay with it!'], color: 'text-ember' },
   2: { msgs: ['Getting closer!', 'Keep pushing!', 'Not bad!', 'Almost!'], color: 'text-amber-500' },
-  4: { msgs: ['Nice!', 'Got it!', 'Solid!', 'Well done!', 'Clean!'], color: 'text-blue-400' },
-  5: { msgs: ['Perfect!', 'Flawless!', 'Crushed it!', 'Effortless!', '完璧!'], color: 'text-emerald-400' },
+  3: { msgs: ['Nice!', 'Got it!', 'Solid!', 'Well done!', 'Clean!'], color: 'text-blue-400' },
+  4: { msgs: ['Perfect!', 'Flawless!', 'Crushed it!', 'Effortless!', '完璧!'], color: 'text-emerald-400' },
 }
 function randomMsg(q) { const m = FEEDBACK[q].msgs; return m[Math.floor(Math.random() * m.length)] }
 
 const RATING_META = [
-  { q: 0, label: 'Again', color: 'text-ember',       border: 'border-ember/30',       bg: 'bg-ember/5 hover:bg-ember/12',        bar: 'bg-ember/70'         },
-  { q: 2, label: 'Hard',  color: 'text-amber-500',   border: 'border-amber-500/30',   bg: 'bg-amber-500/5 hover:bg-amber-500/12',bar: 'bg-amber-500/70'     },
-  { q: 4, label: 'Good',  color: 'text-blue-400',    border: 'border-blue-400/30',    bg: 'bg-blue-400/5 hover:bg-blue-400/12',  bar: 'bg-blue-400/70'      },
-  { q: 5, label: 'Easy',  color: 'text-emerald-400', border: 'border-emerald-400/30', bg: 'bg-emerald-400/5 hover:bg-emerald-400/12', bar: 'bg-emerald-400/70' },
+  { q: Rating.Again, label: 'Again', color: 'text-ember',       border: 'border-ember/30',       bg: 'bg-ember/5 hover:bg-ember/12',        bar: 'bg-ember/70'         },
+  { q: Rating.Hard,  label: 'Hard',  color: 'text-amber-500',   border: 'border-amber-500/30',   bg: 'bg-amber-500/5 hover:bg-amber-500/12',bar: 'bg-amber-500/70'     },
+  { q: Rating.Good,  label: 'Good',  color: 'text-blue-400',    border: 'border-blue-400/30',    bg: 'bg-blue-400/5 hover:bg-blue-400/12',  bar: 'bg-blue-400/70'      },
+  { q: Rating.Easy,  label: 'Easy',  color: 'text-emerald-400', border: 'border-emerald-400/30', bg: 'bg-emerald-400/5 hover:bg-emerald-400/12', bar: 'bg-emerald-400/70' },
 ]
 
 const MODES = [
@@ -332,9 +332,8 @@ function ModeToggle({ mode, onChange }) {
   return (<div className="flex bg-ink-700 border border-gold-400/10 rounded-lg p-0.5 gap-0.5">{MODES.map(m => (<button key={m.key} onClick={() => onChange(m.key)} className={`flex-1 font-mono text-[9px] tracking-wide py-1.5 px-2 rounded-md transition-colors duration-150 touch-manipulation whitespace-nowrap ${mode === m.key ? 'bg-ink-800 text-gold-400 border border-gold-400/20' : 'text-parchment-500/60 hover:text-parchment-400'}`}>{m.label}</button>))}</div>)
 }
 
-function RatingButtons({ onRate, settings }) {
-  const subs = ['reset', `${settings.hardIntervalMins}m`, `${settings.goodIntervalDays}d`, `${settings.easyIntervalDays}d`]
-  return (<div className="grid grid-cols-4 gap-2 animate-fade-up">{RATING_META.map((r, i) => (<button key={r.label} onClick={() => onRate(r.q)} className={`relative rounded-xl border overflow-hidden flex flex-col items-center justify-center gap-1.5 py-4 transition-colors duration-150 touch-manipulation ${r.border} ${r.bg}`}><div className={`absolute top-0 inset-x-0 h-[2px] ${r.bar}`} /><span className={`font-display italic text-[15px] leading-none ${r.color}`}>{r.label}</span><span className="font-mono text-[9px] text-parchment-500/50 leading-none">{subs[i]}</span></button>))}</div>)
+function RatingButtons({ onRate, preview }) {
+  return (<div className="grid grid-cols-4 gap-2 animate-fade-up">{RATING_META.map((r) => (<button key={r.label} onClick={() => onRate(r.q)} className={`relative rounded-xl border overflow-hidden flex flex-col items-center justify-center gap-1.5 py-4 transition-colors duration-150 touch-manipulation ${r.border} ${r.bg}`}><div className={`absolute top-0 inset-x-0 h-[2px] ${r.bar}`} /><span className={`font-display italic text-[15px] leading-none ${r.color}`}>{r.label}</span><span className="font-mono text-[9px] text-parchment-500/50 leading-none">{preview?.[r.q]?.interval || '—'}</span></button>))}</div>)
 }
 
 // ─── Main StudyScreen ─────────────────────────────────────────────────────
@@ -343,7 +342,7 @@ export default function StudyScreen() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
-  const { rate, getStudyQueue, getCardProgress, restoreCardProgress } = useSRS(id)
+  const { rate, getStudyQueue, getCardProgress, restoreCardProgress, getSchedulingPreview, simulateRate } = useSRS(id)
   const { settings } = useSettings()
 
   const [mode, setMode] = useState('meaning')
@@ -405,15 +404,15 @@ export default function StudyScreen() {
   useShake(useCallback(() => { if (!flipped) { setPeek(true); setTimeout(() => setPeek(false), 2000) } }, [flipped]))
 
   const swipeUp = useCallback(() => { if (!flipped) { setFlipped(true); setSCUses(bumpSC()) } }, [flipped])
-  const swipeL = useCallback(() => { if (flipped) { handleRate(0); setSCUses(bumpSC()) } }, [flipped])
-  const swipeR = useCallback(() => { if (flipped) { handleRate(4); setSCUses(bumpSC()) } }, [flipped])
+  const swipeL = useCallback(() => { if (flipped) { handleRate(Rating.Again); setSCUses(bumpSC()) } }, [flipped])
+  const swipeR = useCallback(() => { if (flipped) { handleRate(Rating.Good); setSCUses(bumpSC()) } }, [flipped])
   useSwipe({ onSwipeUp: swipeUp, onSwipeLeft: swipeL, onSwipeRight: swipeR })
 
   useEffect(() => {
     function onKey(e) {
       if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return
       if (e.code === 'Space') { e.preventDefault(); setFlipped(f => !f); setSCUses(bumpSC()) }
-      if (flipped) { if (e.key==='1'){handleRate(0);setSCUses(bumpSC())} if (e.key==='2'){handleRate(2);setSCUses(bumpSC())} if (e.key==='3'){handleRate(4);setSCUses(bumpSC())} if (e.key==='4'){handleRate(5);setSCUses(bumpSC())} }
+      if (flipped) { if (e.key==='1'){handleRate(Rating.Again);setSCUses(bumpSC())} if (e.key==='2'){handleRate(Rating.Hard);setSCUses(bumpSC())} if (e.key==='3'){handleRate(Rating.Good);setSCUses(bumpSC())} if (e.key==='4'){handleRate(Rating.Easy);setSCUses(bumpSC())} }
       if ((e.ctrlKey||e.metaKey) && e.key==='z' && undoToast) { e.preventDefault(); performUndo() }
     }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
@@ -443,13 +442,14 @@ export default function StudyScreen() {
     const snapshot = prevProg ? { ...prevProg } : null
     const prevStage = getMasteryStage(prevProg)
 
-    rate(card.id, q)
-
-    // Compute expected new state for stage-up detection (can't read state after batched setState)
-    const afterProg = sm2(prevProg, q)
+    // Simulate to get expected new state (for stage-up detection & requeue timing)
+    const afterProg = simulateRate(card.id, q)
     const afterStage = getMasteryStage(afterProg)
 
-    const isGood = q >= 3
+    // Apply the actual rating
+    rate(card.id, q)
+
+    const isGood = q >= Rating.Good
     const statsDelta = { ok: isGood ? 1 : 0, miss: isGood ? 0 : 1 }
 
     // Combo
@@ -465,13 +465,12 @@ export default function StudyScreen() {
 
     // Tracking
     if (!isGood && !troubleRef.current.find(t => t.card.id === card.id)) troubleRef.current.push({ card, q })
-    if (isGood && (!prevProg || !prevProg.graduated) && !graduatedRef.current.find(c => c.id === card.id)) graduatedRef.current.push(card)
+    if (isGood && (!prevProg || prevProg.state === undefined || prevProg.state <= 1) && !graduatedRef.current.find(c => c.id === card.id)) graduatedRef.current.push(card)
 
     setStats(s => ({ ok: s.ok + statsDelta.ok, miss: s.miss + statsDelta.miss }))
 
     // Show feedback
     const msg = randomMsg(q)
-    const fbColor = FEEDBACK[q].color
     setFeedback({ q, msg, xp: earnedXP, combo: newCombo, key: Date.now() })
     setTimeout(() => setFeedback(null), 900)
 
@@ -481,9 +480,13 @@ export default function StudyScreen() {
       setTimeout(() => setStageUpEvent(afterStage.stage), 500)
     }
 
-    // Requeue logic
+    // Requeue logic — use FSRS-calculated due time
     let requeueEntry = null
-    if (!isGood) { const d = q === 0 ? 600000 : settings.hardIntervalMins * 60000; requeueEntry = { card, dueAt: Date.now() + d }; requeuePool.current.push(requeueEntry) }
+    if (!isGood) {
+      const dueAt = new Date(afterProg.due).getTime()
+      requeueEntry = { card, dueAt }
+      requeuePool.current.push(requeueEntry)
+    }
     const now = Date.now(), dueNow = requeuePool.current.filter(e => e.dueAt <= now); requeuePool.current = requeuePool.current.filter(e => e.dueAt > now)
     const nextI = cI + 1
     setQueue(p => { const n = [...p]; dueNow.forEach((e, i) => n.splice(nextI+i, 0, e.card)); queueRef.current = n; return n })
@@ -491,8 +494,6 @@ export default function StudyScreen() {
     const undo = { label: RATING_META.find(r => r.q === q)?.label || '?', snapshot, cardId: card.id, qi: cI, statsDelta, requeueEntry, xpDelta: earnedXP, comboDelta: { prev: prevCombo } }
 
     if (nextI >= cQ.length + dueNow.length) {
-      // Queue exhausted — if there are pending requeues, release them all
-      // immediately so the user can keep studying without waiting
       if (requeuePool.current.length > 0) {
         const pending = requeuePool.current.map(e => e.card)
         requeuePool.current = []
@@ -508,7 +509,7 @@ export default function StudyScreen() {
       setDone(true); setUndoToast(undo); return
     }
     qiRef.current = nextI; setQi(nextI); setFlipped(false); setUndoToast(undo)
-  }, [rate, settings.hardIntervalMins, getCardProgress, combo, maxCombo])
+  }, [rate, simulateRate, getCardProgress, combo, maxCombo])
 
   // ── Burn ─────────────────────────────────────────────────────────────
   const handleBurn = useCallback(() => {
@@ -546,8 +547,8 @@ export default function StudyScreen() {
   const pct = Math.max(0, Math.round((qi / queue.length) * 100))
   const showHints = scUses < 10
 
-  // Card animation class based on last feedback
-  const cardAnimClass = feedback ? (feedback.q === 0 ? 'animate-wrong' : feedback.q === 2 ? 'animate-hard' : feedback.q === 5 ? 'animate-easy' : 'animate-correct') : ''
+  // Card animation class based on last feedback (FSRS: Again=1, Hard=2, Good=3, Easy=4)
+  const cardAnimClass = feedback ? (feedback.q === Rating.Again ? 'animate-wrong' : feedback.q === Rating.Hard ? 'animate-hard' : feedback.q === Rating.Easy ? 'animate-easy' : 'animate-correct') : ''
 
   return (
     <div className="flex flex-col h-full relative">
@@ -608,7 +609,7 @@ export default function StudyScreen() {
       <div className="shrink-0 px-5 pb-6">
         {flipped ? (
           <div>
-            <RatingButtons onRate={handleRate} settings={settings} />
+            <RatingButtons onRate={handleRate} preview={current ? getSchedulingPreview(current.id) : null} />
             {showHints ? (
               <div className="flex items-center justify-center gap-4 mt-2.5">
                 <span className="font-mono text-[8px] text-parchment-500/30 tracking-widest uppercase">1 · 2 · 3 · 4 keys</span>

@@ -60,6 +60,62 @@ function SettingRow({ label, description, value, min, max, step = 1, unit = '', 
   )
 }
 
+// ─── Retention slider ───────────────────────────────────────────────────
+function RetentionSlider({ value, onChange }) {
+  const pct = Math.round(value * 100)
+
+  // Color shifts: green (high retention) → gold (balanced) → amber (low retention)
+  const colorClass =
+    pct >= 92 ? 'text-emerald-400' :
+    pct >= 85 ? 'text-blue-400' :
+    pct >= 80 ? 'text-gold-400' :
+    'text-amber-500'
+
+  const desc =
+    pct >= 95 ? 'Very high retention — many reviews, excellent recall' :
+    pct >= 90 ? 'Recommended — good balance of retention and workload' :
+    pct >= 85 ? 'Moderate — fewer reviews, some forgetting is expected' :
+    pct >= 80 ? 'Relaxed — lighter workload, more re-learning' :
+    'Minimal — least reviews, but you will forget more cards'
+
+  return (
+    <div className="px-4 py-4">
+      <div className="flex items-baseline justify-between mb-1">
+        <p className="font-body text-sm text-parchment-200">Desired retention</p>
+        <span className={`font-display italic text-2xl tabular-nums ${colorClass}`}>
+          {pct}%
+        </span>
+      </div>
+      <p className="font-mono text-[10px] text-parchment-500/60 mb-4 leading-snug">
+        {desc}
+      </p>
+
+      <input
+        type="range"
+        min={70} max={97} step={1}
+        value={pct}
+        onChange={e => onChange(parseInt(e.target.value, 10) / 100)}
+        className="w-full h-1.5 bg-ink-600 rounded-full appearance-none cursor-pointer
+                   [&::-webkit-slider-thumb]:appearance-none
+                   [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5
+                   [&::-webkit-slider-thumb]:bg-gold-400 [&::-webkit-slider-thumb]:rounded-full
+                   [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-gold-400/20
+                   [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-ink-800
+                   [&::-webkit-slider-thumb]:cursor-pointer
+                   [&::-moz-range-thumb]:appearance-none
+                   [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5
+                   [&::-moz-range-thumb]:bg-gold-400 [&::-moz-range-thumb]:rounded-full
+                   [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-ink-800
+                   [&::-moz-range-thumb]:cursor-pointer"
+      />
+      <div className="flex justify-between mt-1.5">
+        <span className="font-mono text-[8px] text-parchment-500/30 tracking-widest">FEWER REVIEWS</span>
+        <span className="font-mono text-[8px] text-parchment-500/30 tracking-widest">BETTER RECALL</span>
+      </div>
+    </div>
+  )
+}
+
 // ─── SettingsScreen ───────────────────────────────────────────────────────
 export default function SettingsScreen() {
   const navigate = useNavigate()
@@ -76,7 +132,7 @@ export default function SettingsScreen() {
         <div>
           <h1 className="font-display italic text-2xl text-parchment-100">Study settings</h1>
           <p className="font-mono text-[10px] text-parchment-500 tracking-widest uppercase mt-1">
-            Customize your SRS experience
+            Powered by FSRS
           </p>
         </div>
         <button
@@ -86,6 +142,38 @@ export default function SettingsScreen() {
         >
           ← Back
         </button>
+      </div>
+
+      {/* ── FSRS Algorithm ── */}
+      <Section label="Algorithm">
+        <RetentionSlider
+          value={s.desiredRetention}
+          onChange={v => updateSetting('desiredRetention', v)}
+        />
+        <div className="h-px bg-gold-400/8" />
+        <SettingRow
+          label="Maximum interval"
+          description="Cards will never be scheduled further than this"
+          value={s.maximumIntervalDays}
+          min={30} max={36500} step={30}
+          unit="days"
+          onChange={v => updateSetting('maximumIntervalDays', v)}
+          last
+        />
+      </Section>
+
+      {/* FSRS explainer */}
+      <div className="bg-ink-800/50 border border-gold-400/8 rounded-xl px-4 py-3.5 animate-fade-up">
+        <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">How FSRS works</p>
+        <p className="font-mono text-[10px] text-parchment-500/70 leading-relaxed">
+          FSRS uses a machine-learning model to predict exactly when you're about to forget each card.
+          It tracks memory <em className="not-italic text-parchment-400">stability</em> (how durable the memory is)
+          and <em className="not-italic text-parchment-400">difficulty</em> (how hard the card is for you specifically)
+          to schedule reviews at the optimal time — right before the probability of recall drops below your desired retention.
+        </p>
+        <p className="font-mono text-[10px] text-parchment-500/50 leading-relaxed mt-2">
+          This means ~30% fewer reviews than traditional SRS algorithms like SM-2, with the same or better retention.
+        </p>
       </div>
 
       {/* ── Daily Limits ── */}
@@ -103,80 +191,6 @@ export default function SettingsScreen() {
           value={s.maxReviewsPerDay}
           min={10} max={9999} step={10}
           onChange={v => updateSetting('maxReviewsPerDay', v)}
-          last
-        />
-      </Section>
-
-      {/* ── Intervals ── */}
-      <Section label="Intervals">
-        <SettingRow
-          label="Hard interval"
-          description="How soon a Hard card reappears"
-          value={s.hardIntervalMins}
-          min={1} max={1440} step={5}
-          unit="min"
-          onChange={v => updateSetting('hardIntervalMins', v)}
-        />
-        <SettingRow
-          label="Good interval"
-          description="Days until a Good card is due again (first rep)"
-          value={s.goodIntervalDays}
-          min={1} max={30} step={1}
-          unit="days"
-          onChange={v => updateSetting('goodIntervalDays', v)}
-        />
-        <SettingRow
-          label="Easy interval"
-          description="Days until an Easy card is due again (first rep)"
-          value={s.easyIntervalDays}
-          min={1} max={90} step={1}
-          unit="days"
-          onChange={v => updateSetting('easyIntervalDays', v)}
-        />
-        <SettingRow
-          label="Maximum interval"
-          description="Cards will never be scheduled further than this"
-          value={s.maximumIntervalDays}
-          min={30} max={36500} step={30}
-          unit="days"
-          onChange={v => updateSetting('maximumIntervalDays', v)}
-          last
-        />
-      </Section>
-
-      {/* ── Ease Factor ── */}
-      <Section label="Ease factor">
-        <SettingRow
-          label="Starting ease"
-          description="Initial interval multiplier for new cards"
-          value={s.startingEase}
-          min={130} max={500} step={10}
-          unit="%"
-          onChange={v => updateSetting('startingEase', v)}
-        />
-        <SettingRow
-          label="Easy bonus"
-          description="Extra multiplier applied when rating Easy"
-          value={s.easyBonus}
-          min={100} max={300} step={10}
-          unit="%"
-          onChange={v => updateSetting('easyBonus', v)}
-        />
-        <SettingRow
-          label="Interval modifier"
-          description="Global multiplier applied to all review intervals"
-          value={s.intervalModifier}
-          min={50} max={500} step={5}
-          unit="%"
-          onChange={v => updateSetting('intervalModifier', v)}
-        />
-        <SettingRow
-          label="Minimum ease"
-          description="Ease factor cannot drop below this value"
-          value={s.minimumEase}
-          min={100} max={250} step={5}
-          unit="%"
-          onChange={v => updateSetting('minimumEase', v)}
           last
         />
       </Section>

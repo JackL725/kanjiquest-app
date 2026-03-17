@@ -1,8 +1,20 @@
 import { useState, useEffect, useCallback } from 'react'
+import {
+  FSRS,
+  createEmptyCard,
+  generatorParameters,
+  Rating,
+  State,
+} from 'ts-fsrs'
 import { readSettings } from './useSettings'
 
-const STORAGE_KEY = 'kq-srs-progress'
-const STREAK_KEY  = 'kq-study-dates'
+// Re-export for consumers
+export { Rating, State }
+
+const STORAGE_KEY    = 'kq-srs-progress'
+const STREAK_KEY     = 'kq-study-dates'
+const MIGRATION_KEY  = 'kq-srs-version'
+const CURRENT_VERSION = 2  // v2 = FSRS
 
 // ─── Helpers ─────────────────────────────────────────────────────────────
 function todayISO() {
@@ -32,123 +44,114 @@ function recordStudyDate() {
   } catch {}
 }
 
-// ─── SM-2 (KanjiQuest variant) ───────────────────────────────────────────
-//
-// Card progress record:
-// {
-//   interval:     number  — current interval in days (0 = intra-day / learning)
-//   reps:         number  — consecutive correct answers since last lapse
-//   ef:           number  — ease factor (multiplier, e.g. 2.5)
-//   next:         string  — ISO datetime when card is next due
-//   last:         string  — ISO datetime of last review
-//   firstStudied: string  — ISO datetime of very first review (never changes)
-//   graduated:    boolean — true once the card has been rated Good/Easy at least once
-// }
-//
-// Card states:
-//   NEW       — no progress record exists
-//   LEARNING  — progress exists, graduated === false (initial learning phase)
-//   REVIEW    — progress exists, graduated === true, next <= now (due review)
-//   MASTERED  — progress exists, graduated === true, next > now (not yet due)
-//
-export function sm2(prev, q) {
-  const s     = readSettings()
-  const ef0   = s.startingEase / 100
-  const efMin = s.minimumEase  / 100
-  const bonus = s.easyBonus    / 100
-  const mod   = s.intervalModifier / 100
-  const maxD  = s.maximumIntervalDays
+// ─── Create FSRS scheduler from settings ─────────────────────────────────
+function createScheduler() {
+  const s = readSettings()
+  return new FSRS(generatorParameters({
+    request_retention: s.desiredRetention,
+    maximum_interval:  s.maximumIntervalDays,
+    enable_fuzz:       true,
+  }))
+}
 
-  let { interval = 0, reps = 0, ef = ef0, graduated = false } = prev || {}
-  const now  = new Date()
-  const next = new Date()
-  const todayDate = now.toISOString().split('T')[0]
+// ─── SM-2 → FSRS migration ──────────────────────────────────────────────
+// Runs once on first load after upgrade. Converts old progress records to
+// FSRS card format with reasonable approximations.
+function migrateIfNeeded() {
+  try {
+    const ver = parseInt(localStorage.getItem(MIGRATION_KEY) || '0', 10)
+    if (ver >= CURRENT_VERSION) return
 
-  // Track whether the user stumbled (Again/Hard) today.
-  // Cleared when they answer Good/Easy.
-  let stumbledDate = prev?.stumbledDate || null
+    const progress = readProgress()
+    const migrated = {}
 
-  switch (q) {
-    case 0: // Again — full reset to learning state
-      reps     = 0
-      interval = 0
-      stumbledDate = todayDate
-      // graduated stays — you don't un-learn a card, you re-learn it
-      next.setMinutes(next.getMinutes() + 10)
-      break
+    for (const deckId of Object.keys(progress)) {
+      const deckProg = progress[deckId]
+      if (!deckProg || typeof deckProg !== 'object') continue
 
-    case 2: // Hard — stay in current phase, short delay
-      // Don't reset reps (the effort still counts), but don't increment either
-      // Preserve interval for the next Good calculation
-      stumbledDate = todayDate
-      next.setMinutes(next.getMinutes() + s.hardIntervalMins)
-      break
+      migrated[deckId] = {}
+      for (const cardId of Object.keys(deckProg)) {
+        const old = deckProg[cardId]
+        if (!old) continue
 
-    case 4: { // Good — graduate or advance
-      reps++
-      graduated = true
-      stumbledDate = null
+        // Already FSRS format? (has 'stability' field)
+        if ('stability' in old) {
+          migrated[deckId][cardId] = old
+          continue
+        }
 
-      if (reps === 1) {
-        // First graduation: use the fixed "good" interval
-        interval = s.goodIntervalDays
-      } else {
-        // Subsequent: grow from current interval
-        const base = Math.max(interval, s.goodIntervalDays)
-        interval = Math.round(base * ef * mod)
-        interval = Math.max(interval, s.goodIntervalDays)
+        // Old SM-2 format → FSRS card
+        const wasGraduated = old.graduated === true
+        const oldInterval  = old.interval || 0
+        const oldEf        = old.ef || 2.5
+        const oldReps      = old.reps || 0
+
+        // Map ease factor to FSRS difficulty (1-10 scale)
+        // ef=2.5 (easy) → D≈3, ef=1.3 (hard) → D≈8
+        const difficulty = Math.max(1, Math.min(10,
+          10 - ((oldEf - 1.3) / (2.5 - 1.3)) * 7
+        ))
+
+        // Map interval to stability (they're roughly equivalent)
+        const stability = wasGraduated ? Math.max(1, oldInterval) : 0.5
+
+        // Map state
+        let state = State.New
+        if (wasGraduated && oldInterval > 0) state = State.Review
+        else if (oldReps > 0) state = State.Learning
+
+        migrated[deckId][cardId] = {
+          due:            old.next || new Date().toISOString(),
+          stability,
+          difficulty,
+          elapsed_days:   oldInterval,
+          scheduled_days: oldInterval,
+          reps:           oldReps,
+          lapses:         0,
+          learning_steps: wasGraduated ? 0 : (oldReps > 0 ? 1 : 0),
+          state,
+          last_review:    old.last || null,
+          // KQ metadata
+          firstStudied:   old.firstStudied || null,
+        }
       }
-      interval = Math.min(interval, maxD)
-
-      // Update ease factor (SM-2 formula)
-      ef = Math.max(efMin, ef + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
-      next.setDate(next.getDate() + interval)
-      break
     }
 
-    case 5: { // Easy — graduate with bonus
-      reps++
-      graduated = true
-      stumbledDate = null
-
-      if (reps === 1) {
-        interval = s.easyIntervalDays
-      } else {
-        const base = Math.max(interval, s.easyIntervalDays)
-        interval = Math.round(base * ef * mod * bonus)
-        interval = Math.max(interval, s.easyIntervalDays)
-      }
-      interval = Math.min(interval, maxD)
-
-      ef = Math.max(efMin, ef + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
-      next.setDate(next.getDate() + interval)
-      break
-    }
-
-    default:
-      break
-  }
-
-  return {
-    interval,
-    reps,
-    ef,
-    next:         next.toISOString(),
-    last:         now.toISOString(),
-    firstStudied: prev?.firstStudied || now.toISOString(),
-    graduated,
-    stumbledDate,
+    writeProgress(migrated)
+    localStorage.setItem(MIGRATION_KEY, String(CURRENT_VERSION))
+  } catch (e) {
+    console.warn('SRS migration failed:', e)
   }
 }
 
+// Run migration on module load
+migrateIfNeeded()
+
 // ─── State classification ────────────────────────────────────────────────
-function isNew(p)       { return !p }
-function isLearning(p)  { return p && !p.graduated }
-function isGraduated(p) { return p && p.graduated === true }
+function isNew(p)        { return !p }
+function isLearning(p)   { return p && (p.state === State.Learning || p.state === State.Relearning) }
+function isGraduated(p)  { return p && p.state === State.Review }
 
 function isDueNow(p) {
   if (!p) return false
-  return new Date(p.next) <= new Date()
+  return new Date(p.due) <= new Date()
+}
+
+// ─── Format interval for display ─────────────────────────────────────────
+export function formatInterval(card) {
+  if (!card) return ''
+  const days = card.scheduled_days
+  if (days === 0) {
+    // Intra-day: compute minutes from due
+    const now = new Date()
+    const due = new Date(card.due)
+    const mins = Math.max(1, Math.round((due - now) / 60000))
+    if (mins < 60) return `${mins}m`
+    return `${Math.round(mins / 60)}h`
+  }
+  if (days < 30) return `${days}d`
+  if (days < 365) return `${(days / 30).toFixed(1).replace(/\.0$/, '')}mo`
+  return `${(days / 365).toFixed(1).replace(/\.0$/, '')}y`
 }
 
 // ─── Bonus cards for today (per-deck, auto-resets daily) ─────────────────
@@ -176,11 +179,10 @@ function writeBonus(deckId, count) {
 
 // ─── Hook ────────────────────────────────────────────────────────────────
 export function useSRS(deckId) {
-  // Lazy init from localStorage — no race condition
   const [progress, setProgress] = useState(readProgress)
   const [bonus, setBonus]       = useState(() => readBonus(deckId))
 
-  // Persist on change — but skip the initial read
+  // Persist on change
   const [ready, setReady] = useState(false)
   useEffect(() => { setReady(true) }, [])
   useEffect(() => {
@@ -190,27 +192,149 @@ export function useSRS(deckId) {
     if (ready) writeBonus(deckId, bonus)
   }, [bonus, ready])
 
-  // ── Rate a card ────────────────────────────────────────────────────
-  const rate = useCallback((cardId, q) => {
+  // ── Rate a card (FSRS) ─────────────────────────────────────────────
+  // rating: Rating.Again(1), Rating.Hard(2), Rating.Good(3), Rating.Easy(4)
+  const rate = useCallback((cardId, rating) => {
     recordStudyDate()
     setProgress(prev => {
       const deckProg = prev[deckId] || {}
+      const existing = deckProg[cardId]
+      const scheduler = createScheduler()
+      const now = new Date()
+
+      // Build FSRS card object from stored progress (or create new)
+      let card
+      if (existing && 'stability' in existing) {
+        card = {
+          due:            new Date(existing.due),
+          stability:      existing.stability,
+          difficulty:     existing.difficulty,
+          elapsed_days:   existing.elapsed_days,
+          scheduled_days: existing.scheduled_days,
+          reps:           existing.reps,
+          lapses:         existing.lapses,
+          learning_steps: existing.learning_steps ?? 0,
+          state:          existing.state,
+          last_review:    existing.last_review ? new Date(existing.last_review) : undefined,
+        }
+      } else {
+        card = createEmptyCard(now)
+      }
+
+      // Schedule
+      const result = scheduler.repeat(card, now)
+      const outcome = result[rating]
+      const newCard = outcome.card
+
       return {
         ...prev,
         [deckId]: {
           ...deckProg,
-          [cardId]: sm2(deckProg[cardId], q),
+          [cardId]: {
+            due:            newCard.due.toISOString ? newCard.due.toISOString() : new Date(newCard.due).toISOString(),
+            stability:      newCard.stability,
+            difficulty:     newCard.difficulty,
+            elapsed_days:   newCard.elapsed_days,
+            scheduled_days: newCard.scheduled_days,
+            reps:           newCard.reps,
+            lapses:         newCard.lapses,
+            learning_steps: newCard.learning_steps ?? 0,
+            state:          newCard.state,
+            last_review:    newCard.last_review
+              ? (newCard.last_review.toISOString ? newCard.last_review.toISOString() : new Date(newCard.last_review).toISOString())
+              : now.toISOString(),
+            // KQ metadata
+            firstStudied:   existing?.firstStudied || now.toISOString(),
+          },
         },
       }
     })
   }, [deckId])
+
+  // ── Get scheduling preview (for button labels) ─────────────────────
+  // Returns { [Rating.Again]: { card, interval }, ... } for all 4 ratings
+  function getSchedulingPreview(cardId) {
+    const existing = (progress[deckId] || {})[cardId]
+    const scheduler = createScheduler()
+    const now = new Date()
+
+    let card
+    if (existing && 'stability' in existing) {
+      card = {
+        due:            new Date(existing.due),
+        stability:      existing.stability,
+        difficulty:     existing.difficulty,
+        elapsed_days:   existing.elapsed_days,
+        scheduled_days: existing.scheduled_days,
+        reps:           existing.reps,
+        lapses:         existing.lapses,
+        learning_steps: existing.learning_steps ?? 0,
+        state:          existing.state,
+        last_review:    existing.last_review ? new Date(existing.last_review) : undefined,
+      }
+    } else {
+      card = createEmptyCard(now)
+    }
+
+    const result = scheduler.repeat(card, now)
+    const preview = {}
+    for (const r of [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy]) {
+      const c = result[r].card
+      preview[r] = {
+        card: c,
+        interval: formatInterval(c),
+      }
+    }
+    return preview
+  }
+
+  // ── Simulate a rating (for stage-up detection without mutating state) ──
+  function simulateRate(cardId, rating) {
+    const existing = (progress[deckId] || {})[cardId]
+    const scheduler = createScheduler()
+    const now = new Date()
+
+    let card
+    if (existing && 'stability' in existing) {
+      card = {
+        due:            new Date(existing.due),
+        stability:      existing.stability,
+        difficulty:     existing.difficulty,
+        elapsed_days:   existing.elapsed_days,
+        scheduled_days: existing.scheduled_days,
+        reps:           existing.reps,
+        lapses:         existing.lapses,
+        learning_steps: existing.learning_steps ?? 0,
+        state:          existing.state,
+        last_review:    existing.last_review ? new Date(existing.last_review) : undefined,
+      }
+    } else {
+      card = createEmptyCard(now)
+    }
+
+    const result = scheduler.repeat(card, now)
+    const outcome = result[rating].card
+    return {
+      due:            outcome.due.toISOString ? outcome.due.toISOString() : new Date(outcome.due).toISOString(),
+      stability:      outcome.stability,
+      difficulty:     outcome.difficulty,
+      elapsed_days:   outcome.elapsed_days,
+      scheduled_days: outcome.scheduled_days,
+      reps:           outcome.reps,
+      lapses:         outcome.lapses,
+      learning_steps: outcome.learning_steps ?? 0,
+      state:          outcome.state,
+      last_review:    now.toISOString(),
+      firstStudied:   existing?.firstStudied || now.toISOString(),
+    }
+  }
 
   // ── Card queries ───────────────────────────────────────────────────
   function getCardProgress(cardId) {
     return (progress[deckId] || {})[cardId] ?? null
   }
 
-  // Reviews due: graduated cards whose next time has passed
+  // Reviews due: graduated cards (state=Review) whose due time has passed
   function getDueReviews(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
@@ -218,7 +342,7 @@ export function useSRS(deckId) {
     })
   }
 
-  // Learning: cards in learning phase that are due now
+  // Learning: cards in learning/relearning phase that are due now
   function getDueLearning(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
@@ -231,11 +355,11 @@ export function useSRS(deckId) {
     return cards.filter(c => isNew(getCardProgress(c.id)))
   }
 
-  // Cards that have graduated at least once (even if currently lapsed)
+  // Cards that have graduated at least once (state=Review, even if lapsed)
   function getLearnedCount(cards) {
     return cards.filter(c => {
       const p = getCardProgress(c.id)
-      return p && p.graduated === true
+      return p && (p.state === State.Review || (p.reps > 0 && p.state !== undefined))
     }).length
   }
 
@@ -248,33 +372,28 @@ export function useSRS(deckId) {
     }).length
   }
 
-  // Total cards to study today: reviews + learning + new card allotment + bonus
+  // Total cards to study today
   function getDueCount(cards) {
     const s = readSettings()
-
     const reviews  = getDueReviews(cards).length
     const learning = getDueLearning(cards).length
-
-    // New card budget: daily limit + bonus, minus cards already introduced today
     const alreadyIntroduced = getNewIntroducedToday(cards)
     const todayLimit        = s.newCardsPerDay + bonus
     const remaining         = Math.max(0, todayLimit - alreadyIntroduced)
     const newAvail          = Math.min(getNewCards(cards).length, remaining)
-
     return reviews + learning + newAvail
   }
 
-  // Total unseen cards
   function getNewCount(cards) {
     return getNewCards(cards).length
   }
 
-  // For StudyScreen: build the cards that should be studied right now
+  // Build study queue: learning first (time-sensitive), then reviews, then new
   function getStudyQueue(cards) {
     const s = readSettings()
 
-    const reviews  = getDueReviews(cards)
     const learning = getDueLearning(cards)
+    const reviews  = getDueReviews(cards)
 
     const alreadyIntroduced = getNewIntroducedToday(cards)
     const todayLimit        = s.newCardsPerDay + bonus
@@ -286,7 +405,6 @@ export function useSRS(deckId) {
     return { newBatch, reviewBatch, learning }
   }
 
-  // Add extra new cards for today
   function addBonusCards(count) {
     setBonus(prev => prev + count)
   }
@@ -308,6 +426,8 @@ export function useSRS(deckId) {
     rate,
     getCardProgress,
     restoreCardProgress,
+    getSchedulingPreview,
+    simulateRate,
     getDueReviews,
     getDueLearning,
     getNewCards,
@@ -319,4 +439,3 @@ export function useSRS(deckId) {
     addBonusCards,
   }
 }
-

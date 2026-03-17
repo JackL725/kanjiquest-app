@@ -28,18 +28,18 @@ function readTotalDue(decks) {
     return decks.reduce((sum, deck) => {
       const dp = prog[deck.id] || {}
 
-      // Reviews: graduated cards that are due now
+      // Reviews: graduated cards (state >= 2) that are due now
       const reviews = deck.cards.filter(c => {
         const p = dp[c.id]
-        if (!p || !p.graduated) return false
-        return new Date(p.next) <= new Date()
+        if (!p || p.state < 2) return false
+        return new Date(p.due) <= new Date()
       }).length
 
-      // Learning: non-graduated cards that are due now
+      // Learning: learning/relearning cards that are due now
       const learning = deck.cards.filter(c => {
         const p = dp[c.id]
-        if (!p || p.graduated) return false
-        return new Date(p.next) <= new Date()
+        if (!p || p.state >= 2) return false
+        return new Date(p.due) <= new Date()
       }).length
 
       // Bonus for today (auto-resets by date check)

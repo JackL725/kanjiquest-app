@@ -59,7 +59,7 @@ export default function DeckScreen() {
 
     return deck.cards.map(card => {
       const p = getCardProgress(card.id)
-      const isDue = p && new Date(p.next) <= now
+      const isDue = p && new Date(p.due) <= now
       const isUnseen = !p
       const isQueuedNew = isUnseen && queuedNewIds.has(card.id)
 
@@ -73,7 +73,7 @@ export default function DeckScreen() {
         p,
         mastery,
         isNew:      p && p.firstStudied && new Date(p.firstStudied) >= oneDayAgo,
-        isLearning: p?.graduated === true && isDue,
+        isLearning: p?.state >= 1 && isDue,
         isDue:      !!isDue || isQueuedNew,
         isUnseen:   isUnseen && !isQueuedNew,
       }
