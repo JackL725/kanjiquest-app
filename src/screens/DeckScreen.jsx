@@ -57,16 +57,20 @@ export default function DeckScreen() {
     const { newBatch } = getStudyQueue(deck.cards)
     const queuedNewIds = new Set(newBatch.map(c => c.id))
 
-    return deck.cards.map(card => {
+    return deck.cards.filter(Boolean).map(card => {
       const p = getCardProgress(card.id)
-      const isDue = p && new Date(p.due) <= now
+      const isDue = p && p.due && new Date(p.due) <= now
       const isUnseen = !p
       const isQueuedNew = isUnseen && queuedNewIds.has(card.id)
 
-      // Unseen cards that are in today's study queue show as Kindled
-      const mastery = isQueuedNew
-        ? { stage: STAGES[1], stageIndex: 1, progress: 0, stumbled: false }
-        : getMasteryStage(p)
+      let mastery
+      try {
+        mastery = isQueuedNew
+          ? { stage: STAGES[1], stageIndex: 1, progress: 0, stumbled: false }
+          : getMasteryStage(p)
+      } catch {
+        mastery = { stage: STAGES[0], stageIndex: 0, progress: 0, stumbled: false }
+      }
 
       return {
         card,
@@ -86,7 +90,7 @@ export default function DeckScreen() {
     new:      classifiedCards.filter(c => c.isNew).length,
     learning: classifiedCards.filter(c => !c.isUnseen).length,
     due:      classifiedCards.filter(c => c.isDue).length,
-    mastered: classifiedCards.filter(c => c.mastery.stageIndex >= 4).length,
+    mastered: classifiedCards.filter(c => (c?.mastery?.stageIndex ?? 0) >= 4).length,
   }), [classifiedCards])
 
   // ── Filtered + searched cards ───────────────────────────────────────
@@ -98,7 +102,7 @@ export default function DeckScreen() {
     if (filter === 'new')      result = result.filter(c => c.isNew)
     if (filter === 'learning') result = result.filter(c => !c.isUnseen)
     if (filter === 'due')      result = result.filter(c => c.isDue)
-    if (filter === 'mastered') result = result.filter(c => c.mastery.stageIndex >= 4)
+    if (filter === 'mastered') result = result.filter(c => (c?.mastery?.stageIndex ?? 0) >= 4)
 
     if (search.trim()) {
       const q = search.trim().toLowerCase()
@@ -112,8 +116,8 @@ export default function DeckScreen() {
 
     // Sort by mastery stage
     result = [...result].sort((a, b) => {
-      const sa = a.mastery.stageIndex || 6
-      const sb = b.mastery.stageIndex || 6
+      const sa = a?.mastery?.stageIndex || 6
+      const sb = b?.mastery?.stageIndex || 6
       return sa - sb
     })
 
@@ -337,15 +341,15 @@ export default function DeckScreen() {
       ) : (
         <div className="space-y-2">
           {displayCards.map(({ card, p, mastery, isDue, isUnseen }, i) => {
-            const prevStage = i > 0 ? displayCards[i - 1].mastery.stageIndex : null
-            const curStage = mastery.stageIndex
+            const prevStage = i > 0 ? displayCards[i - 1]?.mastery?.stageIndex ?? null : null
+            const curStage = mastery?.stageIndex ?? 0
             const showHeader = prevStage !== curStage
 
             return (
               <div key={card.id}>
                 {showHeader && (
-                  <StageGroupHeader stage={mastery.stage} stageIndex={curStage}
-                    count={visibleCards.filter(c => c.mastery.stageIndex === curStage).length}
+                  <StageGroupHeader stage={mastery?.stage || STAGES[0]} stageIndex={curStage}
+                    count={visibleCards.filter(c => (c?.mastery?.stageIndex ?? 0) === curStage).length}
                     isFirst={i === 0} />
                 )}
                 <div
