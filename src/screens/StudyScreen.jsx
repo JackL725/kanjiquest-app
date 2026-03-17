@@ -358,29 +358,46 @@ function CardBack({ card, mode, deckId }) {
     <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
       <div className="h-full overflow-y-auto p-5">
+        {/* 1. Meaning + Reading */}
         {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
         ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
         <Div />
 
-        {/* RTK stories — only for foundation decks (Primer, Radicals) */}
+        {/* RTK stories — foundation decks only */}
         {isFoundationDeck && card.rtk1 && (
-          <>
-            <BSection label="RTK stories"><div className="space-y-2"><Story n={1}>{card.rtk1}</Story><Story n={2}>{card.rtk2}</Story></div></BSection>
-          </>
+          <><BSection label="RTK stories"><div className="space-y-2"><Story n={1}>{card.rtk1}</Story><Story n={2}>{card.rtk2}</Story></div></BSection></>
         )}
 
-        {/* My Story — always shown */}
+        {/* 2. My Story — always shown */}
         <UserStorySection cardId={card.id} />
         <Div />
 
-        {/* Components */}
+        {/* 3. Components */}
         <BSection label="Components">
           <div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div>
         </BSection>
 
-        {(card.onyomi || card.kunyomi) && (<><Div />{card.onyomi && <BSection label="On'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p></BSection>}{card.kunyomi && <BSection label="Kun'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p></BSection>}{card.nanori && <BSection label="Nanori"><p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p></BSection>}</>)}
+        {/* Foundation deck extras: onyomi/kunyomi */}
+        {isFoundationDeck && (card.onyomi || card.kunyomi) && (<><Div />{card.onyomi && <BSection label="On'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p></BSection>}{card.kunyomi && <BSection label="Kun'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p></BSection>}{card.nanori && <BSection label="Nanori"><p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p></BSection>}</>)}
+
+        {/* 4. In-game context */}
         {card.context && (<><Div /><BSection label="In-game context"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p><p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p></BSection></>)}
-        {card.jlpt > 0 && (<div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between"><span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span><span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span></div>)}
+
+        {/* 5. Frequency rank (game decks) */}
+        {card.frequency > 0 && (
+          <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
+            <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">Game frequency</span>
+            <span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">#{card.frequency} / 500</span>
+          </div>
+        )}
+
+        {/* JLPT (foundation decks) */}
+        {isFoundationDeck && card.jlpt > 0 && (
+          <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
+            <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span>
+            <span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span>
+          </div>
+        )}
       </div>
     </div>
   )
