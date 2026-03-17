@@ -167,7 +167,7 @@ body {
   100% { opacity: 0; transform: translateY(-120px) scale(0.9); }
 }
 .animate-burn-up {
-  animation: burnFlyUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: burnFlyUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   pointer-events: none;
 }
 

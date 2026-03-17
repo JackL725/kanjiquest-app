@@ -504,7 +504,7 @@ export default function StudyScreen() {
       })
       if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }
       setFlipped(false)
-    }, 350)
+    }, 550)
   }, [deck, id, burnCard, getCardProgress, combo])
 
   // ── Shake / Swipe / Keyboard ─────────────────────────────────────────
@@ -706,14 +706,6 @@ export default function StudyScreen() {
       {/* Mode toggle */}
       <div className="shrink-0 px-5 pb-3"><ModeToggle mode={mode} onChange={m => { setMode(m); setFlipped(false) }} /></div>
 
-      {/* Engraved celebration — above card area */}
-      {burnAnim && (
-        <div className="shrink-0 flex flex-col items-center gap-1 pb-2 pointer-events-none animate-fade-up">
-          <span className="text-3xl text-gold-400">✦</span>
-          <span className="font-display italic text-xl text-gold-400 drop-shadow-lg">Engraved!</span>
-        </div>
-      )}
-
       {/* Card area */}
       <div className="flex-1 min-h-0 px-5 pb-3 relative">
         <div key={`${qi}-${current?.id}`}
@@ -724,6 +716,18 @@ export default function StudyScreen() {
             <CardBack card={current} mode={mode} deckId={id} />
           </div>
         </div>
+
+        {/* Engraved celebration — overlaid on card, in the gap between First Look and kanji */}
+        {burnAnim && (
+          <div className="absolute inset-0 flex items-start justify-center pt-[25%] pointer-events-none z-30">
+            <div className="flex flex-col items-center gap-3 animate-fade-up">
+              <span className="font-kanji text-6xl text-parchment-100 drop-shadow-lg">刻</span>
+              <span className="font-display italic text-3xl text-parchment-100 drop-shadow-lg tracking-wide">Engraved</span>
+              <div className="h-px w-16 bg-parchment-100/30 mt-1" />
+              <span className="font-mono text-[10px] text-parchment-100/50 tracking-widest uppercase">Already known</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Combo counter (persistent, above rating buttons) */}
