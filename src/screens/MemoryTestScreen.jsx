@@ -428,9 +428,9 @@ export default function MemoryTestScreen() {
         )}
       </div>
 
-      {/* ── Choice boxes (4 meanings) ── */}
-      <div className="shrink-0 px-5 pb-4">
-        <div className="grid grid-cols-2 gap-2">
+      {/* ── Choice boxes (4 meanings) — fill most of the screen ── */}
+      <div className="flex-1 min-h-0 px-4 pb-3 flex flex-col">
+        <div className="grid grid-cols-2 gap-3 flex-1">
           {choices.map((card, i) => {
             const isFeedbackTarget = feedback && feedback.choiceId === card.id
             const isCorrectChoice  = feedback && feedback.correctId === card.id
@@ -443,23 +443,32 @@ export default function MemoryTestScreen() {
                 ref={el => choiceRefs.current[i] = el}
                 onClick={() => !feedback && handleSelect(card)}
                 disabled={!!feedback}
-                className={`relative bg-ink-800 rounded-xl px-3 py-4 text-center
-                           border transition-all duration-200 touch-manipulation
+                className={`relative bg-ink-800 rounded-2xl px-4 text-center
+                           border-2 transition-all duration-200 touch-manipulation
+                           flex flex-col items-center justify-center gap-1
                            ${showCorrect ? 'border-emerald-400/50 bg-emerald-400/8 animate-drop-correct' :
                              showWrong ? 'border-ember/50 bg-ember/8 animate-drop-wrong' :
-                             'border-gold-400/12 hover:border-blue-400/30 hover:bg-blue-400/5'}`}
+                             'border-gold-400/10 hover:border-blue-400/30 hover:bg-blue-400/5'}`}
               >
-                <span className="font-mono text-[8px] text-parchment-500/30 absolute top-1.5 left-2.5">
+                <span className="font-mono text-[9px] text-parchment-500/25 absolute top-2.5 left-3">
                   {i + 1}
                 </span>
-                <p className={`font-display italic text-sm leading-tight transition-colors
+
+                {/* Feedback points inside the box */}
+                {showCorrect && feedback.isCorrect && (
+                  <span className="absolute top-2.5 right-3 font-mono text-[10px] text-emerald-400 animate-fade-up">
+                    +{feedback.points}
+                  </span>
+                )}
+
+                <p className={`font-display italic text-lg leading-snug transition-colors
                               ${showCorrect ? 'text-emerald-400' :
                                 showWrong ? 'text-ember' :
-                                'text-parchment-200'}`}>
+                                'text-parchment-100'}`}>
                   {card.meaning}
                 </p>
-                {card.reading && (
-                  <p className={`font-mono text-[9px] mt-1 transition-colors
+                {card.romaji && (
+                  <p className={`font-mono text-[10px] transition-colors
                                 ${showCorrect ? 'text-emerald-400/50' :
                                   showWrong ? 'text-ember/50' :
                                   'text-parchment-500/40'}`}>
@@ -472,44 +481,41 @@ export default function MemoryTestScreen() {
         </div>
       </div>
 
-      {/* ── Feedback float ── */}
+      {/* ── Feedback float (between boxes and kanji) ── */}
       {feedback && (
-        <div className="shrink-0 flex justify-center pb-2">
+        <div className="shrink-0 flex justify-center py-1">
           {feedback.isCorrect ? (
             <div className="flex items-center gap-3 animate-fade-up">
-              <span className="font-display italic text-lg text-emerald-400 drop-shadow-lg">+{feedback.points}</span>
               {feedback.speedLabel && <span className="font-mono text-[9px] text-blue-400/70 tracking-widest uppercase">{feedback.speedLabel}</span>}
-              {feedback.mult > 1 && <span className="font-mono text-[9px] text-blue-400/50 tracking-widest">×{feedback.mult}</span>}
+              {feedback.mult > 1 && <span className="font-mono text-[9px] text-blue-400/50 tracking-widest">×{feedback.mult} combo</span>}
             </div>
           ) : (
-            <span className="font-display italic text-lg text-ember animate-fade-up drop-shadow-lg">
-              Wrong — back of deck
+            <span className="font-display italic text-base text-ember animate-fade-up drop-shadow-lg">
+              Back of deck
             </span>
           )}
         </div>
       )}
 
-      {/* ── Draggable kanji card ── */}
-      <div className="flex-1 min-h-0 flex items-center justify-center px-5 pb-3 relative">
+      {/* ── Kanji card (pinned to bottom) ── */}
+      <div className="shrink-0 px-5 pb-5 flex justify-center relative">
         <div className="relative">
-          {/* Ghost card (stays in place while dragging) */}
           {dragging && (
-            <div className="w-36 h-44 bg-ink-700/30 border border-dashed border-gold-400/10 rounded-2xl" />
+            <div className="w-28 h-32 bg-ink-700/30 border border-dashed border-gold-400/10 rounded-xl" />
           )}
 
-          {/* Actual draggable card */}
           <div
             className={`${dragging ? 'fixed z-50 pointer-events-none' : 'relative'} animate-kanji-reveal`}
             key={`kanji-${qi}-${current?.id}`}
             style={dragging ? {
-              left: dragPos.x - 72,
-              top: dragPos.y - 88,
-              width: 144,
-              height: 176,
+              left: dragPos.x - 56,
+              top: dragPos.y - 64,
+              width: 112,
+              height: 128,
             } : undefined}
           >
             <div
-              className={`w-36 h-44 bg-ink-800 border rounded-2xl flex flex-col items-center
+              className={`w-28 h-32 bg-ink-800 border rounded-xl flex flex-col items-center
                           justify-center cursor-grab active:cursor-grabbing touch-manipulation
                           transition-shadow duration-200
                           ${dragging ? 'border-blue-400/40 shadow-lg shadow-blue-400/10' :
@@ -518,20 +524,17 @@ export default function MemoryTestScreen() {
               onMouseDown={!feedback ? onDragStart : undefined}
               onTouchStart={!feedback ? onDragStart : undefined}
             >
-              <p className="font-mono text-[8px] text-parchment-500/30 tracking-[3px] uppercase mb-2">
-                Match me
-              </p>
-              <p className="font-kanji text-6xl text-parchment-100 leading-none">
+              <p className="font-kanji text-5xl text-parchment-100 leading-none">
                 {current?.kanji}
               </p>
               {current?.disambig && (
-                <span className="font-mono text-[8px] text-gold-400/60 tracking-wider uppercase mt-2
+                <span className="font-mono text-[7px] text-gold-400/60 tracking-wider uppercase mt-1.5
                                  border border-gold-400/15 rounded-full px-2 py-0.5 bg-gold-400/5">
                   {current.disambig}
                 </span>
               )}
               {!dragging && !feedback && (
-                <p className="font-mono text-[7px] text-parchment-500/15 tracking-widest mt-3 uppercase">
+                <p className="font-mono text-[7px] text-parchment-500/15 tracking-widest mt-2 uppercase">
                   Drag or tap 1–4
                 </p>
               )}
