@@ -213,15 +213,18 @@ export default function MemoryTestScreen() {
 
   function onDragEnd(e) {
     if (!dragging || feedback) return
-    const point = e.changedTouches ? e.changedTouches[0] : e
 
-    // Check which choice box the pointer is over
+    // Hit-test using the CENTER of the card, not the pointer
+    // Card is 112×128, anchored at (dragPos.x - 56, dragPos.y - 120)
+    const cardCenterX = dragPos.x
+    const cardCenterY = dragPos.y - 56  // -120 + half height (64)
+
     for (let i = 0; i < choiceRefs.current.length; i++) {
       const el = choiceRefs.current[i]
       if (!el) continue
       const rect = el.getBoundingClientRect()
-      if (point.clientX >= rect.left && point.clientX <= rect.right &&
-          point.clientY >= rect.top && point.clientY <= rect.bottom) {
+      if (cardCenterX >= rect.left && cardCenterX <= rect.right &&
+          cardCenterY >= rect.top && cardCenterY <= rect.bottom) {
         handleSelect(choices[i])
         return
       }
