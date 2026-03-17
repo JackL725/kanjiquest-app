@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { getDeckById, getOwnedDecks } from '@/data/decks'
 import { useSRS, Rating } from '@/hooks/useSRS'
@@ -350,8 +350,11 @@ function UserStorySection({ cardId }) {
   )
 }
 
-function CardBack({ card, mode }) {
+function CardBack({ card, mode, deckId }) {
   const isMF = mode === 'kanji'
+  const isFoundationDeck = deckId === 'primer' || deckId === 'radicals'
+  const [showComponents, setShowComponents] = useState(false)
+
   return (
     <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-parchment-100 select-none pointer-events-none">{card.kanji}</span>
@@ -359,14 +362,43 @@ function CardBack({ card, mode }) {
         {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
         ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
         <Div />
-        <BSection label="RTK stories"><div className="space-y-2"><Story n={1}>{card.rtk1}</Story><Story n={2}>{card.rtk2}</Story></div></BSection>
+
+        {/* RTK stories — only for foundation decks (Primer, Radicals) */}
+        {isFoundationDeck && card.rtk1 && (
+          <>
+            <BSection label="RTK stories"><div className="space-y-2"><Story n={1}>{card.rtk1}</Story><Story n={2}>{card.rtk2}</Story></div></BSection>
+          </>
+        )}
+
+        {/* My Story — always shown */}
         <UserStorySection cardId={card.id} />
         <Div />
-        <BSection label="Components"><div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div></BSection>
+
+        {/* Components */}
+        <BSection label="Components">
+          <div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div>
+        </BSection>
+
+        {/* Component Library button — game decks only */}
+        {!isFoundationDeck && (
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowComponents(true) }}
+            className="w-full border border-gold-400/15 rounded-lg py-2.5 mb-4
+                       font-mono text-[10px] text-gold-400/60 tracking-widest uppercase
+                       hover:border-gold-400/30 hover:text-gold-400/80 transition-colors">
+            View component library
+          </button>
+        )}
+
         {(card.onyomi || card.kunyomi) && (<><Div />{card.onyomi && <BSection label="On'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p></BSection>}{card.kunyomi && <BSection label="Kun'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p></BSection>}{card.nanori && <BSection label="Nanori"><p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p></BSection>}</>)}
         {card.context && (<><Div /><BSection label="In-game context"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p><p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p></BSection></>)}
-        {card.jlpt && (<div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between"><span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span><span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span></div>)}
+        {card.jlpt > 0 && (<div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between"><span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span><span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span></div>)}
       </div>
+
+      {/* Component Library overlay */}
+      {showComponents && (
+        <ComponentLibrary deckId={deckId} onClose={() => setShowComponents(false)} />
+      )}
     </div>
   )
 }
@@ -635,7 +667,7 @@ export default function StudyScreen() {
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
             <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} deckId={id} isNew={!getCardProgress(current.id)} feedback={feedback} />
-            <CardBack card={current} mode={mode} />
+            <CardBack card={current} mode={mode} deckId={id} />
           </div>
         </div>
       </div>
@@ -674,6 +706,102 @@ export default function StudyScreen() {
 
       {/* Undo toast */}
       {undoToast && <UndoToast key={undoToast.cardId+undoToast.qi} label={undoToast.label} onUndo={performUndo} onExpire={() => setUndoToast(null)} />}
+    </div>
+  )
+}
+
+// ─── Component Library overlay ───────────────────────────────────────────
+function ComponentLibrary({ deckId, onClose }) {
+  const deck = getDeckById(deckId)
+  const [search, setSearch] = useState('')
+
+  // Extract and deduplicate all components from the deck
+  const components = useMemo(() => {
+    if (!deck) return []
+    const seen = new Map()
+    deck.cards.forEach(card => {
+      if (!card.parts) return
+      card.parts.forEach(part => {
+        // part can be 'kanji' or 'kanji: description'
+        const colonIdx = part.indexOf(':')
+        const char = colonIdx > 0 ? part.substring(0, colonIdx).trim() : part.trim()
+        const desc = colonIdx > 0 ? part.substring(colonIdx + 1).trim() : ''
+
+        if (!seen.has(char)) {
+          seen.set(char, { char, desc, cards: [card.kanji] })
+        } else {
+          const existing = seen.get(char)
+          if (!existing.cards.includes(card.kanji)) {
+            existing.cards.push(card.kanji)
+          }
+          // Keep the longer description
+          if (desc.length > existing.desc.length) existing.desc = desc
+        }
+      })
+    })
+    return [...seen.values()].sort((a, b) => b.cards.length - a.cards.length)
+  }, [deck])
+
+  const filtered = search.trim()
+    ? components.filter(c =>
+        c.char.includes(search) || c.desc.toLowerCase().includes(search.toLowerCase())
+      )
+    : components
+
+  return (
+    <div className="absolute inset-0 z-50 bg-ink-950/95 backdrop-blur-sm flex flex-col rounded-2xl overflow-hidden"
+         onClick={(e) => e.stopPropagation()}>
+      {/* Header */}
+      <div className="shrink-0 px-5 pt-5 pb-3">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h3 className="font-display italic text-lg text-parchment-100">Component Library</h3>
+            <p className="font-mono text-[9px] text-parchment-500/50 tracking-widest uppercase mt-0.5">
+              {components.length} unique components
+            </p>
+          </div>
+          <button onClick={onClose}
+            className="font-mono text-[10px] text-parchment-500/50 tracking-widest uppercase
+                       hover:text-parchment-300 transition-colors px-2 py-1">
+            ✕ Close
+          </button>
+        </div>
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search components..."
+          className="w-full bg-ink-800 border border-gold-400/12 rounded-lg px-3 py-2
+                     font-mono text-[11px] text-parchment-300 placeholder:text-parchment-500/30
+                     outline-none focus:border-gold-400/30 transition-colors"
+        />
+      </div>
+
+      {/* Component list */}
+      <div className="flex-1 overflow-y-auto px-5 pb-5">
+        <div className="space-y-1.5">
+          {filtered.map(comp => (
+            <div key={comp.char}
+              className="flex items-center gap-3 bg-ink-800/70 border border-gold-400/8 rounded-lg px-3 py-2.5">
+              <span className="font-kanji text-xl text-parchment-200 w-8 text-center shrink-0">{comp.char}</span>
+              <div className="flex-1 min-w-0">
+                {comp.desc && (
+                  <p className="font-mono text-[10px] text-parchment-400 leading-snug truncate">{comp.desc}</p>
+                )}
+                <p className="font-mono text-[9px] text-parchment-500/40 mt-0.5 truncate">
+                  Used in: {comp.cards.slice(0, 8).join(' · ')}{comp.cards.length > 8 ? ` +${comp.cards.length - 8}` : ''}
+                </p>
+              </div>
+              <span className="font-mono text-[9px] text-gold-400/40 shrink-0">{comp.cards.length}</span>
+            </div>
+          ))}
+        </div>
+        {filtered.length === 0 && (
+          <p className="font-mono text-[10px] text-parchment-500/30 tracking-widest uppercase text-center mt-8">
+            No components match your search
+          </p>
+        )}
+      </div>
     </div>
   )
 }
