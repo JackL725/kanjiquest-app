@@ -66,28 +66,25 @@ export default function AppShell() {
   function handleTabClick(e, to) {
     // If we're on a study screen, open tabs as overlays instead of navigating
     if (onProtected) {
-      e.preventDefault()
-
       if (to === '/radicals') {
         setOverlay(prev => prev === 'radicals' ? null : 'radicals')
       } else if (to === '/library') {
-        // "Library" while studying = close any overlay, stay on study screen
         setOverlay(null)
       } else {
-        // Other tabs: just close overlay and stay
+        // Browse, Profile — close overlay and navigate away from study
         setOverlay(null)
+        navigate(to)
       }
       return
     }
 
     // Normal navigation when not on a protected route
+    setOverlay(null)
     if (to === '/library' && location.pathname !== '/library') {
-      // Already on a tab page, go back
-      e.preventDefault()
       navigate(-1)
-      return
+    } else {
+      navigate(to)
     }
-    // Default: NavLink handles navigation normally
   }
 
   return (
