@@ -29,13 +29,56 @@ function getTomorrowForecast() {
   } catch { return 0 }
 }
 
-// ─── XP values (keyed by FSRS Rating: Again=1, Hard=2, Good=3, Easy=4) ──
-const XP_VALUES = { 1: 0, 2: 1, 3: 5, 4: 8 }
+// ─── XP System (FSRS-aware) ───────────────────────────────────────────────
+// Base XP by rating. Hard is a successful recall in FSRS — rewarded fairly.
+const BASE_XP = { 1: 0, 2: 3, 3: 5, 4: 8 }
+
+// Difficulty bonus: FSRS difficulty (1–10) rewards harder cards
+function getDifficultyBonus(p) {
+  if (!p || !p.difficulty) return 0
+  if (p.difficulty >= 7) return 4   // tough card
+  if (p.difficulty >= 4) return 2   // moderate
+  return 0                          // easy card
+}
+
+// Stability bonus: reward maintaining long-term memories
+function getStabilityBonus(p) {
+  if (!p || !p.stability) return 0
+  if (p.stability >= 90) return 3   // engraved
+  if (p.stability >= 30) return 2   // mastered
+  if (p.stability >= 7)  return 1   // tempered
+  return 0                          // still building
+}
+
+// Combo multiplier: capped and stepped (no more runaway scaling)
+const COMBO_MULT_TIERS = [
+  { min: 0,  mult: 1.0 },
+  { min: 3,  mult: 1.5 },
+  { min: 6,  mult: 2.0 },
+  { min: 10, mult: 2.5 },
+  { min: 15, mult: 3.0 },  // max
+]
+function getComboMult(combo) {
+  for (let i = COMBO_MULT_TIERS.length - 1; i >= 0; i--) {
+    if (combo >= COMBO_MULT_TIERS[i].min) return COMBO_MULT_TIERS[i].mult
+  }
+  return 1.0
+}
+
+// Calculate total XP for a single rating
+function calcXP(q, combo, cardProgress) {
+  const base = BASE_XP[q] || 0
+  if (base === 0) return 0
+  const diff  = getDifficultyBonus(cardProgress)
+  const stab  = getStabilityBonus(cardProgress)
+  const mult  = getComboMult(combo)
+  return Math.round((base + diff + stab) * mult)
+}
 
 // ─── Rating feedback messages ─────────────────────────────────────────────
 const FEEDBACK = {
   1: { msgs: ['Keep going!', 'You\'ll get it!', 'Almost there!', 'Stay with it!'], color: 'text-ember' },
-  2: { msgs: ['Getting closer!', 'Keep pushing!', 'Not bad!', 'Almost!'], color: 'text-amber-500' },
+  2: { msgs: ['Remembered!', 'Tough one!', 'Got it!', 'Not easy, but you knew it!'], color: 'text-amber-500' },
   3: { msgs: ['Nice!', 'Got it!', 'Solid!', 'Well done!', 'Clean!'], color: 'text-blue-400' },
   4: { msgs: ['Perfect!', 'Flawless!', 'Crushed it!', 'Effortless!', '完璧!'], color: 'text-emerald-400' },
 }
@@ -142,7 +185,7 @@ function DoneScreen({ stats, deckId, onRestart, troubleCards, graduatedCards, on
           {[
             { n: sessionXP, l: 'XP earned', c: 'text-gold-400' },
             { n: stats.ok,  l: 'Correct',   c: 'text-blue-400' },
-            { n: maxCombo > 1 ? `×${maxCombo}` : '—', l: 'Best combo', c: 'text-amber-500' },
+            { n: maxCombo >= 3 ? `×${getComboMult(maxCombo)}` : maxCombo > 0 ? maxCombo : '—', l: maxCombo >= 3 ? 'Peak mult' : 'Best streak', c: 'text-amber-500' },
             { n: pct + '%', l: 'Accuracy',   c: 'text-parchment-100' },
           ].map(({ n, l, c }) => (
             <div key={l} className="text-center">
@@ -257,7 +300,7 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId, feedback }) 
           {feedback.combo >= 2 && (
             <span className="font-mono text-[11px] text-gold-400/70 tracking-widest animate-combo-pop"
                   style={{ animationDelay: '0.1s' }}>
-              ×{feedback.combo} combo
+              {feedback.comboMult > 1 ? `×${feedback.comboMult} combo` : `${feedback.combo} streak`}
             </span>
           )}
         </div>
@@ -449,29 +492,30 @@ export default function StudyScreen() {
     // Apply the actual rating
     rate(card.id, q)
 
-    const isGood = q >= Rating.Good
-    const statsDelta = { ok: isGood ? 1 : 0, miss: isGood ? 0 : 1 }
+    // In FSRS, Hard (2) is a successful recall — only Again (1) is a failure
+    const isPass = q >= Rating.Hard
+    const statsDelta = { ok: isPass ? 1 : 0, miss: isPass ? 0 : 1 }
 
-    // Combo
+    // Combo: Hard+ continues, only Again breaks
     const prevCombo = combo
-    const newCombo = isGood ? combo + 1 : 0
+    const newCombo = isPass ? combo + 1 : 0
     setCombo(newCombo)
     if (newCombo > maxCombo) setMaxCombo(newCombo)
 
-    // XP = base × max(1, combo)
-    const baseXP = XP_VALUES[q] || 0
-    const earnedXP = baseXP * Math.max(1, isGood ? newCombo : 1)
+    // XP: base + difficulty bonus + stability bonus, × capped combo multiplier
+    const earnedXP = calcXP(q, isPass ? newCombo : 0, prevProg)
     setSessionXP(x => x + earnedXP)
 
     // Tracking
-    if (!isGood && !troubleRef.current.find(t => t.card.id === card.id)) troubleRef.current.push({ card, q })
-    if (isGood && (!prevProg || prevProg.state === undefined || prevProg.state <= 1) && !graduatedRef.current.find(c => c.id === card.id)) graduatedRef.current.push(card)
+    if (!isPass && !troubleRef.current.find(t => t.card.id === card.id)) troubleRef.current.push({ card, q })
+    if (isPass && (!prevProg || prevProg.state === undefined || prevProg.state <= 1) && !graduatedRef.current.find(c => c.id === card.id)) graduatedRef.current.push(card)
 
     setStats(s => ({ ok: s.ok + statsDelta.ok, miss: s.miss + statsDelta.miss }))
 
-    // Show feedback
+    // Show feedback (include combo multiplier tier for display)
     const msg = randomMsg(q)
-    setFeedback({ q, msg, xp: earnedXP, combo: newCombo, key: Date.now() })
+    const comboMult = getComboMult(newCombo)
+    setFeedback({ q, msg, xp: earnedXP, combo: newCombo, comboMult, key: Date.now() })
     setTimeout(() => setFeedback(null), 900)
 
     // Stage-up check
@@ -480,9 +524,9 @@ export default function StudyScreen() {
       setTimeout(() => setStageUpEvent(afterStage.stage), 500)
     }
 
-    // Requeue logic — use FSRS-calculated due time
+    // Requeue logic — only Again requeues
     let requeueEntry = null
-    if (!isGood) {
+    if (!isPass) {
       const dueAt = new Date(afterProg.due).getTime()
       requeueEntry = { card, dueAt }
       requeuePool.current.push(requeueEntry)
@@ -600,7 +644,7 @@ export default function StudyScreen() {
       {combo >= 2 && !feedback && (
         <div className="shrink-0 flex justify-center pb-1">
           <span className="font-mono text-[11px] text-gold-400/60 tracking-widest animate-combo-pop">
-            ×{combo} combo
+            {getComboMult(combo) > 1 ? `×${getComboMult(combo)} combo` : `${combo} streak`}
           </span>
         </div>
       )}
