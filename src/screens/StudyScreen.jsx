@@ -149,10 +149,10 @@ function UndoToast({ label, onUndo, onExpire }) {
   useEffect(() => { const d = 4000, s = Date.now(); let id; const t = () => { const p = Math.max(0, 100-((Date.now()-s)/d)*100); setPct(p); if (Date.now()-s < d) id = requestAnimationFrame(t); else onExpire() }; id = requestAnimationFrame(t); return () => cancelAnimationFrame(id) }, [])
   return (
     <div className="fixed bottom-24 left-4 z-50 animate-fade-up">
-      <button onClick={onUndo} className="relative bg-ink-700 border border-gold-400/30 rounded-xl px-5 py-3 flex items-center gap-3 shadow-lg shadow-black/40 overflow-hidden hover:border-gold-400/50 transition-colors touch-manipulation">
+      <button onClick={onUndo} className="relative bg-ink-700 border border-gold-400/30 rounded-xl px-6 py-4 flex items-center gap-3 shadow-lg shadow-black/40 overflow-hidden hover:border-gold-400/50 transition-colors touch-manipulation">
         <div className="absolute bottom-0 left-0 h-[2px] bg-gold-400/50 transition-none" style={{ width: `${pct}%` }} />
-        <span className="font-mono text-[10px] text-parchment-400 tracking-wide">{label}</span>
-        <span className="font-mono text-[10px] text-gold-400 tracking-widest uppercase font-medium">Undo</span>
+        <span className="font-mono text-[12px] text-parchment-400 tracking-wide">{label}</span>
+        <span className="font-mono text-[12px] text-gold-400 tracking-widest uppercase font-medium">Undo</span>
       </button>
     </div>
   )
