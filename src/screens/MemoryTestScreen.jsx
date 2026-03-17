@@ -162,9 +162,6 @@ export default function MemoryTestScreen() {
       setCombo(0)
       wrongRef.current += 1
       setWrong(wrongRef.current)
-      // Push to back
-      queueRef.current = [...queueRef.current, cur]
-      setQueue([...queueRef.current])
     }
 
     setFeedback({
@@ -491,7 +488,7 @@ export default function MemoryTestScreen() {
             </div>
           ) : (
             <span className="font-display italic text-base text-ember animate-fade-up drop-shadow-lg">
-              Back of deck
+              Incorrect
             </span>
           )}
         </div>
