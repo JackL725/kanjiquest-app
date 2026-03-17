@@ -717,9 +717,9 @@ export default function StudyScreen() {
           </div>
         </div>
 
-        {/* Engraved celebration — overlaid on card, in the gap between First Look and kanji */}
+        {/* Engraved celebration — positioned below the peek hint text */}
         {burnAnim && (
-          <div className="absolute inset-0 flex items-start justify-center pt-[25%] pointer-events-none z-30">
+          <div className="absolute inset-0 flex items-end justify-center pb-[18%] pointer-events-none z-30">
             <div className="flex flex-col items-center gap-3 animate-fade-up">
               <span className="font-kanji text-6xl text-parchment-100 drop-shadow-lg">刻</span>
               <span className="font-display italic text-3xl text-parchment-100 drop-shadow-lg tracking-wide">Engraved</span>
