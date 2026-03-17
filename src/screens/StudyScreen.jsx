@@ -417,7 +417,7 @@ export default function StudyScreen() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const deck = getDeckById(id)
-  const { rate, getStudyQueue, getCardProgress, restoreCardProgress, getSchedulingPreview, simulateRate } = useSRS(id)
+  const { rate, burnCard, getStudyQueue, getCardProgress, restoreCardProgress, getSchedulingPreview, simulateRate } = useSRS(id)
   const { settings } = useSettings()
 
   const [mode, setMode] = useState('meaning')
@@ -475,10 +475,51 @@ export default function StudyScreen() {
   // ── Requeue polling ──────────────────────────────────────────────────
   useEffect(() => { const iv = setInterval(() => { const now = Date.now(), due = requeuePool.current.filter(e => e.dueAt <= now); if (!due.length) return; requeuePool.current = requeuePool.current.filter(e => e.dueAt > now); setQueue(p => { const n = [...p]; due.forEach((e, i) => n.splice(qiRef.current+1+i, 0, e.card)); queueRef.current = n; return n }); setWaiting(false) }, 30000); return () => clearInterval(iv) }, [])
 
+  // ── Burn (mark as mastered, remove from queue, replace) ────────────
+  const [burnAnim, setBurnAnim] = useState(false)
+
+  const handleBurn = useCallback(() => {
+    const cQ = queueRef.current, cI = qiRef.current, card = cQ[cI]; if (!card) return
+
+    // Trigger fly-up animation
+    setBurnAnim(true)
+
+    // Mark as permanently mastered in FSRS
+    burnCard(card.id)
+
+    // Add to burned list so it doesn't show in "All" mode
+    burnedRef.current.add(card.id); writeBurned(id, burnedRef.current)
+
+    // After animation, swap card in queue with next unseen card
+    setTimeout(() => {
+      setBurnAnim(false)
+      const queued = new Set(cQ.map(c => c.id))
+      const rep = deck?.cards.find(c => !queued.has(c.id) && !burnedRef.current.has(c.id) && !getCardProgress(c.id))
+      setQueue(p => {
+        const n = p.filter((_, i) => i !== cI)
+        if (rep) n.splice(cI, 0, rep)
+        queueRef.current = n
+        return n
+      })
+      if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }
+      setFlipped(false)
+    }, 350)
+  }, [deck, id, burnCard, getCardProgress])
+
   // ── Shake / Swipe / Keyboard ─────────────────────────────────────────
   useShake(useCallback(() => { if (!flipped) { setPeek(true); setTimeout(() => setPeek(false), 2000) } }, [flipped]))
 
-  const swipeUp = useCallback(() => { if (!flipped) { setFlipped(true); setSCUses(bumpSC()) } }, [flipped])
+  const swipeUp = useCallback(() => {
+    const card = queueRef.current[qiRef.current]
+    const isNewCard = card && !getCardProgress(card.id)
+    if (!flipped && isNewCard) {
+      // Swipe up on a new card = burn/master it
+      handleBurn()
+    } else if (!flipped) {
+      // Swipe up on a seen card = flip
+      setFlipped(true); setSCUses(bumpSC())
+    }
+  }, [flipped, getCardProgress, handleBurn])
   const swipeL = useCallback(() => { if (flipped) { handleRate(Rating.Again); setSCUses(bumpSC()) } }, [flipped])
   const swipeR = useCallback(() => { if (flipped) { handleRate(Rating.Good); setSCUses(bumpSC()) } }, [flipped])
   useSwipe({ onSwipeUp: swipeUp, onSwipeLeft: swipeL, onSwipeRight: swipeR })
@@ -587,15 +628,6 @@ export default function StudyScreen() {
     qiRef.current = nextI; setQi(nextI); setFlipped(false); setUndoToast(undo)
   }, [rate, simulateRate, getCardProgress, combo, maxCombo])
 
-  // ── Burn ─────────────────────────────────────────────────────────────
-  const handleBurn = useCallback(() => {
-    const cQ = queueRef.current, cI = qiRef.current, card = cQ[cI]; if (!card) return
-    burnedRef.current.add(card.id); writeBurned(id, burnedRef.current)
-    const queued = new Set(cQ.map(c => c.id)), rep = deck?.cards.find(c => !queued.has(c.id) && !burnedRef.current.has(c.id))
-    setQueue(p => { const n = p.filter((_, i) => i !== cI); if (rep) n.splice(cI, 0, rep); queueRef.current = n; return n })
-    if (cQ.length - 1 + (rep ? 1 : 0) === 0) { setDone(true); return }; setFlipped(false)
-  }, [deck, id])
-
   const handleFlip = useCallback(() => { setFlipped(f => !f) }, [])
   const checkPoolNow = useCallback(() => { const now = Date.now(), due = requeuePool.current.filter(e => e.dueAt <= now); if (!due.length) return; requeuePool.current = requeuePool.current.filter(e => e.dueAt > now); const nI = qiRef.current + 1; setQueue(p => { const n = [...p]; due.forEach((e, i) => n.splice(nI+i, 0, e.card)); queueRef.current = n; return n }); setWaiting(false); qiRef.current = nI; setQi(nI); setFlipped(false) }, [])
 
@@ -663,13 +695,22 @@ export default function StudyScreen() {
       {/* Card area */}
       <div className="flex-1 min-h-0 px-5 pb-3 relative">
         <div key={`${qi}-${current?.id}`}
-          className={`card-scene h-full animate-card-enter ${cardAnimClass}`}
+          className={`card-scene h-full animate-card-enter ${cardAnimClass} ${burnAnim ? 'animate-burn-up' : ''}`}
           onClick={handleFlip}>
           <div className={`card-inner w-full h-full relative ${flipped ? 'flipped' : ''}`}>
             <CardFront card={current} mode={mode} peekActive={peekActive} onBurn={handleBurn} deckId={id} isNew={!getCardProgress(current.id)} feedback={feedback} />
             <CardBack card={current} mode={mode} deckId={id} />
           </div>
         </div>
+        {/* Mastered overlay during burn */}
+        {burnAnim && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+            <div className="flex flex-col items-center gap-2 animate-fade-up">
+              <span className="font-kanji text-5xl text-gold-400">✦</span>
+              <span className="font-display italic text-2xl text-gold-400 drop-shadow-lg">Mastered!</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Combo counter (persistent, above rating buttons) */}
@@ -699,7 +740,12 @@ export default function StudyScreen() {
         ) : (
           <div className="flex flex-col items-center justify-center py-3 gap-1">
             <p className="font-mono text-[10px] text-parchment-500/35 tracking-widest uppercase">Tap or Space to reveal</p>
-            {showHints && <p className="font-mono text-[8px] text-parchment-500/20 tracking-widest uppercase">Swipe up to flip</p>}
+            {showHints && current && !getCardProgress(current.id) && (
+              <p className="font-mono text-[8px] text-gold-400/30 tracking-widest uppercase">↑ Swipe up to master</p>
+            )}
+            {showHints && current && getCardProgress(current.id) && (
+              <p className="font-mono text-[8px] text-parchment-500/20 tracking-widest uppercase">Swipe up to flip</p>
+            )}
           </div>
         )}
       </div>

@@ -160,6 +160,17 @@ body {
 .animate-wrong    { animation: wrongShake 0.45s ease both; }
 .animate-hard     { animation: hardPulse 0.5s ease both; }
 
+/* ─── Burn/Master swipe-up ─────────────────────────── */
+@keyframes burnFlyUp {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  40%  { opacity: 1; transform: translateY(-30px) scale(1.02); }
+  100% { opacity: 0; transform: translateY(-120px) scale(0.9); }
+}
+.animate-burn-up {
+  animation: burnFlyUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
 /* ─── XP floater ───────────────────────────────────── */
 @keyframes xpFloat {
   0%   { opacity: 1; transform: translateY(0) scale(1); }

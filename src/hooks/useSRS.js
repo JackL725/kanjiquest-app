@@ -550,8 +550,40 @@ export function useSRS(deckId) {
     })
   }
 
+  // Burn a card — mark as permanently mastered so it never comes up for review
+  const burnCard = useCallback((cardId) => {
+    const now = new Date()
+    const cardData = {
+      due:            new Date(Date.now() + 365 * 100 * 86400000).toISOString(),
+      stability:      999,
+      difficulty:     1,
+      elapsed_days:   0,
+      scheduled_days: 36500,
+      reps:           2,
+      lapses:         0,
+      learning_steps: 0,
+      state:          State.Review,
+      last_review:    now.toISOString(),
+      firstStudied:   now.toISOString(),
+    }
+
+    setProgress(prev => ({
+      ...prev,
+      [deckId]: {
+        ...(prev[deckId] || {}),
+        [cardId]: cardData,
+      },
+    }))
+
+    // Sync to cloud
+    if (userId) {
+      upsertCardToCloud(userId, deckId, cardId, cardData)
+    }
+  }, [deckId, userId])
+
   return {
     rate,
+    burnCard,
     getCardProgress,
     restoreCardProgress,
     getSchedulingPreview,
