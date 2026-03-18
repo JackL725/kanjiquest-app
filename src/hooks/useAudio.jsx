@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { readSettings } from './useSettings'
 
 // ─── useAudio ──────────────────────────────────────────────────────────
 // Japanese TTS pronunciation using the Web Speech API.

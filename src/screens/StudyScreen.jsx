@@ -444,17 +444,19 @@ export default function StudyScreen() {
   const [sessionDuration, setSessionDuration] = useState(0)
 
   // ── Audio pronunciation ───────────────────────────────────────────────
-  const { speak, stop: stopAudio, getSettings: getAudioSettings } = useAudio()
+  const { speak, speakReading, stop: stopAudio, getSettings: getAudioSettings } = useAudio()
 
   // Auto-play pronunciation when card flips to back
   useEffect(() => {
     if (!flipped) return
-    const settings = getAudioSettings()
-    if (!settings.enabled || !settings.autoPlay) return
+    const audioSettings = getAudioSettings()
+    if (!audioSettings.enabled || !audioSettings.autoPlay) return
     const card = queueRef.current[qiRef.current]
     if (!card) return
-    // Speak the kanji (the synthesizer handles Japanese text well)
-    speak(card.kanji)
+    // Speak the reading (hiragana) — always accurate pronunciation
+    // Fall back to kanji if no reading available
+    if (card.reading) speakReading(card.reading)
+    else speak(card.kanji)
   }, [flipped, qi])
 
   const troubleRef = useRef([])
