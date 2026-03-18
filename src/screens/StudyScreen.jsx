@@ -374,11 +374,11 @@ function FoundationCardBack({ card, mode, deckId }) {
       {/* Ghost kanji watermark */}
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
 
-      {/* Hiragana reading + audio at top-right (primer/radicals) */}
+      {/* Hiragana reading + audio at top-left */}
       {card.kunyomi && (
-        <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 bg-ink-800/90 backdrop-blur-sm rounded-lg px-2.5 py-1.5 border border-gold-400/10">
-          <p className="font-kanji text-[14px] text-parchment-300 leading-none">{card.kunyomi.split('、')[0].replace(/[-.]/g, '')}</p>
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-ink-800/90 backdrop-blur-sm rounded-lg px-2.5 py-1.5 border border-gold-400/10">
           <AudioButton text={card.kanji} reading={card.reading} />
+          <p className="font-kanji text-[14px] text-parchment-300 leading-none">{card.kunyomi.split('、')[0].replace(/[-.]/g, '')}</p>
         </div>
       )}
 
