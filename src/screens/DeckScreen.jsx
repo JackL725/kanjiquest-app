@@ -34,7 +34,7 @@ export default function DeckScreen() {
   const needsGuide = isFoundation && !isPrimerGuideComplete()
 
   function handleStudy(mode) {
-    if (needsGuide) navigate('/primer-guide')
+    if (needsGuide) navigate(`/primer-guide?deck=${id}`)
     else if (mode === 'all') navigate(`/study/${id}?mode=all`)
     else navigate(`/study/${id}`)
   }
@@ -209,7 +209,7 @@ export default function DeckScreen() {
           </button>
         )}
         {isFoundation && !needsGuide && (
-          <button onClick={() => navigate('/primer-guide')}
+          <button onClick={() => navigate(`/primer-guide?deck=${id}`)}
             className="w-full bg-transparent text-parchment-500/40
                        font-mono text-[10px] tracking-widest uppercase py-2
                        hover:text-parchment-400 transition-colors duration-200">

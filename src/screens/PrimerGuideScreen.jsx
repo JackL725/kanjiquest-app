@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // ─── localStorage flag ───────────────────────────────────────────────────
 const GUIDE_KEY = 'kq-primer-guide-complete'
@@ -882,8 +882,12 @@ function ProgressBar({ step }) {
 // ─── PrimerGuideScreen ───────────────────────────────────────────────────
 export default function PrimerGuideScreen() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [step, setStep] = useState(0)
   const scrollRef = useRef(null)
+
+  // Which deck the user was trying to study (default to primer)
+  const targetDeck = searchParams.get('deck') || 'primer'
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
@@ -894,7 +898,7 @@ export default function PrimerGuideScreen() {
 
   function handleFinish() {
     markGuideComplete()
-    navigate('/study/radicals', { replace: true })
+    navigate(`/study/${targetDeck}`, { replace: true })
   }
 
   return (
