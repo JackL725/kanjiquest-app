@@ -28,6 +28,63 @@ function p() {
   return new opentype.Path()
 }
 
+// ── Winding direction fix ────────────────────────────────────────────────
+// CFF fonts require counter-clockwise contours for filled shapes.
+// Our stroke helpers produce clockwise contours, so we reverse every
+// contour after building the glyph path.
+function reverseContour(commands) {
+  if (commands.length < 3) return commands
+  const reversed = []
+  const lastCmd = commands[commands.length - 2]
+  reversed.push({ type: 'M', x: lastCmd.x, y: lastCmd.y })
+  for (let i = commands.length - 2; i >= 1; i--) {
+    const cmd = commands[i]
+    const prev = commands[i - 1]
+    if (cmd.type === 'L') {
+      reversed.push({ type: 'L', x: prev.x, y: prev.y })
+    } else if (cmd.type === 'Q') {
+      reversed.push({ type: 'Q', x1: cmd.x1, y1: cmd.y1, x: prev.x, y: prev.y })
+    } else if (cmd.type === 'C') {
+      reversed.push({ type: 'C', x1: cmd.x2, y1: cmd.y2, x2: cmd.x1, y2: cmd.y1, x: prev.x, y: prev.y })
+    }
+  }
+  reversed.push({ type: 'Z' })
+  return reversed
+}
+
+function fixWinding(srcPath) {
+  const dst = new opentype.Path()
+  const contours = []
+  let cur = []
+  for (const cmd of srcPath.commands) {
+    cur.push(cmd)
+    if (cmd.type === 'Z') { contours.push(cur); cur = [] }
+  }
+  for (const contour of contours) {
+    // Calculate signed area to determine winding direction
+    let area = 0, prevX = 0, prevY = 0, startX = 0, startY = 0
+    for (const cmd of contour) {
+      if (cmd.type === 'M') { startX = cmd.x; startY = cmd.y; prevX = cmd.x; prevY = cmd.y }
+      else if (cmd.type === 'L') { area += (prevX * cmd.y - cmd.x * prevY); prevX = cmd.x; prevY = cmd.y }
+      else if (cmd.type === 'Q') { area += (prevX * cmd.y1 - cmd.x1 * prevY); area += (cmd.x1 * cmd.y - cmd.x * cmd.y1); prevX = cmd.x; prevY = cmd.y }
+      else if (cmd.type === 'C') { area += (prevX * cmd.y1 - cmd.x1 * prevY); area += (cmd.x1 * cmd.y2 - cmd.x2 * cmd.y1); area += (cmd.x2 * cmd.y - cmd.x * cmd.y2); prevX = cmd.x; prevY = cmd.y }
+      else if (cmd.type === 'Z') { area += (prevX * startY - startX * prevY) }
+    }
+    // Only reverse if clockwise (area < 0) — we want CCW (filled)
+    const fixed = area < 0 ? reverseContour(contour) : contour
+    for (const cmd of fixed) {
+      switch (cmd.type) {
+        case 'M': dst.moveTo(cmd.x, cmd.y); break
+        case 'L': dst.lineTo(cmd.x, cmd.y); break
+        case 'Q': dst.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y); break
+        case 'C': dst.curveTo(cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y); break
+        case 'Z': dst.close(); break
+      }
+    }
+  }
+  return dst
+}
+
 // Horizontal stroke with slight taper
 function hStroke(path, x1, y, x2, t = 70) {
   const half = t / 2
@@ -1610,7 +1667,7 @@ for (const offset of ALL_PUA_OFFSETS) {
   const builder = glyphs[offset]
   if (!builder) continue
 
-  const glyphPath = builder()
+  const glyphPath = fixWinding(builder())
   
   const glyph = new opentype.Glyph({
     name: `pua_${offset.toString(16).padStart(4, '0')}`,
@@ -1636,11 +1693,16 @@ const font = new opentype.Font({
 const outDir = path.join(__dirname, '..', 'src', 'assets', 'fonts')
 fs.mkdirSync(outDir, { recursive: true })
 
+const publicDir = path.join(__dirname, '..', 'public', 'fonts')
+fs.mkdirSync(publicDir, { recursive: true })
+
 const otfPath = path.join(outDir, 'kanjiquest-primitives.otf')
-font.download && typeof font.download
+const publicOtfPath = path.join(publicDir, 'kanjiquest-primitives.otf')
 const buffer = font.toArrayBuffer()
 fs.writeFileSync(otfPath, Buffer.from(buffer))
+fs.writeFileSync(publicOtfPath, Buffer.from(buffer))
 console.log(`  Written: ${otfPath} (${(buffer.byteLength / 1024).toFixed(1)} KB)`)
+console.log(`  Copied:  ${publicOtfPath}`)
 
 // Convert to WOFF2 if possible
 try {

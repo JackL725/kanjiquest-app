@@ -3,10 +3,11 @@
 /* KanjiQuest Primitives — custom PUA glyphs for Heisig primitives */
 @font-face {
   font-family: 'KanjiQuest Primitives';
-  src: url('../assets/fonts/kanjiquest-primitives.otf') format('opentype');
+  src: url('/fonts/kanjiquest-primitives.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+E000-E0FF;
 }
 
 @tailwind base;
