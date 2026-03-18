@@ -4,7 +4,7 @@ import { getDeckById, getOwnedDecks } from '@/data/decks'
 import { useSRS, Rating } from '@/hooks/useSRS'
 import { useSettings } from '@/hooks/useSettings'
 import { getMasteryStage, STAGES } from '@/hooks/useMastery'
-import { useAudio, AudioButton } from '@/hooks/useAudio'
+import { useAudio } from '@/hooks/useAudio'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 const STORIES_KEY = 'kq-user-stories'
@@ -419,14 +419,6 @@ function FoundationCardBack({ card, mode, deckId }) {
       {/* Ghost kanji watermark */}
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
 
-      {/* Hiragana reading + audio at top-left */}
-      {card.kunyomi && (
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-ink-800/90 backdrop-blur-sm rounded-lg px-2.5 py-1.5 border border-gold-400/10">
-          <AudioButton text={card.kanji} reading={card.reading} />
-          <p className="font-kanji text-[14px] text-parchment-300 leading-none">{card.kunyomi.split('、')[0].replace(/[-.]/g, '')}</p>
-        </div>
-      )}
-
       <div className="h-full overflow-y-auto p-5">
 
         {/* ── 1. Kanji + Meaning header ── */}
@@ -438,7 +430,6 @@ function FoundationCardBack({ card, mode, deckId }) {
             )}
             <div className="flex items-center gap-2">
               <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
-              <AudioButton text={card.kanji} reading={card.reading} />
             </div>
             <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
           </BSection>
@@ -450,7 +441,6 @@ function FoundationCardBack({ card, mode, deckId }) {
             <BSection label="Reading">
               <div className="flex items-center gap-2">
                 <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
-                <AudioButton text={card.kanji} reading={card.reading} />
               </div>
               <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
             </BSection>
@@ -554,7 +544,6 @@ function GameCardBack({ card, mode, deckId }) {
             <p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p>
             <div className="flex items-center gap-2">
               <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
-              <AudioButton text={card.kanji} reading={card.reading} />
             </div>
             <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
           </BSection>
@@ -566,7 +555,6 @@ function GameCardBack({ card, mode, deckId }) {
             <BSection label="Reading">
               <div className="flex items-center gap-2">
                 <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
-                <AudioButton text={card.kanji} reading={card.reading} />
               </div>
               <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
             </BSection>
