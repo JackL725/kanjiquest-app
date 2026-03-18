@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useSettings, DEFAULT_SETTINGS } from '@/hooks/useSettings'
+import { useState, useEffect } from 'react'
+import { useAudio, writeAudioSettings } from '@/hooks/useAudio'
 
 // ─── Section header ───────────────────────────────────────────────────────
 function Section({ label, children }) {
@@ -116,6 +118,95 @@ function RetentionSlider({ value, onChange }) {
   )
 }
 
+// ─── Toggle row ──────────────────────────────────────────────────────────
+function ToggleRow({ label, description, value, onChange, last = false }) {
+  return (
+    <div className={`flex items-center justify-between gap-4 px-4 py-3.5
+                     ${!last ? 'border-b border-gold-400/8' : ''}`}>
+      <div className="min-w-0 flex-1">
+        <p className="font-body text-sm text-parchment-200 leading-tight">{label}</p>
+        <p className="font-mono text-[10px] text-parchment-500/60 mt-0.5 leading-snug">
+          {description}
+        </p>
+      </div>
+      <button
+        onClick={() => onChange(!value)}
+        className={`w-11 h-6 rounded-full border transition-colors duration-200 relative shrink-0
+          ${value ? 'bg-gold-400/20 border-gold-400/40' : 'bg-ink-700 border-ink-500'}`}
+      >
+        <div className={`absolute top-[3px] w-[18px] h-[18px] rounded-full transition-all duration-200
+          ${value ? 'left-[21px] bg-gold-400' : 'left-[3px] bg-parchment-500/50'}`} />
+      </button>
+    </div>
+  )
+}
+
+// ─── Audio settings section ──────────────────────────────────────────────
+function AudioSection() {
+  const AUDIO_KEY = 'kq-audio-settings'
+  const { speak, isAvailable } = useAudio()
+
+  const [audio, setAudio] = useState(() => {
+    try {
+      const raw = localStorage.getItem(AUDIO_KEY)
+      const parsed = raw ? JSON.parse(raw) : {}
+      return {
+        enabled: parsed.enabled !== false,
+        autoPlay: parsed.autoPlay !== false,
+        rate: parsed.rate ?? 0.85,
+      }
+    } catch {
+      return { enabled: true, autoPlay: true, rate: 0.85 }
+    }
+  })
+
+  function update(key, val) {
+    const next = { ...audio, [key]: val }
+    setAudio(next)
+    writeAudioSettings(next)
+  }
+
+  function testAudio() {
+    speak('漢字', { force: true, rate: audio.rate })
+  }
+
+  return (
+    <Section label="Audio">
+      <ToggleRow
+        label="Pronunciation audio"
+        description={isAvailable ? 'Play Japanese TTS when cards are revealed' : 'No Japanese voice available on this device'}
+        value={audio.enabled}
+        onChange={v => update('enabled', v)}
+      />
+      <ToggleRow
+        label="Auto-play on flip"
+        description="Automatically pronounce when you reveal a card"
+        value={audio.autoPlay}
+        onChange={v => update('autoPlay', v)}
+      />
+      <SettingRow
+        label="Speech rate"
+        description="Speed of pronunciation audio"
+        value={audio.rate}
+        min={0.5} max={1.5} step={0.05}
+        onChange={v => update('rate', Math.round(v * 100) / 100)}
+        last
+      />
+      {isAvailable && (
+        <div className="px-4 py-3 border-t border-gold-400/8">
+          <button
+            onClick={testAudio}
+            className="font-mono text-[10px] text-gold-400/60 tracking-widest uppercase
+                       hover:text-gold-400 transition-colors"
+          >
+            ▶ Test: 漢字 (kanji)
+          </button>
+        </div>
+      )}
+    </Section>
+  )
+}
+
 // ─── SettingsScreen ───────────────────────────────────────────────────────
 export default function SettingsScreen() {
   const navigate = useNavigate()
@@ -194,6 +285,9 @@ export default function SettingsScreen() {
           last
         />
       </Section>
+
+      {/* ── Audio ── */}
+      <AudioSection />
 
       {/* Reset */}
       {changed && (

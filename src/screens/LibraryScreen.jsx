@@ -4,6 +4,7 @@ import { getOwnedDecks } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { readProfile } from '@/hooks/useOnboarding'
 import ReviewForecast from '@/components/ui/ReviewForecast'
+import DailyQuestBoard from '@/components/ui/DailyQuestBoard'
 
 // ─── Sync utility: read due count without hooks ───────────────────────────
 // Avoids calling useSRS inside a loop (Rules of Hooks violation).
@@ -394,6 +395,9 @@ export default function LibraryScreen() {
         <DueBanner totalDue={totalDue} deckId={decks[0]?.id} />
       )}
       {hasDecks && totalDue === 0 && <CaughtUpBanner />}
+
+      {/* ── Daily Quests ────────────────────────────────── */}
+      {hasDecks && <DailyQuestBoard />}
 
       {/* ── Library ─────────────────────────────────────── */}
       {hasDecks ? (

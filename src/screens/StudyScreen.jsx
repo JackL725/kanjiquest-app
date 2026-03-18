@@ -4,6 +4,7 @@ import { getDeckById, getOwnedDecks } from '@/data/decks'
 import { useSRS, Rating } from '@/hooks/useSRS'
 import { useSettings } from '@/hooks/useSettings'
 import { getMasteryStage, STAGES } from '@/hooks/useMastery'
+import { useAudio, AudioButton } from '@/hooks/useAudio'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 const STORIES_KEY = 'kq-user-stories'
@@ -361,8 +362,8 @@ function CardBack({ card, mode, deckId }) {
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
       <div className="h-full overflow-y-auto p-5">
         {/* 1. Meaning + Reading */}
-        {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
-        ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
+        {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><div className="flex items-center gap-2"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><AudioButton text={card.kanji} reading={card.reading} /></div><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
+        ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><div className="flex items-center gap-2"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><AudioButton text={card.kanji} reading={card.reading} /></div><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
         <Div />
 
         {/* RTK stories — foundation decks only */}
@@ -441,6 +442,20 @@ export default function StudyScreen() {
   const [feedback, setFeedback]     = useState(null)    // { q, msg, xp, combo, key }
   const [stageUpEvent, setStageUpEvent] = useState(null)  // STAGES entry
   const [sessionDuration, setSessionDuration] = useState(0)
+
+  // ── Audio pronunciation ───────────────────────────────────────────────
+  const { speak, stop: stopAudio, getSettings: getAudioSettings } = useAudio()
+
+  // Auto-play pronunciation when card flips to back
+  useEffect(() => {
+    if (!flipped) return
+    const settings = getAudioSettings()
+    if (!settings.enabled || !settings.autoPlay) return
+    const card = queueRef.current[qiRef.current]
+    if (!card) return
+    // Speak the kanji (the synthesizer handles Japanese text well)
+    speak(card.kanji)
+  }, [flipped, qi])
 
   const troubleRef = useRef([])
   const graduatedRef = useRef([])

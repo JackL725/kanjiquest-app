@@ -7,6 +7,7 @@ import { STAGES, getMasteryStage } from '@/hooks/useMastery'
 import { ComponentLibrary } from '@/screens/StudyScreen'
 import { readHighScore as readVoiceHS } from '@/screens/ComboBlitzScreen'
 import { readMemTestHighScore as readDragHS } from '@/screens/MemoryTestScreen'
+import GameReadiness from '@/components/ui/GameReadiness'
 
 const BONUS_OPTIONS = [5, 10, 15, 20]
 
@@ -187,6 +188,9 @@ export default function DeckScreen() {
           <div className="h-full bg-gold-400 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
         </div>
       </div>
+
+      {/* Game Readiness Timeline */}
+      <GameReadiness deckId={id} learnedPct={pct} learned={learned} total={deck.cards.length} />
 
       {/* Study buttons */}
       <div className="space-y-3 mb-8 animate-fade-up delay-300">
