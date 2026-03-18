@@ -35,12 +35,16 @@ function PartBadge({ part, size = 'md' }) {
   if (!isObjectPart(part)) {
     return <span className={`font-mono ${size === 'sm' ? 'text-[10px]' : 'text-[11px]'} text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1`}>{String(part)}</span>
   }
-  const charSize = size === 'sm' ? 'text-[14px]' : 'text-[18px]'
-  const nameSize = size === 'sm' ? 'text-[9px]' : 'text-[10px]'
+  const charSize = size === 'sm' ? 'text-[20px]' : 'text-[26px]'
+  const nameSize = size === 'sm' ? 'text-[8px]' : 'text-[9px]'
   return (
-    <span className={`inline-flex items-center gap-1.5 bg-ink-700/60 border border-gold-400/10 rounded-lg ${size === 'sm' ? 'px-2 py-0.5' : 'px-2.5 py-1'}`}>
-      {part.c && <span className={`font-kanji ${charSize} text-parchment-200 leading-none`}>{part.c}</span>}
-      <span className={`font-mono ${nameSize} text-parchment-500`}>{part.n}</span>
+    <span className={`inline-flex flex-col items-center bg-ink-700/60 border border-gold-400/10 rounded-xl ${size === 'sm' ? 'px-2.5 py-1.5 min-w-[48px]' : 'px-3 py-2 min-w-[56px]'}`}>
+      {part.c ? (
+        <span className={`font-kanji ${charSize} text-parchment-100 leading-none`}>{part.c}</span>
+      ) : (
+        <span className={`font-mono ${size === 'sm' ? 'text-[11px]' : 'text-[12px]'} text-parchment-500/40 leading-none`}>?</span>
+      )}
+      <span className={`font-mono ${nameSize} text-parchment-500 mt-1 text-center leading-tight max-w-[72px]`}>{part.n}</span>
     </span>
   )
 }
@@ -363,16 +367,21 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId, feedback }) 
         <div className="flex flex-col items-center">
           <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-6">{card.kanji}</p>
           {card.disambig && <span className="font-mono text-[9px] text-gold-400/70 tracking-[1.5px] uppercase border border-gold-400/20 rounded-full px-3 py-1 mb-4 bg-gold-400/5 select-none">{card.disambig}</span>}
-          {!hideHint && (<>
-            <div className={`text-center leading-relaxed px-4 transition-all duration-300 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 ${peekActive ? '' : 'blur-reveal'}`}>
+          {!hideHint && (card.parts || []).length > 0 && (<>
+            <div className={`transition-all duration-300 flex flex-wrap items-start justify-center gap-1.5 px-2 ${peekActive ? '' : 'blur-reveal'}`}>
               {(card.parts || []).map((p, i) => (
-                <span key={i} className="inline-flex items-center gap-1">
-                  {i > 0 && <span className="font-mono text-[10px] text-parchment-500/30 mr-0.5">·</span>}
-                  {isObjectPart(p) ? (<>
-                    {p.c && <span className="font-kanji text-[16px] text-parchment-300/80 leading-none">{p.c}</span>}
-                    <span className="font-mono text-[11px] text-parchment-500/70">{p.n}</span>
-                  </>) : <span className="font-mono text-[11px] text-parchment-500/70">{String(p)}</span>}
-                </span>
+                isObjectPart(p) ? (
+                  <span key={i} className="inline-flex flex-col items-center bg-ink-700/50 border border-gold-400/8 rounded-lg px-2 py-1.5 min-w-[44px]">
+                    {p.c ? (
+                      <span className="font-kanji text-[18px] text-parchment-200 leading-none">{p.c}</span>
+                    ) : (
+                      <span className="font-mono text-[10px] text-parchment-500/30 leading-none">?</span>
+                    )}
+                    <span className="font-mono text-[8px] text-parchment-500/60 mt-0.5 text-center leading-tight max-w-[60px]">{p.n}</span>
+                  </span>
+                ) : (
+                  <span key={i} className="font-mono text-[10px] text-parchment-500/60 bg-ink-700/50 border border-gold-400/8 rounded-lg px-2 py-1.5">{String(p)}</span>
+                )
               ))}
             </div>
             <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">hover or shake to peek</p>
@@ -499,13 +508,17 @@ function FoundationCardBack({ card, mode, deckId }) {
         <Div />
 
         {/* ── 2. Components / Radicals ── */}
-        <BSection label="Components">
-          <div className="flex flex-wrap gap-1.5">
-            {card.parts.map((p, i) => (
-              <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} />
-            ))}
-          </div>
-        </BSection>
+        {card.parts && card.parts.length > 0 && (
+          <BSection label="Components">
+            <div className="bg-ink-700/40 border border-gold-400/8 rounded-xl p-3">
+              <div className="flex flex-wrap gap-2 justify-center">
+                {card.parts.map((p, i) => (
+                  <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} />
+                ))}
+              </div>
+            </div>
+          </BSection>
+        )}
 
         {/* ── 3. Mnemonic Story ── */}
         {card.story1 && (
@@ -616,9 +629,13 @@ function GameCardBack({ card, mode, deckId }) {
         <Div />
 
         {/* 3. Components */}
-        <BSection label="Components">
-          <div className="flex flex-wrap gap-1.5">{card.parts.map((p, i) => <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} size="sm" />)}</div>
-        </BSection>
+        {card.parts && card.parts.length > 0 && (
+          <BSection label="Components">
+            <div className="bg-ink-700/40 border border-gold-400/8 rounded-xl p-3">
+              <div className="flex flex-wrap gap-2 justify-center">{card.parts.map((p, i) => <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} size="sm" />)}</div>
+            </div>
+          </BSection>
+        )}
 
         {/* 4. In-game context */}
         {card.context && (
