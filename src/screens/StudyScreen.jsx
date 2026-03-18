@@ -406,7 +406,29 @@ function FoundationCardBack({ card, mode, deckId }) {
 
         <Div />
 
-        {/* ── 2. Readings grid (On / Kun / Nanori) ── */}
+        {/* ── 2. Components / Radicals ── */}
+        <BSection label="Components">
+          <div className="flex flex-wrap gap-1.5">
+            {card.parts.map(p => (
+              <span key={p} className="font-mono text-[11px] text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1">{p}</span>
+            ))}
+          </div>
+        </BSection>
+
+        {/* ── 3. Mnemonic Story ── */}
+        {card.story1 && (
+          <BSection label="Mnemonic">
+            <div className="bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
+              <StoryText text={card.story1} />
+            </div>
+          </BSection>
+        )}
+
+        {/* ── 4. My Story ── */}
+        <UserStorySection cardId={card.id} />
+        <Div />
+
+        {/* ── 5. Readings grid (On / Kun / Nanori) ── */}
         {hasReadings && (
           <>
             <BSection label="Readings">
@@ -437,33 +459,8 @@ function FoundationCardBack({ card, mode, deckId }) {
                 )}
               </div>
             </BSection>
-            <Div />
           </>
         )}
-
-        {/* ── 3. Mnemonic Story ── */}
-        {card.story1 && (
-          <>
-            <BSection label="Mnemonic">
-              <div className="bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
-                <StoryText text={card.story1} />
-              </div>
-            </BSection>
-          </>
-        )}
-
-        {/* ── 4. My Story ── */}
-        <UserStorySection cardId={card.id} />
-        <Div />
-
-        {/* ── 5. Components / Radicals ── */}
-        <BSection label="Components">
-          <div className="flex flex-wrap gap-1.5">
-            {card.parts.map(p => (
-              <span key={p} className="font-mono text-[11px] text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1">{p}</span>
-            ))}
-          </div>
-        </BSection>
 
         {/* ── 6. Context example ── */}
         {hasContext && (
