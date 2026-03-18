@@ -385,8 +385,8 @@ export default function DeckScreen() {
               <div className="flex items-center gap-3">
                 <span className="font-kanji text-xl text-parchment-200">{card.kanji}</span>
                 <div>
-                  <p className="font-mono text-[11px] text-parchment-400">{card.romaji}</p>
-                  <p className="font-mono text-[10px] text-parchment-500">{card.meaning}</p>
+                  <p className="font-mono text-[11px] text-parchment-400">{card.meaning}</p>
+                  <p className="font-mono text-[10px] text-parchment-500">{card.romaji}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
