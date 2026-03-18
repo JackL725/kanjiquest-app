@@ -446,7 +446,7 @@ function FoundationCardBack({ card, mode, deckId }) {
           <>
             <BSection label="Mnemonic">
               <div className="bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
-                <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story1}</p>
+                <StoryText text={card.story1} />
               </div>
             </BSection>
           </>
@@ -1088,3 +1088,18 @@ export function ComponentLibrary({ deckId, onClose }) {
 // ─── Sub-components ───────────────────────────────────────────────────────
 function BSection({ label, children }) { return <div className="mb-4"><p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">{label}</p>{children}</div> }
 function Div() { return <div className="h-px bg-gold-400/10 my-4" /> }
+
+// Renders story text with **bold** markers as gold-highlighted spans
+function StoryText({ text }) {
+  if (!text) return null
+  const parts = text.split(/\*\*(.+?)\*\*/g)
+  return (
+    <p className="font-body text-[13px] text-parchment-400 leading-relaxed">
+      {parts.map((part, i) =>
+        i % 2 === 1
+          ? <span key={i} className="text-gold-400/80 font-medium">{part}</span>
+          : <span key={i}>{part}</span>
+      )}
+    </p>
+  )
+}
