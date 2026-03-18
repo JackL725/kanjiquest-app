@@ -1,5 +1,6 @@
 // Single Character Kanji 101 — 3,000 Essential Kanji
 // Ordering: Frequency-weighted topological sort (Kahn's algorithm).
+// First 3 cards pinned: 日 → 月 → 明 (demonstrates composition in onboarding).
 // Components always appear before the kanji that use them (0 violations).
 // Within that constraint, the most common kanji (by Wikipedia corpus
 // frequency — 59M kanji tokens from 100K articles) are studied first.
@@ -39,7 +40,7 @@ const primerDeck = {
       kunyomi:   'ひ、-び、-か',
       nanori:    'あ, あき, いる, く, くさ, こう, す, たち, に, にっ, につ, へ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0013-month',
       kanji:     '月',
@@ -54,545 +55,7 @@ const primerDeck = {
       kunyomi:   'つき',
       nanori:    'おと, がっ, す, ずき, もり',
       jlpt:      5,
-    },
-    {
-      id:        'rtk-0112-large',
-      kanji:     '大',
-      reading:   'ダイ',
-      romaji:    'dai',
-      meaning:   'large',
-      parts:     ['大: big, big radical (no. 37)'],
-      story1:      'A person throwing their arms wide to show how **large** something is — stretched to the max.',
-      context:   '大分(だいぶ)',
-      contextEn: 'considerably; greatly; a lot',
-      onyomi:    'ダイ、タイ',
-      kunyomi:   'おお-、おお.きい、-おお.いに',
-      nanori:    'うふ, お, おう, た, たかし, とも, はじめ, ひろ, ひろし, まさ, まさる, もと, わ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1023-person',
-      kanji:     '人',
-      reading:   'ジン',
-      romaji:    'jin',
-      meaning:   'person',
-      parts:     ['人: human, human radical (no. 9)'],
-      story1:      'Two legs striding forward — a stick figure walking with purpose. A **person** on the move.',
-      context:   '一人(ひとり)',
-      contextEn: 'one person',
-      onyomi:    'ジン、ニン',
-      kunyomi:   'ひと、-り、-と',
-      nanori:    'じ, と, ね, ひこ, ふみ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0001-one',
-      kanji:     '一',
-      reading:   'イチ',
-      romaji:    'ichi',
-      meaning:   'one',
-      parts:     ['一: one, one radical (no. 1)'],
-      story1:      'A single horizontal brushstroke — the simplest mark, the number **one**.',
-      context:   '一人(ひとり)',
-      contextEn: 'one person',
-      onyomi:    'イチ、イツ',
-      kunyomi:   'ひと-、ひと.つ',
-      nanori:    'かず, い, いっ, いる, かつ, かづ, てん, はじめ, ひ, ひとつ, まこと',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1224-make',
-      kanji:     '作',
-      reading:   'サク',
-      romaji:    'saku',
-      meaning:   'make',
-      parts:     ['人: person', '乍: though; notwithstanding; while; during; both; all'],
-      story1:      'A **person** next to a sudden action — hands moving fast, assembling something. **Make**!',
-      context:   '作業(さぎょう)',
-      contextEn: 'work; operation; manufacturing; fatigue duty',
-      onyomi:    'サク、サ',
-      kunyomi:   'つく.る、つく.り、-づく.り',
-      nanori:    'くり, さか, さっ, づくり, とも, なお, はぎ, まさか',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0938-going',
-      kanji:     '行',
-      reading:   'コウ',
-      romaji:    'kou',
-      meaning:   'going',
-      parts:     ['彳: stop; linger; loiter; going man radical (no. 60)'],
-      story1:      'A **left step** and a right step — legs alternating as someone keeps **going** forward on the road.',
-      context:   '流行(はやり)',
-      contextEn: 'fashion; fad; vogue; craze',
-      onyomi:    'コウ、ギョウ、アン',
-      kunyomi:   'い.く、ゆ.く、-ゆ.き、-ゆき、-い.き、-いき、おこな.う、おこ.なう',
-      nanori:    'いく, なみ, なめ, みち, ゆき, ゆく',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0099-child',
-      kanji:     '子',
-      reading:   'シ',
-      romaji:    'shi',
-      meaning:   'child',
-      parts:     ['子: child, seed, child radical (no. 39)'],
-      story1:      'A baby wrapped in a blanket, arms outstretched — a tiny **child** reaching up to be held.',
-      context:   '子供(こども)',
-      contextEn: 'child; children',
-      onyomi:    'シ、ス、ツ',
-      kunyomi:   'こ、-こ、ね',
-      nanori:    'い, き, ぎ, く, け, ねっ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0050-above',
-      kanji:     '上',
-      reading:   'ジョウ',
-      romaji:    'jou',
-      meaning:   'above',
-      parts:     ['卜: divination', '一: one; one radical (no.1)'],
-      story1:      'A **divination** stick standing on a **line** — it points upward, **above** the surface.',
-      context:   '上がる(あがる)',
-      contextEn: 'to rise; to go up; to come up; to ascend; to be raised',
-      onyomi:    'ジョウ、ショウ、シャン',
-      kunyomi:   'うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、よ.す',
-      nanori:    'あおい, あげ, い, か, かき, かず, かん, こう, のぼり, ほつ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1479-behind',
-      kanji:     '後',
-      reading:   'ゴ',
-      romaji:    'go',
-      meaning:   'behind',
-      parts:     ['彳: stop; linger; loiter; going man radical (no. 60)', '幺: short thread radical (no. 52)', '夂: winter radical (no. 34)'],
-      story1:      'A **step**, tiny **threads**, and slow **legs** — someone shuffling along, lagging **behind** everyone else.',
-      context:   '午後(ごご)',
-      contextEn: 'afternoon; p.m.',
-      onyomi:    'ゴ、コウ',
-      kunyomi:   'のち、うし.ろ、うしろ、あと、おく.れる',
-      nanori:    'こし, し, しい, しり',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1675-life',
-      kanji:     '生',
-      reading:   'セイ',
-      romaji:    'sei',
-      meaning:   'life',
-      parts:     ['生: life, life radical (no. 100)'],
-      story1:      'A plant sprouting from the ground with leaves spreading — new **life** pushing through the soil.',
-      context:   '出生(しゅっせい)',
-      contextEn: 'birth',
-      onyomi:    'セイ、ショウ',
-      kunyomi:   'い.きる、い.かす、い.ける、う.まれる、うま.れる、う.まれ、うまれ、う.む、お.う、は.える、は.やす、き、なま、なま-、な.る、な.す、む.す、-う',
-      nanori:    'あさ, いき, いく, いけ, うぶ, うまい, え, おい, ぎゅう, くるみ, ごせ, さ, じょう, すぎ, そ, そう, ちる, なば, にう, にゅう, ふ, み, もう, よい, りゅう',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0014-rice-field',
-      kanji:     '田',
-      reading:   'デン',
-      romaji:    'den',
-      meaning:   'rice field',
-      parts:     ['田: field, field radical (no. 102)'],
-      story1:      'A square plot divided into four sections by irrigation channels — a **rice field** seen from above.',
-      context:   '水田(すいでん)',
-      contextEn: '(water-filled) paddy field',
-      onyomi:    'デン',
-      kunyomi:   'た',
-      nanori:    'いなか, おか, たん, で, とう, や',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-1080-substitute',
-      kanji:     '代',
-      reading:   'ダイ',
-      romaji:    'dai',
-      meaning:   'substitute',
-      parts:     ['人: person', '弋: piling; ceremony radical (no. 56)'],
-      story1:      'A **person** next to a **ceremony arrow** — they step in to take the shot for someone else. A **substitute**.',
-      context:   '代わり(かわり)',
-      contextEn: 'substitute; replacement; substituting; replacing',
-      onyomi:    'ダイ、タイ',
-      kunyomi:   'か.わる、かわ.る、かわ.り、か.わり、-がわ.り、-が.わり、か.える、よ、しろ',
-      nanori:    'す',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-1265-utilize',
-      kanji:     '用',
-      reading:   'ヨウ',
-      romaji:    'you',
-      meaning:   'utilize',
-      parts:     ['用: use (radical no. 101)'],
-      story1:      'A frame divided into slots for **use** — a toolbox organized to **utilize** every section.',
-      context:   '雇用(こよう)',
-      contextEn: 'employment (long term); hire',
-      onyomi:    'ヨウ',
-      kunyomi:   'もち.いる',
-      nanori:    'たから',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0386-turn-into',
-      kanji:     '成',
-      reading:   'セイ',
-      romaji:    'sei',
-      meaning:   'turn into',
-      parts:     ['勹: wrapping enclosure; wrapping radical (no. 20)', '戈: halberd; arms; festival car; float; tasselled spear radical (no. 62)'],
-      story1:      'A **wrap** around a **spear** — something peaceful wrapped around a weapon. It can **turn into** danger fast.',
-      context:   '成長(せいちょう)',
-      contextEn: 'growth; grow to adulthood',
-      onyomi:    'セイ、ジョウ',
-      kunyomi:   'な.る、な.す、-な.す',
-      nanori:    'あき, あきら, しげ, そん, たえ, なお, なり, なる, のり, ひら, まさ, よし, り',
-      jlpt:      3,
-    },
-    {
-      id:        'rtk-2070-long',
-      kanji:     '長',
-      reading:   'チョウ',
-      romaji:    'chou',
-      meaning:   'long',
-      parts:     ['長: long, grow, leader radical (no. 168)'],
-      story1:      'A figure with flowing robes trailing far behind — the **longer** the robe, the higher the rank.',
-      context:   '議長(ぎちょう)',
-      contextEn: 'chairman; speaker (e.g. of assembly); president (e.g. of council, senate, etc.); moderator (e.g. of a newsgroup)',
-      onyomi:    'チョウ',
-      kunyomi:   'なが.い、おさ',
-      nanori:    'お, おしゃ, たかし, たけ, な, は, ひさ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0830-mountain',
-      kanji:     '山',
-      reading:   'サン',
-      romaji:    'san',
-      meaning:   'mountain',
-      parts:     ['山: mountain, mountain radical (no. 46)'],
-      story1:      'Three peaks — a **tall** center summit flanked by two smaller ones. A **mountain** range on the horizon.',
-      context:   '山(やま)',
-      contextEn: 'mountain; hill',
-      onyomi:    'サン、セン',
-      kunyomi:   'やま',
-      nanori:    'さ, やの, やん',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0829-exit',
-      kanji:     '出',
-      reading:   'シュツ',
-      romaji:    'shutsu',
-      meaning:   'exit',
-      parts:     ['山: mountain', '凵: open box enclosure; open box radical (no. 17)'],
-      story1:      'A **mountain** bursting out of an **open box** — it can\'t be contained. **Exit**!',
-      context:   '出生(しゅっせい)',
-      contextEn: 'birth',
-      onyomi:    'シュツ、スイ',
-      kunyomi:   'で.る、-で、だ.す、-だ.す、い.でる、い.だす',
-      nanori:    'いず, いづ, いで, じ, すっ, すつ, てん',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0687-hand',
-      kanji:     '手',
-      reading:   'シュ',
-      romaji:    'shu',
-      meaning:   'hand',
-      parts:     ['手: hand, hand radical (no. 64)'],
-      story1:      'Four fingers and a thumb spreading outward — an open **hand** reaching forward to grab something.',
-      context:   '手続(てつづき)',
-      contextEn: 'procedure; (legal) process; formalities',
-      onyomi:    'シュ、ズ',
-      kunyomi:   'て、て-、-て、た-',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0462-stand-up',
-      kanji:     '立',
-      reading:   'リツ',
-      romaji:    'ritsu',
-      meaning:   'stand up',
-      parts:     ['亠: kettle lid radical (no. 8)'],
-      story1:      'A **lid** on top, feet planted wide on the ground — push up from under the cover and **stand up**.',
-      context:   '立場(たちば)',
-      contextEn: 'standpoint; position; situation',
-      onyomi:    'リツ、リュウ、リットル',
-      kunyomi:   'た.つ、-た.つ、た.ち-、た.てる、-た.てる、た.て-、たて-、-た.て、-だ.て、-だ.てる',
-      nanori:    'たち, たっ, たつ, だて, つい',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0015-eye',
-      kanji:     '目',
-      reading:   'モク',
-      romaji:    'moku',
-      meaning:   'eye',
-      parts:     ['目: eye, eye radical (no. 109)'],
-      story1:      'A rectangle turned on its side with horizontal lines inside — an **eye** rotated 90 degrees, pupil staring.',
-      context:   '課目(かもく)',
-      contextEn: '(school) subject; curriculum; course',
-      onyomi:    'モク、ボク',
-      kunyomi:   'め、-め、ま-',
-      nanori:    'さかん, さがん, さっか, さつか',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0134-stream',
-      kanji:     '川',
-      reading:   'セン',
-      romaji:    'sen',
-      meaning:   'stream',
-      parts:     ['巛: river, river radical (no. 47)'],
-      story1:      'Three vertical lines flowing downward — currents of water rushing through a narrow **stream**.',
-      context:   '川(かわ)',
-      contextEn: 'river; stream',
-      onyomi:    'セン',
-      kunyomi:   'かわ',
-      nanori:    'か, こ, さわ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1861-sentence',
-      kanji:     '文',
-      reading:   'ブン',
-      romaji:    'bun',
-      meaning:   'sentence',
-      parts:     ['亠: kettle lid radical (no. 8)', '乂: mow; cut grass; subdue'],
-      story1:      'A **lid** over a crossing pattern — marks arranged carefully on paper. A written **sentence**.',
-      context:   '文字(もんじ)',
-      contextEn: 'letter (of alphabet); character',
-      onyomi:    'ブン、モン',
-      kunyomi:   'ふみ、あや',
-      nanori:    'かざり, ふ, も',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0110-little',
-      kanji:     '小',
-      reading:   'ショウ',
-      romaji:    'shou',
-      meaning:   'little',
-      parts:     ['小: small, insignificant, small radical (no. 42)'],
-      story1:      'A tiny vertical line with two specks beside it — something so **little** you can barely see it.',
-      context:   '小売り(こうり)',
-      contextEn: 'retail',
-      onyomi:    'ショウ',
-      kunyomi:   'ちい.さい、こ-、お-、さ-',
-      nanori:    'いさら, こう, さざ, しゃお, ちいさ',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0346-study',
-      kanji:     '学',
-      reading:   'ガク',
-      romaji:    'gaku',
-      meaning:   'study',
-      parts:     ['小: small, insignificant', '冖: wa-shaped crown radical (no. 14)', '子: child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac'],
-      story1:      'A **child** sits under a **cover** with small marks above — cramming away, **studying** hard.',
-      context:   '学校(がっこう)',
-      contextEn: 'school',
-      onyomi:    'ガク',
-      kunyomi:   'まな.ぶ',
-      nanori:    'たか, のり',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0552-prefecture',
-      kanji:     '県',
-      reading:   'ケン',
-      romaji:    'ken',
-      meaning:   'prefecture',
-      parts:     ['目: eye; class; look; insight; experience; care; favor', '小: little; small'],
-      story1:      'An eye (目) hanging over something small (小) — the government\'s watchful gaze over a prefecture.',
-      context:   '県庁(けんちょう)',
-      contextEn: 'prefectural office',
-      onyomi:    'ケン',
-      kunyomi:   'か.ける',
-      nanori:    'あがた, がた',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0036-oneself',
-      kanji:     '自',
-      reading:   'ジ',
-      romaji:    'ji',
-      meaning:   'oneself',
-      parts:     ['目: eye; class; look; insight; experience; care; favor'],
-      story1:      'An eye (目) with a small mark on top — point at your own face and say: that\'s oneself.',
-      context:   '自ら(みずから)',
-      contextEn: 'for one\'s self; personally',
-      onyomi:    'ジ、シ',
-      kunyomi:   'みずか.ら、おの.ずから、おの.ずと',
-      nanori:    'より',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-1095-inside',
-      kanji:     '内',
-      reading:   'ナイ',
-      romaji:    'nai',
-      meaning:   'inside',
-      parts:     ['冂: upside-down box radical (no. 13)', '人: person'],
-      story1:      'A **person** standing within a **frame** — tucked safely **inside** the walls.',
-      context:   '内閣(ないかく)',
-      contextEn: 'cabinet; (government) ministry',
-      onyomi:    'ナイ、ダイ',
-      kunyomi:   'うち',
-      nanori:    'いと, ただ, ち, のち',
-      jlpt:      3,
-    },
-    {
-      id:        'rtk-0842-enter',
-      kanji:     '入',
-      reading:   'ニュウ',
-      romaji:    'nyuu',
-      meaning:   'enter',
-      parts:     ['入: enter, enter radical (no. 11)'],
-      story1:      'Two strokes angling inward — squeezing between the walls to **enter** the narrow gap.',
-      context:   '入口(いりぐち)',
-      contextEn: 'entrance; entry; gate; approach; mouth',
-      onyomi:    'ニュウ、ジュ',
-      kunyomi:   'い.る、-い.る、-い.り、い.れる、-い.れ、はい.る',
-      nanori:    'いり, いる, に, の, りり',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-1511-traffic',
-      kanji:     '通',
-      reading:   'ツウ',
-      romaji:    'tsuu',
-      meaning:   'traffic',
-      parts:     ['甬: road with walls on both sides', '辶: walk; walking; road radical variant (no. 162)'],
-      story1:      'A walled corridor over a **road** — cars and people funneling through a bottleneck. **Traffic**.',
-      context:   '通信(つうしん)',
-      contextEn: 'correspondence; communication; transmission; news; signal',
-      onyomi:    'ツウ、ツ',
-      kunyomi:   'とお.る、とお.り、-とお.り、-どお.り、とお.す、とお.し、-どお.し、かよ.う',
-      nanori:    'とん, どうし, どおり, みち',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0580-house',
-      kanji:     '家',
-      reading:   'カ',
-      romaji:    'ka',
-      meaning:   'house',
-      parts:     ['宀: shaped crown; katakana u radical (no. 40)', '豕: pig; hog; pig radical (no. 152)'],
-      story1:      'A pig (豕) living under a roof (宀) — ancient farmers kept livestock downstairs. That\'s a house.',
-      context:   '家族(かぞく)',
-      contextEn: 'family; members of a family',
-      onyomi:    'カ、ケ',
-      kunyomi:   'いえ、や、うち',
-      nanori:    'あり, え, く, つか, べ',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-0051-below',
-      kanji:     '下',
-      reading:   'カ',
-      romaji:    'ka',
-      meaning:   'below',
-      parts:     ['一: one; one radical (no.1)', '卜: divination'],
-      story1:      'A **line** with a **divination** stick hanging underneath — dangling down **below**.',
-      context:   '足下(あしもと)',
-      contextEn: 'at one\'s feet; underfoot; one\'s step (as in "watch your step")',
-      onyomi:    'カ、ゲ',
-      kunyomi:   'した、しも、もと、さ.げる、さ.がる、くだ.る、くだ.り、くだ.す、-くだ.す、くだ.さる、お.ろす、お.りる',
-      nanori:    'さか, しと',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0304-car',
-      kanji:     '車',
-      reading:   'シャ',
-      romaji:    'sha',
-      meaning:   'car',
-      parts:     ['車: cart, car, car radical (no. 159)'],
-      story1:      'An axle through the center of a frame with wheels — a vehicle seen from above. A **car**.',
-      context:   '自動車(じどうしゃ)',
-      contextEn: 'automobile',
-      onyomi:    'シャ',
-      kunyomi:   'くるま',
-      nanori:    'くら, くろま',
-      jlpt:      5,
-    },
-    {
-      id:        'rtk-0305-take-along',
-      kanji:     '連',
-      reading:   'レン',
-      romaji:    'ren',
-      meaning:   'take along',
-      parts:     ['車: car', '辶: walk; walking; road radical variant (no. 162)'],
-      story1:      'A **car** rolling down a **road** — load up and **take everyone along** for the ride.',
-      context:   '関連(かんれん)',
-      contextEn: 'relation; connection; relevance',
-      onyomi:    'レン',
-      kunyomi:   'つら.なる、つら.ねる、つ.れる、-づ.れ',
-      nanori:    'ずれ, つれ, むらじ, れ',
-      jlpt:      3,
-    },
-    {
-      id:        'rtk-1236-hit',
-      kanji:     '当',
-      reading:   'トウ',
-      romaji:    'tou',
-      meaning:   'hit',
-      parts:     ['小: little; small', '彑: pig\'s head radical variant (no. 58)'],
-      story1:      'Something **small** swept by a broom — smack! A direct **hit**.',
-      context:   '当り前(あたりまえ)',
-      contextEn: 'natural; reasonable; obvious',
-      onyomi:    'トウ',
-      kunyomi:   'あ.たる、あ.たり、あ.てる、あ.て、まさ.に、まさ.にべし',
-      nanori:    'たい',
-      jlpt:      3,
-    },
-    {
-      id:        'rtk-0529-direction',
-      kanji:     '方',
-      reading:   'ホウ',
-      romaji:    'hou',
-      meaning:   'direction',
-      parts:     ['亠: kettle lid radical (no. 8)'],
-      story1:      'A **lid** over a bent shape — a signpost with a flag pointing the way. Which **direction**?',
-      context:   '一方(いっぽう)',
-      contextEn: 'one (esp. of two); the other; one way; the other way; one direction; the other direction; one side; the other side; one party; the other party',
-      onyomi:    'ホウ',
-      kunyomi:   'かた、-かた、-がた',
-      nanori:    'から, な, なた, ふさ, まさ, みち, も, わ',
-      jlpt:      4,
-    },
-    {
-      id:        'rtk-1944-elect',
-      kanji:     '選',
-      reading:   'セン',
-      romaji:    'sen',
-      meaning:   'elect',
-      parts:     ['巽: southeast', '辶: walk; walking; road radical variant (no. 162)'],
-      story1:      'Isn\'t this how the US presedential election works? You are given a choice between two snakes. Their politics are actually strung together but you get to feel as though you chose which one you want to lead you down the political road for the next four years. So which snake are you going to elect?',
-      context:   '選挙(せんきょ)',
-      contextEn: 'election',
-      onyomi:    'セン',
-      kunyomi:   'えら.ぶ',
-      jlpt:      3,
-    },
-    {
-      id:        'rtk-0102-woman',
-      kanji:     '女',
-      reading:   'ジョ',
-      romaji:    'jo',
-      meaning:   'woman',
-      parts:     ['女: woman, female, female radical (no. 38)'],
-      story1:      'A figure sitting with legs crossed gracefully — the flowing curves of a **woman** at rest.',
-      context:   '女のコ(おんなのコ)',
-      contextEn: 'girl',
-      onyomi:    'ジョ、ニョ、ニョウ',
-      kunyomi:   'おんな、め',
-      nanori:    'おな, た, つき, な',
-      jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0020-bright',
       kanji:     '明',
@@ -607,7 +70,545 @@ const primerDeck = {
       kunyomi:   'あ.かり、あか.るい、あか.るむ、あか.らむ、あき.らか、あ.ける、-あ.け、あ.く、あ.くる、あ.かす',
       nanori:    'あきら, あけ, あす, きら, け, さや, さやか, とし, はる, み, め',
       jlpt:      4,
-    },
+    },,
+    {
+      id:        'rtk-0112-large',
+      kanji:     '大',
+      reading:   'ダイ',
+      romaji:    'dai',
+      meaning:   'large',
+      parts:     ['大: big, big radical (no. 37)'],
+      story1:      'A person throwing their arms wide to show how **large** something is — stretched to the max.',
+      context:   '大分(だいぶ)',
+      contextEn: 'considerably; greatly; a lot',
+      onyomi:    'ダイ、タイ',
+      kunyomi:   'おお-、おお.きい、-おお.いに',
+      nanori:    'うふ, お, おう, た, たかし, とも, はじめ, ひろ, ひろし, まさ, まさる, もと, わ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1023-person',
+      kanji:     '人',
+      reading:   'ジン',
+      romaji:    'jin',
+      meaning:   'person',
+      parts:     ['人: human, human radical (no. 9)'],
+      story1:      'Two legs striding forward — a stick figure walking with purpose. A **person** on the move.',
+      context:   '一人(ひとり)',
+      contextEn: 'one person',
+      onyomi:    'ジン、ニン',
+      kunyomi:   'ひと、-り、-と',
+      nanori:    'じ, と, ね, ひこ, ふみ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0001-one',
+      kanji:     '一',
+      reading:   'イチ',
+      romaji:    'ichi',
+      meaning:   'one',
+      parts:     ['一: one, one radical (no. 1)'],
+      story1:      'A single horizontal brushstroke — the simplest mark, the number **one**.',
+      context:   '一人(ひとり)',
+      contextEn: 'one person',
+      onyomi:    'イチ、イツ',
+      kunyomi:   'ひと-、ひと.つ',
+      nanori:    'かず, い, いっ, いる, かつ, かづ, てん, はじめ, ひ, ひとつ, まこと',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1224-make',
+      kanji:     '作',
+      reading:   'サク',
+      romaji:    'saku',
+      meaning:   'make',
+      parts:     ['人: person', '乍: though; notwithstanding; while; during; both; all'],
+      story1:      'A **person** next to a sudden action — hands moving fast, assembling something. **Make**!',
+      context:   '作業(さぎょう)',
+      contextEn: 'work; operation; manufacturing; fatigue duty',
+      onyomi:    'サク、サ',
+      kunyomi:   'つく.る、つく.り、-づく.り',
+      nanori:    'くり, さか, さっ, づくり, とも, なお, はぎ, まさか',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0938-going',
+      kanji:     '行',
+      reading:   'コウ',
+      romaji:    'kou',
+      meaning:   'going',
+      parts:     ['彳: stop; linger; loiter; going man radical (no. 60)'],
+      story1:      'A **left step** and a right step — legs alternating as someone keeps **going** forward on the road.',
+      context:   '流行(はやり)',
+      contextEn: 'fashion; fad; vogue; craze',
+      onyomi:    'コウ、ギョウ、アン',
+      kunyomi:   'い.く、ゆ.く、-ゆ.き、-ゆき、-い.き、-いき、おこな.う、おこ.なう',
+      nanori:    'いく, なみ, なめ, みち, ゆき, ゆく',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0099-child',
+      kanji:     '子',
+      reading:   'シ',
+      romaji:    'shi',
+      meaning:   'child',
+      parts:     ['子: child, seed, child radical (no. 39)'],
+      story1:      'A baby wrapped in a blanket, arms outstretched — a tiny **child** reaching up to be held.',
+      context:   '子供(こども)',
+      contextEn: 'child; children',
+      onyomi:    'シ、ス、ツ',
+      kunyomi:   'こ、-こ、ね',
+      nanori:    'い, き, ぎ, く, け, ねっ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0050-above',
+      kanji:     '上',
+      reading:   'ジョウ',
+      romaji:    'jou',
+      meaning:   'above',
+      parts:     ['卜: divination', '一: one; one radical (no.1)'],
+      story1:      'A **divination** stick standing on a **line** — it points upward, **above** the surface.',
+      context:   '上がる(あがる)',
+      contextEn: 'to rise; to go up; to come up; to ascend; to be raised',
+      onyomi:    'ジョウ、ショウ、シャン',
+      kunyomi:   'うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、よ.す',
+      nanori:    'あおい, あげ, い, か, かき, かず, かん, こう, のぼり, ほつ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1479-behind',
+      kanji:     '後',
+      reading:   'ゴ',
+      romaji:    'go',
+      meaning:   'behind',
+      parts:     ['彳: stop; linger; loiter; going man radical (no. 60)', '幺: short thread radical (no. 52)', '夂: winter radical (no. 34)'],
+      story1:      'A **step**, tiny **threads**, and slow **legs** — someone shuffling along, lagging **behind** everyone else.',
+      context:   '午後(ごご)',
+      contextEn: 'afternoon; p.m.',
+      onyomi:    'ゴ、コウ',
+      kunyomi:   'のち、うし.ろ、うしろ、あと、おく.れる',
+      nanori:    'こし, し, しい, しり',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1675-life',
+      kanji:     '生',
+      reading:   'セイ',
+      romaji:    'sei',
+      meaning:   'life',
+      parts:     ['生: life, life radical (no. 100)'],
+      story1:      'A plant sprouting from the ground with leaves spreading — new **life** pushing through the soil.',
+      context:   '出生(しゅっせい)',
+      contextEn: 'birth',
+      onyomi:    'セイ、ショウ',
+      kunyomi:   'い.きる、い.かす、い.ける、う.まれる、うま.れる、う.まれ、うまれ、う.む、お.う、は.える、は.やす、き、なま、なま-、な.る、な.す、む.す、-う',
+      nanori:    'あさ, いき, いく, いけ, うぶ, うまい, え, おい, ぎゅう, くるみ, ごせ, さ, じょう, すぎ, そ, そう, ちる, なば, にう, にゅう, ふ, み, もう, よい, りゅう',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0014-rice-field',
+      kanji:     '田',
+      reading:   'デン',
+      romaji:    'den',
+      meaning:   'rice field',
+      parts:     ['田: field, field radical (no. 102)'],
+      story1:      'A square plot divided into four sections by irrigation channels — a **rice field** seen from above.',
+      context:   '水田(すいでん)',
+      contextEn: '(water-filled) paddy field',
+      onyomi:    'デン',
+      kunyomi:   'た',
+      nanori:    'いなか, おか, たん, で, とう, や',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-1080-substitute',
+      kanji:     '代',
+      reading:   'ダイ',
+      romaji:    'dai',
+      meaning:   'substitute',
+      parts:     ['人: person', '弋: piling; ceremony radical (no. 56)'],
+      story1:      'A **person** next to a **ceremony arrow** — they step in to take the shot for someone else. A **substitute**.',
+      context:   '代わり(かわり)',
+      contextEn: 'substitute; replacement; substituting; replacing',
+      onyomi:    'ダイ、タイ',
+      kunyomi:   'か.わる、かわ.る、かわ.り、か.わり、-がわ.り、-が.わり、か.える、よ、しろ',
+      nanori:    'す',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-1265-utilize',
+      kanji:     '用',
+      reading:   'ヨウ',
+      romaji:    'you',
+      meaning:   'utilize',
+      parts:     ['用: use (radical no. 101)'],
+      story1:      'A frame divided into slots for **use** — a toolbox organized to **utilize** every section.',
+      context:   '雇用(こよう)',
+      contextEn: 'employment (long term); hire',
+      onyomi:    'ヨウ',
+      kunyomi:   'もち.いる',
+      nanori:    'たから',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0386-turn-into',
+      kanji:     '成',
+      reading:   'セイ',
+      romaji:    'sei',
+      meaning:   'turn into',
+      parts:     ['勹: wrapping enclosure; wrapping radical (no. 20)', '戈: halberd; arms; festival car; float; tasselled spear radical (no. 62)'],
+      story1:      'A **wrap** around a **spear** — something peaceful wrapped around a weapon. It can **turn into** danger fast.',
+      context:   '成長(せいちょう)',
+      contextEn: 'growth; grow to adulthood',
+      onyomi:    'セイ、ジョウ',
+      kunyomi:   'な.る、な.す、-な.す',
+      nanori:    'あき, あきら, しげ, そん, たえ, なお, なり, なる, のり, ひら, まさ, よし, り',
+      jlpt:      3,
+    },,
+    {
+      id:        'rtk-2070-long',
+      kanji:     '長',
+      reading:   'チョウ',
+      romaji:    'chou',
+      meaning:   'long',
+      parts:     ['長: long, grow, leader radical (no. 168)'],
+      story1:      'A figure with flowing robes trailing far behind — the **longer** the robe, the higher the rank.',
+      context:   '議長(ぎちょう)',
+      contextEn: 'chairman; speaker (e.g. of assembly); president (e.g. of council, senate, etc.); moderator (e.g. of a newsgroup)',
+      onyomi:    'チョウ',
+      kunyomi:   'なが.い、おさ',
+      nanori:    'お, おしゃ, たかし, たけ, な, は, ひさ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0830-mountain',
+      kanji:     '山',
+      reading:   'サン',
+      romaji:    'san',
+      meaning:   'mountain',
+      parts:     ['山: mountain, mountain radical (no. 46)'],
+      story1:      'Three peaks — a **tall** center summit flanked by two smaller ones. A **mountain** range on the horizon.',
+      context:   '山(やま)',
+      contextEn: 'mountain; hill',
+      onyomi:    'サン、セン',
+      kunyomi:   'やま',
+      nanori:    'さ, やの, やん',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0829-exit',
+      kanji:     '出',
+      reading:   'シュツ',
+      romaji:    'shutsu',
+      meaning:   'exit',
+      parts:     ['山: mountain', '凵: open box enclosure; open box radical (no. 17)'],
+      story1:      'A **mountain** bursting out of an **open box** — it can\'t be contained. **Exit**!',
+      context:   '出生(しゅっせい)',
+      contextEn: 'birth',
+      onyomi:    'シュツ、スイ',
+      kunyomi:   'で.る、-で、だ.す、-だ.す、い.でる、い.だす',
+      nanori:    'いず, いづ, いで, じ, すっ, すつ, てん',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0687-hand',
+      kanji:     '手',
+      reading:   'シュ',
+      romaji:    'shu',
+      meaning:   'hand',
+      parts:     ['手: hand, hand radical (no. 64)'],
+      story1:      'Four fingers and a thumb spreading outward — an open **hand** reaching forward to grab something.',
+      context:   '手続(てつづき)',
+      contextEn: 'procedure; (legal) process; formalities',
+      onyomi:    'シュ、ズ',
+      kunyomi:   'て、て-、-て、た-',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0462-stand-up',
+      kanji:     '立',
+      reading:   'リツ',
+      romaji:    'ritsu',
+      meaning:   'stand up',
+      parts:     ['亠: kettle lid radical (no. 8)'],
+      story1:      'A **lid** on top, feet planted wide on the ground — push up from under the cover and **stand up**.',
+      context:   '立場(たちば)',
+      contextEn: 'standpoint; position; situation',
+      onyomi:    'リツ、リュウ、リットル',
+      kunyomi:   'た.つ、-た.つ、た.ち-、た.てる、-た.てる、た.て-、たて-、-た.て、-だ.て、-だ.てる',
+      nanori:    'たち, たっ, たつ, だて, つい',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0015-eye',
+      kanji:     '目',
+      reading:   'モク',
+      romaji:    'moku',
+      meaning:   'eye',
+      parts:     ['目: eye, eye radical (no. 109)'],
+      story1:      'A rectangle turned on its side with horizontal lines inside — an **eye** rotated 90 degrees, pupil staring.',
+      context:   '課目(かもく)',
+      contextEn: '(school) subject; curriculum; course',
+      onyomi:    'モク、ボク',
+      kunyomi:   'め、-め、ま-',
+      nanori:    'さかん, さがん, さっか, さつか',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0134-stream',
+      kanji:     '川',
+      reading:   'セン',
+      romaji:    'sen',
+      meaning:   'stream',
+      parts:     ['巛: river, river radical (no. 47)'],
+      story1:      'Three vertical lines flowing downward — currents of water rushing through a narrow **stream**.',
+      context:   '川(かわ)',
+      contextEn: 'river; stream',
+      onyomi:    'セン',
+      kunyomi:   'かわ',
+      nanori:    'か, こ, さわ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1861-sentence',
+      kanji:     '文',
+      reading:   'ブン',
+      romaji:    'bun',
+      meaning:   'sentence',
+      parts:     ['亠: kettle lid radical (no. 8)', '乂: mow; cut grass; subdue'],
+      story1:      'A **lid** over a crossing pattern — marks arranged carefully on paper. A written **sentence**.',
+      context:   '文字(もんじ)',
+      contextEn: 'letter (of alphabet); character',
+      onyomi:    'ブン、モン',
+      kunyomi:   'ふみ、あや',
+      nanori:    'かざり, ふ, も',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0110-little',
+      kanji:     '小',
+      reading:   'ショウ',
+      romaji:    'shou',
+      meaning:   'little',
+      parts:     ['小: small, insignificant, small radical (no. 42)'],
+      story1:      'A tiny vertical line with two specks beside it — something so **little** you can barely see it.',
+      context:   '小売り(こうり)',
+      contextEn: 'retail',
+      onyomi:    'ショウ',
+      kunyomi:   'ちい.さい、こ-、お-、さ-',
+      nanori:    'いさら, こう, さざ, しゃお, ちいさ',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0346-study',
+      kanji:     '学',
+      reading:   'ガク',
+      romaji:    'gaku',
+      meaning:   'study',
+      parts:     ['小: small, insignificant', '冖: wa-shaped crown radical (no. 14)', '子: child; sign of the rat; 11PM-1AM; first sign of Chinese zodiac'],
+      story1:      'A **child** sits under a **cover** with small marks above — cramming away, **studying** hard.',
+      context:   '学校(がっこう)',
+      contextEn: 'school',
+      onyomi:    'ガク',
+      kunyomi:   'まな.ぶ',
+      nanori:    'たか, のり',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0552-prefecture',
+      kanji:     '県',
+      reading:   'ケン',
+      romaji:    'ken',
+      meaning:   'prefecture',
+      parts:     ['目: eye; class; look; insight; experience; care; favor', '小: little; small'],
+      story1:      'An eye (目) hanging over something small (小) — the government\'s watchful gaze over a prefecture.',
+      context:   '県庁(けんちょう)',
+      contextEn: 'prefectural office',
+      onyomi:    'ケン',
+      kunyomi:   'か.ける',
+      nanori:    'あがた, がた',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0036-oneself',
+      kanji:     '自',
+      reading:   'ジ',
+      romaji:    'ji',
+      meaning:   'oneself',
+      parts:     ['目: eye; class; look; insight; experience; care; favor'],
+      story1:      'An eye (目) with a small mark on top — point at your own face and say: that\'s oneself.',
+      context:   '自ら(みずから)',
+      contextEn: 'for one\'s self; personally',
+      onyomi:    'ジ、シ',
+      kunyomi:   'みずか.ら、おの.ずから、おの.ずと',
+      nanori:    'より',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-1095-inside',
+      kanji:     '内',
+      reading:   'ナイ',
+      romaji:    'nai',
+      meaning:   'inside',
+      parts:     ['冂: upside-down box radical (no. 13)', '人: person'],
+      story1:      'A **person** standing within a **frame** — tucked safely **inside** the walls.',
+      context:   '内閣(ないかく)',
+      contextEn: 'cabinet; (government) ministry',
+      onyomi:    'ナイ、ダイ',
+      kunyomi:   'うち',
+      nanori:    'いと, ただ, ち, のち',
+      jlpt:      3,
+    },,
+    {
+      id:        'rtk-0842-enter',
+      kanji:     '入',
+      reading:   'ニュウ',
+      romaji:    'nyuu',
+      meaning:   'enter',
+      parts:     ['入: enter, enter radical (no. 11)'],
+      story1:      'Two strokes angling inward — squeezing between the walls to **enter** the narrow gap.',
+      context:   '入口(いりぐち)',
+      contextEn: 'entrance; entry; gate; approach; mouth',
+      onyomi:    'ニュウ、ジュ',
+      kunyomi:   'い.る、-い.る、-い.り、い.れる、-い.れ、はい.る',
+      nanori:    'いり, いる, に, の, りり',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-1511-traffic',
+      kanji:     '通',
+      reading:   'ツウ',
+      romaji:    'tsuu',
+      meaning:   'traffic',
+      parts:     ['甬: road with walls on both sides', '辶: walk; walking; road radical variant (no. 162)'],
+      story1:      'A walled corridor over a **road** — cars and people funneling through a bottleneck. **Traffic**.',
+      context:   '通信(つうしん)',
+      contextEn: 'correspondence; communication; transmission; news; signal',
+      onyomi:    'ツウ、ツ',
+      kunyomi:   'とお.る、とお.り、-とお.り、-どお.り、とお.す、とお.し、-どお.し、かよ.う',
+      nanori:    'とん, どうし, どおり, みち',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0580-house',
+      kanji:     '家',
+      reading:   'カ',
+      romaji:    'ka',
+      meaning:   'house',
+      parts:     ['宀: shaped crown; katakana u radical (no. 40)', '豕: pig; hog; pig radical (no. 152)'],
+      story1:      'A pig (豕) living under a roof (宀) — ancient farmers kept livestock downstairs. That\'s a house.',
+      context:   '家族(かぞく)',
+      contextEn: 'family; members of a family',
+      onyomi:    'カ、ケ',
+      kunyomi:   'いえ、や、うち',
+      nanori:    'あり, え, く, つか, べ',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-0051-below',
+      kanji:     '下',
+      reading:   'カ',
+      romaji:    'ka',
+      meaning:   'below',
+      parts:     ['一: one; one radical (no.1)', '卜: divination'],
+      story1:      'A **line** with a **divination** stick hanging underneath — dangling down **below**.',
+      context:   '足下(あしもと)',
+      contextEn: 'at one\'s feet; underfoot; one\'s step (as in "watch your step")',
+      onyomi:    'カ、ゲ',
+      kunyomi:   'した、しも、もと、さ.げる、さ.がる、くだ.る、くだ.り、くだ.す、-くだ.す、くだ.さる、お.ろす、お.りる',
+      nanori:    'さか, しと',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0304-car',
+      kanji:     '車',
+      reading:   'シャ',
+      romaji:    'sha',
+      meaning:   'car',
+      parts:     ['車: cart, car, car radical (no. 159)'],
+      story1:      'An axle through the center of a frame with wheels — a vehicle seen from above. A **car**.',
+      context:   '自動車(じどうしゃ)',
+      contextEn: 'automobile',
+      onyomi:    'シャ',
+      kunyomi:   'くるま',
+      nanori:    'くら, くろま',
+      jlpt:      5,
+    },,
+    {
+      id:        'rtk-0305-take-along',
+      kanji:     '連',
+      reading:   'レン',
+      romaji:    'ren',
+      meaning:   'take along',
+      parts:     ['車: car', '辶: walk; walking; road radical variant (no. 162)'],
+      story1:      'A **car** rolling down a **road** — load up and **take everyone along** for the ride.',
+      context:   '関連(かんれん)',
+      contextEn: 'relation; connection; relevance',
+      onyomi:    'レン',
+      kunyomi:   'つら.なる、つら.ねる、つ.れる、-づ.れ',
+      nanori:    'ずれ, つれ, むらじ, れ',
+      jlpt:      3,
+    },,
+    {
+      id:        'rtk-1236-hit',
+      kanji:     '当',
+      reading:   'トウ',
+      romaji:    'tou',
+      meaning:   'hit',
+      parts:     ['小: little; small', '彑: pig\'s head radical variant (no. 58)'],
+      story1:      'Something **small** swept by a broom — smack! A direct **hit**.',
+      context:   '当り前(あたりまえ)',
+      contextEn: 'natural; reasonable; obvious',
+      onyomi:    'トウ',
+      kunyomi:   'あ.たる、あ.たり、あ.てる、あ.て、まさ.に、まさ.にべし',
+      nanori:    'たい',
+      jlpt:      3,
+    },,
+    {
+      id:        'rtk-0529-direction',
+      kanji:     '方',
+      reading:   'ホウ',
+      romaji:    'hou',
+      meaning:   'direction',
+      parts:     ['亠: kettle lid radical (no. 8)'],
+      story1:      'A **lid** over a bent shape — a signpost with a flag pointing the way. Which **direction**?',
+      context:   '一方(いっぽう)',
+      contextEn: 'one (esp. of two); the other; one way; the other way; one direction; the other direction; one side; the other side; one party; the other party',
+      onyomi:    'ホウ',
+      kunyomi:   'かた、-かた、-がた',
+      nanori:    'から, な, なた, ふさ, まさ, みち, も, わ',
+      jlpt:      4,
+    },,
+    {
+      id:        'rtk-1944-elect',
+      kanji:     '選',
+      reading:   'セン',
+      romaji:    'sen',
+      meaning:   'elect',
+      parts:     ['巽: southeast', '辶: walk; walking; road radical variant (no. 162)'],
+      story1:      'Isn\'t this how the US presedential election works? You are given a choice between two snakes. Their politics are actually strung together but you get to feel as though you chose which one you want to lead you down the political road for the next four years. So which snake are you going to elect?',
+      context:   '選挙(せんきょ)',
+      contextEn: 'election',
+      onyomi:    'セン',
+      kunyomi:   'えら.ぶ',
+      jlpt:      3,
+    },,
+    {
+      id:        'rtk-0102-woman',
+      kanji:     '女',
+      reading:   'ジョ',
+      romaji:    'jo',
+      meaning:   'woman',
+      parts:     ['女: woman, female, female radical (no. 38)'],
+      story1:      'A figure sitting with legs crossed gracefully — the flowing curves of a **woman** at rest.',
+      context:   '女のコ(おんなのコ)',
+      contextEn: 'girl',
+      onyomi:    'ジョ、ニョ、ニョウ',
+      kunyomi:   'おんな、め',
+      nanori:    'おな, た, つき, な',
+      jlpt:      5,
+    },,
     {
       id:        'rtk-1105-by-means-of',
       kanji:     '以',
@@ -622,7 +623,7 @@ const primerDeck = {
       kunyomi:   'もっ.て',
       nanori:    'もち',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0922-power',
       kanji:     '力',
@@ -637,7 +638,7 @@ const primerDeck = {
       kunyomi:   'ちから',
       nanori:    'じから, つとむ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0349-write',
       kanji:     '書',
@@ -652,7 +653,7 @@ const primerDeck = {
       kunyomi:   'か.く、-が.き、-がき',
       nanori:    'かき',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0003-three',
       kanji:     '三',
@@ -667,7 +668,7 @@ const primerDeck = {
       kunyomi:   'み、み.つ、みっ.つ',
       nanori:    'か, さ, さい, さえ, さぶ, ざ, ざえ, ざぶ, そう, ぞ, ただ, みつ, みん, も, や',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0061-see',
       kanji:     '見',
@@ -681,7 +682,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'み.る、み.える、み.せる',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0535-set-free',
       kanji:     '放',
@@ -696,7 +697,7 @@ const primerDeck = {
       kunyomi:   'はな.す、-っぱな.し、はな.つ、はな.れる、こ.く、ほう.る',
       nanori:    'はなれ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0323-army',
       kanji:     '軍',
@@ -710,7 +711,7 @@ const primerDeck = {
       onyomi:    'グン',
       kunyomi:   'いくさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1694-reality',
       kanji:     '実',
@@ -725,7 +726,7 @@ const primerDeck = {
       kunyomi:   'み、みの.る、まこと、みの、みち.る',
       nanori:    'ぐみ, さね',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1028-rank',
       kanji:     '位',
@@ -740,7 +741,7 @@ const primerDeck = {
       kunyomi:   'くらい、ぐらい',
       nanori:    'ぞき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1728-west',
       kanji:     '西',
@@ -755,7 +756,7 @@ const primerDeck = {
       kunyomi:   'にし',
       nanori:    'いり, ひし, むら',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1831-ward',
       kanji:     '区',
@@ -769,7 +770,7 @@ const primerDeck = {
       onyomi:    'ク、オウ、コウ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2058-turn',
       kanji:     '番',
@@ -784,7 +785,7 @@ const primerDeck = {
       kunyomi:   'つが.い',
       nanori:    'は, ま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0137-water',
       kanji:     '水',
@@ -799,7 +800,7 @@ const primerDeck = {
       kunyomi:   'みず、みず-',
       nanori:    'うず, ずみ, つ, ど, み, みさ, みつ, みな, みん',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1730-need',
       kanji:     '要',
@@ -814,7 +815,7 @@ const primerDeck = {
       kunyomi:   'い.る、かなめ',
       nanori:    'とし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0949-duty',
       kanji:     '役',
@@ -829,7 +830,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ちゃく',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0207-tree',
       kanji:     '木',
@@ -844,7 +845,7 @@ const primerDeck = {
       kunyomi:   'き、こ-',
       nanori:    'ぐ, も, もと',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0224-book',
       kanji:     '本',
@@ -859,7 +860,7 @@ const primerDeck = {
       kunyomi:   'もと',
       nanori:    'まと, ごう',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0543-east',
       kanji:     '東',
@@ -874,7 +875,7 @@ const primerDeck = {
       kunyomi:   'ひがし',
       nanori:    'あい, あがり, あずま, あづま, こ, さき, しの, とお, はる, ひが, もと',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1030-body',
       kanji:     '体',
@@ -889,7 +890,7 @@ const primerDeck = {
       kunyomi:   'からだ、かたち',
       nanori:    'なり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1337-somebody',
       kanji:     '身',
@@ -903,7 +904,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0287-gold',
       kanji:     '金',
@@ -918,7 +919,7 @@ const primerDeck = {
       kunyomi:   'かね、かな-、-がね',
       nanori:    'かん, きむ, こ, この, ん',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1856-visit',
       kanji:     '参',
@@ -933,7 +934,7 @@ const primerDeck = {
       kunyomi:   'まい.る、まい-、まじわる、みつ',
       nanori:    'み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0002-two',
       kanji:     '二',
@@ -948,7 +949,7 @@ const primerDeck = {
       kunyomi:   'ふた、ふた.つ、ふたたび',
       nanori:    'おと, つぐ, にい, は, ふ, ふたつ, ふだ, わ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2030-spirit',
       kanji:     '気',
@@ -962,7 +963,7 @@ const primerDeck = {
       onyomi:    'キ、ケ',
       kunyomi:   'いき',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2039-mask',
       kanji:     '面',
@@ -977,7 +978,7 @@ const primerDeck = {
       kunyomi:   'おも、おもて、つら',
       nanori:    'お, ずら, ほおつき, も',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1847-shape',
       kanji:     '形',
@@ -992,7 +993,7 @@ const primerDeck = {
       kunyomi:   'かた、-がた、かたち、なり',
       nanori:    'ち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0601-gather',
       kanji:     '集',
@@ -1007,7 +1008,7 @@ const primerDeck = {
       kunyomi:   'あつ.まる、あつ.める、つど.う',
       nanori:    'あつまり, ず',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1226-record',
       kanji:     '録',
@@ -1021,7 +1022,7 @@ const primerDeck = {
       onyomi:    'ロク',
       kunyomi:   'しる.す、と.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0325-carry',
       kanji:     '運',
@@ -1035,7 +1036,7 @@ const primerDeck = {
       onyomi:    'ウン',
       kunyomi:   'はこ.ぶ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1882-unusual',
       kanji:     '変',
@@ -1049,7 +1050,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'か.わる、か.わり、か.える',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0080-craft',
       kanji:     '工',
@@ -1064,7 +1065,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'もく',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0377-style',
       kanji:     '式',
@@ -1079,7 +1080,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'のり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0011-mouth',
       kanji:     '口',
@@ -1093,7 +1094,7 @@ const primerDeck = {
       onyomi:    'コウ、ク',
       kunyomi:   'くち',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0039-in',
       kanji:     '中',
@@ -1108,7 +1109,7 @@ const primerDeck = {
       kunyomi:   'なか、うち、あた.る',
       nanori:    'あたる, かなえ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0269-fit',
       kanji:     '合',
@@ -1123,7 +1124,7 @@ const primerDeck = {
       kunyomi:   'あ.う、-あ.う、あ.い、あい-、-あ.い、-あい、あ.わす、あ.わせる、-あ.わせる',
       nanori:    'あう, あん, い, か, こう, ごお, に, ね, や, り, わい',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1240-matter',
       kanji:     '事',
@@ -1138,7 +1139,7 @@ const primerDeck = {
       kunyomi:   'こと、つか.う、つか.える',
       nanori:    'ろ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0192-same',
       kanji:     '同',
@@ -1152,7 +1153,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   'おな.じ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0329-tall',
       kanji:     '高',
@@ -1167,7 +1168,7 @@ const primerDeck = {
       kunyomi:   'たか.い、たか、-だか、たか.まる、たか.める',
       nanori:    'か, こ, じょい, た, はか',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0963-harmony',
       kanji:     '和',
@@ -1182,7 +1183,7 @@ const primerDeck = {
       kunyomi:   'やわ.らぐ、やわ.らげる、なご.む、なご.やか',
       nanori:    'あい, いず, かず, かつ, かつり, かづ, たけ, ち, とも, な, にぎ, まさ, やす, よし, より, わだこ, わっ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0630-name',
       kanji:     '回',
@@ -1196,7 +1197,7 @@ const primerDeck = {
       onyomi:    'カイ、エ',
       kunyomi:   'まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0334-capital',
       kanji:     '京',
@@ -1211,7 +1212,7 @@ const primerDeck = {
       kunyomi:   'みやこ',
       nanori:    'たか',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1330-nickname',
       kanji:     '号',
@@ -1225,7 +1226,7 @@ const primerDeck = {
       onyomi:    'ゴウ',
       kunyomi:   'さけ.ぶ、よびな',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0023-goods',
       kanji:     '品',
@@ -1239,7 +1240,7 @@ const primerDeck = {
       onyomi:    'ヒン、ホン',
       kunyomi:   'しな',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0932-add',
       kanji:     '加',
@@ -1253,7 +1254,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'くわ.える、くわ.わる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0747-history',
       kanji:     '史',
@@ -1268,7 +1269,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あきら, あや, お, こ, ちか, とし, なか, のぶ, ひさ, ひと, ふみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0357-say',
       kanji:     '言',
@@ -1283,7 +1284,7 @@ const primerDeck = {
       kunyomi:   'い.う、こと',
       nanori:    'とき',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0765-establishment',
       kanji:     '設',
@@ -1298,7 +1299,7 @@ const primerDeck = {
       kunyomi:   'もう.ける',
       nanori:    'した',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1043-faith',
       kanji:     '信',
@@ -1313,7 +1314,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'し, しが, しな, しの, しぶ, とき, のび, のぶ, まこと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0457-heavens',
       kanji:     '天',
@@ -1328,7 +1329,7 @@ const primerDeck = {
       kunyomi:   'あまつ、あめ、あま-',
       nanori:    'あき, あも, た, たかし, て, なま',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2172-send-off',
       kanji:     '送',
@@ -1342,7 +1343,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'おく.る',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1872-music',
       kanji:     '楽',
@@ -1357,7 +1358,7 @@ const primerDeck = {
       kunyomi:   'たの.しい、たの.しむ、この.む',
       nanori:    'さ, た, やす, ら',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0518-sound',
       kanji:     '音',
@@ -1372,7 +1373,7 @@ const primerDeck = {
       kunyomi:   'おと、ね',
       nanori:    'お, と',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1302-negative',
       kanji:     '不',
@@ -1386,7 +1387,7 @@ const primerDeck = {
       onyomi:    'フ、ブ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0135-state',
       kanji:     '州',
@@ -1401,7 +1402,7 @@ const primerDeck = {
       kunyomi:   'す',
       nanori:    'くに',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1946-well',
       kanji:     '井',
@@ -1416,7 +1417,7 @@ const primerDeck = {
       kunyomi:   'い',
       nanori:    'いの, さい, ひ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0341-gentleman',
       kanji:     '士',
@@ -1431,7 +1432,7 @@ const primerDeck = {
       kunyomi:   'さむらい',
       nanori:    'お, ま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1770-decide',
       kanji:     '決',
@@ -1445,7 +1446,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'き.める、-ぎ.め、き.まる、さ.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0805-pedestal',
       kanji:     '台',
@@ -1459,7 +1460,7 @@ const primerDeck = {
       onyomi:    'ダイ、タイ',
       kunyomi:   'うてな、われ、つかさ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0807-reign',
       kanji:     '治',
@@ -1474,7 +1475,7 @@ const primerDeck = {
       kunyomi:   'おさ.める、おさ.まる、なお.る、なお.す',
       nanori:    'し, ぢ, はり, はる, みち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0809-commence',
       kanji:     '始',
@@ -1489,7 +1490,7 @@ const primerDeck = {
       kunyomi:   'はじ.める、-はじ.める、はじ.まる',
       nanori:    'もと',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1295-wisteria',
       kanji:     '藤',
@@ -1504,7 +1505,7 @@ const primerDeck = {
       kunyomi:   'ふじ',
       nanori:    'ぞう, と, ふじゅ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2112-mount',
       kanji:     '岡',
@@ -1518,7 +1519,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'おか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0126-plump',
       kanji:     '太',
@@ -1533,7 +1534,7 @@ const primerDeck = {
       kunyomi:   'ふと.い、ふと.る',
       nanori:    'おお, たか, ひろ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0923-male',
       kanji:     '男',
@@ -1548,7 +1549,7 @@ const primerDeck = {
       kunyomi:   'おとこ、お',
       nanori:    'み',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0603-advance',
       kanji:     '進',
@@ -1563,7 +1564,7 @@ const primerDeck = {
       kunyomi:   'すす.む、すす.める',
       nanori:    'のぶ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1078-responsibility',
       kanji:     '任',
@@ -1578,7 +1579,7 @@ const primerDeck = {
       kunyomi:   'まか.せる、まか.す',
       nanori:    'さ, とう, ひで',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1681-products',
       kanji:     '産',
@@ -1593,7 +1594,7 @@ const primerDeck = {
       kunyomi:   'う.む、う.まれる、うぶ-、む.す',
       nanori:    'もと',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1644-art',
       kanji:     '術',
@@ -1607,7 +1608,7 @@ const primerDeck = {
       onyomi:    'ジュツ',
       kunyomi:   'すべ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0118-stone',
       kanji:     '石',
@@ -1622,7 +1623,7 @@ const primerDeck = {
       kunyomi:   'いし',
       nanori:    'いさ, いす, いわ, し, せっく, と',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0729-polish',
       kanji:     '研',
@@ -1637,7 +1638,7 @@ const primerDeck = {
       kunyomi:   'と.ぐ',
       nanori:    'のり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0222-inter',
       kanji:     '相',
@@ -1652,7 +1653,7 @@ const primerDeck = {
       kunyomi:   'あい-',
       nanori:    'あ, い, おう, さ, さが, すけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0826-current',
       kanji:     '流',
@@ -1667,7 +1668,7 @@ const primerDeck = {
       kunyomi:   'なが.れる、なが.れ、なが.す、-なが.す',
       nanori:    'な, ながれ, めぐる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0639-heart',
       kanji:     '心',
@@ -1681,7 +1682,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'こころ、-ごころ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1679-sex',
       kanji:     '性',
@@ -1695,7 +1696,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'さが',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0654-idea',
       kanji:     '意',
@@ -1710,7 +1711,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'もと, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0799-wide',
       kanji:     '広',
@@ -1724,7 +1725,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ひろ.い、ひろ.まる、ひろ.める、ひろ.がる、ひろ.げる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0195-yonder',
       kanji:     '向',
@@ -1739,7 +1740,7 @@ const primerDeck = {
       kunyomi:   'む.く、む.い、-む.き、む.ける、-む.け、む.かう、む.かい、む.こう、む.こう-、むこ、むか.い',
       nanori:    'こお, た, な, むか, むかい, むこう',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2103-belong',
       kanji:     '属',
@@ -1754,7 +1755,7 @@ const primerDeck = {
       kunyomi:   'さかん、つく、やから',
       nanori:    'さっか, つき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0417-build',
       kanji:     '建',
@@ -1769,7 +1770,7 @@ const primerDeck = {
       kunyomi:   'た.てる、た.て、-だ.て、た.つ',
       nanori:    'たけ, たつ, たて',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0971-appellation',
       kanji:     '称',
@@ -1784,7 +1785,7 @@ const primerDeck = {
       kunyomi:   'たた.える、とな.える、あ.げる、かな.う、はか.り、はか.る、ほめ.る',
       nanori:    'ね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0111-few',
       kanji:     '少',
@@ -1798,7 +1799,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'すく.ない、すこ.し',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0202-relax',
       kanji:     '安',
@@ -1813,7 +1814,7 @@ const primerDeck = {
       kunyomi:   'やす.い、やす.まる、やす、やす.らか',
       nanori:    'あ, あす, あず, あっ, や',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0613-authority',
       kanji:     '権',
@@ -1827,7 +1828,7 @@ const primerDeck = {
       onyomi:    'ケン、ゴン',
       kunyomi:   'おもり、かり、はか.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0629-park',
       kanji:     '園',
@@ -1842,7 +1843,7 @@ const primerDeck = {
       kunyomi:   'その',
       nanori:    'おん, ぞの',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1743-gates',
       kanji:     '門',
@@ -1857,7 +1858,7 @@ const primerDeck = {
       kunyomi:   'かど、と',
       nanori:    'じょう, も, と, ゆき',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1747-interval',
       kanji:     '間',
@@ -1872,7 +1873,7 @@ const primerDeck = {
       kunyomi:   'あいだ、ま、あい',
       nanori:    'ちか, は, はざ, はし',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1750-open',
       kanji:     '開',
@@ -1887,7 +1888,7 @@ const primerDeck = {
       kunyomi:   'ひら.く、ひら.き、-びら.き、ひら.ける、あ.く、あ.ける',
       nanori:    'はる, か, ひらき',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2173-connection',
       kanji:     '関',
@@ -1901,7 +1902,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'せき、-ぜき、かか.わる、からくり、かんぬき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0766-beat',
       kanji:     '撃',
@@ -1915,7 +1916,7 @@ const primerDeck = {
       onyomi:    'ゲキ',
       kunyomi:   'う.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0538-rumor',
       kanji:     '説',
@@ -1930,7 +1931,7 @@ const primerDeck = {
       kunyomi:   'と.く',
       nanori:    'さとし, とき',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1956-again',
       kanji:     '再',
@@ -1945,7 +1946,7 @@ const primerDeck = {
       kunyomi:   'ふたた.び',
       nanori:    'ふた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0125-ray',
       kanji:     '光',
@@ -1960,7 +1961,7 @@ const primerDeck = {
       kunyomi:   'ひか.る、ひかり',
       nanori:    'あき, あきら, こお, てる, ひこ, み, みつ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0821-bring-up',
       kanji:     '育',
@@ -1975,7 +1976,7 @@ const primerDeck = {
       kunyomi:   'そだ.つ、そだ.ち、そだ.てる、はぐく.む',
       nanori:    'やす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0460-bridge',
       kanji:     '橋',
@@ -1990,7 +1991,7 @@ const primerDeck = {
       kunyomi:   'はし',
       nanori:    'ばせ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1267-equip',
       kanji:     '備',
@@ -2005,7 +2006,7 @@ const primerDeck = {
       kunyomi:   'そな.える、そな.わる、つぶさ.に',
       nanori:    'びっ, びん',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1252-both',
       kanji:     '両',
@@ -2020,7 +2021,7 @@ const primerDeck = {
       kunyomi:   'てる、ふたつ',
       nanori:    'もろ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1186-wherefore',
       kanji:     '由',
@@ -2034,7 +2035,7 @@ const primerDeck = {
       onyomi:    'ユ、ユウ、ユイ',
       kunyomi:   'よし、よ.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1254-brush-stroke',
       kanji:     '画',
@@ -2048,7 +2049,7 @@ const primerDeck = {
       onyomi:    'ガ、カク、エ、カイ',
       kunyomi:   'えが.く、かく.する、かぎ.る、はかりごと、はか.る',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0851-valley',
       kanji:     '谷',
@@ -2063,7 +2064,7 @@ const primerDeck = {
       kunyomi:   'たに、きわ.まる',
       nanori:    'がい, がえ, がや, せ, たり, たん, や',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0739-suppose',
       kanji:     '存',
@@ -2078,7 +2079,7 @@ const primerDeck = {
       kunyomi:   'ながら.える、あ.る、たも.つ と.う',
       nanori:    'まさ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0161-soil',
       kanji:     '土',
@@ -2093,7 +2094,7 @@ const primerDeck = {
       kunyomi:   'つち',
       nanori:    'つ, つく, は, ひじ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0584-location',
       kanji:     '場',
@@ -2107,7 +2108,7 @@ const primerDeck = {
       onyomi:    'ジョウ、チョウ',
       kunyomi:   'ば',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0740-exist',
       kanji:     '在',
@@ -2122,7 +2123,7 @@ const primerDeck = {
       kunyomi:   'あ.る',
       nanori:    'あり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1904-fundamentals',
       kanji:     '基',
@@ -2137,7 +2138,7 @@ const primerDeck = {
       kunyomi:   'もと、もとい',
       nanori:    'きい, とも',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0387-castle',
       kanji:     '城',
@@ -2152,7 +2153,7 @@ const primerDeck = {
       kunyomi:   'しろ',
       nanori:    'いく, がき, き, くに, ぐしく, ぐすく, しき, すく, ぜい, たち, なり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0396-stop',
       kanji:     '止',
@@ -2167,7 +2168,7 @@ const primerDeck = {
       kunyomi:   'と.まる、-ど.まり、と.める、-と.める、-ど.め、とど.める、とど.め、とど.まる、や.める、や.む、-や.む、よ.す、-さ.す、-さ.し',
       nanori:    'どめ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0405-correct',
       kanji:     '正',
@@ -2182,7 +2183,7 @@ const primerDeck = {
       kunyomi:   'ただ.しい、ただ.す、まさ、まさ.に',
       nanori:    'おお, くに, ま, まさし, ただし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0407-politics',
       kanji:     '政',
@@ -2197,7 +2198,7 @@ const primerDeck = {
       kunyomi:   'まつりごと、まん',
       nanori:    'ただ, まさ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0403-warrior',
       kanji:     '武',
@@ -2212,7 +2213,7 @@ const primerDeck = {
       kunyomi:   'たけ.し',
       nanori:    'う, お, たけし, たけん, ん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1363-bureaucrat',
       kanji:     '官',
@@ -2226,7 +2227,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1202-fruit',
       kanji:     '果',
@@ -2241,7 +2242,7 @@ const primerDeck = {
       kunyomi:   'は.たす、はた.す、-は.たす、は.てる、-は.てる、は.て',
       nanori:    'み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1597-call',
       kanji:     '呼',
@@ -2256,7 +2257,7 @@ const primerDeck = {
       kunyomi:   'よ.ぶ',
       nanori:    'よぶ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1157-door',
       kanji:     '戸',
@@ -2271,7 +2272,7 @@ const primerDeck = {
       kunyomi:   'と',
       nanori:    'え, へ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1959-posture',
       kanji:     '構',
@@ -2286,7 +2287,7 @@ const primerDeck = {
       kunyomi:   'かま.える、かま.う',
       nanori:    'とち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0378-test',
       kanji:     '試',
@@ -2300,7 +2301,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'こころ.みる、ため.す',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1502-fate',
       kanji:     '命',
@@ -2314,7 +2315,7 @@ const primerDeck = {
       onyomi:    'メイ、ミョウ',
       kunyomi:   'いのち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2044-voice',
       kanji:     '声',
@@ -2328,7 +2329,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'こえ、こわ-',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0037-white',
       kanji:     '白',
@@ -2343,7 +2344,7 @@ const primerDeck = {
       kunyomi:   'しろ、しら-、しろ.い',
       nanori:    'あき, か, はっ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0142-meadow',
       kanji:     '原',
@@ -2358,7 +2359,7 @@ const primerDeck = {
       kunyomi:   'はら',
       nanori:    'た, ばる, ら, わた, わら',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1961-argument',
       kanji:     '論',
@@ -2372,7 +2373,7 @@ const primerDeck = {
       onyomi:    'ロン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0068-ten-thousand',
       kanji:     '万',
@@ -2387,7 +2388,7 @@ const primerDeck = {
       kunyomi:   'よろず',
       nanori:    'かず, ま, ゆる',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0342-good-luck',
       kanji:     '吉',
@@ -2402,7 +2403,7 @@ const primerDeck = {
       kunyomi:   'よし',
       nanori:    'え, き, きっ, きる, こし, と, よ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0197-character',
       kanji:     '字',
@@ -2416,7 +2417,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'あざ、あざな、-な',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1575-retreat',
       kanji:     '退',
@@ -2430,7 +2431,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'しりぞ.く、しりぞ.ける、ひ.く、の.く、の.ける、ど.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1676-star',
       kanji:     '星',
@@ -2444,7 +2445,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'ほし、-ぼし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0148-creek',
       kanji:     '江',
@@ -2459,7 +2460,7 @@ const primerDeck = {
       kunyomi:   'え',
       nanori:    'くん, とうみ, み, りえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1621-parent',
       kanji:     '親',
@@ -2474,7 +2475,7 @@ const primerDeck = {
       kunyomi:   'おや、おや-、した.しい、した.しむ',
       nanori:    'ぎ, ちか, のり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1744-question',
       kanji:     '問',
@@ -2489,7 +2490,7 @@ const primerDeck = {
       kunyomi:   'と.う、と.い、とん',
       nanori:    'はる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1167-show',
       kanji:     '示',
@@ -2503,7 +2504,7 @@ const primerDeck = {
       onyomi:    'ジ、シ',
       kunyomi:   'しめ.す',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1173-company',
       kanji:     '社',
@@ -2518,7 +2519,7 @@ const primerDeck = {
       kunyomi:   'やしろ',
       nanori:    'こそ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1171-blessing',
       kanji:     '福',
@@ -2533,7 +2534,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'とし, とみ, ふ, ふき, ふっ, ぼく, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0339-circumference',
       kanji:     '周',
@@ -2548,7 +2549,7 @@ const primerDeck = {
       kunyomi:   'まわ.り',
       nanori:    'あまね, しゅ, す, ちか, のり, ひろ, びび, まこと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0373-tune',
       kanji:     '調',
@@ -2563,7 +2564,7 @@ const primerDeck = {
       kunyomi:   'しら.べる、しら.べ、ととの.う、ととの.える',
       nanori:    'ぎ, つぎ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0311-each',
       kanji:     '各',
@@ -2578,7 +2579,7 @@ const primerDeck = {
       kunyomi:   'おのおの',
       nanori:    'かか, かが',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0312-status',
       kanji:     '格',
@@ -2593,7 +2594,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'いたる, のり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1578-good',
       kanji:     '良',
@@ -2608,7 +2609,7 @@ const primerDeck = {
       kunyomi:   'よ.い、-よ.い、い.い、-い.い',
       nanori:    'じ, なが, まこと, よし, ら, りょ, ろう',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0653-apply',
       kanji:     '応',
@@ -2623,7 +2624,7 @@ const primerDeck = {
       kunyomi:   'あた.る、まさに、こた.える',
       nanori:    'お, たか, まさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1858-discipline',
       kanji:     '修',
@@ -2638,7 +2639,7 @@ const primerDeck = {
       kunyomi:   'おさ.める、おさ.まる',
       nanori:    'おき, なが, のぶ, おさむ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0010-ten',
       kanji:     '十',
@@ -2653,7 +2654,7 @@ const primerDeck = {
       kunyomi:   'とお、と',
       nanori:    'い, か, ぎ, さ, し, そ, そう, ち, とう, ね, ま, る, わ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0016-old',
       kanji:     '古',
@@ -2668,7 +2669,7 @@ const primerDeck = {
       kunyomi:   'ふる.い、ふる-、-ふる.す',
       nanori:    'ふゆ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0359-plot',
       kanji:     '計',
@@ -2683,7 +2684,7 @@ const primerDeck = {
       kunyomi:   'はか.る、はか.らう',
       nanori:    'え, かず, け',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0077-straightaway',
       kanji:     '直',
@@ -2698,7 +2699,7 @@ const primerDeck = {
       kunyomi:   'ただ.ちに、なお.す、-なお.す、なお.る、なお.き、す.ぐ',
       nanori:    'すぐ, なお, のう, のお',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0895-placement',
       kanji:     '置',
@@ -2713,7 +2714,7 @@ const primerDeck = {
       kunyomi:   'お.く、-お.き',
       nanori:    'おき, おけ, き',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0937-co',
       kanji:     '協',
@@ -2727,7 +2728,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0040-thousand',
       kanji:     '千',
@@ -2742,7 +2743,7 @@ const primerDeck = {
       kunyomi:   'ち',
       nanori:    'かず, ゆき',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1709-ride',
       kanji:     '乗',
@@ -2757,7 +2758,7 @@ const primerDeck = {
       kunyomi:   'の.る、-の.り、の.せる',
       nanori:    'のり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0749-grow-late',
       kanji:     '更',
@@ -2771,7 +2772,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'さら、さら.に、ふ.ける、ふ.かす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1286-half',
       kanji:     '半',
@@ -2786,7 +2787,7 @@ const primerDeck = {
       kunyomi:   'なか.ば',
       nanori:    'は',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1654-blue',
       kanji:     '青',
@@ -2801,7 +2802,7 @@ const primerDeck = {
       kunyomi:   'あお、あお-、あお.い',
       nanori:    'お',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1657-feelings',
       kanji:     '情',
@@ -2815,7 +2816,7 @@ const primerDeck = {
       onyomi:    'ジョウ、セイ',
       kunyomi:   'なさ.け',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0383-load',
       kanji:     '載',
@@ -2830,7 +2831,7 @@ const primerDeck = {
       kunyomi:   'の.せる、の.る',
       nanori:    'とし, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0350-haven',
       kanji:     '津',
@@ -2845,7 +2846,7 @@ const primerDeck = {
       kunyomi:   'つ',
       nanori:    'ず, ち, と',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1389-overdo',
       kanji:     '過',
@@ -2859,7 +2860,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'す.ぎる、-す.ぎる、-す.ぎ、す.ごす、あやま.つ、あやま.ち、よ.ぎる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0901-husband',
       kanji:     '夫',
@@ -2874,7 +2875,7 @@ const primerDeck = {
       kunyomi:   'おっと、それ',
       nanori:    'お, と, ゆう, よ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0352-aggression',
       kanji:     '攻',
@@ -2889,7 +2890,7 @@ const primerDeck = {
       kunyomi:   'せ.める',
       nanori:    'おさむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1607-kill',
       kanji:     '殺',
@@ -2903,7 +2904,7 @@ const primerDeck = {
       onyomi:    'サツ、サイ、セツ',
       kunyomi:   'ころ.す、-ごろ.し、そ.ぐ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0551-year-end',
       kanji:     '歳',
@@ -2917,7 +2918,7 @@ const primerDeck = {
       onyomi:    'サイ、セイ',
       kunyomi:   'とし、とせ、よわい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1062-sponsor',
       kanji:     '催',
@@ -2931,7 +2932,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'もよう.す、もよお.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1092-long-time',
       kanji:     '久',
@@ -2946,7 +2947,7 @@ const primerDeck = {
       kunyomi:   'ひさ.しい',
       nanori:    'きゅ, わ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1366-father',
       kanji:     '父',
@@ -2960,7 +2961,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'ちち',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1368-mingle',
       kanji:     '交',
@@ -2975,7 +2976,7 @@ const primerDeck = {
       kunyomi:   'まじ.わる、まじ.える、ま.じる、まじ.る、ま.ざる、ま.ぜる、-か.う、か.わす、かわ.す、こもごも',
       nanori:    'かた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1371-exam',
       kanji:     '校',
@@ -2990,7 +2991,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'めん',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2007-director',
       kanji:     '司',
@@ -3005,7 +3006,7 @@ const primerDeck = {
       kunyomi:   'つかさど.る',
       nanori:    'つ, つか, つかさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1582-eat',
       kanji:     '食',
@@ -3020,7 +3021,7 @@ const primerDeck = {
       kunyomi:   'く.う、く.らう、た.べる、は.む',
       nanori:    'ぐい',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1589-bldg',
       kanji:     '館',
@@ -3035,7 +3036,7 @@ const primerDeck = {
       kunyomi:   'やかた、たて',
       nanori:    'たち',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0319-twig',
       kanji:     '条',
@@ -3049,7 +3050,7 @@ const primerDeck = {
       onyomi:    'ジョウ、チョウ、デキ',
       kunyomi:   'えだ、すじ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0614-outlook',
       kanji:     '観',
@@ -3063,7 +3064,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'み.る、しめ.す',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0762-throw',
       kanji:     '投',
@@ -3077,7 +3078,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'な.げる、-な.げ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1775-defense',
       kanji:     '衛',
@@ -3092,7 +3093,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'もり, い, まもる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0843-crowded',
       kanji:     '込',
@@ -3107,7 +3108,7 @@ const primerDeck = {
       kunyomi:   'こ.む、-こ.む、こ.み、-こ.み、こ.める',
       nanori:    'こみ, ごめ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0035-olden-times',
       kanji:     '旧',
@@ -3121,7 +3122,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'ふる.い、もと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1264-map',
       kanji:     '図',
@@ -3136,7 +3137,7 @@ const primerDeck = {
       kunyomi:   'え、はか.る',
       nanori:    'づ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0651-think',
       kanji:     '思',
@@ -3150,7 +3151,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'おも.う、おもえら.く、おぼ.す',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0127-utensil',
       kanji:     '器',
@@ -3164,7 +3165,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'うつわ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0940-restore',
       kanji:     '復',
@@ -3178,7 +3179,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'また',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0471-make-a-deal',
       kanji:     '商',
@@ -3193,7 +3194,7 @@ const primerDeck = {
       kunyomi:   'あきな.う',
       nanori:    'あき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1245-italy',
       kanji:     '伊',
@@ -3208,7 +3209,7 @@ const primerDeck = {
       kunyomi:   'かれ',
       nanori:    'これ, ただ, よし, いと, だ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0633-warehouse',
       kanji:     '庫',
@@ -3222,7 +3223,7 @@ const primerDeck = {
       onyomi:    'コ、ク',
       kunyomi:   'くら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2009-parts-of-speech',
       kanji:     '詞',
@@ -3236,7 +3237,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1671-harm',
       kanji:     '害',
@@ -3250,7 +3251,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1605-detach',
       kanji:     '離',
@@ -3264,7 +3265,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'はな.れる、はな.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1238-contend',
       kanji:     '争',
@@ -3278,7 +3279,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あらそ.う、いか.でか',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0987-rice',
       kanji:     '米',
@@ -3293,7 +3294,7 @@ const primerDeck = {
       kunyomi:   'こめ、よね',
       nanori:    'は, べ, まべ, め, よ, よな, よの, よま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0998-number',
       kanji:     '数',
@@ -3308,7 +3309,7 @@ const primerDeck = {
       kunyomi:   'かず、かぞ.える、しばしば、せ.める、わずらわ.しい',
       nanori:    'じゅ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2029-come',
       kanji:     '来',
@@ -3323,7 +3324,7 @@ const primerDeck = {
       kunyomi:   'く.る、きた.る、きた.す、き.たす、き.たる、き、こ',
       nanori:    'くり, くる, ごろ, さ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0105-mama',
       kanji:     '母',
@@ -3337,7 +3338,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'はは、も',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0904-standard',
       kanji:     '規',
@@ -3352,7 +3353,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すのり, ただし, のり, み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1690-springtime',
       kanji:     '春',
@@ -3367,7 +3368,7 @@ const primerDeck = {
       kunyomi:   'はる',
       nanori:    'あずま, かす, すの, ひ, わら',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0008-eight',
       kanji:     '八',
@@ -3382,7 +3383,7 @@ const primerDeck = {
       kunyomi:   'や、や.つ、やっ.つ、よう',
       nanori:    'な, は, はっ, はつ, やち, やつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1840-discharge',
       kanji:     '発',
@@ -3397,7 +3398,7 @@ const primerDeck = {
       kunyomi:   'た.つ、あば.く、おこ.る、つか.わす、はな.つ',
       nanori:    'ば, わ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0847-public',
       kanji:     '公',
@@ -3412,7 +3413,7 @@ const primerDeck = {
       kunyomi:   'おおやけ',
       nanori:    'あきら, き, きみ, きん, たか, ただし, とも, ひろ, まさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0063-beginning',
       kanji:     '元',
@@ -3427,7 +3428,7 @@ const primerDeck = {
       kunyomi:   'もと',
       nanori:    'ちか, はじめ, はる, ゆき, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0345-sell',
       kanji:     '売',
@@ -3442,7 +3443,7 @@ const primerDeck = {
       kunyomi:   'う.る、う.れる',
       nanori:    'うり, うる, め',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1934-together',
       kanji:     '共',
@@ -3456,7 +3457,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'とも、とも.に、-ども',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0848-pine-tree',
       kanji:     '松',
@@ -3471,7 +3472,7 @@ const primerDeck = {
       kunyomi:   'まつ',
       nanori:    'おお, しょ, ま, まっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0263-before',
       kanji:     '先',
@@ -3486,7 +3487,7 @@ const primerDeck = {
       kunyomi:   'さき、ま.ず',
       nanori:    'ぽん',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0004-four',
       kanji:     '四',
@@ -3501,7 +3502,7 @@ const primerDeck = {
       kunyomi:   'よ、よ.つ、よっ.つ、よん',
       nanori:    'あ, つ, よつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1936-uncommon',
       kanji:     '異',
@@ -3515,7 +3516,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'こと、こと.なる、け',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2088-raise',
       kanji:     '挙',
@@ -3530,7 +3531,7 @@ const primerDeck = {
       kunyomi:   'あ.げる、あ.がる、こぞ.る',
       nanori:    'たか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0199-perfect',
       kanji:     '完',
@@ -3544,7 +3545,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0979-committee',
       kanji:     '委',
@@ -3559,7 +3560,7 @@ const primerDeck = {
       kunyomi:   'ゆだ.ねる',
       nanori:    'まかせ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1229-hurry',
       kanji:     '急',
@@ -3573,7 +3574,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'いそ.ぐ、いそ.ぎ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1935-submit',
       kanji:     '供',
@@ -3587,7 +3588,7 @@ const primerDeck = {
       onyomi:    'キョウ、ク、クウ、グ',
       kunyomi:   'そな.える、とも、-ども',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2075-unfold',
       kanji:     '展',
@@ -3602,7 +3603,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'のぶ, のり, ひろ, ゆき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0401-undertake',
       kanji:     '企',
@@ -3616,7 +3617,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'くわだ.てる、たくら.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1711-now',
       kanji:     '今',
@@ -3631,7 +3632,7 @@ const primerDeck = {
       kunyomi:   'いま',
       nanori:    'な',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1715-wish',
       kanji:     '念',
@@ -3645,7 +3646,7 @@ const primerDeck = {
       onyomi:    'ネン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0853-contain',
       kanji:     '容',
@@ -3660,7 +3661,7 @@ const primerDeck = {
       kunyomi:   'い.れる',
       nanori:    'かた, ひろ, まさ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0265-jammed-in',
       kanji:     '介',
@@ -3675,7 +3676,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ, ゆき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0266-world',
       kanji:     '界',
@@ -3689,7 +3690,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0048-dr',
       kanji:     '博',
@@ -3704,7 +3705,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ぐれ, と, はか, ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0662-emotion',
       kanji:     '感',
@@ -3718,7 +3719,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1372-leg',
       kanji:     '足',
@@ -3733,7 +3734,7 @@ const primerDeck = {
       kunyomi:   'あし、た.りる、た.る、た.す',
       nanori:    'あ, あす, おす, たらし',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1376-path',
       kanji:     '路',
@@ -3747,7 +3748,7 @@ const primerDeck = {
       onyomi:    'ロ、ル',
       kunyomi:   'みち, -じ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1940-harbor',
       kanji:     '港',
@@ -3761,7 +3762,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'みなと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0208-grove',
       kanji:     '林',
@@ -3776,7 +3777,7 @@ const primerDeck = {
       kunyomi:   'はやし',
       nanori:    'し',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0402-curriculum',
       kanji:     '歴',
@@ -3790,7 +3791,7 @@ const primerDeck = {
       onyomi:    'レキ、レッキ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0209-forest',
       kanji:     '森',
@@ -3805,7 +3806,7 @@ const primerDeck = {
       kunyomi:   'もり',
       nanori:    'もと',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1335-bestow',
       kanji:     '与',
@@ -3820,7 +3821,7 @@ const primerDeck = {
       kunyomi:   'あた.える、あずか.る、くみ.する、ともに',
       nanori:    'とも, ゆ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0103-fond',
       kanji:     '好',
@@ -3835,7 +3836,7 @@ const primerDeck = {
       kunyomi:   'この.む、す.く、よ.い、い.い',
       nanori:    'こ, たか, とし, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1999-faction',
       kanji:     '派',
@@ -3849,7 +3850,7 @@ const primerDeck = {
       onyomi:    'ハ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0005-five',
       kanji:     '五',
@@ -3864,7 +3865,7 @@ const primerDeck = {
       kunyomi:   'いつ、いつ.つ',
       nanori:    'い, さ, さつ, ち, ふ, み, め',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1359-chase',
       kanji:     '追',
@@ -3879,7 +3880,7 @@ const primerDeck = {
       kunyomi:   'お.う',
       nanori:    'おい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0812-gone',
       kanji:     '去',
@@ -3894,7 +3895,7 @@ const primerDeck = {
       kunyomi:   'さ.る、-さ.る',
       nanori:    'い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0813-method',
       kanji:     '法',
@@ -3909,7 +3910,7 @@ const primerDeck = {
       kunyomi:   'のり',
       nanori:    'ほ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1868-finish',
       kanji:     '済',
@@ -3924,7 +3925,7 @@ const primerDeck = {
       kunyomi:   'す.む、-ず.み、-ずみ、す.まない、す.ます、-す.ます、すく.う、な.す、わたし、わた.る',
       nanori:    'すむ, なり, わたる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0871-remainder',
       kanji:     '残',
@@ -3938,7 +3939,7 @@ const primerDeck = {
       onyomi:    'ザン、サン',
       kunyomi:   'のこ.る、のこ.す、そこな.う、のこ.り',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1952-circle',
       kanji:     '円',
@@ -3953,7 +3954,7 @@ const primerDeck = {
       kunyomi:   'まる.い、まる、まど、まど.か、まろ.やか',
       nanori:    'つぶら, のぶ, まどか, みつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1712-include',
       kanji:     '含',
@@ -3967,7 +3968,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'ふく.む、ふく.める',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0410-run',
       kanji:     '走',
@@ -3982,7 +3983,7 @@ const primerDeck = {
       kunyomi:   'はし.る',
       nanori:    'はしり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0832-boulder',
       kanji:     '岩',
@@ -3996,7 +3997,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'いわ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1503-orders',
       kanji:     '令',
@@ -4011,7 +4012,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'のり, りょう, れ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1841-abolish',
       kanji:     '廃',
@@ -4025,7 +4026,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'すた.れる、すた.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1877-center',
       kanji:     '央',
@@ -4040,7 +4041,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あきら, え, お, さと, ちか, てる, なか, ひさ, ひろ, や',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1879-reflect',
       kanji:     '映',
@@ -4055,7 +4056,7 @@ const primerDeck = {
       kunyomi:   'うつ.る、うつ.す、は.える、-ば.え',
       nanori:    'あきら, え, てる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1878-england',
       kanji:     '英',
@@ -4070,7 +4071,7 @@ const primerDeck = {
       kunyomi:   'はなぶさ',
       nanori:    'あ, あい, え, すぐる, はな, ひ, ひで, よし, ら',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1175-nara',
       kanji:     '奈',
@@ -4084,7 +4085,7 @@ const primerDeck = {
       onyomi:    'ナ、ナイ、ダイ',
       kunyomi:   'いかん、からなし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0173-fire',
       kanji:     '火',
@@ -4098,7 +4099,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'ひ、-び、ほ-',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1913-nothingness',
       kanji:     '無',
@@ -4112,7 +4113,7 @@ const primerDeck = {
       onyomi:    'ム、ブ',
       kunyomi:   'な.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2132-horse',
       kanji:     '馬',
@@ -4127,7 +4128,7 @@ const primerDeck = {
       kunyomi:   'うま、うま-、ま',
       nanori:    'た, ばん, め, も',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2134-verification',
       kanji:     '験',
@@ -4141,7 +4142,7 @@ const primerDeck = {
       onyomi:    'ケン、ゲン',
       kunyomi:   'あかし、しるし、ため.す、ためし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1643-mention',
       kanji:     '述',
@@ -4155,7 +4156,7 @@ const primerDeck = {
       onyomi:    'ジュツ',
       kunyomi:   'の.べる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1033-attend',
       kanji:     '仕',
@@ -4169,7 +4170,7 @@ const primerDeck = {
       onyomi:    'シ、ジ',
       kunyomi:   'つか.える',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0131-focus',
       kanji:     '省',
@@ -4184,7 +4185,7 @@ const primerDeck = {
       kunyomi:   'かえり.みる、はぶ.く',
       nanori:    'さとし, み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0205-wealth',
       kanji:     '富',
@@ -4199,7 +4200,7 @@ const primerDeck = {
       kunyomi:   'と.む、とみ',
       nanori:    'と, とん, ふっ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0645-intention',
       kanji:     '志',
@@ -4214,7 +4215,7 @@ const primerDeck = {
       kunyomi:   'シリング、こころざ.す、こころざし',
       nanori:    'じん, べ, べし, ゆき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0101-complete',
       kanji:     '了',
@@ -4229,7 +4230,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さとる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1719-beforehand',
       kanji:     '予',
@@ -4243,7 +4244,7 @@ const primerDeck = {
       onyomi:    'ヨ、シャ',
       kunyomi:   'あらかじ.め',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1970-family-name',
       kanji:     '氏',
@@ -4257,7 +4258,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'うじ、-うじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1976-people',
       kanji:     '民',
@@ -4272,7 +4273,7 @@ const primerDeck = {
       kunyomi:   'たみ',
       nanori:    'ひと, み',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0685-invariably',
       kanji:     '必',
@@ -4286,7 +4287,7 @@ const primerDeck = {
       onyomi:    'ヒツ',
       kunyomi:   'かなら.ず',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1659-pure',
       kanji:     '清',
@@ -4301,7 +4302,7 @@ const primerDeck = {
       kunyomi:   'きよ.い、きよ.まる、きよ.める',
       nanori:    'あき, さや, し, すが, すみ, せ, ちん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0230-extremity',
       kanji:     '末',
@@ -4315,7 +4316,7 @@ const primerDeck = {
       onyomi:    'マツ、バツ',
       kunyomi:   'すえ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0908-lose',
       kanji:     '失',
@@ -4329,7 +4330,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'うしな.う、う.せる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0909-iron',
       kanji:     '鉄',
@@ -4344,7 +4345,7 @@ const primerDeck = {
       kunyomi:   'くろがね',
       nanori:    'けん, てっ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0804-masculine',
       kanji:     '雄',
@@ -4359,7 +4360,7 @@ const primerDeck = {
       kunyomi:   'お-、おす、おん',
       nanori:    'かつ, たけ, つよし, ゆ, よう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0609-assurance',
       kanji:     '確',
@@ -4373,7 +4374,7 @@ const primerDeck = {
       onyomi:    'カク、コウ',
       kunyomi:   'たし.か、たし.かめる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1785-eaves',
       kanji:     '宇',
@@ -4388,7 +4389,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'いえ, たか, ひろ, ひろし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1571-root',
       kanji:     '根',
@@ -4402,7 +4403,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'ね、-ね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1299-of',
       kanji:     '之',
@@ -4417,7 +4418,7 @@ const primerDeck = {
       kunyomi:   'の, これ, おいて, ゆく, この',
       nanori:    'ゆき, いたる, あき, つな, ゆみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0950-benevolence',
       kanji:     '徳',
@@ -4432,7 +4433,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あつ, なる, のり, ゆき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0656-concept',
       kanji:     '想',
@@ -4446,7 +4447,7 @@ const primerDeck = {
       onyomi:    'ソウ、ソ',
       kunyomi:   'おも.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1880-red',
       kanji:     '赤',
@@ -4461,7 +4462,7 @@ const primerDeck = {
       kunyomi:   'あか、あか-、あか.い、あか.らむ、あか.らめる',
       nanori:    'あ, あこ, あま',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0913-storehouse',
       kanji:     '蔵',
@@ -4476,7 +4477,7 @@ const primerDeck = {
       kunyomi:   'くら、おさ.める、かく.れる',
       nanori:    'くらし, くらん, くろう, さし, ざ, ろう',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0315-guest',
       kanji:     '客',
@@ -4490,7 +4491,7 @@ const primerDeck = {
       onyomi:    'キャク、カク',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0966-autumn',
       kanji:     '秋',
@@ -4505,7 +4506,7 @@ const primerDeck = {
       kunyomi:   'あき、とき',
       nanori:    'あい',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0977-incense',
       kanji:     '香',
@@ -4520,7 +4521,7 @@ const primerDeck = {
       kunyomi:   'か、かお.り、かお.る',
       nanori:    'こ, こお, ひゃん, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1729-value',
       kanji:     '価',
@@ -4534,7 +4535,7 @@ const primerDeck = {
       onyomi:    'カ、ケ',
       kunyomi:   'あたい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1912-dance',
       kanji:     '舞',
@@ -4548,7 +4549,7 @@ const primerDeck = {
       onyomi:    'ブ',
       kunyomi:   'ま.う、-ま.う、まい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1569-silver',
       kanji:     '銀',
@@ -4563,7 +4564,7 @@ const primerDeck = {
       kunyomi:   'しろがね',
       nanori:    'うん, かな, かね',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0523-boundary',
       kanji:     '境',
@@ -4578,7 +4579,7 @@ const primerDeck = {
       kunyomi:   'さかい',
       nanori:    'さか, じき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0229-not-yet',
       kanji:     '未',
@@ -4592,7 +4593,7 @@ const primerDeck = {
       onyomi:    'ミ、ビ',
       kunyomi:   'いま.だ、ま.だ、ひつじ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0233-flavor',
       kanji:     '味',
@@ -4606,7 +4607,7 @@ const primerDeck = {
       onyomi:    'ミ',
       kunyomi:   'あじ、あじ.わう',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1102-graduate',
       kanji:     '卒',
@@ -4620,7 +4621,7 @@ const primerDeck = {
       onyomi:    'ソツ、シュツ',
       kunyomi:   'そっ.する、お.える、お.わる、ついに、にわか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1174-inspection',
       kanji:     '視',
@@ -4635,7 +4636,7 @@ const primerDeck = {
       kunyomi:   'み.る',
       nanori:    'とも, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0185-ri',
       kanji:     '里',
@@ -4650,7 +4651,7 @@ const primerDeck = {
       kunyomi:   'さと',
       nanori:    'さ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1722-plains',
       kanji:     '野',
@@ -4665,7 +4666,7 @@ const primerDeck = {
       kunyomi:   'の、の-',
       nanori:    'ずけ, つけ, ぬ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1805-heavy',
       kanji:     '重',
@@ -4680,7 +4681,7 @@ const primerDeck = {
       kunyomi:   'え、おも.い、おも.り、おも.なう、かさ.ねる、かさ.なる、おも',
       nanori:    'さね, しげ, しげる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1806-move',
       kanji:     '動',
@@ -4695,7 +4696,7 @@ const primerDeck = {
       kunyomi:   'うご.く、うご.かす',
       nanori:    'るぎ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1810-species',
       kanji:     '種',
@@ -4710,7 +4711,7 @@ const primerDeck = {
       kunyomi:   'たね、-ぐさ',
       nanori:    'おい, くさ, た, ほ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0186-black',
       kanji:     '黒',
@@ -4724,7 +4725,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'くろ、くろ.ずむ、くろ.い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0074-neck',
       kanji:     '首',
@@ -4739,7 +4740,7 @@ const primerDeck = {
       kunyomi:   'くび',
       nanori:    'おびと, こべ, す',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0295-road-way',
       kanji:     '道',
@@ -4754,7 +4755,7 @@ const primerDeck = {
       kunyomi:   'みち',
       nanori:    'さ, じ, ど, みつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0140-spring',
       kanji:     '泉',
@@ -4769,7 +4770,7 @@ const primerDeck = {
       kunyomi:   'いずみ',
       nanori:    'いず, ずい, ずみ, ぜい, ぜん, の',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1957-lecture',
       kanji:     '講',
@@ -4783,7 +4784,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1127-trip',
       kanji:     '旅',
@@ -4797,7 +4798,7 @@ const primerDeck = {
       onyomi:    'リョ',
       kunyomi:   'たび',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0095-street',
       kanji:     '丁',
@@ -4811,7 +4812,7 @@ const primerDeck = {
       onyomi:    'チョウ、テイ、チン、トウ、チ',
       kunyomi:   'ひのと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0096-village',
       kanji:     '町',
@@ -4825,7 +4826,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'まち',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0097-can',
       kanji:     '可',
@@ -4840,7 +4841,7 @@ const primerDeck = {
       kunyomi:   'べ.き、-べ.し',
       nanori:    'よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0705-strike',
       kanji:     '打',
@@ -4855,7 +4856,7 @@ const primerDeck = {
       kunyomi:   'う.つ、う.ち-、ぶ.つ',
       nanori:    'うち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0157-river',
       kanji:     '河',
@@ -4870,7 +4871,7 @@ const primerDeck = {
       kunyomi:   'かわ',
       nanori:    'かっ, こ, こう',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1758-godown',
       kanji:     '倉',
@@ -4884,7 +4885,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'くら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1760-un',
       kanji:     '非',
@@ -4898,7 +4899,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'あら.ず',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2130-elephant',
       kanji:     '象',
@@ -4913,7 +4914,7 @@ const primerDeck = {
       kunyomi:   'かたど.る',
       nanori:    'きさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2131-statue',
       kanji:     '像',
@@ -4928,7 +4929,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0139-eternity',
       kanji:     '永',
@@ -4943,7 +4944,7 @@ const primerDeck = {
       kunyomi:   'なが.い',
       nanori:    'え, と, のり, ひさ, ひさし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1181-religion',
       kanji:     '宗',
@@ -4958,7 +4959,7 @@ const primerDeck = {
       kunyomi:   'むね',
       nanori:    'かず, し, そ, そお, たか, とし, のり, ひろ, むな, もと, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0314-abbreviation',
       kanji:     '略',
@@ -4972,7 +4973,7 @@ const primerDeck = {
       onyomi:    'リャク',
       kunyomi:   'ほぼ、おか.す、おさ.める、はかりごと、はか.る、はぶ.く、りゃく.す、りゃく.する',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0397-walk',
       kanji:     '歩',
@@ -4987,7 +4988,7 @@ const primerDeck = {
       kunyomi:   'ある.く、あゆ.む',
       nanori:    'あ, ゆき, ゆみ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0646-document',
       kanji:     '誌',
@@ -5001,7 +5002,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1953-angle',
       kanji:     '角',
@@ -5016,7 +5017,7 @@ const primerDeck = {
       kunyomi:   'かど、つの',
       nanori:    'い, す, すみ, ずみ, ふさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1803-examination',
       kanji:     '検',
@@ -5030,7 +5031,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'しら.べる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0413-surpass',
       kanji:     '越',
@@ -5045,7 +5046,7 @@ const primerDeck = {
       kunyomi:   'こ.す、-こ.す、-ご.し、こ.える、-ご.え',
       nanori:    'えち, えっ, お, こえ, こし, ごえ, ごし, ごや',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0272-jewel',
       kanji:     '玉',
@@ -5060,7 +5061,7 @@ const primerDeck = {
       kunyomi:   'たま、たま-、-だま',
       nanori:    'おう, だん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0624-country',
       kanji:     '国',
@@ -5075,7 +5076,7 @@ const primerDeck = {
       kunyomi:   'くに',
       nanori:    'くな, こ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0284-lord',
       kanji:     '主',
@@ -5090,7 +5091,7 @@ const primerDeck = {
       kunyomi:   'ぬし、おも、あるじ',
       nanori:    'かず, ず, もん',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0275-present',
       kanji:     '現',
@@ -5105,7 +5106,7 @@ const primerDeck = {
       kunyomi:   'あらわ.れる、あらわ.す、うつつ、うつ.つ',
       nanori:    'あきら, きら',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0281-whole',
       kanji:     '全',
@@ -5120,7 +5121,7 @@ const primerDeck = {
       kunyomi:   'まった.く、すべ.て',
       nanori:    'たけ, まさ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0283-logic',
       kanji:     '理',
@@ -5135,7 +5136,7 @@ const primerDeck = {
       kunyomi:   'ことわり',
       nanori:    'あや, おさむ, さと, さとる, ただ, ただし, とおる, に, のり, ひ, まこと, まさ, まさし, まろ, みち, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0285-pour',
       kanji:     '注',
@@ -5149,7 +5150,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'そそ.ぐ、さ.す、つ.ぐ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0271-king',
       kanji:     '王',
@@ -5164,7 +5165,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おお, おおきみ, わ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1027-dwell',
       kanji:     '住',
@@ -5179,7 +5180,7 @@ const primerDeck = {
       kunyomi:   'す.む、す.まう、-ず.まい',
       nanori:    'し, じゅ, すみ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0279-emperor',
       kanji:     '皇',
@@ -5194,7 +5195,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おうじ, おお, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0899-ring',
       kanji:     '環',
@@ -5209,7 +5210,7 @@ const primerDeck = {
       kunyomi:   'わ',
       nanori:    'たま, たまき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1107-join',
       kanji:     '併',
@@ -5223,7 +5224,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'あわ.せる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1336-copy',
       kanji:     '写',
@@ -5237,7 +5238,7 @@ const primerDeck = {
       onyomi:    'シャ、ジャ',
       kunyomi:   'うつ.す、うつ.る、うつ-、うつ.し',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0153-source',
       kanji:     '源',
@@ -5252,7 +5253,7 @@ const primerDeck = {
       kunyomi:   'みなもと',
       nanori:    'はら, みな, もと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0062-newborn-babe',
       kanji:     '児',
@@ -5267,7 +5268,7 @@ const primerDeck = {
       kunyomi:   'こ、-こ、-っこ',
       nanori:    'る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1183-ritual',
       kanji:     '祭',
@@ -5281,7 +5282,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'まつ.る、まつ.り、まつり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1184-guess',
       kanji:     '察',
@@ -5295,7 +5296,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0273-treasure',
       kanji:     '宝',
@@ -5310,7 +5311,7 @@ const primerDeck = {
       kunyomi:   'たから',
       nanori:    'ほ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0406-evidence',
       kanji:     '証',
@@ -5324,7 +5325,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'あかし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2003-grade',
       kanji:     '段',
@@ -5338,7 +5339,7 @@ const primerDeck = {
       onyomi:    'ダン、タン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1204-chapter',
       kanji:     '課',
@@ -5352,7 +5353,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1143-reside',
       kanji:     '居',
@@ -5367,7 +5368,7 @@ const primerDeck = {
       kunyomi:   'い.る、-い、お.る',
       nanori:    'おき, ぐ, すえ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1426-deep',
       kanji:     '深',
@@ -5381,7 +5382,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'ふか.い、-ぶか.い、ふか.まる、ふか.める、み-',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0082-right',
       kanji:     '右',
@@ -5396,7 +5397,7 @@ const primerDeck = {
       kunyomi:   'みぎ',
       nanori:    'あき, すけ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0237-young',
       kanji:     '若',
@@ -5411,7 +5412,7 @@ const primerDeck = {
       kunyomi:   'わか.い、わか-、も.しくわ、も.し、も.しくは、ごと.し',
       nanori:    'わく, わこ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0026-early',
       kanji:     '早',
@@ -5426,7 +5427,7 @@ const primerDeck = {
       kunyomi:   'はや.い、はや、はや-、はや.まる、はや.める、さ-',
       nanori:    'さか, さわ, そ, わ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0464-badge',
       kanji:     '章',
@@ -5441,7 +5442,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき, あきら, あや, ふみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0372-read',
       kanji:     '読',
@@ -5456,7 +5457,7 @@ const primerDeck = {
       kunyomi:   'よ.む、-よ.み',
       nanori:    'よみ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0081-left',
       kanji:     '左',
@@ -5471,7 +5472,7 @@ const primerDeck = {
       kunyomi:   'ひだり',
       nanori:    'そ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1024-assistant',
       kanji:     '佐',
@@ -5486,7 +5487,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2101-abet',
       kanji:     '援',
@@ -5500,7 +5501,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0340-week',
       kanji:     '週',
@@ -5514,7 +5515,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   '',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0497-every',
       kanji:     '毎',
@@ -5529,7 +5530,7 @@ const primerDeck = {
       kunyomi:   'ごと、-ごと.に',
       nanori:    'つね',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0500-sea',
       kanji:     '海',
@@ -5544,7 +5545,7 @@ const primerDeck = {
       kunyomi:   'うみ',
       nanori:    'あ, あま, うな, うん, え, か, た, ひろ, ひろし, ぶ, まち, まま, み, め, わたる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1066-convenience',
       kanji:     '便',
@@ -5558,7 +5559,7 @@ const primerDeck = {
       onyomi:    'ベン、ビン',
       kunyomi:   'たよ.り',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1883-tracks',
       kanji:     '跡',
@@ -5572,7 +5573,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'あと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0317-summer',
       kanji:     '夏',
@@ -5586,7 +5587,7 @@ const primerDeck = {
       onyomi:    'カ、ガ、ゲ',
       kunyomi:   'なつ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1159-tassel',
       kanji:     '房',
@@ -5601,7 +5602,7 @@ const primerDeck = {
       kunyomi:   'ふさ',
       nanori:    'お, のぶ, わ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1703-difficult',
       kanji:     '難',
@@ -5616,7 +5617,7 @@ const primerDeck = {
       kunyomi:   'かた.い、-がた.い、むずか.しい、むづか.しい、むつか.しい、-にく.い',
       nanori:    'な, なに',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1048-healthy',
       kanji:     '健',
@@ -5631,7 +5632,7 @@ const primerDeck = {
       kunyomi:   'すこ.やか',
       nanori:    'かつ, たけ, たけし, たて, とし, やす, やすし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0227-plan',
       kanji:     '案',
@@ -5645,7 +5646,7 @@ const primerDeck = {
       onyomi:    'アン',
       kunyomi:   'つくえ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1800-organize',
       kanji:     '整',
@@ -5660,7 +5661,7 @@ const primerDeck = {
       kunyomi:   'ととの.える、ととの.う',
       nanori:    'ひとし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0716-conjecture',
       kanji:     '推',
@@ -5674,7 +5675,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'お.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1973-lower',
       kanji:     '低',
@@ -5688,7 +5689,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'ひく.い、ひく.める、ひく.まる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1809-work',
       kanji:     '働',
@@ -5702,7 +5703,7 @@ const primerDeck = {
       onyomi:    'ドウ、リュク、リキ、ロク、リョク',
       kunyomi:   'はたら.く',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2052-poles',
       kanji:     '極',
@@ -5716,7 +5717,7 @@ const primerDeck = {
       onyomi:    'キョク、ゴク',
       kunyomi:   'きわ.める、きわ.まる、きわ.まり、きわ.み、き.める、-ぎ.め、き.まる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1004-request',
       kanji:     '求',
@@ -5730,7 +5731,7 @@ const primerDeck = {
       onyomi:    'キュウ、グ',
       kunyomi:   'もと.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1005-ball',
       kanji:     '球',
@@ -5745,7 +5746,7 @@ const primerDeck = {
       kunyomi:   'たま',
       nanori:    'く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1873-medicine',
       kanji:     '薬',
@@ -5760,7 +5761,7 @@ const primerDeck = {
       kunyomi:   'くすり',
       nanori:    'み',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1087-what',
       kanji:     '何',
@@ -5775,7 +5776,7 @@ const primerDeck = {
       kunyomi:   'なに、なん、なに-、なん-',
       nanori:    'あが',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1287-consort',
       kanji:     '伴',
@@ -5790,7 +5791,7 @@ const primerDeck = {
       kunyomi:   'ともな.う',
       nanori:    'とも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0905-exchange',
       kanji:     '替',
@@ -5805,7 +5806,7 @@ const primerDeck = {
       kunyomi:   'か.える、か.え-、か.わる',
       nanori:    'かえ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1980-bay',
       kanji:     '浦',
@@ -5819,7 +5820,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'うら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0943-junior',
       kanji:     '徒',
@@ -5834,7 +5835,7 @@ const primerDeck = {
       kunyomi:   'いたずら、あだ',
       nanori:    'かち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1655-refined',
       kanji:     '精',
@@ -5849,7 +5850,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'きよ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1122-interchange',
       kanji:     '換',
@@ -5863,7 +5864,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'か.える、-か.える、か.わる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1693-play-music',
       kanji:     '奏',
@@ -5878,7 +5879,7 @@ const primerDeck = {
       kunyomi:   'かな.でる',
       nanori:    'すすむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1369-merit',
       kanji:     '効',
@@ -5892,7 +5893,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'き.く、ききめ、なら.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0419-prolong',
       kanji:     '延',
@@ -5907,7 +5908,7 @@ const primerDeck = {
       kunyomi:   'の.びる、の.べる、の.べ、の.ばす',
       nanori:    'たか, のぶ, のべ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0217-plant',
       kanji:     '植',
@@ -5922,7 +5923,7 @@ const primerDeck = {
       kunyomi:   'う.える、う.わる',
       nanori:    'うえ, え, げ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0429-distant',
       kanji:     '遠',
@@ -5937,7 +5938,7 @@ const primerDeck = {
       kunyomi:   'とお.い',
       nanori:    'お, おに, ど, どお',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2035-wife',
       kanji:     '妻',
@@ -5952,7 +5953,7 @@ const primerDeck = {
       kunyomi:   'つま',
       nanori:    'ずま, め',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1845-heal',
       kanji:     '療',
@@ -5966,7 +5967,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0038-hundred',
       kanji:     '百',
@@ -5981,7 +5982,7 @@ const primerDeck = {
       kunyomi:   'もも',
       nanori:    'お, ど, どう, なり, ひゃっ, ひゅく, も, もんど, ゆ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0911-retainer',
       kanji:     '臣',
@@ -5996,7 +5997,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おみ, たか, と, とみ, み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0919-perusal',
       kanji:     '覧',
@@ -6010,7 +6011,7 @@ const primerDeck = {
       onyomi:    'ラン',
       kunyomi:   'み.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1007-bamboo',
       kanji:     '竹',
@@ -6025,7 +6026,7 @@ const primerDeck = {
       kunyomi:   'たけ',
       nanori:    'たか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1365-pipe',
       kanji:     '管',
@@ -6040,7 +6041,7 @@ const primerDeck = {
       kunyomi:   'くだ',
       nanori:    'すが',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1019-scheme',
       kanji:     '策',
@@ -6054,7 +6055,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1017-calculate',
       kanji:     '算',
@@ -6068,7 +6069,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'そろ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0968-private',
       kanji:     '私',
@@ -6082,7 +6083,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'わたくし、わたし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1773-difference',
       kanji:     '違',
@@ -6096,7 +6097,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'ちが.う、ちが.い、ちが.える、-ちが.える、たが.う、たが.える',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2091-bird',
       kanji:     '鳥',
@@ -6111,7 +6112,7 @@ const primerDeck = {
       kunyomi:   'とり',
       nanori:    'か, と, とっ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2098-island',
       kanji:     '島',
@@ -6125,7 +6126,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'しま',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1704-splendor',
       kanji:     '華',
@@ -6140,7 +6141,7 @@ const primerDeck = {
       kunyomi:   'はな',
       nanori:    'わ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1885-romance',
       kanji:     '恋',
@@ -6154,7 +6155,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'こ.う、こい、こい.しい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1070-inn',
       kanji:     '宿',
@@ -6169,7 +6170,7 @@ const primerDeck = {
       kunyomi:   'やど、やど.る、やど.す',
       nanori:    'すく, ぶすき, やけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1948-surround',
       kanji:     '囲',
@@ -6183,7 +6184,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'かこ.む、かこ.う、かこ.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1194-armor',
       kanji:     '甲',
@@ -6198,7 +6199,7 @@ const primerDeck = {
       kunyomi:   'きのえ',
       nanori:    'かぶと, き, まさ, まさる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2078-simple',
       kanji:     '単',
@@ -6212,7 +6213,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'ひとえ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2079-war',
       kanji:     '戦',
@@ -6227,7 +6228,7 @@ const primerDeck = {
       kunyomi:   'いくさ、たたか.う、おのの.く、そよ.ぐ、わなな.く',
       nanori:    'せ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0524-deceased',
       kanji:     '亡',
@@ -6241,7 +6242,7 @@ const primerDeck = {
       onyomi:    'ボウ、モウ',
       kunyomi:   'な.い、な.き-、ほろ.びる、ほろ.ぶ、ほろ.ぼす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0528-ambition',
       kanji:     '望',
@@ -6256,7 +6257,7 @@ const primerDeck = {
       kunyomi:   'のぞ.む、もち',
       nanori:    'み, も',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1117-hillock',
       kanji:     '塚',
@@ -6271,7 +6272,7 @@ const primerDeck = {
       kunyomi:   'つか、-づか',
       nanori:    'ずか, つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0858-run-alongside',
       kanji:     '沿',
@@ -6285,7 +6286,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'そ.う、-ぞ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0927-achievement',
       kanji:     '功',
@@ -6300,7 +6301,7 @@ const primerDeck = {
       kunyomi:   'いさお',
       nanori:    'いさ, かつ, くぬ, ぐう, こと, つとむ, とし, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0338-cottage',
       kanji:     '舎',
@@ -6315,7 +6316,7 @@ const primerDeck = {
       kunyomi:   'やど.る',
       nanori:    'さ, とり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2061-clan',
       kanji:     '藩',
@@ -6329,7 +6330,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0006-six',
       kanji:     '六',
@@ -6344,7 +6345,7 @@ const primerDeck = {
       kunyomi:   'む、む.つ、むっ.つ、むい',
       nanori:    'く, むつ, ろっ, ろつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1852-lad',
       kanji:     '彦',
@@ -6359,7 +6360,7 @@ const primerDeck = {
       kunyomi:   'ひこ',
       nanori:    'よし, こ, ひろ, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0635-government-office',
       kanji:     '庁',
@@ -6373,7 +6374,7 @@ const primerDeck = {
       onyomi:    'チョウ、テイ',
       kunyomi:   'やくしょ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1038-rest',
       kanji:     '休',
@@ -6387,7 +6388,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'やす.む、やす.まる、やす.める',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0318-dispose',
       kanji:     '処',
@@ -6401,7 +6402,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   'ところ、-こ、お.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0924-labor',
       kanji:     '労',
@@ -6415,7 +6416,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'ろう.する、いたわ.る、いた.ずき、ねぎら、つか.れる、ねぎら.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1251-edge',
       kanji:     '端',
@@ -6430,7 +6431,7 @@ const primerDeck = {
       kunyomi:   'はし、は、はた、-ばた、はな',
       nanori:    'ただし, みず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0952-indications',
       kanji:     '徴',
@@ -6444,7 +6445,7 @@ const primerDeck = {
       onyomi:    'チョウ、チ',
       kunyomi:   'しるし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1660-quiet',
       kanji:     '静',
@@ -6459,7 +6460,7 @@ const primerDeck = {
       kunyomi:   'しず-、しず.か、しず.まる、しず.める',
       nanori:    'しづ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0107-elder-brother',
       kanji:     '兄',
@@ -6474,7 +6475,7 @@ const primerDeck = {
       kunyomi:   'あに',
       nanori:    'え, せ, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0465-vie',
       kanji:     '競',
@@ -6489,7 +6490,7 @@ const primerDeck = {
       kunyomi:   'きそ.う、せ.る、くら.べる',
       nanori:    'かい, わたなべ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1581-daughter',
       kanji:     '娘',
@@ -6503,7 +6504,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'むすめ、こ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0837-secrecy',
       kanji:     '密',
@@ -6517,7 +6518,7 @@ const primerDeck = {
       onyomi:    'ミツ',
       kunyomi:   'ひそ.か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0521-discriminating',
       kanji:     '識',
@@ -6532,7 +6533,7 @@ const primerDeck = {
       kunyomi:   'し.る、しる.す',
       nanori:    'さと, さとる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0238-grass',
       kanji:     '草',
@@ -6547,7 +6548,7 @@ const primerDeck = {
       kunyomi:   'くさ、くさ-、-ぐさ',
       nanori:    'そ, や',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0615-feathers',
       kanji:     '羽',
@@ -6562,7 +6563,7 @@ const primerDeck = {
       kunyomi:   'は、わ、はね',
       nanori:    'しゅう, ば',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0618-weekday',
       kanji:     '曜',
@@ -6577,7 +6578,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'てる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0616-learn',
       kanji:     '習',
@@ -6591,7 +6592,7 @@ const primerDeck = {
       onyomi:    'シュウ、ジュ',
       kunyomi:   'なら.う、なら.い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0617-the-following',
       kanji:     '翌',
@@ -6605,7 +6606,7 @@ const primerDeck = {
       onyomi:    'ヨク',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2067-do',
       kanji:     '為',
@@ -6620,7 +6621,7 @@ const primerDeck = {
       kunyomi:   'ため、な.る、な.す、す.る、たり、つく.る、なり',
       nanori:    'びい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0355-happenstance',
       kanji:     '故',
@@ -6634,7 +6635,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'ゆえ、ふる.い、もと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2065-home',
       kanji:     '宅',
@@ -6649,7 +6650,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'け, たか, たけ, や, やけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0475-enemy',
       kanji:     '敵',
@@ -6663,7 +6664,7 @@ const primerDeck = {
       onyomi:    'テキ',
       kunyomi:   'かたき、あだ、かな.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1243-sane',
       kanji:     '康',
@@ -6678,7 +6679,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かん, こ, みち, やす, やすし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0657-breath',
       kanji:     '息',
@@ -6692,7 +6693,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'いき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1963-wheel',
       kanji:     '輪',
@@ -6707,7 +6708,7 @@ const primerDeck = {
       kunyomi:   'わ',
       nanori:    'なわ, も',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0307-transport',
       kanji:     '輸',
@@ -6721,7 +6722,7 @@ const primerDeck = {
       onyomi:    'ユ、シュ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0659-favor',
       kanji:     '恵',
@@ -6736,7 +6737,7 @@ const primerDeck = {
       kunyomi:   'めぐ.む、めぐ.み',
       nanori:    'あや, け, さと, さとし, しげ, へい, み, やす',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0336-scenery',
       kanji:     '景',
@@ -6751,7 +6752,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かげ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1848-shadow',
       kanji:     '影',
@@ -6765,7 +6766,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'かげ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0354-sheet-of',
       kanji:     '枚',
@@ -6780,7 +6781,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ひら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0391-dwindle',
       kanji:     '減',
@@ -6794,7 +6795,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'へ.る、へ.らす',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0722-foothold',
       kanji:     '拠',
@@ -6808,7 +6809,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'よ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1634-heat',
       kanji:     '熱',
@@ -6823,7 +6824,7 @@ const primerDeck = {
       kunyomi:   'あつ.い',
       nanori:    'あた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0163-pressure',
       kanji:     '圧',
@@ -6837,7 +6838,7 @@ const primerDeck = {
       onyomi:    'アツ、エン、オウ',
       kunyomi:   'お.す、へ.す、おさ.える、お.さえる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1425-grope',
       kanji:     '探',
@@ -6851,7 +6852,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'さぐ.る、さが.す',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1978-catch',
       kanji:     '捕',
@@ -6865,7 +6866,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'と.らえる、と.らわれる、と.る、とら.える、とら.われる、つか.まえる、つか.まる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0637-hemp',
       kanji:     '麻',
@@ -6880,7 +6881,7 @@ const primerDeck = {
       kunyomi:   'あさ',
       nanori:    'あ, あざ, お',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1162-re',
       kanji:     '戻',
@@ -6894,7 +6895,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'もど.す、もど.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1190-mid-air',
       kanji:     '宙',
@@ -6909,7 +6910,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ひろ, ゆ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1508-small-bell',
       kanji:     '鈴',
@@ -6924,7 +6925,7 @@ const primerDeck = {
       kunyomi:   'すず',
       nanori:    'ず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0347-memorize',
       kanji:     '覚',
@@ -6938,7 +6939,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'おぼ.える、さ.ます、さ.める、さと.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1029-go-between',
       kanji:     '仲',
@@ -6953,7 +6954,7 @@ const primerDeck = {
       kunyomi:   'なか',
       nanori:    'ちゅん, つづき, なかつ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1273-scatter',
       kanji:     '散',
@@ -6968,7 +6969,7 @@ const primerDeck = {
       kunyomi:   'ち.る、ち.らす、-ち.らす、ち.らかす、ち.らかる、ち.らばる、ばら、ばら.ける',
       nanori:    'ちる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0724-maneuver',
       kanji:     '操',
@@ -6983,7 +6984,7 @@ const primerDeck = {
       kunyomi:   'みさお、あやつ.る',
       nanori:    'さお, みさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0700-confront',
       kanji:     '抗',
@@ -6997,7 +6998,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あらが.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0078-tool',
       kanji:     '具',
@@ -7012,7 +7013,7 @@ const primerDeck = {
       kunyomi:   'そな.える、つぶさ.に',
       nanori:    'とも',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0079-true',
       kanji:     '真',
@@ -7027,7 +7028,7 @@ const primerDeck = {
       kunyomi:   'ま、ま-、まこと',
       nanori:    'さな, さね, ただ, ただし, なお, のり, まあ, まこ, まさ, まっ, まど, まな, まゆ, みち, も',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1776-korea',
       kanji:     '韓',
@@ -7041,7 +7042,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'から、いげた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0156-but-of-course',
       kanji:     '況',
@@ -7055,7 +7056,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'まし.て、いわ.んや、おもむき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1478-infancy',
       kanji:     '幼',
@@ -7070,7 +7071,7 @@ const primerDeck = {
       kunyomi:   'おさな.い',
       nanori:    'うぶ, わか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2050-acquiesce',
       kanji:     '承',
@@ -7085,7 +7086,7 @@ const primerDeck = {
       kunyomi:   'うけたまわ.る、う.ける、ささ.げる、とど.める、こ.らす、つい.で、すく.う',
       nanori:    'つぐ, こと, すけ, つぎ, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0179-disaster',
       kanji:     '災',
@@ -7099,7 +7100,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'わざわ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0626-cause',
       kanji:     '因',
@@ -7114,7 +7115,7 @@ const primerDeck = {
       kunyomi:   'よ.る、ちな.む',
       nanori:    'て',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0390-destroy',
       kanji:     '滅',
@@ -7128,7 +7129,7 @@ const primerDeck = {
       onyomi:    'メツ',
       kunyomi:   'ほろ.びる、ほろ.ぶ、ほろ.ぼす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1126-play',
       kanji:     '遊',
@@ -7143,7 +7144,7 @@ const primerDeck = {
       kunyomi:   'あそ.ぶ、あそ.ばす',
       nanori:    'あす, う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1530-stamp',
       kanji:     '印',
@@ -7157,7 +7158,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'しるし、-じるし、しる.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1886-gulf',
       kanji:     '湾',
@@ -7171,7 +7172,7 @@ const primerDeck = {
       onyomi:    'ワン',
       kunyomi:   'いりえ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1006-salvation',
       kanji:     '救',
@@ -7185,7 +7186,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'すく.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1924-row',
       kanji:     '並',
@@ -7200,7 +7201,7 @@ const primerDeck = {
       kunyomi:   'な.み、なみ、なら.べる、なら.ぶ、なら.びに',
       nanori:    'なび',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1925-universal',
       kanji:     '普',
@@ -7215,7 +7216,7 @@ const primerDeck = {
       kunyomi:   'あまね.く、あまねし',
       nanori:    'しん, ひろ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0648-loyalty',
       kanji:     '忠',
@@ -7230,7 +7231,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'きよし, たた, ただ, ただし, なお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0348-flourish',
       kanji:     '栄',
@@ -7245,7 +7246,7 @@ const primerDeck = {
       kunyomi:   'さか.える、は.え、-ば.え、は.える、え',
       nanori:    'さかえ, しげ, てる, なが, ひで, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0534-call-on',
       kanji:     '訪',
@@ -7260,7 +7261,7 @@ const primerDeck = {
       kunyomi:   'おとず.れる、たず.ねる、と.う',
       nanori:    'わ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2985-dragon-old',
       kanji:     '龍',
@@ -7275,7 +7276,7 @@ const primerDeck = {
       kunyomi:   'たつ',
       nanori:    'りゅ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0727-hang',
       kanji:     '掛',
@@ -7290,7 +7291,7 @@ const primerDeck = {
       kunyomi:   'か.ける、-か.ける、か.け、-か.け、-が.け、か.かる、-か.かる、-が.かる、か.かり、-が.かり、かかり、-がかり',
       nanori:    'かけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1052-price',
       kanji:     '値',
@@ -7305,7 +7306,7 @@ const primerDeck = {
       kunyomi:   'ね、あたい',
       nanori:    'じ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2137-drive',
       kanji:     '駆',
@@ -7319,7 +7320,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'か.ける、か.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0473-suitable',
       kanji:     '適',
@@ -7333,7 +7334,7 @@ const primerDeck = {
       onyomi:    'テキ',
       kunyomi:   'かな.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1723-concurrently',
       kanji:     '兼',
@@ -7348,7 +7349,7 @@ const primerDeck = {
       kunyomi:   'か.ねる、-か.ねる',
       nanori:    'かね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1764-guilt',
       kanji:     '罪',
@@ -7362,7 +7363,7 @@ const primerDeck = {
       onyomi:    'ザイ',
       kunyomi:   'つみ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1553-rejoice',
       kanji:     '喜',
@@ -7377,7 +7378,7 @@ const primerDeck = {
       kunyomi:   'よろこ.ぶ、よろこ.ばす',
       nanori:    'あき, きゅ, のぶ, ゆき, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0726-put-up-a-notice',
       kanji:     '掲',
@@ -7391,7 +7392,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かか.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0536-violent',
       kanji:     '激',
@@ -7405,7 +7406,7 @@ const primerDeck = {
       onyomi:    'ゲキ',
       kunyomi:   'はげ.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1071-wound',
       kanji:     '傷',
@@ -7419,7 +7420,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'きず、いた.む、いた.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0146-open-sea',
       kanji:     '沖',
@@ -7433,7 +7434,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'おき、おきつ、ちゅう.する、わく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1305-dart',
       kanji:     '矢',
@@ -7447,7 +7448,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'や',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1308-know',
       kanji:     '知',
@@ -7462,7 +7463,7 @@ const primerDeck = {
       kunyomi:   'し.る、し.らせる',
       nanori:    'さと, さとる, しり, しれ, とも, のり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1307-tribe',
       kanji:     '族',
@@ -7477,7 +7478,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'つぎ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1829-doctor',
       kanji:     '医',
@@ -7491,7 +7492,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'い.やす、い.する、くすし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1769-climate',
       kanji:     '候',
@@ -7505,7 +7506,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'そうろう',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0803-valve',
       kanji:     '弁',
@@ -7520,7 +7521,7 @@ const primerDeck = {
       kunyomi:   'かんむり、わきま.える、わ.ける、はなびら、あらそ.う',
       nanori:    'べ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1816-symptoms',
       kanji:     '症',
@@ -7534,7 +7535,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0773-suspicious',
       kanji:     '怪',
@@ -7548,7 +7549,7 @@ const primerDeck = {
       onyomi:    'カイ、ケ',
       kunyomi:   'あや.しい、あや.しむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0575-dragon',
       kanji:     '竜',
@@ -7563,7 +7564,7 @@ const primerDeck = {
       kunyomi:   'たつ、いせ',
       nanori:    'りう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0715-brandish',
       kanji:     '揮',
@@ -7577,7 +7578,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'ふる.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0698-board',
       kanji:     '搭',
@@ -7591,7 +7592,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0801-broaden',
       kanji:     '拡',
@@ -7605,7 +7606,7 @@ const primerDeck = {
       onyomi:    'カク、コウ',
       kunyomi:   'ひろ.がる、ひろ.げる、ひろ.める',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1752-tower',
       kanji:     '閣',
@@ -7619,7 +7620,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0815-climax',
       kanji:     '至',
@@ -7634,7 +7635,7 @@ const primerDeck = {
       kunyomi:   'いた.る',
       nanori:    'のぶ, のり, みち, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1138-roof',
       kanji:     '屋',
@@ -7649,7 +7650,7 @@ const primerDeck = {
       kunyomi:   'や',
       nanori:    'た',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0816-room',
       kanji:     '室',
@@ -7663,7 +7664,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'むろ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1063-humanity',
       kanji:     '仁',
@@ -7678,7 +7679,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'きみ, く, さと, しのぶ, じ, と, のり, ひと, ひとし, ひろ, まさ, まさし, やす, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0970-secret',
       kanji:     '秘',
@@ -7692,7 +7693,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'ひ.める、ひそ.か、かく.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0920-gigantic',
       kanji:     '巨',
@@ -7707,7 +7708,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おお, か, こ, なお',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1106-similar',
       kanji:     '似',
@@ -7722,7 +7723,7 @@ const primerDeck = {
       kunyomi:   'に.る、ひ.る',
       nanori:    'にた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1379-leap',
       kanji:     '躍',
@@ -7737,7 +7738,7 @@ const primerDeck = {
       kunyomi:   'おど.る',
       nanori:    'おどり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1297-one-sided',
       kanji:     '片',
@@ -7751,7 +7752,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'かた-、かた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0912-princess',
       kanji:     '姫',
@@ -7765,7 +7766,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'ひめ、ひめ-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0742-portable',
       kanji:     '携',
@@ -7779,7 +7780,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'たずさ.える、たずさ.わる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1246-old-boy',
       kanji:     '君',
@@ -7794,7 +7795,7 @@ const primerDeck = {
       kunyomi:   'きみ、-ぎみ',
       nanori:    'み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2059-hearing',
       kanji:     '審',
@@ -7809,7 +7810,7 @@ const primerDeck = {
       kunyomi:   'つまび.らか、つぶさ.に',
       nanori:    'あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2109-inverted',
       kanji:     '逆',
@@ -7823,7 +7824,7 @@ const primerDeck = {
       onyomi:    'ギャク、ゲキ',
       kunyomi:   'さか、さか.さ、さか.らう',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0774-lightly',
       kanji:     '軽',
@@ -7837,7 +7838,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かる.い、かろ.やか、かろ.んじる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1037-buddha',
       kanji:     '仏',
@@ -7851,7 +7852,7 @@ const primerDeck = {
       onyomi:    'ブツ、フツ',
       kunyomi:   'ほとけ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2157-jubilation',
       kanji:     '慶',
@@ -7866,7 +7867,7 @@ const primerDeck = {
       kunyomi:   'よろこ.び',
       nanori:    'き, きよん, け, みち, む, やす, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1732-ballot',
       kanji:     '票',
@@ -7880,7 +7881,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1734-signpost',
       kanji:     '標',
@@ -7895,7 +7896,7 @@ const primerDeck = {
       kunyomi:   'しるべ、しるし',
       nanori:    'しべ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2082-cherry-tree',
       kanji:     '桜',
@@ -7910,7 +7911,7 @@ const primerDeck = {
       kunyomi:   'さくら',
       nanori:    'さ, ろう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1309-wisdom',
       kanji:     '智',
@@ -7925,7 +7926,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さと, さとし, さとる, さとい, とも, のり, とし, あきら, じ, とみ, ひと, もと, よも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1950-asia',
       kanji:     '亜',
@@ -7940,7 +7941,7 @@ const primerDeck = {
       kunyomi:   'つ.ぐ',
       nanori:    'や, つぎ, つぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1951-bad',
       kanji:     '悪',
@@ -7954,7 +7955,7 @@ const primerDeck = {
       onyomi:    'アク、オ',
       kunyomi:   'わる.い、わる-、あ.し、にく.い、-にく.い、ああ、いずくに、いずくんぞ、にく.む',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1014-writing-brush',
       kanji:     '筆',
@@ -7969,7 +7970,7 @@ const primerDeck = {
       kunyomi:   'ふで',
       nanori:    'くし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0234-younger-sister',
       kanji:     '妹',
@@ -7984,7 +7985,7 @@ const primerDeck = {
       kunyomi:   'いもうと',
       nanori:    'す, せ, も',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1887-yellow',
       kanji:     '黄',
@@ -7999,7 +8000,7 @@ const primerDeck = {
       kunyomi:   'き、こ-',
       nanori:    'うい, れい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1888-sideways',
       kanji:     '横',
@@ -8013,7 +8014,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'よこ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2028-spread',
       kanji:     '敷',
@@ -8028,7 +8029,7 @@ const primerDeck = {
       kunyomi:   'し.く、-し.き',
       nanori:    'しき, にゅう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0939-rhythm',
       kanji:     '律',
@@ -8043,7 +8044,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たかし, のり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0049-fortune-telling',
       kanji:     '占',
@@ -8058,7 +8059,7 @@ const primerDeck = {
       kunyomi:   'し.める、うらな.う',
       nanori:    'うら, しむ, じめ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0181-spot',
       kanji:     '点',
@@ -8072,7 +8073,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'つ.ける、つ.く、た.てる、さ.す、とぼ.す、とも.す、ぼち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0632-store',
       kanji:     '店',
@@ -8086,7 +8087,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'みせ、たな',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0997-core',
       kanji:     '奥',
@@ -8101,7 +8102,7 @@ const primerDeck = {
       kunyomi:   'おく、おく.まる、くま',
       nanori:    'お, おお, おん, つ, のく',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1945-mr',
       kanji:     '殿',
@@ -8116,7 +8117,7 @@ const primerDeck = {
       kunyomi:   'との、-どの',
       nanori:    'て, どん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0423-garment',
       kanji:     '衣',
@@ -8130,7 +8131,7 @@ const primerDeck = {
       onyomi:    'イ、エ',
       kunyomi:   'ころも、きぬ、-ぎ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1666-surface',
       kanji:     '表',
@@ -8144,7 +8145,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'おもて、-おもて、あらわ.す、あらわ.れる、あら.わす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1983-supplement',
       kanji:     '補',
@@ -8158,7 +8159,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'おぎな.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0504-duplicate',
       kanji:     '複',
@@ -8172,7 +8173,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0424-tailor',
       kanji:     '裁',
@@ -8186,7 +8187,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'た.つ、さば.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0427-demolition',
       kanji:     '壊',
@@ -8200,7 +8201,7 @@ const primerDeck = {
       onyomi:    'カイ、エ',
       kunyomi:   'こわ.す、こわ.れる、やぶ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2181-attack',
       kanji:     '襲',
@@ -8215,7 +8216,7 @@ const primerDeck = {
       kunyomi:   'おそ.う、かさ.ね',
       nanori:    'そい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0426-back',
       kanji:     '裏',
@@ -8229,7 +8230,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'うら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0856-abundant',
       kanji:     '裕',
@@ -8244,7 +8245,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ, のり, ひろ, ひろし, やす, ゆ, ゆたか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1849-cedar',
       kanji:     '杉',
@@ -8258,7 +8259,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'すぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1061-hermit',
       kanji:     '仙',
@@ -8273,7 +8274,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'そま, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1941-outburst',
       kanji:     '暴',
@@ -8287,7 +8288,7 @@ const primerDeck = {
       onyomi:    'ボウ、バク',
       kunyomi:   'あば.く、あば.れる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1942-bomb',
       kanji:     '爆',
@@ -8301,7 +8302,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'は.ぜる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0420-nativity',
       kanji:     '誕',
@@ -8315,7 +8316,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0622-harden',
       kanji:     '固',
@@ -8329,7 +8330,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'かた.める、かた.まる、かた.まり、かた.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1047-individual',
       kanji:     '個',
@@ -8343,7 +8344,7 @@ const primerDeck = {
       onyomi:    'コ、カ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1656-solicit',
       kanji:     '請',
@@ -8358,7 +8359,7 @@ const primerDeck = {
       kunyomi:   'こ.う、う.ける',
       nanori:    'うけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1008-laugh',
       kanji:     '笑',
@@ -8373,7 +8374,7 @@ const primerDeck = {
       kunyomi:   'わら.う、え.む',
       nanori:    'えみ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1761-haiku',
       kanji:     '俳',
@@ -8387,7 +8388,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1674-constitution',
       kanji:     '憲',
@@ -8402,7 +8403,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かず, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0303-patrol',
       kanji:     '巡',
@@ -8416,7 +8417,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'めぐ.る、めぐ.り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1871-bases',
       kanji:     '塁',
@@ -8431,7 +8432,7 @@ const primerDeck = {
       kunyomi:   'とりで',
       nanori:    'る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1618-evade',
       kanji:     '避',
@@ -8445,7 +8446,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'さ.ける、よ.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1179-prohibition',
       kanji:     '禁',
@@ -8459,7 +8460,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1837-welcome',
       kanji:     '迎',
@@ -8474,7 +8475,7 @@ const primerDeck = {
       kunyomi:   'むか.える',
       nanori:    'むかえ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2136-parking',
       kanji:     '駐',
@@ -8488,7 +8489,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0763-drown',
       kanji:     '没',
@@ -8502,7 +8503,7 @@ const primerDeck = {
       onyomi:    'ボツ、モツ',
       kunyomi:   'おぼ.れる、しず.む、ない',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0918-look-to',
       kanji:     '臨',
@@ -8517,7 +8518,7 @@ const primerDeck = {
       kunyomi:   'のぞ.む',
       nanori:    'み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1284-bake',
       kanji:     '焼',
@@ -8532,7 +8533,7 @@ const primerDeck = {
       kunyomi:   'や.く、や.き、や.き-、-や.き、や.ける',
       nanori:    'やい, やき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0965-second',
       kanji:     '秒',
@@ -8546,7 +8547,7 @@ const primerDeck = {
       onyomi:    'ビョウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0183-fish',
       kanji:     '魚',
@@ -8561,7 +8562,7 @@ const primerDeck = {
       kunyomi:   'うお、さかな、-ざかな',
       nanori:    'い',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2062-fur',
       kanji:     '毛',
@@ -8576,7 +8577,7 @@ const primerDeck = {
       kunyomi:   'け',
       nanori:    'めん, も',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2064-tail',
       kanji:     '尾',
@@ -8590,7 +8591,7 @@ const primerDeck = {
       onyomi:    'ビ',
       kunyomi:   'お',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2093-crane',
       kanji:     '鶴',
@@ -8605,7 +8606,7 @@ const primerDeck = {
       kunyomi:   'つる',
       nanori:    'たず, ず, か, つ, づ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1041-chief',
       kanji:     '伯',
@@ -8620,7 +8621,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'いき, えき, か, き, は, ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0395-shallow',
       kanji:     '浅',
@@ -8635,7 +8636,7 @@ const primerDeck = {
       kunyomi:   'あさ.い',
       nanori:    'あざ, さ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1045-reliant',
       kanji:     '依',
@@ -8650,7 +8651,7 @@ const primerDeck = {
       kunyomi:   'よ.る',
       nanori:    'よ, より',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1089-sagacious',
       kanji:     '俊',
@@ -8665,7 +8666,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すぐる, とし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1516-pattern',
       kanji:     '範',
@@ -8680,7 +8681,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0519-darkness',
       kanji:     '暗',
@@ -8694,7 +8695,7 @@ const primerDeck = {
       onyomi:    'アン',
       kunyomi:   'くら.い、くら.む、くれ.る',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2195-lagoon',
       kanji:     '潟',
@@ -8709,7 +8710,7 @@ const primerDeck = {
       kunyomi:   'かた、-がた',
       nanori:    'がら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1098-meat',
       kanji:     '肉',
@@ -8723,7 +8724,7 @@ const primerDeck = {
       onyomi:    'ニク',
       kunyomi:   'しし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1902-period',
       kanji:     '期',
@@ -8737,7 +8738,7 @@ const primerDeck = {
       onyomi:    'キ、ゴ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1294-victory',
       kanji:     '勝',
@@ -8752,7 +8753,7 @@ const primerDeck = {
       kunyomi:   'か.つ、-が.ち、まさ.る、すぐ.れる、かつ',
       nanori:    'かち, と, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0083-possess',
       kanji:     '有',
@@ -8767,7 +8768,7 @@ const primerDeck = {
       kunyomi:   'あ.る',
       nanori:    'あ, あら, あり, ある, くに, なお, ゆ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0053-morning',
       kanji:     '朝',
@@ -8782,7 +8783,7 @@ const primerDeck = {
       kunyomi:   'あさ',
       nanori:    'あ, あそ, ささ, ちか, とも',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0537-undress',
       kanji:     '脱',
@@ -8796,7 +8797,7 @@ const primerDeck = {
       onyomi:    'ダツ',
       kunyomi:   'ぬ.ぐ、ぬ.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0527-laid-waste',
       kanji:     '荒',
@@ -8811,7 +8812,7 @@ const primerDeck = {
       kunyomi:   'あら.い、あら-、あ.れる、あ.らす、-あ.らし、すさ.む',
       nanori:    'ら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0978-seasons',
       kanji:     '季',
@@ -8826,7 +8827,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すえ, とし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0961-tax',
       kanji:     '税',
@@ -8841,7 +8842,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0267-tea',
       kanji:     '茶',
@@ -8856,7 +8857,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ちや',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0689-chafe',
       kanji:     '摩',
@@ -8870,7 +8871,7 @@ const primerDeck = {
       onyomi:    'マ',
       kunyomi:   'ま.する、さす.る、す.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1383-skeleton',
       kanji:     '骨',
@@ -8884,7 +8885,7 @@ const primerDeck = {
       onyomi:    'コツ',
       kunyomi:   'ほね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1375-long-distance',
       kanji:     '距',
@@ -8898,7 +8899,7 @@ const primerDeck = {
       onyomi:    'キョ',
       kunyomi:   'へだ.たる、けづめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0122-sand',
       kanji:     '砂',
@@ -8913,7 +8914,7 @@ const primerDeck = {
       kunyomi:   'すな',
       nanori:    'いさ, ご',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1058-hundred-million',
       kanji:     '億',
@@ -8928,7 +8929,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'お',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2175-ghost',
       kanji:     '鬼',
@@ -8942,7 +8943,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'おに、おに-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2178-witch',
       kanji:     '魔',
@@ -8956,7 +8957,7 @@ const primerDeck = {
       onyomi:    'マ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0456-winter',
       kanji:     '冬',
@@ -8970,7 +8971,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ふゆ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0239-suffering',
       kanji:     '苦',
@@ -8984,7 +8985,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'くる.しい、-ぐる.しい、くる.しむ、くる.しめる、にが.い、にが.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0132-thick',
       kanji:     '厚',
@@ -8999,7 +9000,7 @@ const primerDeck = {
       kunyomi:   'あつ.い、あか',
       nanori:    'あ, あっ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0690-ego',
       kanji:     '我',
@@ -9014,7 +9015,7 @@ const primerDeck = {
       kunyomi:   'われ、わ、わ.が-、わが-',
       nanori:    'あ, あが, か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1786-too-much',
       kanji:     '余',
@@ -9029,7 +9030,7 @@ const primerDeck = {
       kunyomi:   'あま.る、あま.り、あま.す、あんま.り',
       nanori:    'あまる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1790-route',
       kanji:     '途',
@@ -9043,7 +9044,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'みち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0212-frame',
       kanji:     '枠',
@@ -9057,7 +9058,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'わく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1234-lady',
       kanji:     '婦',
@@ -9072,7 +9073,7 @@ const primerDeck = {
       kunyomi:   'よめ',
       nanori:    'ね',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0468-juvenile',
       kanji:     '童',
@@ -9087,7 +9088,7 @@ const primerDeck = {
       kunyomi:   'わらべ',
       nanori:    'ぱ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0253-dog',
       kanji:     '犬',
@@ -9101,7 +9102,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'いぬ、いぬ-',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0254-status-quo',
       kanji:     '状',
@@ -9115,7 +9116,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0256-sort-of-thing',
       kanji:     '然',
@@ -9129,7 +9130,7 @@ const primerDeck = {
       onyomi:    'ゼン、ネン',
       kunyomi:   'しか、しか.り、しか.し、さ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1517-crime',
       kanji:     '犯',
@@ -9143,7 +9144,7 @@ const primerDeck = {
       onyomi:    'ハン、ボン',
       kunyomi:   'おか.す',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1701-sino',
       kanji:     '漢',
@@ -9158,7 +9159,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'はん',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0384-overgrown',
       kanji:     '茂',
@@ -9173,7 +9174,7 @@ const primerDeck = {
       kunyomi:   'しげ.る',
       nanori:    'うむさ, き, し, つとむ, む, もて',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0819-mutually',
       kanji:     '互',
@@ -9187,7 +9188,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'たが.い、かたみ.に',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0595-solely',
       kanji:     '唯',
@@ -9202,7 +9203,7 @@ const primerDeck = {
       kunyomi:   'ただ',
       nanori:    'ゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1195-push',
       kanji:     '押',
@@ -9217,7 +9218,7 @@ const primerDeck = {
       kunyomi:   'お.す、お.し-、お.っ-、お.さえる、おさ.える',
       nanori:    'おし, おす, おや',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1982-shop',
       kanji:     '舗',
@@ -9232,7 +9233,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'き',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1303-negate',
       kanji:     '否',
@@ -9246,7 +9247,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'いな、いや',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0172-level',
       kanji:     '均',
@@ -9261,7 +9262,7 @@ const primerDeck = {
       kunyomi:   'なら.す',
       nanori:    'ひとし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2089-reputation',
       kanji:     '誉',
@@ -9276,7 +9277,7 @@ const primerDeck = {
       kunyomi:   'ほま.れ、ほ.める',
       nanori:    'え, たか, たけ, ほまれ, ほめ, ほん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2126-excuse',
       kanji:     '免',
@@ -9291,7 +9292,7 @@ const primerDeck = {
       kunyomi:   'まぬか.れる、まぬが.れる',
       nanori:    'め',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1198-speaketh',
       kanji:     '申',
@@ -9305,7 +9306,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'もう.す、もう.し-、さる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1200-gods',
       kanji:     '神',
@@ -9320,7 +9321,7 @@ const primerDeck = {
       kunyomi:   'かみ、かん-、こう-',
       nanori:    'か, かぐ, かな, かも, くま, こ, こは, だま, み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1199-expand',
       kanji:     '伸',
@@ -9335,7 +9336,7 @@ const primerDeck = {
       kunyomi:   'の.びる、の.ばす、の.べる、の.す',
       nanori:    'のぶ, よぼる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1506-cool',
       kanji:     '冷',
@@ -9349,7 +9350,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'つめ.たい、ひ.える、ひ.や、ひ.ややか、ひ.やす、ひ.やかす、さ.める、さ.ます',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1201-search',
       kanji:     '捜',
@@ -9363,7 +9364,7 @@ const primerDeck = {
       onyomi:    'ソウ、シュ、シュウ',
       kunyomi:   'さが.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1648-defer',
       kanji:     '譲',
@@ -9378,7 +9379,7 @@ const primerDeck = {
       kunyomi:   'ゆず.る',
       nanori:    'ゆずり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1593-previously',
       kanji:     '既',
@@ -9392,7 +9393,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'すで.に',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1594-outline',
       kanji:     '概',
@@ -9406,7 +9407,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   'おおむ.ね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1509-courage',
       kanji:     '勇',
@@ -9421,7 +9422,7 @@ const primerDeck = {
       kunyomi:   'いさ.む',
       nanori:    'お, はや',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0451-rain',
       kanji:     '雨',
@@ -9435,7 +9436,7 @@ const primerDeck = {
       onyomi:    'ウ',
       kunyomi:   'あめ、あま-、-さめ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0574-electricity',
       kanji:     '電',
@@ -9449,7 +9450,7 @@ const primerDeck = {
       onyomi:    'デン',
       kunyomi:   '',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1930-spirits',
       kanji:     '霊',
@@ -9463,7 +9464,7 @@ const primerDeck = {
       onyomi:    'レイ、リョウ',
       kunyomi:   'たま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1377-dew',
       kanji:     '露',
@@ -9478,7 +9479,7 @@ const primerDeck = {
       kunyomi:   'つゆ',
       nanori:    'や, ゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1225-snow',
       kanji:     '雪',
@@ -9493,7 +9494,7 @@ const primerDeck = {
       kunyomi:   'ゆき',
       nanori:    'せっ, ぶき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1188-oil',
       kanji:     '油',
@@ -9507,7 +9508,7 @@ const primerDeck = {
       onyomi:    'ユ、ユウ',
       kunyomi:   'あぶら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0505-lack',
       kanji:     '欠',
@@ -9521,7 +9522,7 @@ const primerDeck = {
       onyomi:    'ケツ、ケン',
       kunyomi:   'か.ける、か.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0510-next',
       kanji:     '次',
@@ -9536,7 +9537,7 @@ const primerDeck = {
       kunyomi:   'つ.ぐ、つぎ',
       nanori:    'き, すき, つぐ, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0508-song',
       kanji:     '歌',
@@ -9550,7 +9551,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'うた、うた.う',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0513-figure',
       kanji:     '姿',
@@ -9565,7 +9566,7 @@ const primerDeck = {
       kunyomi:   'すがた',
       nanori:    'しな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0506-blow',
       kanji:     '吹',
@@ -9580,7 +9581,7 @@ const primerDeck = {
       kunyomi:   'ふ.く',
       nanori:    'ふき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1834-europe',
       kanji:     '欧',
@@ -9595,7 +9596,7 @@ const primerDeck = {
       kunyomi:   'うた.う、は.く',
       nanori:    'おお, ひろ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0907-submerge',
       kanji:     '潜',
@@ -9609,7 +9610,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'ひそ.む、もぐ.る、かく.れる、くぐ.る、ひそ.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0133-strange',
       kanji:     '奇',
@@ -9623,7 +9624,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'く.しき、あや.しい、くし、めずら.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0840-promontory',
       kanji:     '崎',
@@ -9637,7 +9638,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'さき、さい、みさき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0204-draw-near',
       kanji:     '寄',
@@ -9652,7 +9653,7 @@ const primerDeck = {
       kunyomi:   'よ.る、-よ.り、よ.せる',
       nanori:    'よせ, より, よろ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2135-equestrian',
       kanji:     '騎',
@@ -9666,7 +9667,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0164-cape',
       kanji:     '埼',
@@ -9680,7 +9681,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'さき、さい、みさき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2083-animal',
       kanji:     '獣',
@@ -9694,7 +9695,7 @@ const primerDeck = {
       onyomi:    'ジュウ',
       kunyomi:   'けもの、けだもの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0174-inflammation',
       kanji:     '炎',
@@ -9709,7 +9710,7 @@ const primerDeck = {
       kunyomi:   'ほのお',
       nanori:    'ぬく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0374-discuss',
       kanji:     '談',
@@ -9723,7 +9724,7 @@ const primerDeck = {
       onyomi:    'ダン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0741-from',
       kanji:     '乃',
@@ -9738,7 +9739,7 @@ const primerDeck = {
       kunyomi:   'の, すなわ.ち, なんじ',
       nanori:    'おさむ, お, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0980-excel',
       kanji:     '秀',
@@ -9753,7 +9754,7 @@ const primerDeck = {
       kunyomi:   'ひい.でる',
       nanori:    'しゅ, しょう, ひで, ひでし, ほ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0982-entice',
       kanji:     '誘',
@@ -9767,7 +9768,7 @@ const primerDeck = {
       onyomi:    'ユウ、イウ',
       kunyomi:   'さそ.う、いざな.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1937-wing',
       kanji:     '翼',
@@ -9781,7 +9782,7 @@ const primerDeck = {
       onyomi:    'ヨク',
       kunyomi:   'つばさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0152-tide',
       kanji:     '潮',
@@ -9796,7 +9797,7 @@ const primerDeck = {
       kunyomi:   'しお、うしお',
       nanori:    'いた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0585-hot-water',
       kanji:     '湯',
@@ -9810,7 +9811,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ゆ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0549-burn',
       kanji:     '燃',
@@ -9824,7 +9825,7 @@ const primerDeck = {
       onyomi:    'ネン',
       kunyomi:   'も.える、も.やす、も.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1067-double',
       kanji:     '倍',
@@ -9839,7 +9840,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'べ, ます',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1771-cheerful',
       kanji:     '快',
@@ -9854,7 +9855,7 @@ const primerDeck = {
       kunyomi:   'こころよ.い',
       nanori:    'よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1793-bundle',
       kanji:     '束',
@@ -9868,7 +9869,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'たば、たば.ねる、つか、つか.ねる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1799-quick',
       kanji:     '速',
@@ -9883,7 +9884,7 @@ const primerDeck = {
       kunyomi:   'はや.い、はや-、はや.める、すみ.やか',
       nanori:    'わ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1910-dispatch',
       kanji:     '遣',
@@ -9897,7 +9898,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'つか.う、-つか.い、-づか.い、つか.わす、や.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0388-sincerity',
       kanji:     '誠',
@@ -9912,7 +9913,7 @@ const primerDeck = {
       kunyomi:   'まこと',
       nanori:    'きよ, さと, しげ, とも, のぶ, ま, まこ, まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1088-baggage',
       kanji:     '荷',
@@ -9927,7 +9928,7 @@ const primerDeck = {
       kunyomi:   'に',
       nanori:    'はす, り',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0241-tolerant',
       kanji:     '寛',
@@ -9942,7 +9943,7 @@ const primerDeck = {
       kunyomi:   'くつろ.ぐ、ひろ.い、ゆる.やか',
       nanori:    'とも, のぶ, のり, ひろし, ひろん, ゆた, ゆたか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0087-sword',
       kanji:     '刀',
@@ -9957,7 +9958,7 @@ const primerDeck = {
       kunyomi:   'かたな、そり',
       nanori:    'き, ち, と, わき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0844-part',
       kanji:     '分',
@@ -9972,7 +9973,7 @@ const primerDeck = {
       kunyomi:   'わ.ける、わ.け、わ.かれる、わ.かる、わ.かつ',
       nanori:    'いた, わけ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0309-in-front',
       kanji:     '前',
@@ -9987,7 +9988,7 @@ const primerDeck = {
       kunyomi:   'まえ、-まえ',
       nanori:    'さき, さと, まい',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0431-first-time',
       kanji:     '初',
@@ -10002,7 +10003,7 @@ const primerDeck = {
       kunyomi:   'はじ.め、はじ.めて、はつ、はつ-、うい-、-そ.める、-ぞ.め',
       nanori:    'し, はっ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0972-profit',
       kanji:     '利',
@@ -10017,7 +10018,7 @@ const primerDeck = {
       kunyomi:   'き.く',
       nanori:    'かが, と, とし, のり, み, りい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0094-separate',
       kanji:     '別',
@@ -10032,7 +10033,7 @@ const primerDeck = {
       kunyomi:   'わか.れる、わ.ける',
       nanori:    'べっ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1289-judgment',
       kanji:     '判',
@@ -10046,7 +10047,7 @@ const primerDeck = {
       onyomi:    'ハン、バン',
       kunyomi:   'わか.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2152-drama',
       kanji:     '劇',
@@ -10060,7 +10061,7 @@ const primerDeck = {
       onyomi:    'ゲキ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0875-file',
       kanji:     '列',
@@ -10075,7 +10076,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'れっ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1046-example',
       kanji:     '例',
@@ -10089,7 +10090,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'たと.える',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1759-genesis',
       kanji:     '創',
@@ -10104,7 +10105,7 @@ const primerDeck = {
       kunyomi:   'つく.る、はじ.める、きず、けず.しける',
       nanori:    'はじめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0302-environs',
       kanji:     '辺',
@@ -10119,7 +10120,7 @@ const primerDeck = {
       kunyomi:   'あた.り、ほと.り、-べ',
       nanori:    'なべ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1316-homecoming',
       kanji:     '帰',
@@ -10133,7 +10134,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'かえ.る、かえ.す、おく.る、とつ.ぐ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1673-proportion',
       kanji:     '割',
@@ -10147,7 +10148,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'わ.る、わり、わ.り、わ.れる、さ.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0734-punish',
       kanji:     '刑',
@@ -10162,7 +10163,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おさか, ぎょう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0735-mould',
       kanji:     '型',
@@ -10176,7 +10177,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かた、-がた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1669-pledge',
       kanji:     '契',
@@ -10190,7 +10191,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'ちぎ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0093-vice',
       kanji:     '副',
@@ -10205,7 +10206,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'そい, そえ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1801-saber',
       kanji:     '剣',
@@ -10219,7 +10220,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'つるぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1291-ticket',
       kanji:     '券',
@@ -10233,7 +10234,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0973-pear-tree',
       kanji:     '梨',
@@ -10248,7 +10249,7 @@ const primerDeck = {
       kunyomi:   'なし',
       nanori:    'か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1901-national-flag',
       kanji:     '旗',
@@ -10262,7 +10263,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'はた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1616-wall',
       kanji:     '壁',
@@ -10276,7 +10277,7 @@ const primerDeck = {
       onyomi:    'ヘキ',
       kunyomi:   'かべ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0499-plum',
       kanji:     '梅',
@@ -10290,7 +10291,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'うめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0365-instruction',
       kanji:     '訓',
@@ -10305,7 +10306,7 @@ const primerDeck = {
       kunyomi:   'おし.える、よ.む、くん.ずる',
       nanori:    'く, くに, くの, さとし, のり, ふみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0324-radiance',
       kanji:     '輝',
@@ -10320,7 +10321,7 @@ const primerDeck = {
       kunyomi:   'かがや.く',
       nanori:    'あき, あきら, さき, てる, ひ, ひかる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0934-erect',
       kanji:     '架',
@@ -10334,7 +10335,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'か.ける、か.かる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0900-send-back',
       kanji:     '還',
@@ -10348,7 +10349,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'かえ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0454-thunder',
       kanji:     '雷',
@@ -10362,7 +10363,7 @@ const primerDeck = {
       onyomi:    'ライ',
       kunyomi:   'かみなり、いかずち、いかづち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1370-contrast',
       kanji:     '較',
@@ -10376,7 +10377,7 @@ const primerDeck = {
       onyomi:    'カク、コウ',
       kunyomi:   'くら.べる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0294-tranquillize',
       kanji:     '鎮',
@@ -10391,7 +10392,7 @@ const primerDeck = {
       kunyomi:   'しず.める、しず.まる、おさえ',
       nanori:    'しげ, じん, ちか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0556-insect',
       kanji:     '虫',
@@ -10406,7 +10407,7 @@ const primerDeck = {
       kunyomi:   'むし',
       nanori:    'む',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0563-wind',
       kanji:     '風',
@@ -10421,7 +10422,7 @@ const primerDeck = {
       kunyomi:   'かぜ、かざ-、-かぜ',
       nanori:    'い, え',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0561-single',
       kanji:     '独',
@@ -10436,7 +10437,7 @@ const primerDeck = {
       kunyomi:   'ひと.り',
       nanori:    'どいつ, どっ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1954-contact',
       kanji:     '触',
@@ -10450,7 +10451,7 @@ const primerDeck = {
       onyomi:    'ショク',
       kunyomi:   'ふ.れる、さわ.る、さわ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1123-dissolve',
       kanji:     '融',
@@ -10465,7 +10466,7 @@ const primerDeck = {
       kunyomi:   'と.ける、と.かす',
       nanori:    'あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0798-pay',
       kanji:     '払',
@@ -10480,7 +10481,7 @@ const primerDeck = {
       kunyomi:   'はら.う、-はら.い、-ばら.い',
       nanori:    'はらい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0703-clear-the-land',
       kanji:     '拓',
@@ -10495,7 +10496,7 @@ const primerDeck = {
       kunyomi:   'ひら.く',
       nanori:    'つ, ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0270-pagoda',
       kanji:     '塔',
@@ -10509,7 +10510,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0564-self',
       kanji:     '己',
@@ -10524,7 +10525,7 @@ const primerDeck = {
       kunyomi:   'おのれ、つちのと、な',
       nanori:    'し, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0568-scribe',
       kanji:     '記',
@@ -10539,7 +10540,7 @@ const primerDeck = {
       kunyomi:   'しる.す',
       nanori:    'のり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0567-reformation',
       kanji:     '改',
@@ -10553,7 +10554,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'あらた.める、あらた.まる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0565-rouse',
       kanji:     '起',
@@ -10567,7 +10568,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'お.きる、お.こる、お.こす、おこ.す、た.つ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1292-scroll',
       kanji:     '巻',
@@ -10581,7 +10582,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'ま.く、まき、ま.き',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1293-sphere',
       kanji:     '圏',
@@ -10595,7 +10596,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'かこ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1018-solution',
       kanji:     '答',
@@ -10610,7 +10611,7 @@ const primerDeck = {
       kunyomi:   'こた.える、こた.え',
       nanori:    'どう',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0582-overpowering',
       kanji:     '豪',
@@ -10625,7 +10626,7 @@ const primerDeck = {
       kunyomi:   'えら.い',
       nanori:    'こう, ご, すぐる, たけ, たけし, ひで, まさる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0736-genius',
       kanji:     '才',
@@ -10639,7 +10640,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0738-lumber',
       kanji:     '材',
@@ -10654,7 +10655,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'き, さい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1751-closed',
       kanji:     '閉',
@@ -10669,7 +10670,7 @@ const primerDeck = {
       kunyomi:   'と.じる、と.ざす、し.める、し.まる、た.てる',
       nanori:    'へ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1505-age',
       kanji:     '齢',
@@ -10683,7 +10684,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'よわい、とし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0817-arrival',
       kanji:     '到',
@@ -10697,7 +10698,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'いた.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1055-overthrow',
       kanji:     '倒',
@@ -10711,7 +10712,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'たお.れる、-だお.れ、たお.す、さかさま、さかさ、さかしま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0975-ear-of-a-plant',
       kanji:     '穂',
@@ -10726,7 +10727,7 @@ const primerDeck = {
       kunyomi:   'ほ',
       nanori:    'お, こう, のり, ほい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0025-prosperous',
       kanji:     '昌',
@@ -10741,7 +10742,7 @@ const primerDeck = {
       kunyomi:   'さかん',
       nanori:    'まさ, まさし, よし, あき, あきら, さかえ, あつ, すけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0021-chant',
       kanji:     '唱',
@@ -10755,7 +10756,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'とな.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0573-tortoise',
       kanji:     '亀',
@@ -10770,7 +10771,7 @@ const primerDeck = {
       kunyomi:   'かめ',
       nanori:    'ひさ, ひさし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0822-remove',
       kanji:     '撤',
@@ -10784,7 +10785,7 @@ const primerDeck = {
       onyomi:    'テツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1658-clear-up',
       kanji:     '晴',
@@ -10799,7 +10800,7 @@ const primerDeck = {
       kunyomi:   'は.れる、は.れ、は.れ-、-ば.れ、は.らす',
       nanori:    'はる, はれ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0636-bed',
       kanji:     '床',
@@ -10813,7 +10814,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'とこ、ゆか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0356-awe',
       kanji:     '敬',
@@ -10828,7 +10829,7 @@ const primerDeck = {
       kunyomi:   'うやま.う',
       nanori:    'け, たか, たかし, たけ, とし, のり, ひろ, ゆき, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0358-admonish',
       kanji:     '警',
@@ -10842,7 +10843,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'いまし.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0996-chrysanthemum',
       kanji:     '菊',
@@ -10856,7 +10857,7 @@ const primerDeck = {
       onyomi:    'キク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0226-calendar',
       kanji:     '暦',
@@ -10870,7 +10871,7 @@ const primerDeck = {
       onyomi:    'レキ',
       kunyomi:   'こよみ、りゃく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1975-bottom',
       kanji:     '底',
@@ -10884,7 +10885,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'そこ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1301-turf',
       kanji:     '芝',
@@ -10899,7 +10900,7 @@ const primerDeck = {
       kunyomi:   'しば',
       nanori:    'こげ, しは',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2687-livraison',
       kanji:     '篇',
@@ -10913,7 +10914,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0787-floating',
       kanji:     '浮',
@@ -10928,7 +10929,7 @@ const primerDeck = {
       kunyomi:   'う.く、う.かれる、う.かぶ、む、う.かべる',
       nanori:    'うき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1875-astringent',
       kanji:     '渋',
@@ -10942,7 +10943,7 @@ const primerDeck = {
       onyomi:    'ジュウ、シュウ',
       kunyomi:   'しぶ、しぶ.い、しぶ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1584-drink',
       kanji:     '飲',
@@ -10956,7 +10957,7 @@ const primerDeck = {
       onyomi:    'イン、オン',
       kunyomi:   'の.む、-の.み',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1360-large-hill',
       kanji:     '阜',
@@ -10971,7 +10972,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1401-inst',
       kanji:     '院',
@@ -10985,7 +10986,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1392-occasion',
       kanji:     '際',
@@ -11000,7 +11001,7 @@ const primerDeck = {
       kunyomi:   'きわ、-ぎわ',
       nanori:    'わ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1403-regiment',
       kanji:     '隊',
@@ -11014,7 +11015,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1405-descend',
       kanji:     '降',
@@ -11029,7 +11030,7 @@ const primerDeck = {
       kunyomi:   'お.りる、お.ろす、ふ.る、ふ.り、くだ.る、くだ.す',
       nanori:    'ふり, ふる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1576-limit',
       kanji:     '限',
@@ -11043,7 +11044,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'かぎ.る、かぎ.り、-かぎ.り',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1399-ward-off',
       kanji:     '防',
@@ -11058,7 +11059,7 @@ const primerDeck = {
       kunyomi:   'ふせ.ぐ',
       nanori:    'あた, う, ほう',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1631-land',
       kanji:     '陸',
@@ -11073,7 +11074,7 @@ const primerDeck = {
       kunyomi:   'おか',
       nanori:    'くが, たち, みち, む, むつ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1787-exclude',
       kanji:     '除',
@@ -11087,7 +11088,7 @@ const primerDeck = {
       onyomi:    'ジョ、ジ',
       kunyomi:   'のぞ.く、-よ.け',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1397-sunshine',
       kanji:     '陽',
@@ -11102,7 +11103,7 @@ const primerDeck = {
       kunyomi:   'ひ',
       nanori:    'あき, あきら, あけ, はる, ひろ, やん, よ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1802-precipitous',
       kanji:     '険',
@@ -11116,7 +11117,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'けわ.しい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1393-hinder',
       kanji:     '障',
@@ -11130,7 +11131,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'さわ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1391-africa',
       kanji:     '阿',
@@ -11145,7 +11146,7 @@ const primerDeck = {
       kunyomi:   'おもね.る, くま',
       nanori:    'ほとり, あず, あわ, おか, きた, な',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1408-neighboring',
       kanji:     '隣',
@@ -11160,7 +11161,7 @@ const primerDeck = {
       kunyomi:   'とな.る、となり',
       nanori:    'ちか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1682-hump',
       kanji:     '隆',
@@ -11175,7 +11176,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'お, たか, たかし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1402-camp',
       kanji:     '陣',
@@ -11189,7 +11190,7 @@ const primerDeck = {
       onyomi:    'ジン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1749-simplicity',
       kanji:     '簡',
@@ -11203,7 +11204,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'えら.ぶ、ふだ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0326-crown',
       kanji:     '冠',
@@ -11218,7 +11219,7 @@ const primerDeck = {
       kunyomi:   'かんむり',
       nanori:    'か, かっぷ, まさる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2066-consign',
       kanji:     '託',
@@ -11232,7 +11233,7 @@ const primerDeck = {
       onyomi:    'タク',
       kunyomi:   'かこつ.ける、かこ.つ、かこ.つける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1577-eyeball',
       kanji:     '眼',
@@ -11246,7 +11247,7 @@ const primerDeck = {
       onyomi:    'ガン、ゲン',
       kunyomi:   'まなこ、め',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1255-tooth',
       kanji:     '歯',
@@ -11260,7 +11261,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'よわい、は、よわ.い、よわい.する',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0446-thorn',
       kanji:     '刺',
@@ -11274,7 +11275,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'さ.す、さ.さる、さ.し、さし、とげ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0522-mirror',
       kanji:     '鏡',
@@ -11289,7 +11290,7 @@ const primerDeck = {
       kunyomi:   'かがみ',
       nanori:    'あき, かが, かがん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0260-cow',
       kanji:     '牛',
@@ -11304,7 +11305,7 @@ const primerDeck = {
       kunyomi:   'うし',
       nanori:    'うじ, ご',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1955-unravel',
       kanji:     '解',
@@ -11319,7 +11320,7 @@ const primerDeck = {
       kunyomi:   'と.く、と.かす、と.ける、ほど.く、ほど.ける、わか.る、さと.る',
       nanori:    'さとる, とけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1032-affair',
       kanji:     '件',
@@ -11333,7 +11334,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'くだん',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0262-revelation',
       kanji:     '告',
@@ -11348,7 +11349,7 @@ const primerDeck = {
       kunyomi:   'つ.げる',
       nanori:    'い',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0299-create',
       kanji:     '造',
@@ -11363,7 +11364,7 @@ const primerDeck = {
       kunyomi:   'つく.る、つく.り、-づく.り',
       nanori:    'ずくり, づくり, み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0351-breed',
       kanji:     '牧',
@@ -11378,7 +11379,7 @@ const primerDeck = {
       kunyomi:   'まき',
       nanori:    'ま, まい, もく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2404-abounding',
       kanji:     '浩',
@@ -11393,7 +11394,7 @@ const primerDeck = {
       kunyomi:   'おおき.い, ひろ.い',
       nanori:    'ひろ, ひろし, ゆたか, こお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2324-extensive',
       kanji:     '宏',
@@ -11408,7 +11409,7 @@ const primerDeck = {
       kunyomi:   'ひろ.い',
       nanori:    'あつ, ひろ, ひろし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0018-risk',
       kanji:     '冒',
@@ -11422,7 +11423,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'おか.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0569-wrap',
       kanji:     '包',
@@ -11437,7 +11438,7 @@ const primerDeck = {
       kunyomi:   'つつ.む、くる.む',
       nanori:    'お, かね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0571-cannon',
       kanji:     '砲',
@@ -11452,7 +11453,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'づつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0570-placenta',
       kanji:     '胞',
@@ -11466,7 +11467,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0697-embrace',
       kanji:     '抱',
@@ -11481,7 +11482,7 @@ const primerDeck = {
       kunyomi:   'だ.く、いだ.く、かか.える',
       nanori:    'たば',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1009-bamboo-hat',
       kanji:     '笠',
@@ -11495,7 +11496,7 @@ const primerDeck = {
       onyomi:    'リュウ',
       kunyomi:   'かさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0709-pinch',
       kanji:     '摘',
@@ -11510,7 +11511,7 @@ const primerDeck = {
       kunyomi:   'つ.む',
       nanori:    'つむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2196-cinnabar',
       kanji:     '丹',
@@ -11525,7 +11526,7 @@ const primerDeck = {
       kunyomi:   'に',
       nanori:    'た, たみ, まこと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0818-doth',
       kanji:     '致',
@@ -11539,7 +11540,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'いた.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0114-evening',
       kanji:     '夕',
@@ -11554,7 +11555,7 @@ const primerDeck = {
       kunyomi:   'ゆう',
       nanori:    'ゆ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0117-name',
       kanji:     '名',
@@ -11569,7 +11570,7 @@ const primerDeck = {
       kunyomi:   'な、-な',
       nanori:    'と',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0116-outside',
       kanji:     '外',
@@ -11584,7 +11585,7 @@ const primerDeck = {
       kunyomi:   'そと、ほか、はず.す、はず.れる、と-',
       nanori:    'うい, け, ふか',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0113-many',
       kanji:     '多',
@@ -11598,7 +11599,7 @@ const primerDeck = {
       onyomi:    'タ',
       kunyomi:   'おお.い、まさ.に、まさ.る',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0964-shift',
       kanji:     '移',
@@ -11612,7 +11613,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'うつ.る、うつ.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1115-night',
       kanji:     '夜',
@@ -11626,7 +11627,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'よ、よる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0327-dream',
       kanji:     '夢',
@@ -11640,7 +11641,7 @@ const primerDeck = {
       onyomi:    'ム、ボウ',
       kunyomi:   'ゆめ、ゆめ.みる、くら.い',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1116-fluid',
       kanji:     '液',
@@ -11654,7 +11655,7 @@ const primerDeck = {
       onyomi:    'エキ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1745-review',
       kanji:     '閲',
@@ -11668,7 +11669,7 @@ const primerDeck = {
       onyomi:    'エツ',
       kunyomi:   'けみ.する',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1762-repudiate',
       kanji:     '排',
@@ -11683,7 +11684,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0946-subjugate',
       kanji:     '征',
@@ -11698,7 +11699,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'いく, そ, ただ, まさ, ゆき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0865-pelt',
       kanji:     '皮',
@@ -11712,7 +11713,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'かわ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0948-he',
       kanji:     '彼',
@@ -11727,7 +11728,7 @@ const primerDeck = {
       kunyomi:   'かれ、かの、か.の',
       nanori:    'その',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0866-waves',
       kanji:     '波',
@@ -11742,7 +11743,7 @@ const primerDeck = {
       kunyomi:   'なみ',
       nanori:    'ひら, みな, みなみ, わ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0869-rend',
       kanji:     '破',
@@ -11756,7 +11757,7 @@ const primerDeck = {
       onyomi:    'ハ',
       kunyomi:   'やぶ.る、やぶ.れる、わ.れる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0870-incur',
       kanji:     '被',
@@ -11771,7 +11772,7 @@ const primerDeck = {
       kunyomi:   'こうむ.る、おお.う、かぶ.る、かぶ.せる',
       nanori:    'ぎぬ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1724-dislike',
       kanji:     '嫌',
@@ -11785,7 +11786,7 @@ const primerDeck = {
       onyomi:    'ケン、ゲン',
       kunyomi:   'きら.う、きら.い、いや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1304-cupfuls',
       kanji:     '杯',
@@ -11799,7 +11800,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'さかずき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1579-melodious',
       kanji:     '朗',
@@ -11814,7 +11815,7 @@ const primerDeck = {
       kunyomi:   'ほが.らか、あき.らか',
       nanori:    'あき, あきら, お, さえ, ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0292-needle',
       kanji:     '針',
@@ -11829,7 +11830,7 @@ const primerDeck = {
       kunyomi:   'はり',
       nanori:    'は',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1497-instead',
       kanji:     '却',
@@ -11843,7 +11844,7 @@ const primerDeck = {
       onyomi:    'キャク',
       kunyomi:   'かえ.って、しりぞ.く、しりぞ.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1498-shins',
       kanji:     '脚',
@@ -11858,7 +11859,7 @@ const primerDeck = {
       kunyomi:   'あし',
       nanori:    'し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0300-urge',
       kanji:     '迫',
@@ -11873,7 +11874,7 @@ const primerDeck = {
       kunyomi:   'せま.る',
       nanori:    'さこ, せ, せこ, はさ, はさま, はざま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1678-surname',
       kanji:     '姓',
@@ -11887,7 +11888,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0169-horizon',
       kanji:     '涯',
@@ -11901,7 +11902,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   'はて',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0576-waterfall',
       kanji:     '滝',
@@ -11916,7 +11917,7 @@ const primerDeck = {
       kunyomi:   'たき',
       nanori:    'らき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1692-peaceful',
       kanji:     '泰',
@@ -11931,7 +11932,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'た, はす, ひろ, や, やす, やすし, ゆたか, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0389-intimidate',
       kanji:     '威',
@@ -11946,7 +11947,7 @@ const primerDeck = {
       kunyomi:   'おど.す、おど.し、おど.かす',
       nanori:    'いさ, たけ, たけし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0178-farm',
       kanji:     '畑',
@@ -11961,7 +11962,7 @@ const primerDeck = {
       kunyomi:   'はた、はたけ、-ばたけ',
       nanori:    'かま, まま',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0196-esteem',
       kanji:     '尚',
@@ -11976,7 +11977,7 @@ const primerDeck = {
       kunyomi:   'なお',
       nanori:    'たか, たかし, ないし, なり, ひさ, ひさし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0860-party',
       kanji:     '党',
@@ -11990,7 +11991,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'なかま、むら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0861-public-chamber',
       kanji:     '堂',
@@ -12004,7 +12005,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1851-patent',
       kanji:     '彰',
@@ -12019,7 +12020,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき, あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0958-draft',
       kanji:     '稿',
@@ -12033,7 +12034,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'わら、したがき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1695-dedicate',
       kanji:     '奉',
@@ -12048,7 +12049,7 @@ const primerDeck = {
       kunyomi:   'たてまつ.る、まつ.る、ほう.ずる',
       nanori:    'とも, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0621-quandary',
       kanji:     '困',
@@ -12062,7 +12063,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'こま.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0017-i',
       kanji:     '吾',
@@ -12077,7 +12078,7 @@ const primerDeck = {
       kunyomi:   'われ, わが-, あ-',
       nanori:    'あ, あが',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0371-word',
       kanji:     '語',
@@ -12091,7 +12092,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'かた.る、かた.らう',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1572-instant',
       kanji:     '即',
@@ -12105,7 +12106,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'つ.く、つ.ける、すなわ.ち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1574-node',
       kanji:     '節',
@@ -12120,7 +12121,7 @@ const primerDeck = {
       kunyomi:   'ふし、-ぶし、のっと',
       nanori:    'たかし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1860-checkup',
       kanji:     '診',
@@ -12134,7 +12135,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'み.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0421-cornerstone',
       kanji:     '礎',
@@ -12149,7 +12150,7 @@ const primerDeck = {
       kunyomi:   'いしずえ',
       nanori:    'もと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1081-sack',
       kanji:     '袋',
@@ -12164,7 +12165,7 @@ const primerDeck = {
       kunyomi:   'ふくろ',
       nanori:    'てい, ない, ぶく',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0458-bewitched',
       kanji:     '妖',
@@ -12178,7 +12179,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'あや.しい、なま.めく、わざわ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1811-collide',
       kanji:     '衝',
@@ -12192,7 +12193,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'つ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1035-prostrated',
       kanji:     '伏',
@@ -12207,7 +12208,7 @@ const primerDeck = {
       kunyomi:   'ふ.せる、ふ.す',
       nanori:    'ふし, ふせ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0802-mineral',
       kanji:     '鉱',
@@ -12221,7 +12222,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あらがね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1672-control',
       kanji:     '轄',
@@ -12235,7 +12236,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'くさび',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0398-ford',
       kanji:     '渉',
@@ -12250,7 +12251,7 @@ const primerDeck = {
       kunyomi:   'わた.る',
       nanori:    'えん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0498-cleverness',
       kanji:     '敏',
@@ -12265,7 +12266,7 @@ const primerDeck = {
       kunyomi:   'さとい',
       nanori:    'さとし, ちょう, とし, び',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0951-penetrate',
       kanji:     '徹',
@@ -12280,7 +12281,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき, つ, てっ, とおる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1867-dose',
       kanji:     '剤',
@@ -12294,7 +12295,7 @@ const primerDeck = {
       onyomi:    'ザイ、スイ、セイ',
       kunyomi:   'かる、けず.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0151-grains-of-sand',
       kanji:     '沙',
@@ -12308,7 +12309,7 @@ const primerDeck = {
       onyomi:    'サ、シャ',
       kunyomi:   'すな、よなげる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1381-step',
       kanji:     '踏',
@@ -12322,7 +12323,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ふ.む、ふ.まえる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2645-ancestral-tablet',
       kanji:     '祐',
@@ -12337,7 +12338,7 @@ const primerDeck = {
       kunyomi:   'たす.ける',
       nanori:    'すけ, さち, よし, たすく, ひろ, ひろし, まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1808-meritorious-deed',
       kanji:     '勲',
@@ -12352,7 +12353,7 @@ const primerDeck = {
       kunyomi:   'いさお',
       nanori:    'いさむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2868-applaud',
       kanji:     '嘉',
@@ -12367,7 +12368,7 @@ const primerDeck = {
       kunyomi:   'よみ.する, よい',
       nanori:    'ひろ, よし, よしみ, かず, よ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2060-flip',
       kanji:     '翻',
@@ -12381,7 +12382,7 @@ const primerDeck = {
       onyomi:    'ホン、ハン',
       kunyomi:   'ひるがえ.る、ひるがえ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2006-phantasm',
       kanji:     '幻',
@@ -12395,7 +12396,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'まぼろし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2174-blossom',
       kanji:     '咲',
@@ -12410,7 +12411,7 @@ const primerDeck = {
       kunyomi:   'さ.く、-ざき',
       nanori:    'さ, さき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1735-chestnut',
       kanji:     '栗',
@@ -12425,7 +12426,7 @@ const primerDeck = {
       kunyomi:   'くり, おののく',
       nanori:    'くる, りっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1900-chess-piece',
       kanji:     '棋',
@@ -12439,7 +12440,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'ご',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0688-watch-over',
       kanji:     '看',
@@ -12453,7 +12454,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'み.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0985-germ',
       kanji:     '菌',
@@ -12467,7 +12468,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2115-sturdy',
       kanji:     '剛',
@@ -12482,7 +12483,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かた, こう, ご, たか, たけ, たけし, つよ, つよし, ひさ, まさ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0532-perfumed',
       kanji:     '芳',
@@ -12497,7 +12498,7 @@ const primerDeck = {
       kunyomi:   'かんば.しい',
       nanori:    'お, かおる, は, ほ, みち, やす, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0104-likeness',
       kanji:     '如',
@@ -12512,7 +12513,7 @@ const primerDeck = {
       kunyomi:   'ごと.し',
       nanori:    'き, ね, ゆき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1869-purification',
       kanji:     '斎',
@@ -12527,7 +12528,7 @@ const primerDeck = {
       kunyomi:   'とき、つつし.む、ものいみ、い.む、いわ.う、いつ.く',
       nanori:    'いつき, さえ, ひとし, いつ, きよ, ただ, とき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2092-chirp',
       kanji:     '鳴',
@@ -12542,7 +12543,7 @@ const primerDeck = {
       kunyomi:   'な.く、な.る、な.らす',
       nanori:    'なり, なる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2761-reinforce',
       kanji:     '輔',
@@ -12557,7 +12558,7 @@ const primerDeck = {
       kunyomi:   'たす.ける',
       nanori:    'すけ, たすく, ゆう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0945-journey',
       kanji:     '往',
@@ -12572,7 +12573,7 @@ const primerDeck = {
       kunyomi:   'い.く、いにしえ、さき.に、ゆ.く',
       nanori:    'みち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0511-briar',
       kanji:     '茨',
@@ -12587,7 +12588,7 @@ const primerDeck = {
       kunyomi:   'いばら、かや、くさぶき',
       nanori:    'あし, えばら, ばら, まつ, まん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1926-musical-score',
       kanji:     '譜',
@@ -12601,7 +12602,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2033-sink',
       kanji:     '沈',
@@ -12616,7 +12617,7 @@ const primerDeck = {
       kunyomi:   'しず.む、しず.める',
       nanori:    'しん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0191-bury',
       kanji:     '埋',
@@ -12630,7 +12631,7 @@ const primerDeck = {
       onyomi:    'マイ',
       kunyomi:   'う.める、う.まる、う.もれる、うず.める、うず.まる、い.ける',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0598-who',
       kanji:     '誰',
@@ -12644,7 +12645,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'だれ、たれ、た',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1651-poison',
       kanji:     '毒',
@@ -12658,7 +12659,7 @@ const primerDeck = {
       onyomi:    'ドク',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1580-wandering',
       kanji:     '浪',
@@ -12673,7 +12674,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'なに, なみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1866-adjusted',
       kanji:     '斉',
@@ -12688,7 +12689,7 @@ const primerDeck = {
       kunyomi:   'そろ.う、ひと.しい、ひと.しく、あたる、はやい',
       nanori:    'ただ, なり, ひと, ひとし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1720-preface',
       kanji:     '序',
@@ -12703,7 +12704,7 @@ const primerDeck = {
       kunyomi:   'つい.で、ついで',
       nanori:    'つぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2345-shire',
       kanji:     '庄',
@@ -12718,7 +12719,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2571-damson',
       kanji:     '李',
@@ -12733,7 +12734,7 @@ const primerDeck = {
       kunyomi:   'すもも',
       nanori:    'もも, い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0177-lamp',
       kanji:     '灯',
@@ -12747,7 +12748,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ひ、ほ-、ともしび、とも.す、あかり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0138-icicle',
       kanji:     '氷',
@@ -12762,7 +12763,7 @@ const primerDeck = {
       kunyomi:   'こおり、ひ、こお.る',
       nanori:    'すい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1842-colleague',
       kanji:     '僚',
@@ -12776,7 +12777,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1013-box',
       kanji:     '箱',
@@ -12790,7 +12791,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'はこ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1683-summit',
       kanji:     '峰',
@@ -12805,7 +12806,7 @@ const primerDeck = {
       kunyomi:   'みね、ね',
       nanori:    'ぶ, ほ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1193-axis',
       kanji:     '軸',
@@ -12819,7 +12820,7 @@ const primerDeck = {
       onyomi:    'ジク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0868-expose',
       kanji:     '披',
@@ -12833,7 +12834,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0954-delicate',
       kanji:     '微',
@@ -12848,7 +12849,7 @@ const primerDeck = {
       kunyomi:   'かす.か',
       nanori:    'み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0184-fishing',
       kanji:     '漁',
@@ -12862,7 +12863,7 @@ const primerDeck = {
       onyomi:    'ギョ、リョウ',
       kunyomi:   'あさ.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0820-abandon',
       kanji:     '棄',
@@ -12876,7 +12877,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'す.てる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0193-den',
       kanji:     '洞',
@@ -12891,7 +12892,7 @@ const primerDeck = {
       kunyomi:   'ほら',
       nanori:    'とう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0069-phrase',
       kanji:     '句',
@@ -12906,7 +12907,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1147-bureau',
       kanji:     '局',
@@ -12920,7 +12921,7 @@ const primerDeck = {
       onyomi:    'キョク',
       kunyomi:   'つぼね',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2133-pony',
       kanji:     '駒',
@@ -12934,7 +12935,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'こま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2000-vein',
       kanji:     '脈',
@@ -12948,7 +12949,7 @@ const primerDeck = {
       onyomi:    'ミャク',
       kunyomi:   'すじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0361-prison',
       kanji:     '獄',
@@ -12962,7 +12963,7 @@ const primerDeck = {
       onyomi:    'ゴク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1725-sickle',
       kanji:     '鎌',
@@ -12977,7 +12978,7 @@ const primerDeck = {
       kunyomi:   'かま',
       nanori:    'かた, かね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1282-tomb',
       kanji:     '墳',
@@ -12991,7 +12992,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1356-cramped',
       kanji:     '狭',
@@ -13006,7 +13007,7 @@ const primerDeck = {
       kunyomi:   'せま.い、せば.める、せば.まる、さ',
       nanori:    'はざ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0531-boy',
       kanji:     '坊',
@@ -13020,7 +13021,7 @@ const primerDeck = {
       onyomi:    'ボウ、ボッ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0331-cram-school',
       kanji:     '塾',
@@ -13034,7 +13035,7 @@ const primerDeck = {
       onyomi:    'ジュク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0290-copper',
       kanji:     '銅',
@@ -13048,7 +13049,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   'あかがね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1967-tome',
       kanji:     '冊',
@@ -13062,7 +13063,7 @@ const primerDeck = {
       onyomi:    'サツ、サク',
       kunyomi:   'ふみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0024-spine',
       kanji:     '呂',
@@ -13077,7 +13078,7 @@ const primerDeck = {
       kunyomi:   'せぼね',
       nanori:    'とも, なが',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1110-shinto-shrine',
       kanji:     '宮',
@@ -13092,7 +13093,7 @@ const primerDeck = {
       kunyomi:   'みや',
       nanori:    'ぐ, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1111-occupation',
       kanji:     '営',
@@ -13106,7 +13107,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'いとな.む、いとな.み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1413-hole',
       kanji:     '穴',
@@ -13121,7 +13122,7 @@ const primerDeck = {
       kunyomi:   'あな',
       nanori:    'けな, しし, な',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1414-empty',
       kanji:     '空',
@@ -13136,7 +13137,7 @@ const primerDeck = {
       kunyomi:   'そら、あ.く、あ.き、あ.ける、から、す.く、す.かす、むな.しい',
       nanori:    'うつ, き, く',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1416-stab',
       kanji:     '突',
@@ -13150,7 +13151,7 @@ const primerDeck = {
       onyomi:    'トツ、カ',
       kunyomi:   'つ.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0811-window',
       kanji:     '窓',
@@ -13164,7 +13165,7 @@ const primerDeck = {
       onyomi:    'ソウ、ス',
       kunyomi:   'まど、てんまど、けむだし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0876-split',
       kanji:     '裂',
@@ -13178,7 +13179,7 @@ const primerDeck = {
       onyomi:    'レツ',
       kunyomi:   'さ.く、さ.ける、-ぎ.れ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1835-repress',
       kanji:     '抑',
@@ -13192,7 +13193,7 @@ const primerDeck = {
       onyomi:    'ヨク',
       kunyomi:   'おさ.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1635-diamond',
       kanji:     '菱',
@@ -13206,7 +13207,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'ひし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1170-celebrate',
       kanji:     '祝',
@@ -13221,7 +13222,7 @@ const primerDeck = {
       kunyomi:   'いわ.う',
       nanori:    'のり, ほぎ, ゆわい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1241-t-ang',
       kanji:     '唐',
@@ -13236,7 +13237,7 @@ const primerDeck = {
       kunyomi:   'から',
       nanori:    'かろ, たん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1765-comrade',
       kanji:     '輩',
@@ -13250,7 +13251,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'やから、やかい、-ばら、ともがら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1164-employ',
       kanji:     '雇',
@@ -13264,7 +13265,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'やと.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1933-me',
       kanji:     '僕',
@@ -13278,7 +13279,7 @@ const primerDeck = {
       onyomi:    'ボク',
       kunyomi:   'しもべ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0367-packed',
       kanji:     '詰',
@@ -13293,7 +13294,7 @@ const primerDeck = {
       kunyomi:   'つ.める、つ.め、-づ.め、つ.まる、つ.む',
       nanori:    'ずめ, づめ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1412-collapse',
       kanji:     '陥',
@@ -13307,7 +13308,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'おちい.る、おとしい.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1431-thread',
       kanji:     '糸',
@@ -13321,7 +13322,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'いと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1438-line',
       kanji:     '線',
@@ -13335,7 +13336,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'すじ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1966-compilation',
       kanji:     '編',
@@ -13349,7 +13350,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'あ.む、-あ.み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1460-sutra',
       kanji:     '経',
@@ -13364,7 +13365,7 @@ const primerDeck = {
       kunyomi:   'へ.る、た.つ、たていと、はか.る、のり',
       nanori:    'つね, のぶ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1451-tie',
       kanji:     '結',
@@ -13379,7 +13380,7 @@ const primerDeck = {
       kunyomi:   'むす.ぶ、ゆ.う、ゆ.わえる',
       nanori:    'ゆい, ゆう',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1445-continue',
       kanji:     '続',
@@ -13394,7 +13395,7 @@ const primerDeck = {
       kunyomi:   'つづ.く、つづ.ける、つぐ.ない',
       nanori:    'つぐ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1452-end',
       kanji:     '終',
@@ -13409,7 +13410,7 @@ const primerDeck = {
       kunyomi:   'お.わる、-お.わる、おわ.る、お.える、つい、つい.に',
       nanori:    'ばて',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1492-lineage',
       kanji:     '系',
@@ -13423,7 +13424,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1466-general',
       kanji:     '総',
@@ -13438,7 +13439,7 @@ const primerDeck = {
       kunyomi:   'す.べて、すべ.て、ふさ',
       nanori:    'うさ, ずさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1454-chronicle',
       kanji:     '紀',
@@ -13453,7 +13454,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おさむ, ただす, とし, とも, のり, もと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1470-inherit',
       kanji:     '継',
@@ -13467,7 +13468,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'つ.ぐ、まま-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1493-person-in-charge',
       kanji:     '係',
@@ -13481,7 +13482,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かか.る、かかり、-がかり、かか.わる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1652-elementary',
       kanji:     '素',
@@ -13495,7 +13496,7 @@ const primerDeck = {
       onyomi:    'ソ、ス',
       kunyomi:   'もと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1463-dainty',
       kanji:     '細',
@@ -13509,7 +13510,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'ほそ.い、ほそ.る、こま.か、こま.かい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1432-weave',
       kanji:     '織',
@@ -13524,7 +13525,7 @@ const primerDeck = {
       kunyomi:   'お.る、お.り、おり、-おり、-お.り',
       nanori:    'こおり, こり, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1449-salary',
       kanji:     '給',
@@ -13539,7 +13540,7 @@ const primerDeck = {
       kunyomi:   'たま.う、たも.う、-たま.え',
       nanori:    'きい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1971-paper',
       kanji:     '紙',
@@ -13553,7 +13554,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'かみ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1443-practice',
       kanji:     '練',
@@ -13568,7 +13569,7 @@ const primerDeck = {
       kunyomi:   'ね.る、ね.り',
       nanori:    'ねり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1477-straw-rope',
       kanji:     '縄',
@@ -13582,7 +13583,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'なわ、ただ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1456-settlement',
       kanji:     '納',
@@ -13597,7 +13598,7 @@ const primerDeck = {
       kunyomi:   'おさ.める、-おさ.める、おさ.まる',
       nanori:    'の, ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1494-grandchild',
       kanji:     '孫',
@@ -13612,7 +13613,7 @@ const primerDeck = {
       kunyomi:   'まご',
       nanori:    'ひ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1441-fiber',
       kanji:     '維',
@@ -13627,7 +13628,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'これ, たもつ, つぐ, ゆい, ゆき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1471-green',
       kanji:     '緑',
@@ -13641,7 +13642,7 @@ const primerDeck = {
       onyomi:    'リョク、ロク',
       kunyomi:   'みどり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1472-affinity',
       kanji:     '縁',
@@ -13655,7 +13656,7 @@ const primerDeck = {
       onyomi:    'エン、-ネン',
       kunyomi:   'ふち、ふちど.る、ゆかり、よすが、へり、えにし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1469-winding',
       kanji:     '繰',
@@ -13670,7 +13671,7 @@ const primerDeck = {
       kunyomi:   'く.る',
       nanori:    'くり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1435-luxuriant',
       kanji:     '繁',
@@ -13684,7 +13685,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'しげ.る、しげ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1434-shrink',
       kanji:     '縮',
@@ -13698,7 +13699,7 @@ const primerDeck = {
       onyomi:    'シュク',
       kunyomi:   'ちぢ.む、ちぢ.まる、ちぢ.める、ちぢ.れる、ちぢ.らす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1455-crimson',
       kanji:     '紅',
@@ -13713,7 +13714,7 @@ const primerDeck = {
       kunyomi:   'べに、くれない、あか.い',
       nanori:    'くれ, もみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1465-cord',
       kanji:     '索',
@@ -13727,7 +13728,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1442-gauze',
       kanji:     '羅',
@@ -13741,7 +13742,7 @@ const primerDeck = {
       onyomi:    'ラ',
       kunyomi:   'うすもの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1450-entwine',
       kanji:     '絡',
@@ -13755,7 +13756,7 @@ const primerDeck = {
       onyomi:    'ラク',
       kunyomi:   'から.む、から.まる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2114-hawser',
       kanji:     '綱',
@@ -13769,7 +13770,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'つな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1473-netting',
       kanji:     '網',
@@ -13784,7 +13785,7 @@ const primerDeck = {
       kunyomi:   'あみ',
       nanori:    'あ, ずな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1774-horizontal',
       kanji:     '緯',
@@ -13798,7 +13799,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'よこいと、ぬき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0669-enlightenment',
       kanji:     '悟',
@@ -13812,7 +13813,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'さと.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0935-armpit',
       kanji:     '脇',
@@ -13826,7 +13827,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'わき、わけ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0052-eminent',
       kanji:     '卓',
@@ -13841,7 +13842,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すぐる, たか, たかし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1548-beans',
       kanji:     '豆',
@@ -13856,7 +13857,7 @@ const primerDeck = {
       kunyomi:   'まめ、まめ-',
       nanori:    'ど, ま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1838-ascend',
       kanji:     '登',
@@ -13871,7 +13872,7 @@ const primerDeck = {
       kunyomi:   'のぼ.る、あ.がる',
       nanori:    'たか, のぼし, のぼり, のり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1550-short',
       kanji:     '短',
@@ -13885,7 +13886,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'みじか.い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0679-recollection',
       kanji:     '憶',
@@ -13899,7 +13900,7 @@ const primerDeck = {
       onyomi:    'オク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0264-wash',
       kanji:     '洗',
@@ -13914,7 +13915,7 @@ const primerDeck = {
       kunyomi:   'あら.う',
       nanori:    'あらい, らい',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0752-or-again',
       kanji:     '又',
@@ -13929,7 +13930,7 @@ const primerDeck = {
       kunyomi:   'また、また-、また.の-',
       nanori:    'やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1628-income',
       kanji:     '収',
@@ -13944,7 +13945,7 @@ const primerDeck = {
       kunyomi:   'おさ.める、おさ.まる',
       nanori:    'のぶ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0768-branch',
       kanji:     '支',
@@ -13958,7 +13959,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'ささ.える、つか.える、か.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0769-skill',
       kanji:     '技',
@@ -13972,7 +13973,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'わざ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0779-anti',
       kanji:     '反',
@@ -13987,7 +13988,7 @@ const primerDeck = {
       kunyomi:   'そ.る、そ.らす、かえ.す、かえ.る、-かえ.る',
       nanori:    'そり, た',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1298-printing-block',
       kanji:     '版',
@@ -14001,7 +14002,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1390-heights',
       kanji:     '阪',
@@ -14015,7 +14016,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'さか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0743-reach-out',
       kanji:     '及',
@@ -14030,7 +14031,7 @@ const primerDeck = {
       kunyomi:   'およ.ぶ、およ.び、および、およ.ぼす',
       nanori:    'おい, の',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1453-class',
       kanji:     '級',
@@ -14045,7 +14046,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'しな',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0760-friend',
       kanji:     '友',
@@ -14060,7 +14061,7 @@ const primerDeck = {
       kunyomi:   'とも',
       nanori:    'う, ど, ゆ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0780-slope',
       kanji:     '坂',
@@ -14075,7 +14076,7 @@ const primerDeck = {
       kunyomi:   'さか',
       nanori:    'か, ざ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0781-plank',
       kanji:     '板',
@@ -14089,7 +14090,7 @@ const primerDeck = {
       onyomi:    'ハン、バン',
       kunyomi:   'いた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0782-return',
       kanji:     '返',
@@ -14103,7 +14104,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'かえ.す、-かえ.す、かえ.る、-かえ.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0761-slip-out',
       kanji:     '抜',
@@ -14118,7 +14119,7 @@ const primerDeck = {
       kunyomi:   'ぬ.く、-ぬ.く、ぬ.き、ぬ.ける、ぬ.かす、ぬ.かる',
       nanori:    'ぬき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1501-clothing',
       kanji:     '服',
@@ -14133,7 +14134,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'はっ, はつ, はら',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1039-provisional',
       kanji:     '仮',
@@ -14147,7 +14148,7 @@ const primerDeck = {
       onyomi:    'カ、ケ',
       kunyomi:   'かり、かり-',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0745-handle',
       kanji:     '扱',
@@ -14161,7 +14162,7 @@ const primerDeck = {
       onyomi:    'ソウ、キュウ',
       kunyomi:   'あつか.い、あつか.う、あつか.る、こ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0834-branch-off',
       kanji:     '岐',
@@ -14176,7 +14177,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たかし, また',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0753-pair',
       kanji:     '双',
@@ -14191,7 +14192,7 @@ const primerDeck = {
       kunyomi:   'ふた、たぐい、ならぶ、ふたつ',
       nanori:    'ふ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1583-meal',
       kanji:     '飯',
@@ -14206,7 +14207,7 @@ const primerDeck = {
       kunyomi:   'めし',
       nanori:    'い, いい, いり, え',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0744-suck',
       kanji:     '吸',
@@ -14220,7 +14221,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'す.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1231-encroach',
       kanji:     '侵',
@@ -14234,7 +14235,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'おか.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2074-hair-of-the-head',
       kanji:     '髪',
@@ -14249,7 +14250,7 @@ const primerDeck = {
       kunyomi:   'かみ',
       nanori:    'がた, ひげ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0770-bough',
       kanji:     '枝',
@@ -14264,7 +14265,7 @@ const primerDeck = {
       kunyomi:   'えだ',
       nanori:    'え, ぐさ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1166-disclose',
       kanji:     '啓',
@@ -14279,7 +14280,7 @@ const primerDeck = {
       kunyomi:   'ひら.く、さと.す',
       nanori:    'あき, あきら, さとし, はじめ, ひろ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0992-astray',
       kanji:     '迷',
@@ -14293,7 +14294,7 @@ const primerDeck = {
       onyomi:    'メイ',
       kunyomi:   'まよ.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0071-decameron',
       kanji:     '旬',
@@ -14307,7 +14308,7 @@ const primerDeck = {
       onyomi:    'ジュン、シュン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0544-ridgepole',
       kanji:     '棟',
@@ -14321,7 +14322,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'むね、むな-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1777-dry',
       kanji:     '干',
@@ -14336,7 +14337,7 @@ const primerDeck = {
       kunyomi:   'ほ.す、ほ.し-、-ぼ.し、ひ.る',
       nanori:    'ほし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1114-year',
       kanji:     '年',
@@ -14351,7 +14352,7 @@ const primerDeck = {
       kunyomi:   'とし',
       nanori:    'ね',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1596-even',
       kanji:     '平',
@@ -14366,7 +14367,7 @@ const primerDeck = {
       kunyomi:   'たい.ら、-だいら、ひら、ひら-',
       nanori:    'たいら, たら, はち, ひ, ひとし, へ, へん',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1740-south',
       kanji:     '南',
@@ -14381,7 +14382,7 @@ const primerDeck = {
       kunyomi:   'みなみ',
       nanori:    'なみ, は, みな, みまみ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1742-offering',
       kanji:     '献',
@@ -14395,7 +14396,7 @@ const primerDeck = {
       onyomi:    'ケン、コン',
       kunyomi:   'たてまつ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1599-evaluate',
       kanji:     '評',
@@ -14409,7 +14410,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1779-publish',
       kanji:     '刊',
@@ -14423,7 +14424,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1622-happiness',
       kanji:     '幸',
@@ -14438,7 +14439,7 @@ const primerDeck = {
       kunyomi:   'さいわ.い、さち、しあわ.せ',
       nanori:    'こ, さき, さし, さっ, とも, ひろ, みゆき, ゆ, ゆき, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1625-report',
       kanji:     '報',
@@ -14452,7 +14453,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'むく.いる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1782-beach',
       kanji:     '岸',
@@ -14467,7 +14468,7 @@ const primerDeck = {
       kunyomi:   'きし',
       nanori:    'けし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1783-tree-trunk',
       kanji:     '幹',
@@ -14482,7 +14483,7 @@ const primerDeck = {
       kunyomi:   'みき',
       nanori:    'つよし, まさ, もと, えだ, き, くる, たかし, つね, とも, み, もとき, よし, より',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0610-noon',
       kanji:     '午',
@@ -14496,7 +14497,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'うま',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0611-permit',
       kanji:     '許',
@@ -14510,7 +14511,7 @@ const primerDeck = {
       onyomi:    'キョ',
       kunyomi:   'ゆる.す、もと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0503-abdomen',
       kanji:     '腹',
@@ -14524,7 +14525,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'はら',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0855-longing',
       kanji:     '欲',
@@ -14538,7 +14539,7 @@ const primerDeck = {
       onyomi:    'ヨク',
       kunyomi:   'ほっ.する、ほ.しい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2982-island-alternate',
       kanji:     '嶋',
@@ -14552,7 +14553,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'しま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1191-deliver',
       kanji:     '届',
@@ -14566,7 +14567,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'とど.ける、-とど.け、とど.く',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2446-lotus',
       kanji:     '蓮',
@@ -14580,7 +14581,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'はす, はちす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1290-fist',
       kanji:     '拳',
@@ -14594,7 +14595,7 @@ const primerDeck = {
       onyomi:    'ケン、ゲン',
       kunyomi:   'こぶし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2010-domesticate',
       kanji:     '飼',
@@ -14609,7 +14610,7 @@ const primerDeck = {
       kunyomi:   'か.う',
       nanori:    'かい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0921-repel',
       kanji:     '拒',
@@ -14623,7 +14624,7 @@ const primerDeck = {
       onyomi:    'キョ、ゴ',
       kunyomi:   'こば.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0130-exquisite',
       kanji:     '妙',
@@ -14637,7 +14638,7 @@ const primerDeck = {
       onyomi:    'ミョウ、ビョウ',
       kunyomi:   'たえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2710-damask',
       kanji:     '綾',
@@ -14652,7 +14653,7 @@ const primerDeck = {
       kunyomi:   'あや',
       nanori:    'りょう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1825-pain',
       kanji:     '痛',
@@ -14666,7 +14667,7 @@ const primerDeck = {
       onyomi:    'ツウ',
       kunyomi:   'いた.い、いた.む、いた.ましい、いた.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0947-diameter',
       kanji:     '径',
@@ -14680,7 +14681,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'みち、こみち、さしわたし、ただちに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1244-apprehend',
       kanji:     '逮',
@@ -14694,7 +14695,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0553-horse-chestnut',
       kanji:     '栃',
@@ -14708,7 +14709,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1172-welfare',
       kanji:     '祉',
@@ -14722,7 +14723,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1239-clean',
       kanji:     '浄',
@@ -14736,7 +14737,7 @@ const primerDeck = {
       onyomi:    'ジョウ、セイ',
       kunyomi:   'きよ.める、きよ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1042-vulgar',
       kanji:     '俗',
@@ -14750,7 +14751,7 @@ const primerDeck = {
       onyomi:    'ゾク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1474-tense',
       kanji:     '緊',
@@ -14764,7 +14765,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'し.める、し.まる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1484-mysterious',
       kanji:     '玄',
@@ -14779,7 +14780,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'くろ, けん, はる, はるか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1874-ratio',
       kanji:     '率',
@@ -14793,7 +14794,7 @@ const primerDeck = {
       onyomi:    'ソツ、リツ、シュツ',
       kunyomi:   'ひき.いる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0022-sparkle',
       kanji:     '晶',
@@ -14808,7 +14809,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あ, あき, あきら, ひかり, まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2386-continent',
       kanji:     '洲',
@@ -14822,7 +14823,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'しま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0755-vessels',
       kanji:     '隻',
@@ -14836,7 +14837,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0756-safeguard',
       kanji:     '護',
@@ -14851,7 +14852,7 @@ const primerDeck = {
       kunyomi:   'まも.る',
       nanori:    'もり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0757-seize',
       kanji:     '獲',
@@ -14865,7 +14866,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'え.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1512-jump',
       kanji:     '踊',
@@ -14879,7 +14880,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'おど.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0578-pursue',
       kanji:     '逐',
@@ -14893,7 +14894,7 @@ const primerDeck = {
       onyomi:    'チク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2068-falsehood',
       kanji:     '偽',
@@ -14907,7 +14908,7 @@ const primerDeck = {
       onyomi:    'ギ、カ',
       kunyomi:   'いつわ.る、にせ、いつわ.り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0754-mulberry',
       kanji:     '桑',
@@ -14922,7 +14923,7 @@ const primerDeck = {
       kunyomi:   'くわ',
       nanori:    'こ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1409-isolate',
       kanji:     '隔',
@@ -14936,7 +14937,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'へだ.てる、へだ.たる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1015-cylinder',
       kanji:     '筒',
@@ -14950,7 +14951,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'つつ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1686-worship',
       kanji:     '拝',
@@ -14964,7 +14965,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'おが.む、おろが.む',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2113-steel',
       kanji:     '鋼',
@@ -14978,7 +14979,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'はがね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0075-fish-guts',
       kanji:     '乙',
@@ -14992,7 +14993,7 @@ const primerDeck = {
       onyomi:    'オツ、イツ',
       kunyomi:   'おと-、きのと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0009-nine',
       kanji:     '九',
@@ -15007,7 +15008,7 @@ const primerDeck = {
       kunyomi:   'ここの、ここの.つ',
       nanori:    'いちじく, いちのく, この, ひさし',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1417-research',
       kanji:     '究',
@@ -15022,7 +15023,7 @@ const primerDeck = {
       kunyomi:   'きわ.める',
       nanori:    'きゅ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0044-round',
       kanji:     '丸',
@@ -15037,7 +15038,7 @@ const primerDeck = {
       kunyomi:   'まる、まる.める、まる.い',
       nanori:    'ま, わ, わに',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1633-forces',
       kanji:     '勢',
@@ -15052,7 +15053,7 @@ const primerDeck = {
       kunyomi:   'いきお.い、はずみ',
       nanori:    'せ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0007-seven',
       kanji:     '七',
@@ -15067,7 +15068,7 @@ const primerDeck = {
       kunyomi:   'なな、なな.つ、なの',
       nanori:    'し, しっ, な, ひち',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0089-cut',
       kanji:     '切',
@@ -15082,7 +15083,7 @@ const primerDeck = {
       kunyomi:   'き.る、-き.る、き.り、-き.り、-ぎ.り、き.れる、-き.れる、き.れ、-き.れ、-ぎ.れ',
       nanori:    'きつ, きり, ぎり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0604-miscellaneous',
       kanji:     '雑',
@@ -15096,7 +15097,7 @@ const primerDeck = {
       onyomi:    'ザツ、ゾウ',
       kunyomi:   'まじ.える、まじ.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2236-est',
       kanji:     '也',
@@ -15111,7 +15112,7 @@ const primerDeck = {
       kunyomi:   'なり, か, また',
       nanori:    'し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0554-ground',
       kanji:     '地',
@@ -15126,7 +15127,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'どま',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1034-other',
       kanji:     '他',
@@ -15140,7 +15141,7 @@ const primerDeck = {
       onyomi:    'タ',
       kunyomi:   'ほか',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1124-alms',
       kanji:     '施',
@@ -15154,7 +15155,7 @@ const primerDeck = {
       onyomi:    'シ、セ',
       kunyomi:   'ほどこ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0555-pond',
       kanji:     '池',
@@ -15168,7 +15169,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'いけ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1623-tenacious',
       kanji:     '執',
@@ -15183,7 +15184,7 @@ const primerDeck = {
       kunyomi:   'と.る',
       nanori:    'し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0548-dye',
       kanji:     '染',
@@ -15198,7 +15199,7 @@ const primerDeck = {
       kunyomi:   'そ.める、-ぞ.め、-ぞめ、そ.まる、し.みる、-じ.みる、し.み、-し.める',
       nanori:    'そめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0225-tag',
       kanji:     '札',
@@ -15213,7 +15214,7 @@ const primerDeck = {
       kunyomi:   'ふだ',
       nanori:    'さっ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1168-salutation',
       kanji:     '礼',
@@ -15228,7 +15229,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あや, なり, のり, ひろし, れ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0306-rut',
       kanji:     '軌',
@@ -15242,7 +15243,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0786-milk',
       kanji:     '乳',
@@ -15256,7 +15257,7 @@ const primerDeck = {
       onyomi:    'ニュウ',
       kunyomi:   'ちち、ち',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0027-rising-sun',
       kanji:     '旭',
@@ -15271,7 +15272,7 @@ const primerDeck = {
       kunyomi:   'あさひ',
       nanori:    'あきら, あき, てる, ひ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2145-tiger',
       kanji:     '虎',
@@ -15286,7 +15287,7 @@ const primerDeck = {
       kunyomi:   'とら',
       nanori:    'たけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0158-overnight',
       kanji:     '泊',
@@ -15301,7 +15302,7 @@ const primerDeck = {
       kunyomi:   'と.まる、と.める',
       nanori:    'とまり, はつ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2490-sedge',
       kanji:     '菅',
@@ -15316,7 +15317,7 @@ const primerDeck = {
       kunyomi:   'すげ',
       nanori:    'す, すが, すご',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0109-overcome',
       kanji:     '克',
@@ -15331,7 +15332,7 @@ const primerDeck = {
       kunyomi:   'か.つ',
       nanori:    'かつ, まさる, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0994-riddle',
       kanji:     '謎',
@@ -15345,7 +15346,7 @@ const primerDeck = {
       onyomi:    'メイ、ベイ',
       kunyomi:   'なぞ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1977-sleep',
       kanji:     '眠',
@@ -15360,7 +15361,7 @@ const primerDeck = {
       kunyomi:   'ねむ.る、ねむ.い',
       nanori:    'ね',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2139-boisterous',
       kanji:     '騒',
@@ -15374,7 +15375,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'さわ.ぐ、うれい、さわ.がしい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1792-paint',
       kanji:     '塗',
@@ -15388,7 +15389,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'ぬ.る、ぬ.り、まみ.れる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0211-oak',
       kanji:     '柏',
@@ -15403,7 +15404,7 @@ const primerDeck = {
       kunyomi:   'かしわ',
       nanori:    'かい, かし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0730-commandment',
       kanji:     '戒',
@@ -15417,7 +15418,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'いまし.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0732-contraption',
       kanji:     '械',
@@ -15431,7 +15432,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'かせ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1763-sad',
       kanji:     '悲',
@@ -15445,7 +15446,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'かな.しい、かな.しむ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1197-insert',
       kanji:     '挿',
@@ -15459,7 +15460,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'さ.す、はさ.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1739-smoke',
       kanji:     '煙',
@@ -15474,7 +15475,7 @@ const primerDeck = {
       kunyomi:   'けむ.る、けむり、けむ.い',
       nanori:    'たば',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1863-family-crest',
       kanji:     '紋',
@@ -15489,7 +15490,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1697-rod',
       kanji:     '棒',
@@ -15503,7 +15504,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1836-faceup',
       kanji:     '仰',
@@ -15517,7 +15518,7 @@ const primerDeck = {
       onyomi:    'ギョウ、コウ',
       kunyomi:   'あお.ぐ、おお.せ、お.っしゃる、おっしゃ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1384-slippery',
       kanji:     '滑',
@@ -15532,7 +15533,7 @@ const primerDeck = {
       kunyomi:   'すべ.る、なめ.らか',
       nanori:    'かり, なめり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0854-melt',
       kanji:     '溶',
@@ -15546,7 +15547,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'と.ける、と.かす、と.く',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1489-nourishing',
       kanji:     '滋',
@@ -15561,7 +15562,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'し, しげ, しげる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0333-pavilion',
       kanji:     '亭',
@@ -15575,7 +15576,7 @@ const primerDeck = {
       onyomi:    'テイ、チン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1051-halt',
       kanji:     '停',
@@ -15589,7 +15590,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'と.める、と.まる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1737-transition',
       kanji:     '遷',
@@ -15603,7 +15604,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'うつ.る、うつ.す、みやこがえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1670-consume',
       kanji:     '喫',
@@ -15617,7 +15618,7 @@ const primerDeck = {
       onyomi:    'キツ',
       kunyomi:   'の.む',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2928-translucent',
       kanji:     '亮',
@@ -15632,7 +15633,7 @@ const primerDeck = {
       kunyomi:   'あきらか',
       nanori:    'あき, すけ, まこと, あきら, よし, きょう, たすく, ふさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1636-mausoleum',
       kanji:     '陵',
@@ -15646,7 +15647,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'みささぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0242-dilute',
       kanji:     '薄',
@@ -15660,7 +15661,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'うす.い、うす-、-うす、うす.める、うす.まる、うす.らぐ、うす.ら-、うす.れる、すすき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2151-prudence',
       kanji:     '慮',
@@ -15675,7 +15676,7 @@ const primerDeck = {
       kunyomi:   'おもんぱく.る、おもんぱか.る',
       nanori:    'ぜ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0717-hoist',
       kanji:     '揚',
@@ -15690,7 +15691,7 @@ const primerDeck = {
       kunyomi:   'あ.げる、-あ.げ、あ.がる',
       nanori:    'あがり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0874-augment',
       kanji:     '殖',
@@ -15705,7 +15706,7 @@ const primerDeck = {
       kunyomi:   'ふ.える、ふ.やす',
       nanori:    'うえ, え, げ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0962-immature',
       kanji:     '稚',
@@ -15720,7 +15721,7 @@ const primerDeck = {
       kunyomi:   'いとけない、おさない、おくて、おでる',
       nanori:    'まさ, わか, わく, わっか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0330-receive',
       kanji:     '享',
@@ -15735,7 +15736,7 @@ const primerDeck = {
       kunyomi:   'う.ける',
       nanori:    'たか, たかし, とおる, みち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2410-immaculate',
       kanji:     '淳',
@@ -15750,7 +15751,7 @@ const primerDeck = {
       kunyomi:   'あつ.い',
       nanori:    'あつ, あつし, きよ, きよし, まこと, すなお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0579-consummate',
       kanji:     '遂',
@@ -15764,7 +15765,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'と.げる、つい.に',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1134-buttocks',
       kanji:     '尻',
@@ -15779,7 +15780,7 @@ const primerDeck = {
       kunyomi:   'しり',
       nanori:    'がみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1491-magnet',
       kanji:     '磁',
@@ -15793,7 +15794,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0750-stiff',
       kanji:     '硬',
@@ -15807,7 +15808,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'かた.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0852-bathe',
       kanji:     '浴',
@@ -15822,7 +15823,7 @@ const primerDeck = {
       kunyomi:   'あ.びる、あ.びせる',
       nanori:    'えき, さこ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2741-i-wonder',
       kanji:     '哉',
@@ -15837,7 +15838,7 @@ const primerDeck = {
       kunyomi:   'かな, や',
       nanori:    'か, すけ, とし, ちか, はじめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0758-guy',
       kanji:     '奴',
@@ -15852,7 +15853,7 @@ const primerDeck = {
       kunyomi:   'やつ、やっこ',
       nanori:    'ぬ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0759-angry',
       kanji:     '怒',
@@ -15866,7 +15867,7 @@ const primerDeck = {
       onyomi:    'ド、ヌ',
       kunyomi:   'いか.る、おこ.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1604-bosom',
       kanji:     '胸',
@@ -15880,7 +15881,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'むね、むな-',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2682-slender-bamboo',
       kanji:     '篠',
@@ -15895,7 +15896,7 @@ const primerDeck = {
       kunyomi:   'しの, ささ, すず',
       nanori:    'の',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0981-transparent',
       kanji:     '透',
@@ -15910,7 +15911,7 @@ const primerDeck = {
       kunyomi:   'す.く、す.かす、す.ける、とう.る、とう.す',
       nanori:    'とおる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2648-salarium',
       kanji:     '禄',
@@ -15925,7 +15926,7 @@ const primerDeck = {
       kunyomi:   'さいわ.い, ふち',
       nanori:    'とし, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0707-discard',
       kanji:     '捨',
@@ -15939,7 +15940,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'す.てる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0547-courts',
       kanji:     '廷',
@@ -15954,7 +15955,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0634-courtyard',
       kanji:     '庭',
@@ -15969,7 +15970,7 @@ const primerDeck = {
       kunyomi:   'にわ',
       nanori:    'ば',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1717-harp',
       kanji:     '琴',
@@ -15983,7 +15984,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'こと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1767-marquis',
       kanji:     '侯',
@@ -15997,7 +15998,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2449-orchid',
       kanji:     '蘭',
@@ -16012,7 +16013,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'か, あららぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0286-pillar',
       kanji:     '柱',
@@ -16026,7 +16027,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'はしら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0638-grind',
       kanji:     '磨',
@@ -16041,7 +16042,7 @@ const primerDeck = {
       kunyomi:   'みが.く、す.る',
       nanori:    'おさむ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0928-persuade',
       kanji:     '勧',
@@ -16055,7 +16056,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'すす.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1261-big-dipper',
       kanji:     '斗',
@@ -16070,7 +16071,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ます',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1263-department',
       kanji:     '科',
@@ -16085,7 +16086,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'しな',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1262-fee',
       kanji:     '料',
@@ -16099,7 +16100,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2697-link-up',
       kanji:     '繋',
@@ -16113,7 +16114,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'つな.ぐ, かか.る, か.ける',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1932-slap',
       kanji:     '撲',
@@ -16127,7 +16128,7 @@ const primerDeck = {
       onyomi:    'ボク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2077-nest',
       kanji:     '巣',
@@ -16141,7 +16142,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'す、す.くう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1974-resist',
       kanji:     '抵',
@@ -16155,7 +16156,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0540-formerly',
       kanji:     '曽',
@@ -16169,7 +16170,7 @@ const primerDeck = {
       onyomi:    'ソウ、 ソ、 ゾウ',
       kunyomi:   'かつ.て, か.って, すなわち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0541-increase',
       kanji:     '増',
@@ -16184,7 +16185,7 @@ const primerDeck = {
       kunyomi:   'ま.す、ま.し、ふ.える、ふ.やす',
       nanori:    'まし, ます',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1146-stratum',
       kanji:     '層',
@@ -16198,7 +16199,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1057-buddhist-priest',
       kanji:     '僧',
@@ -16212,7 +16213,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2394-roofbeam',
       kanji:     '梁',
@@ -16226,7 +16227,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'はり, うつばり, うちばり, やな, はし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0277-lunatic',
       kanji:     '狂',
@@ -16240,7 +16241,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'くる.う、くる.おしい、くるお.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0335-refreshing',
       kanji:     '涼',
@@ -16255,7 +16256,7 @@ const primerDeck = {
       kunyomi:   'すず.しい、すず.む、すず.やか、うす.い、ひや.す、まことに',
       nanori:    'りょ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1859-rare',
       kanji:     '珍',
@@ -16270,7 +16271,7 @@ const primerDeck = {
       kunyomi:   'めずら.しい、たから',
       nanori:    'じん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1748-pitch-dark',
       kanji:     '闇',
@@ -16284,7 +16285,7 @@ const primerDeck = {
       onyomi:    'アン、オン',
       kunyomi:   'やみ、くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2344-hawk',
       kanji:     '鷹',
@@ -16298,7 +16299,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'たか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1646-block-up',
       kanji:     '塞',
@@ -16312,7 +16313,7 @@ const primerDeck = {
       onyomi:    'ソク、サイ',
       kunyomi:   'ふさ.ぐ、とりで、み.ちる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0677-humility',
       kanji:     '慎',
@@ -16327,7 +16328,7 @@ const primerDeck = {
       kunyomi:   'つつし.む、つつし、つつし.み',
       nanori:    'ちか, のり, まこと, みつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0293-inscription',
       kanji:     '銘',
@@ -16342,7 +16343,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たか, み, め',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1233-lie-down',
       kanji:     '寝',
@@ -16356,7 +16357,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'ね.る、ね.かす、い.ぬ、みたまや、や.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1139-grip',
       kanji:     '握',
@@ -16370,7 +16371,7 @@ const primerDeck = {
       onyomi:    'アク',
       kunyomi:   'にぎ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1395-follow',
       kanji:     '随',
@@ -16384,7 +16385,7 @@ const primerDeck = {
       onyomi:    'ズイ',
       kunyomi:   'まにま.に、したが.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0839-storm',
       kanji:     '嵐',
@@ -16399,7 +16400,7 @@ const primerDeck = {
       kunyomi:   'あらし',
       nanori:    'ぞれ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1981-bullrush',
       kanji:     '蒲',
@@ -16413,7 +16414,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'がま, かば, かま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0235-vermilion',
       kanji:     '朱',
@@ -16428,7 +16429,7 @@ const primerDeck = {
       kunyomi:   'あけ',
       nanori:    'あ, あか, あき, す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0236-stocks',
       kanji:     '株',
@@ -16442,7 +16443,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'かぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0873-particularly',
       kanji:     '殊',
@@ -16456,7 +16457,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'こと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1103-umbrella',
       kanji:     '傘',
@@ -16470,7 +16471,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'かさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2046-give',
       kanji:     '呉',
@@ -16485,7 +16486,7 @@ const primerDeck = {
       kunyomi:   'く.れる、くれ',
       nanori:    'ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2048-mistake',
       kanji:     '誤',
@@ -16499,7 +16500,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'あやま.る、-あやま.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2164-sign-of-the-dragon',
       kanji:     '辰',
@@ -16514,7 +16515,7 @@ const primerDeck = {
       kunyomi:   'たつ',
       nanori:    'とき, のぶ, のぶる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2167-shake',
       kanji:     '振',
@@ -16529,7 +16530,7 @@ const primerDeck = {
       kunyomi:   'ふ.る、ぶ.る、ふ.り、-ぶ.り、ふ.るう',
       nanori:    'ふり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2166-quake',
       kanji:     '震',
@@ -16543,7 +16544,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'ふる.う、ふる.える',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0516-cultivate',
       kanji:     '培',
@@ -16557,7 +16558,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'つちか.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0652-grace',
       kanji:     '恩',
@@ -16572,7 +16573,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'めぐみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2463-resurrect',
       kanji:     '蘇',
@@ -16586,7 +16587,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'よみがえ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1373-stimulate',
       kanji:     '促',
@@ -16600,7 +16601,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'うなが.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1317-bow',
       kanji:     '弓',
@@ -16615,7 +16616,7 @@ const primerDeck = {
       kunyomi:   'ゆみ',
       nanori:    'こ, ゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1318-pull',
       kanji:     '引',
@@ -16630,7 +16631,7 @@ const primerDeck = {
       kunyomi:   'ひ.く、ひ.き、ひ.き-、-び.き、ひ.ける',
       nanori:    'いな, ひき, ひけ, びき',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1321-strong',
       kanji:     '強',
@@ -16645,7 +16646,7 @@ const primerDeck = {
       kunyomi:   'つよ.い、つよ.まる、つよ.める、し.いる、こわ.い',
       nanori:    'すね',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2071-lengthen',
       kanji:     '張',
@@ -16660,7 +16661,7 @@ const primerDeck = {
       kunyomi:   'は.る、-は.り、-ば.り',
       nanori:    'はり, わり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2081-bullet',
       kanji:     '弾',
@@ -16674,7 +16675,7 @@ const primerDeck = {
       onyomi:    'ダン、タン',
       kunyomi:   'ひ.く、-ひ.き、はず.む、たま、はじ.く、はじ.ける、ただ.す、はじ.きゆみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1320-vast',
       kanji:     '弘',
@@ -16689,7 +16690,7 @@ const primerDeck = {
       kunyomi:   'ひろ.い',
       nanori:    'ひろ, ひろし, ひろむ, みつ, お, こお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1323-weak',
       kanji:     '弱',
@@ -16703,7 +16704,7 @@ const primerDeck = {
       onyomi:    'ジャク',
       kunyomi:   'よわ.い、よわ.る、よわ.まる、よわ.める',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1322-more-and-more',
       kanji:     '弥',
@@ -16718,7 +16719,7 @@ const primerDeck = {
       kunyomi:   'いや、や、あまねし、いよいよ、とおい、ひさし、ひさ.しい、わた.る',
       nanori:    'わたる, みつ, ひろ, よ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1487-bowstring',
       kanji:     '弦',
@@ -16732,7 +16733,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'つる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1791-diagonal',
       kanji:     '斜',
@@ -16746,7 +16747,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'なな.め、はす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0684-annexed',
       kanji:     '添',
@@ -16761,7 +16762,7 @@ const primerDeck = {
       kunyomi:   'そ.える、そ.う、も.える、も.う',
       nanori:    'そえ, ぞい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1481-how-many',
       kanji:     '幾',
@@ -16776,7 +16777,7 @@ const primerDeck = {
       kunyomi:   'いく-、いく.つ、いく.ら',
       nanori:    'い, く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1482-mechanism',
       kanji:     '機',
@@ -16790,7 +16791,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'はた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0881-ear',
       kanji:     '耳',
@@ -16805,7 +16806,7 @@ const primerDeck = {
       kunyomi:   'みみ',
       nanori:    'がみ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0882-take',
       kanji:     '取',
@@ -16820,7 +16821,7 @@ const primerDeck = {
       kunyomi:   'と.る、と.り、と.り-、とり、-ど.り',
       nanori:    'どる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0884-utmost',
       kanji:     '最',
@@ -16835,7 +16836,7 @@ const primerDeck = {
       kunyomi:   'もっと.も、つま',
       nanori:    'も',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0887-post',
       kanji:     '職',
@@ -16850,7 +16851,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'もと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1754-hear',
       kanji:     '聞',
@@ -16864,7 +16865,7 @@ const primerDeck = {
       onyomi:    'ブン、モン',
       kunyomi:   'き.く、き.こえる',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0888-holy',
       kanji:     '聖',
@@ -16879,7 +16880,7 @@ const primerDeck = {
       kunyomi:   'ひじり',
       nanori:    'きよ, さと, さとし, せ, たか, ただ, ひろ, まさ, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0885-snapshot',
       kanji:     '撮',
@@ -16893,7 +16894,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   'と.る、つま.む、-ど.り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0890-listen',
       kanji:     '聴',
@@ -16908,7 +16909,7 @@ const primerDeck = {
       kunyomi:   'き.く、ゆる.す',
       nanori:    'きく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0883-gist',
       kanji:     '趣',
@@ -16922,7 +16923,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'おもむき、おもむ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1738-capsize',
       kanji:     '覆',
@@ -16936,7 +16937,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'おお.う、くつがえ.す、くつがえ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0566-queen',
       kanji:     '妃',
@@ -16951,7 +16952,7 @@ const primerDeck = {
       kunyomi:   'きさき',
       nanori:    'き, ぴ, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0959-earnings',
       kanji:     '稼',
@@ -16965,7 +16966,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'かせ.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1182-adore',
       kanji:     '崇',
@@ -16980,7 +16981,7 @@ const primerDeck = {
       kunyomi:   'あが.める',
       nanori:    'す, たか, たかし, たかむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1789-confer',
       kanji:     '叙',
@@ -16994,7 +16995,7 @@ const primerDeck = {
       onyomi:    'ジョ',
       kunyomi:   'つい.ず、ついで',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1788-gradually',
       kanji:     '徐',
@@ -17008,7 +17009,7 @@ const primerDeck = {
       onyomi:    'ジョ',
       kunyomi:   'おもむ.ろに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1949-till',
       kanji:     '耕',
@@ -17023,7 +17024,7 @@ const primerDeck = {
       kunyomi:   'たがや.す',
       nanori:    'こお',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2192-slave',
       kanji:     '隷',
@@ -17037,7 +17038,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'したが.う、しもべ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0746-length',
       kanji:     '丈',
@@ -17052,7 +17053,7 @@ const primerDeck = {
       kunyomi:   'たけ、だけ',
       nanori:    'とも, ますら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0332-mellow',
       kanji:     '熟',
@@ -17066,7 +17067,7 @@ const primerDeck = {
       onyomi:    'ジュク',
       kunyomi:   'う.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2185-item',
       kanji:     '箇',
@@ -17080,7 +17081,7 @@ const primerDeck = {
       onyomi:    'カ、コ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2428-wolf',
       kanji:     '狼',
@@ -17094,7 +17095,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'おおかみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0362-revise',
       kanji:     '訂',
@@ -17108,7 +17109,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2049-steam',
       kanji:     '蒸',
@@ -17122,7 +17123,7 @@ const primerDeck = {
       onyomi:    'ジョウ、セイ',
       kunyomi:   'む.す、む.れる、む.らす',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1031-remote',
       kanji:     '悠',
@@ -17137,7 +17138,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0090-seduce',
       kanji:     '召',
@@ -17151,7 +17152,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'め.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0091-shining',
       kanji:     '昭',
@@ -17166,7 +17167,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき, あきら, かず, かずみ, てる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0182-illuminate',
       kanji:     '照',
@@ -17181,7 +17182,7 @@ const primerDeck = {
       kunyomi:   'て.る、て.らす、て.れる',
       nanori:    'あき, てる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0411-transcend',
       kanji:     '超',
@@ -17196,7 +17197,7 @@ const primerDeck = {
       kunyomi:   'こ.える、こ.す',
       nanori:    'まさる, わたる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1459-introduce',
       kanji:     '紹',
@@ -17211,7 +17212,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'つぐ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0145-marsh',
       kanji:     '沼',
@@ -17225,7 +17226,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ぬま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0702-beckon',
       kanji:     '招',
@@ -17239,7 +17240,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'まね.く',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0176-thin',
       kanji:     '淡',
@@ -17253,7 +17254,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'あわ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0167-squared-jewel',
       kanji:     '圭',
@@ -17268,7 +17269,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'か, きよ, たま, よし, かど, きよし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0955-boulevard',
       kanji:     '街',
@@ -17283,7 +17284,7 @@ const primerDeck = {
       kunyomi:   'まち',
       nanori:    'また',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1044-excellent',
       kanji:     '佳',
@@ -17298,7 +17299,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'けい, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0210-japanese-judas-tree',
       kanji:     '桂',
@@ -17313,7 +17314,7 @@ const primerDeck = {
       kunyomi:   'かつら',
       nanori:    'かつ, よし, か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0216-paulownia',
       kanji:     '桐',
@@ -17328,7 +17329,7 @@ const primerDeck = {
       kunyomi:   'きり',
       nanori:    'ひさ, き',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2106-interview',
       kanji:     '遇',
@@ -17342,7 +17343,7 @@ const primerDeck = {
       onyomi:    'グウ',
       kunyomi:   'あ.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0274-pearl',
       kanji:     '珠',
@@ -17357,7 +17358,7 @@ const primerDeck = {
       kunyomi:   'たま',
       nanori:    'す, とも, ま, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2906-symmetrically-patterned',
       kanji:     '斐',
@@ -17372,7 +17373,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2439-bush-clover',
       kanji:     '萩',
@@ -17387,7 +17388,7 @@ const primerDeck = {
       kunyomi:   'はぎ',
       nanori:    'は',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2962-bodhisattva',
       kanji:     '薩',
@@ -17402,7 +17403,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さっ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0931-encourage',
       kanji:     '励',
@@ -17416,7 +17417,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'はげ.む、はげ.ます',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1398-line-up',
       kanji:     '陳',
@@ -17431,7 +17432,7 @@ const primerDeck = {
       kunyomi:   'ひ.ねる',
       nanori:    'のぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2128-nightfall',
       kanji:     '晩',
@@ -17445,7 +17446,7 @@ const primerDeck = {
       onyomi:    'バン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0394-coin',
       kanji:     '銭',
@@ -17459,7 +17460,7 @@ const primerDeck = {
       onyomi:    'セン、ゼン',
       kunyomi:   'ぜに、すき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1158-shoulder',
       kanji:     '肩',
@@ -17473,7 +17474,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'かた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2100-beautiful-woman',
       kanji:     '媛',
@@ -17487,7 +17488,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'ひめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2683-redaction',
       kanji:     '纂',
@@ -17501,7 +17502,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あつ.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2051-bin',
       kanji:     '函',
@@ -17515,7 +17516,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'はこ, い.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1332-boast',
       kanji:     '誇',
@@ -17529,7 +17530,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'ほこ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0914-entrails',
       kanji:     '臓',
@@ -17543,7 +17544,7 @@ const primerDeck = {
       onyomi:    'ゾウ',
       kunyomi:   'はらわた',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1819-rapidly',
       kanji:     '疾',
@@ -17557,7 +17558,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'はや.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2907-magistrate',
       kanji:     '卿',
@@ -17571,7 +17572,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'きみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0297-crossing',
       kanji:     '辻',
@@ -17585,7 +17586,7 @@ const primerDeck = {
       onyomi:    'つじ',
       kunyomi:   'つじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1876-vicarious',
       kanji:     '摂',
@@ -17600,7 +17601,7 @@ const primerDeck = {
       kunyomi:   'おさ.める、かね.る、と.る',
       nanori:    'せっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1458-distract',
       kanji:     '紛',
@@ -17614,7 +17615,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'まぎ.れる、-まぎ.れ、まぎ.らす、まぎ.らわす、まぎ.らわしい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1483-capital-suburbs',
       kanji:     '畿',
@@ -17628,7 +17629,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'みやこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0880-wink',
       kanji:     '瞬',
@@ -17642,7 +17643,7 @@ const primerDeck = {
       onyomi:    'シュン',
       kunyomi:   'またた.く、まじろ.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1962-ethics',
       kanji:     '倫',
@@ -17657,7 +17658,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'とも, のり, ひとし, ひろ, みち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2119-noh-chanting',
       kanji:     '謡',
@@ -17671,7 +17672,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'うた.い、うた.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0835-mountain-peak',
       kanji:     '峠',
@@ -17685,7 +17686,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とうげ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1645-cold',
       kanji:     '寒',
@@ -17700,7 +17701,7 @@ const primerDeck = {
       kunyomi:   'さむ.い',
       nanori:    'さ, さん',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2105-accidentally',
       kanji:     '偶',
@@ -17714,7 +17715,7 @@ const primerDeck = {
       onyomi:    'グウ',
       kunyomi:   'たま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2514-progress',
       kanji:     '晋',
@@ -17729,7 +17730,7 @@ const primerDeck = {
       kunyomi:   'すす.む',
       nanori:    'すすむ, ゆき, くに, すすみ, のぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1242-sugar',
       kanji:     '糖',
@@ -17743,7 +17744,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0066-mediocre',
       kanji:     '凡',
@@ -17758,7 +17759,7 @@ const primerDeck = {
       kunyomi:   'およ.そ、おうよ.そ、すべ.て',
       nanori:    'なみ, ひろ, みな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0660-fear',
       kanji:     '恐',
@@ -17772,7 +17773,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'おそ.れる、おそ.る、おそ.ろしい、こわ.い、こわ.がる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2681-ancient-harp',
       kanji:     '筑',
@@ -17787,7 +17788,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'つく, づき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1021-fabricate',
       kanji:     '築',
@@ -17802,7 +17803,7 @@ const primerDeck = {
       kunyomi:   'きず.く',
       nanori:    'つい, つき, つく, づき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1839-lucidity',
       kanji:     '澄',
@@ -17817,7 +17818,7 @@ const primerDeck = {
       kunyomi:   'す.む、す.ます、-す.ます',
       nanori:    'きよ, すす, すみ, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0896-penalty',
       kanji:     '罰',
@@ -17831,7 +17832,7 @@ const primerDeck = {
       onyomi:    'バツ、バチ、ハツ',
       kunyomi:   'ばっ.する',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0988-flour',
       kanji:     '粉',
@@ -17845,7 +17846,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'デシメートル、こ、こな',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1415-withdraw',
       kanji:     '控',
@@ -17859,7 +17860,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ひか.える、ひか.え',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0430-monkey',
       kanji:     '猿',
@@ -17874,7 +17875,7 @@ const primerDeck = {
       kunyomi:   'さる',
       nanori:    'さ, さわ, ざる, まし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0929-toil',
       kanji:     '努',
@@ -17888,7 +17889,7 @@ const primerDeck = {
       onyomi:    'ド',
       kunyomi:   'つと.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1766-front-door',
       kanji:     '扉',
@@ -17902,7 +17903,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'とびら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2938-empathetic',
       kanji:     '敦',
@@ -17917,7 +17918,7 @@ const primerDeck = {
       kunyomi:   'あつ.い',
       nanori:    'あつ, あつし, つる, のぶ, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2522-limpid',
       kanji:     '晃',
@@ -17932,7 +17933,7 @@ const primerDeck = {
       kunyomi:   'あきらか',
       nanori:    'あき, あきら, てる, ひかる, みつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1960-gutter',
       kanji:     '溝',
@@ -17947,7 +17948,7 @@ const primerDeck = {
       kunyomi:   'みぞ',
       nanori:    'どぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1334-dirty',
       kanji:     '汚',
@@ -17961,7 +17962,7 @@ const primerDeck = {
       onyomi:    'オ',
       kunyomi:   'けが.す、けが.れる、けが.らわしい、よご.す、よご.れる、きたな.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2129-exertion',
       kanji:     '勉',
@@ -17976,7 +17977,7 @@ const primerDeck = {
       kunyomi:   'つと.める',
       nanori:    'ひこ, やつ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0056-shellfish',
       kanji:     '貝',
@@ -17990,7 +17991,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'かい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0059-employee',
       kanji:     '員',
@@ -18005,7 +18006,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'いな, かず',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0859-prize',
       kanji:     '賞',
@@ -18019,7 +18020,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ほ.める',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0512-assets',
       kanji:     '資',
@@ -18034,7 +18035,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ, もと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0353-failure',
       kanji:     '敗',
@@ -18048,7 +18049,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'やぶ.れる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0933-congratulations',
       kanji:     '賀',
@@ -18063,7 +18064,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'か, のり, よし, より',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0737-property',
       kanji:     '財',
@@ -18077,7 +18078,7 @@ const primerDeck = {
       onyomi:    'ザイ、サイ、ゾク',
       kunyomi:   'たから',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0783-marketing',
       kanji:     '販',
@@ -18091,7 +18092,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0067-defeat',
       kanji:     '負',
@@ -18105,7 +18106,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'ま.ける、ま.かす、お.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1908-precious',
       kanji:     '貴',
@@ -18120,7 +18121,7 @@ const primerDeck = {
       kunyomi:   'たっと.い、とうと.い、たっと.ぶ、とうと.ぶ',
       nanori:    'きよ, ぎ, たか, たかし, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1909-bequeath',
       kanji:     '遺',
@@ -18134,7 +18135,7 @@ const primerDeck = {
       onyomi:    'イ、ユイ',
       kunyomi:   'のこ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0092-rule',
       kanji:     '則',
@@ -18149,7 +18150,7 @@ const primerDeck = {
       kunyomi:   'のっと.る',
       nanori:    'のり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1049-side',
       kanji:     '側',
@@ -18163,7 +18164,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'かわ、がわ、そば',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0160-fathom',
       kanji:     '測',
@@ -18177,7 +18178,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'はか.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1326-expense',
       kanji:     '費',
@@ -18191,7 +18192,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'つい.やす、つい.える',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0894-buy',
       kanji:     '買',
@@ -18205,7 +18206,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'か.う',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0719-damage',
       kanji:     '損',
@@ -18219,7 +18220,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'そこ.なう、そこな.う、-そこ.なう、そこ.ねる、-そこ.ねる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1661-blame',
       kanji:     '責',
@@ -18233,7 +18234,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'せ.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1662-exploits',
       kanji:     '績',
@@ -18248,7 +18249,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1663-volume',
       kanji:     '積',
@@ -18263,7 +18264,7 @@ const primerDeck = {
       kunyomi:   'つ.む、-づ.み、つ.もる、つ.もり',
       nanori:    'か, さか, しゃこ, ずみ, つみ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0064-page',
       kanji:     '頁',
@@ -18277,7 +18278,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'ぺえじ, おおがい, かしら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0086-paragraph',
       kanji:     '項',
@@ -18291,7 +18292,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'うなじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1000-sort',
       kanji:     '類',
@@ -18305,7 +18306,7 @@ const primerDeck = {
       onyomi:    'ルイ',
       kunyomi:   'たぐ.い',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1507-jurisdiction',
       kanji:     '領',
@@ -18320,7 +18321,7 @@ const primerDeck = {
       kunyomi:   'えり',
       nanori:    'よう, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1549-head',
       kanji:     '頭',
@@ -18335,7 +18336,7 @@ const primerDeck = {
       kunyomi:   'あたま、かしら、-がしら、かぶり',
       nanori:    'かみ, がみ, ちゃん, つむり, づ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0136-obey',
       kanji:     '順',
@@ -18350,7 +18351,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あや, あり, おき, おさむ, しげ, したがう, とし, なお, のぶ, のり, まさ, むね, もと, ゆき, よし, より',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1794-trust',
       kanji:     '頼',
@@ -18365,7 +18366,7 @@ const primerDeck = {
       kunyomi:   'たの.む、たの.もしい、たよ.る',
       nanori:    'よち, より',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1795-rapids',
       kanji:     '瀬',
@@ -18380,7 +18381,7 @@ const primerDeck = {
       kunyomi:   'せ',
       nanori:    'いわた, がせ, しげ, せい, せっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1854-ought',
       kanji:     '須',
@@ -18395,7 +18396,7 @@ const primerDeck = {
       kunyomi:   'すべから.く、すべし、ひげ、まつ、もち.いる、もと.める',
       nanori:    'もとむ, ぞ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1853-face',
       kanji:     '顔',
@@ -18409,7 +18410,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'かお',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0316-forehead',
       kanji:     '額',
@@ -18424,7 +18425,7 @@ const primerDeck = {
       kunyomi:   'ひたい',
       nanori:    'ぬか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0143-petition',
       kanji:     '願',
@@ -18439,7 +18440,7 @@ const primerDeck = {
       kunyomi:   'ねが.う、-ねがい',
       nanori:    'ら',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0106-pierce',
       kanji:     '貫',
@@ -18454,7 +18455,7 @@ const primerDeck = {
       kunyomi:   'つらぬ.く、ぬ.く、ぬき',
       nanori:    'つら, ぬく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1958-subscription',
       kanji:     '購',
@@ -18468,7 +18469,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2087-chain',
       kanji:     '鎖',
@@ -18482,7 +18483,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'くさり、とざ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0058-upright',
       kanji:     '貞',
@@ -18497,7 +18498,7 @@ const primerDeck = {
       kunyomi:   'さだ',
       nanori:    'さざ, ただし, りょう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1056-spy',
       kanji:     '偵',
@@ -18511,7 +18512,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0915-intelligent',
       kanji:     '賢',
@@ -18526,7 +18527,7 @@ const primerDeck = {
       kunyomi:   'かしこ.い',
       nanori:    'かた, さか, さと, さとし, たか, たて, のり, まこと, まさ, まさる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0085-tribute',
       kanji:     '貢',
@@ -18540,7 +18541,7 @@ const primerDeck = {
       onyomi:    'コウ、ク',
       kunyomi:   'みつ.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0906-approve',
       kanji:     '賛',
@@ -18554,7 +18555,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'たす.ける、たた.える',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1165-look-back',
       kanji:     '顧',
@@ -18569,7 +18570,7 @@ const primerDeck = {
       kunyomi:   'かえり.みる',
       nanori:    'たか, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0098-place-on-the-head',
       kanji:     '頂',
@@ -18583,7 +18584,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'いただ.く、いただき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1060-reparation',
       kanji:     '償',
@@ -18597,7 +18598,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'つぐな.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0542-presents',
       kanji:     '贈',
@@ -18611,7 +18612,7 @@ const primerDeck = {
       onyomi:    'ゾウ、ソウ',
       kunyomi:   'おく.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1928-appear',
       kanji:     '顕',
@@ -18626,7 +18627,7 @@ const primerDeck = {
       kunyomi:   'あきらか、あらわ.れる',
       nanori:    'あき, あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1664-bond',
       kanji:     '債',
@@ -18640,7 +18641,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1082-lend',
       kanji:     '貸',
@@ -18654,7 +18655,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'か.す、か.し-、かし-',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1079-fare',
       kanji:     '賃',
@@ -18669,7 +18670,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0381-burglar',
       kanji:     '賊',
@@ -18683,7 +18684,7 @@ const primerDeck = {
       onyomi:    'ゾク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0674-accustomed',
       kanji:     '慣',
@@ -18697,7 +18698,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'な.れる、な.らす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1721-deposit',
       kanji:     '預',
@@ -18711,7 +18712,7 @@ const primerDeck = {
       onyomi:    'ヨ',
       kunyomi:   'あず.ける、あず.かる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0399-repeatedly',
       kanji:     '頻',
@@ -18725,7 +18726,7 @@ const primerDeck = {
       onyomi:    'ヒン',
       kunyomi:   'しき.りに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1268-once-upon-a-time',
       kanji:     '昔',
@@ -18739,7 +18740,7 @@ const primerDeck = {
       onyomi:    'セキ、シャク',
       kunyomi:   'むかし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1689-enroll',
       kanji:     '籍',
@@ -18753,7 +18754,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1270-borrow',
       kanji:     '借',
@@ -18767,7 +18768,7 @@ const primerDeck = {
       onyomi:    'シャク',
       kunyomi:   'か.りる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0144-swim',
       kanji:     '泳',
@@ -18781,7 +18782,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'およ.ぐ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1495-suspend',
       kanji:     '懸',
@@ -18795,7 +18796,7 @@ const primerDeck = {
       onyomi:    'ケン、ケ',
       kunyomi:   'か.ける、か.かる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1755-wet',
       kanji:     '潤',
@@ -18810,7 +18811,7 @@ const primerDeck = {
       kunyomi:   'うるお.う、うるお.す、うる.む',
       nanori:    'めぐみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2640-rocky-beach',
       kanji:     '磯',
@@ -18825,7 +18826,7 @@ const primerDeck = {
       kunyomi:   'いそ',
       nanori:    'し, そ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0581-marry-into',
       kanji:     '嫁',
@@ -18839,7 +18840,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'よめ、とつ.ぐ、い.く、ゆ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0231-obscure',
       kanji:     '昧',
@@ -18853,7 +18854,7 @@ const primerDeck = {
       onyomi:    'マイ、バイ',
       kunyomi:   'くら.い、むさぼ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1203-candy',
       kanji:     '菓',
@@ -18867,7 +18868,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0845-poverty',
       kanji:     '貧',
@@ -18881,7 +18882,7 @@ const primerDeck = {
       onyomi:    'ヒン、ビン',
       kunyomi:   'まず.しい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0640-forget',
       kanji:     '忘',
@@ -18895,7 +18896,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'わす.れる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1272-set-aside',
       kanji:     '措',
@@ -18909,7 +18910,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'お.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1943-respect',
       kanji:     '恭',
@@ -18924,7 +18925,7 @@ const primerDeck = {
       kunyomi:   'うやうや.しい',
       nanori:    'きよ, やす, やすし, ゆき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2005-empress',
       kanji:     '后',
@@ -18938,7 +18939,7 @@ const primerDeck = {
       onyomi:    'コウ、ゴ',
       kunyomi:   'きさき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0108-curse',
       kanji:     '呪',
@@ -18952,7 +18953,7 @@ const primerDeck = {
       onyomi:    'ジュ、シュ、シュウ、ズ',
       kunyomi:   'まじな.う、のろ.い、まじな.い、のろ.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1163-tears',
       kanji:     '涙',
@@ -18966,7 +18967,7 @@ const primerDeck = {
       onyomi:    'ルイ、レイ',
       kunyomi:   'なみだ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0206-savings',
       kanji:     '貯',
@@ -18980,7 +18981,7 @@ const primerDeck = {
       onyomi:    'チョ',
       kunyomi:   'た.める、たくわ.える',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2890-sparrow',
       kanji:     '雀',
@@ -18995,7 +18996,7 @@ const primerDeck = {
       kunyomi:   'すずめ',
       nanori:    'ざく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2153-tyrannize',
       kanji:     '虐',
@@ -19009,7 +19010,7 @@ const primerDeck = {
       onyomi:    'ギャク',
       kunyomi:   'しいた.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2102-slacken',
       kanji:     '緩',
@@ -19024,7 +19025,7 @@ const primerDeck = {
       kunyomi:   'ゆる.い、ゆる.やか、ゆる.む、ゆる.める',
       nanori:    'ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0990-grains',
       kanji:     '粒',
@@ -19038,7 +19039,7 @@ const primerDeck = {
       onyomi:    'リュウ',
       kunyomi:   'つぶ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2141-wonder',
       kanji:     '驚',
@@ -19052,7 +19053,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'おどろ.く、おどろ.かす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0382-plantation',
       kanji:     '栽',
@@ -19066,7 +19067,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0917-strict',
       kanji:     '堅',
@@ -19081,7 +19082,7 @@ const primerDeck = {
       kunyomi:   'かた.い、-がた.い',
       nanori:    'きん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1235-sweep',
       kanji:     '掃',
@@ -19096,7 +19097,7 @@ const primerDeck = {
       kunyomi:   'は.く',
       nanori:    'か',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2127-elude',
       kanji:     '逸',
@@ -19111,7 +19112,7 @@ const primerDeck = {
       kunyomi:   'そ.れる、そ.らす、はぐ.れる',
       nanori:    'いっ, はや, へん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2012-boat',
       kanji:     '舟',
@@ -19125,7 +19126,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'ふね、ふな-、-ぶね',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2019-ship',
       kanji:     '船',
@@ -19140,7 +19141,7 @@ const primerDeck = {
       kunyomi:   'ふね、ふな-',
       nanori:    'ふ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2014-navigate',
       kanji:     '航',
@@ -19155,7 +19156,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'わたる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2016-carrier',
       kanji:     '般',
@@ -19169,7 +19170,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2021-rowboat',
       kanji:     '艇',
@@ -19183,7 +19184,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2632-crag',
       kanji:     '磐',
@@ -19198,7 +19199,7 @@ const primerDeck = {
       kunyomi:   'いわ',
       nanori:    'いわお, わ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0180-ashes',
       kanji:     '灰',
@@ -19212,7 +19213,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'はい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0833-charcoal',
       kanji:     '炭',
@@ -19226,7 +19227,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'すみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1781-flats',
       kanji:     '軒',
@@ -19240,7 +19241,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'のき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0877-ardent',
       kanji:     '烈',
@@ -19255,7 +19256,7 @@ const primerDeck = {
       kunyomi:   'はげ.しい',
       nanori:    'やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1726-self-effacing',
       kanji:     '謙',
@@ -19270,7 +19271,7 @@ const primerDeck = {
       kunyomi:   'へりくだ.る',
       nanori:    'かね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1705-droop',
       kanji:     '垂',
@@ -19285,7 +19286,7 @@ const primerDeck = {
       kunyomi:   'た.れる、た.らす、た.れ、-た.れ、なんなんと.す',
       nanori:    'たる, だれ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0439-brocade',
       kanji:     '錦',
@@ -19300,7 +19301,7 @@ const primerDeck = {
       kunyomi:   'にしき',
       nanori:    'かね, あや, にし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1367-cauldron',
       kanji:     '釜',
@@ -19314,7 +19315,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'かま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1315-squad',
       kanji:     '班',
@@ -19328,7 +19329,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2037-decline',
       kanji:     '衰',
@@ -19342,7 +19343,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'おとろ.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1140-yield',
       kanji:     '屈',
@@ -19357,7 +19358,7 @@ const primerDeck = {
       kunyomi:   'かが.む、かが.める',
       nanori:    'くっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1142-ditch',
       kanji:     '堀',
@@ -19372,7 +19373,7 @@ const primerDeck = {
       kunyomi:   'ほり',
       nanori:    'ほっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1141-dig',
       kanji:     '掘',
@@ -19387,7 +19388,7 @@ const primerDeck = {
       kunyomi:   'ほ.る',
       nanori:    'ぼり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0597-sweet-oak',
       kanji:     '椎',
@@ -19402,7 +19403,7 @@ const primerDeck = {
       kunyomi:   'つち、う.つ',
       nanori:    'しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1490-mercy',
       kanji:     '慈',
@@ -19417,7 +19418,7 @@ const primerDeck = {
       kunyomi:   'いつく.しむ',
       nanori:    'しげ, ちか, めぐみ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0926-inferiority',
       kanji:     '劣',
@@ -19431,7 +19432,7 @@ const primerDeck = {
       onyomi:    'レツ',
       kunyomi:   'おと.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1846-carve',
       kanji:     '彫',
@@ -19445,7 +19446,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'ほ.る、-ぼ.り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2587-zelkova',
       kanji:     '槻',
@@ -19459,7 +19460,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'つき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2889-manchu-dynasty',
       kanji:     '秦',
@@ -19474,7 +19475,7 @@ const primerDeck = {
       kunyomi:   'はた',
       nanori:    'たい, はだ, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0733-nose',
       kanji:     '鼻',
@@ -19488,7 +19489,7 @@ const primerDeck = {
       onyomi:    'ビ',
       kunyomi:   'はな',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0936-threaten',
       kanji:     '脅',
@@ -19502,7 +19503,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'おびや.かす、おど.す、おど.かす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1355-gorge',
       kanji:     '峡',
@@ -19517,7 +19518,7 @@ const primerDeck = {
       kunyomi:   'はざま',
       nanori:    'き, ば',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2156-recommend',
       kanji:     '薦',
@@ -19532,7 +19533,7 @@ const primerDeck = {
       kunyomi:   'すす.める',
       nanori:    'こも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1020-register',
       kanji:     '簿',
@@ -19546,7 +19547,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1566-fierce',
       kanji:     '猛',
@@ -19561,7 +19562,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たけ, たけし, たける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1281-erupt',
       kanji:     '噴',
@@ -19575,7 +19576,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'ふ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0249-seedling',
       kanji:     '苗',
@@ -19590,7 +19591,7 @@ const primerDeck = {
       kunyomi:   'なえ、なわ-',
       nanori:    'ねい, のら, みう, みつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0723-sketch',
       kanji:     '描',
@@ -19604,7 +19605,7 @@ const primerDeck = {
       onyomi:    'ビョウ',
       kunyomi:   'えが.く、か.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0259-cat',
       kanji:     '猫',
@@ -19618,7 +19619,7 @@ const primerDeck = {
       onyomi:    'ビョウ',
       kunyomi:   'ねこ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1488-hug',
       kanji:     '擁',
@@ -19632,7 +19633,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2179-fascination',
       kanji:     '魅',
@@ -19646,7 +19647,7 @@ const primerDeck = {
       onyomi:    'ミ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0509-soft',
       kanji:     '軟',
@@ -19660,7 +19661,7 @@ const primerDeck = {
       onyomi:    'ナン',
       kunyomi:   'やわ.らか、やわ.らかい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1480-faint',
       kanji:     '幽',
@@ -19674,7 +19675,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'ふか.い、かす.か、くら.い、しろ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1090-bystander',
       kanji:     '傍',
@@ -19689,7 +19690,7 @@ const primerDeck = {
       kunyomi:   'かたわ.ら、わき、おか-、はた、そば',
       nanori:    'び',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1612-spicy',
       kanji:     '辛',
@@ -19703,7 +19704,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'から.い、つら.い、-づら.い、かのと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1615-superintend',
       kanji:     '宰',
@@ -19718,7 +19719,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ただ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0956-girder',
       kanji:     '桁',
@@ -19732,7 +19733,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'けた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0463-cry',
       kanji:     '泣',
@@ -19746,7 +19747,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'な.く',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0903-mountain-stream',
       kanji:     '渓',
@@ -19760,7 +19761,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'たに、たにがわ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1357-sandwiched',
       kanji:     '挟',
@@ -19774,7 +19775,7 @@ const primerDeck = {
       onyomi:    'キョウ、ショウ',
       kunyomi:   'はさ.む、はさ.まる、わきばさ.む、さしはさ.む',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1069-fell',
       kanji:     '伐',
@@ -19788,7 +19789,7 @@ const primerDeck = {
       onyomi:    'バツ、ハツ、カ、ボチ',
       kunyomi:   'き.る、そむ.く、う.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2666-repose',
       kanji:     '靖',
@@ -19803,7 +19804,7 @@ const primerDeck = {
       kunyomi:   'やす.んじる',
       nanori:    'のぶ, やす, やすし, しず, おさむ, きよし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0850-sue',
       kanji:     '訟',
@@ -19817,7 +19818,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2717-attentive',
       kanji:     '聡',
@@ -19832,7 +19833,7 @@ const primerDeck = {
       kunyomi:   'さと.い, みみざと.い',
       nanori:    'さと, さとし, さとる, あき, あきら, とし, さた, みのる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2714-gossamer',
       kanji:     '紗',
@@ -19847,7 +19848,7 @@ const primerDeck = {
       kunyomi:   'うすぎぬ',
       nanori:    'たえ, すず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2254-mate',
       kanji:     '倶',
@@ -19861,7 +19862,7 @@ const primerDeck = {
       onyomi:    'グ',
       kunyomi:   'とも.に',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0706-arrest',
       kanji:     '拘',
@@ -19875,7 +19876,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'かか.わる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0602-quasi',
       kanji:     '准',
@@ -19889,7 +19890,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0057-pop-song',
       kanji:     '唄',
@@ -19903,7 +19904,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'うた、うた.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1653-barley',
       kanji:     '麦',
@@ -19917,7 +19918,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'むぎ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0891-pocket',
       kanji:     '懐',
@@ -19932,7 +19933,7 @@ const primerDeck = {
       kunyomi:   'ふところ、なつ.かしい、なつ.かしむ、なつ.く、なつ.ける、なず.ける、いだ.く、おも.う',
       nanori:    'かね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1812-fragrant',
       kanji:     '薫',
@@ -19947,7 +19948,7 @@ const primerDeck = {
       kunyomi:   'かお.る',
       nanori:    'かおり, かおる, かほ, かほる, くに, しげ, にほ, のぶ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0412-proceed',
       kanji:     '赴',
@@ -19961,7 +19962,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'おもむ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1844-dormitory',
       kanji:     '寮',
@@ -19975,7 +19976,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0030-nightbreak',
       kanji:     '旦',
@@ -19989,7 +19990,7 @@ const primerDeck = {
       onyomi:    'タン、ダン',
       kunyomi:   'あき.らか、あきら、ただし、あさ、あした',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0721-shouldering',
       kanji:     '担',
@@ -20003,7 +20004,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'かつ.ぐ、にな.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0189-quantity',
       kanji:     '量',
@@ -20018,7 +20019,7 @@ const primerDeck = {
       kunyomi:   'はか.る',
       nanori:    'かず',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0215-apricot',
       kanji:     '杏',
@@ -20033,7 +20034,7 @@ const primerDeck = {
       kunyomi:   'あんず',
       nanori:    'りょう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1137-footgear',
       kanji:     '履',
@@ -20047,7 +20048,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'は.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2142-fervent',
       kanji:     '篤',
@@ -20061,7 +20062,7 @@ const primerDeck = {
       onyomi:    'トク',
       kunyomi:   'あつ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1187-pluck',
       kanji:     '抽',
@@ -20075,7 +20076,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'ひき-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1598-two-mat-area',
       kanji:     '坪',
@@ -20089,7 +20090,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'つぼ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2609-male-animal',
       kanji:     '牡',
@@ -20103,7 +20104,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'おす, お-, おん-',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1404-crash',
       kanji:     '墜',
@@ -20117,7 +20118,7 @@ const primerDeck = {
       onyomi:    'ツイ',
       kunyomi:   'お.ちる、お.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0897-rather',
       kanji:     '寧',
@@ -20132,7 +20133,7 @@ const primerDeck = {
       kunyomi:   'むし.ろ',
       nanori:    'あき, やす, やすし, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2148-void',
       kanji:     '虚',
@@ -20146,7 +20147,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'むな.しい、うつ.ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2149-frolic',
       kanji:     '戯',
@@ -20160,7 +20161,7 @@ const primerDeck = {
       onyomi:    'ギ、ゲ',
       kunyomi:   'たわむ.れる、ざ.れる、じゃ.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0775-uncle',
       kanji:     '叔',
@@ -20175,7 +20176,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0776-coach',
       kanji:     '督',
@@ -20190,7 +20191,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ただ, ただし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1731-loins',
       kanji:     '腰',
@@ -20205,7 +20206,7 @@ const primerDeck = {
       kunyomi:   'こし',
       nanori:    'うすぐ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1964-partial',
       kanji:     '偏',
@@ -20219,7 +20220,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'かたよ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0418-key',
       kanji:     '鍵',
@@ -20233,7 +20234,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'かぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2018-conveyor',
       kanji:     '搬',
@@ -20247,7 +20248,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0255-silence',
       kanji:     '黙',
@@ -20261,7 +20262,7 @@ const primerDeck = {
       onyomi:    'モク、ボク',
       kunyomi:   'だま.る、もだ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1830-equal',
       kanji:     '匹',
@@ -20275,7 +20276,7 @@ const primerDeck = {
       onyomi:    'ヒツ',
       kunyomi:   'ひき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0546-pregnancy',
       kanji:     '妊',
@@ -20289,7 +20290,7 @@ const primerDeck = {
       onyomi:    'ニン、ジン',
       kunyomi:   'はら.む、みごも.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2189-barracks',
       kanji:     '屯',
@@ -20303,7 +20304,7 @@ const primerDeck = {
       onyomi:    'トン',
       kunyomi:   'たむろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1609-genuine',
       kanji:     '純',
@@ -20318,7 +20319,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あつ, すみ, み, やすし, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1997-shield',
       kanji:     '盾',
@@ -20332,7 +20333,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'たて',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1998-sequential',
       kanji:     '循',
@@ -20346,7 +20347,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0620-sayeth',
       kanji:     '曰',
@@ -20360,7 +20361,7 @@ const primerDeck = {
       onyomi:    'エツ',
       kunyomi:   'いわ.く, のたま.う, のたま.わく, ここに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1256-bend',
       kanji:     '曲',
@@ -20375,7 +20376,7 @@ const primerDeck = {
       kunyomi:   'ま.がる、ま.げる、くま',
       nanori:    'まがた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1969-code',
       kanji:     '典',
@@ -20390,7 +20391,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'すけ, つね, の, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1551-bountiful',
       kanji:     '豊',
@@ -20405,7 +20406,7 @@ const primerDeck = {
       kunyomi:   'ゆた.か、とよ',
       nanori:    'て, で, と, ひろし, ふう, ぶん, ほ, ゆたか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2170-agriculture',
       kanji:     '農',
@@ -20420,7 +20421,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'な, の, み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2171-concentrated',
       kanji:     '濃',
@@ -20435,7 +20436,7 @@ const primerDeck = {
       kunyomi:   'こ.い',
       nanori:    'の',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1257-cadet',
       kanji:     '曹',
@@ -20449,7 +20450,7 @@ const primerDeck = {
       onyomi:    'ソウ、ゾウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1258-encounter',
       kanji:     '遭',
@@ -20463,7 +20464,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あ.う、あ.わせる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0969-regularity',
       kanji:     '秩',
@@ -20478,7 +20479,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ちち, ちっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2611-lapis-lazuli',
       kanji:     '琉',
@@ -20492,7 +20493,7 @@ const primerDeck = {
       onyomi:    'リュウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2080-zen',
       kanji:     '禅',
@@ -20506,7 +20507,7 @@ const primerDeck = {
       onyomi:    'ゼン、セン',
       kunyomi:   'しずか、ゆず.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0530-disturb',
       kanji:     '妨',
@@ -20520,7 +20521,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'さまた.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1380-tread',
       kanji:     '践',
@@ -20534,7 +20535,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'ふ.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0864-manipulate',
       kanji:     '掌',
@@ -20548,7 +20549,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'てのひら、たなごころ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2619-tinkling',
       kanji:     '玲',
@@ -20563,7 +20564,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たま, あきら, あき, りょう, れ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0558-snake',
       kanji:     '蛇',
@@ -20578,7 +20579,7 @@ const primerDeck = {
       kunyomi:   'へび',
       nanori:    'あぶ, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1108-tile',
       kanji:     '瓦',
@@ -20592,7 +20593,7 @@ const primerDeck = {
       onyomi:    'ガ',
       kunyomi:   'かわら、ぐらむ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1504-zero',
       kanji:     '零',
@@ -20606,7 +20607,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'ぜろ、こぼ.す、こぼ.れる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0539-pointed',
       kanji:     '鋭',
@@ -20621,7 +20622,7 @@ const primerDeck = {
       kunyomi:   'するど.い',
       nanori:    'とし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0631-podium',
       kanji:     '壇',
@@ -20635,7 +20636,7 @@ const primerDeck = {
       onyomi:    'ダン、タン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0088-blade',
       kanji:     '刃',
@@ -20650,7 +20651,7 @@ const primerDeck = {
       kunyomi:   'は、やいば、き.る',
       nanori:    'ち, と',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0642-endure',
       kanji:     '忍',
@@ -20665,7 +20666,7 @@ const primerDeck = {
       kunyomi:   'しの.ぶ、しの.ばせる',
       nanori:    'おし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0643-acknowledge',
       kanji:     '認',
@@ -20679,7 +20680,7 @@ const primerDeck = {
       onyomi:    'ニン',
       kunyomi:   'みと.める、したた.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2285-bash',
       kanji:     '叩',
@@ -20693,7 +20694,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'たた.く, はた.く, すぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1285-daybreak',
       kanji:     '暁',
@@ -20708,7 +20709,7 @@ const primerDeck = {
       kunyomi:   'あかつき、さと.る',
       nanori:    'あき, あきら, あけ, さと, さとる, てる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2326-sung-dynasty',
       kanji:     '宋',
@@ -20722,7 +20723,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2450-hollow-reed',
       kanji:     '芦',
@@ -20737,7 +20738,7 @@ const primerDeck = {
       kunyomi:   'あし, よし',
       nanori:    'あ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0930-erection',
       kanji:     '勃',
@@ -20751,7 +20752,7 @@ const primerDeck = {
       onyomi:    'ボツ、ホツ',
       kunyomi:   'おこ.る、にわかに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1684-bee',
       kanji:     '蜂',
@@ -20766,7 +20767,7 @@ const primerDeck = {
       kunyomi:   'はち',
       nanori:    'ほ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1927-damp',
       kanji:     '湿',
@@ -20780,7 +20781,7 @@ const primerDeck = {
       onyomi:    'シツ、シュウ',
       kunyomi:   'しめ.る、しめ.す、うるお.う、うるお.す',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0469-pupil',
       kanji:     '瞳',
@@ -20795,7 +20796,7 @@ const primerDeck = {
       kunyomi:   'ひとみ',
       nanori:    'あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1232-immersed',
       kanji:     '浸',
@@ -20809,7 +20810,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'ひた.す、ひた.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2011-heir',
       kanji:     '嗣',
@@ -20824,7 +20825,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき, つかさ, つぎ, つぐ, ひで',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1680-animal-sacrifice',
       kanji:     '牲',
@@ -20838,7 +20839,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1121-yell',
       kanji:     '喚',
@@ -20852,7 +20853,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'わめ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0376-rebuke',
       kanji:     '諭',
@@ -20867,7 +20868,7 @@ const primerDeck = {
       kunyomi:   'さと.す',
       nanori:    'ゆう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0045-measurement',
       kanji:     '寸',
@@ -20882,7 +20883,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'す, みき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1862-vis-a-vis',
       kanji:     '対',
@@ -20897,7 +20898,7 @@ const primerDeck = {
       kunyomi:   'あいて、こた.える、そろ.い、つれあ.い、なら.ぶ、むか.う',
       nanori:    'つし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0221-town',
       kanji:     '村',
@@ -20912,7 +20913,7 @@ const primerDeck = {
       kunyomi:   'むら',
       nanori:    'え, むた, ら',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0625-group',
       kanji:     '団',
@@ -20926,7 +20927,7 @@ const primerDeck = {
       onyomi:    'ダン、トン',
       kunyomi:   'かたまり、まる.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1075-adhere',
       kanji:     '付',
@@ -20941,7 +20942,7 @@ const primerDeck = {
       kunyomi:   'つ.ける、-つ.ける、-づ.ける、つ.け、つ.け-、-つ.け、-づ.け、-づけ、つ.く、-づ.く、つ.き、-つ.き、-つき、-づ.き、-づき',
       nanori:    'つけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0941-gain',
       kanji:     '得',
@@ -20956,7 +20957,7 @@ const primerDeck = {
       kunyomi:   'え.る、う.る',
       nanori:    'あつ, てろ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0170-buddhist-temple',
       kanji:     '寺',
@@ -20970,7 +20971,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'てら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0171-time',
       kanji:     '時',
@@ -20985,7 +20986,7 @@ const primerDeck = {
       kunyomi:   'とき、-どき',
       nanori:    'と, とぎ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0261-special',
       kanji:     '特',
@@ -20999,7 +21000,7 @@ const primerDeck = {
       onyomi:    'トク',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0712-hold',
       kanji:     '持',
@@ -21014,7 +21015,7 @@ const primerDeck = {
       kunyomi:   'も.つ、-も.ち、も.てる',
       nanori:    'もち, もつ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1016-etc',
       kanji:     '等',
@@ -21029,7 +21030,7 @@ const primerDeck = {
       kunyomi:   'ひと.しい、など、-ら',
       nanori:    'と, ひ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1077-municipality',
       kanji:     '府',
@@ -21044,7 +21045,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'い, う, お, はん',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0047-specialty',
       kanji:     '専',
@@ -21058,7 +21059,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'もっぱ.ら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0296-guidance',
       kanji:     '導',
@@ -21073,7 +21074,7 @@ const primerDeck = {
       kunyomi:   'みちび.く',
       nanori:    'みち',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0198-guard',
       kanji:     '守',
@@ -21088,7 +21089,7 @@ const primerDeck = {
       kunyomi:   'まも.る、まも.り、もり、-もり、かみ',
       nanori:    'う, し, も, て',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1757-fight',
       kanji:     '闘',
@@ -21103,7 +21104,7 @@ const primerDeck = {
       kunyomi:   'たたか.う、あらそ.う',
       nanori:    'と',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1554-timber-trees',
       kanji:     '樹',
@@ -21118,7 +21119,7 @@ const primerDeck = {
       kunyomi:   'き',
       nanori:    'いつき, うえ, こ, しげ, じ, たちき, たつ, たつる, な',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1338-shoot',
       kanji:     '射',
@@ -21132,7 +21133,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'い.る、さ.す、う.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0944-wait',
       kanji:     '待',
@@ -21147,7 +21148,7 @@ const primerDeck = {
       kunyomi:   'ま.つ、-ま.ち',
       nanori:    'まち, まつ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0370-poem',
       kanji:     '詩',
@@ -21161,7 +21162,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'うた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0608-rob',
       kanji:     '奪',
@@ -21175,7 +21176,7 @@ const primerDeck = {
       onyomi:    'ダツ',
       kunyomi:   'うば.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0364-chastise',
       kanji:     '討',
@@ -21189,7 +21190,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'う.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1687-longevity',
       kanji:     '寿',
@@ -21204,7 +21205,7 @@ const primerDeck = {
       kunyomi:   'ことぶき、ことぶ.く、ことほ.ぐ',
       nanori:    'かず, じ, じゅう, すっ, すみ, とし, としかつ, なが, のぶ, のり, ひさ, ひさし, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0168-seal',
       kanji:     '封',
@@ -21218,7 +21219,7 @@ const primerDeck = {
       onyomi:    'フウ、ホウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1400-affixed',
       kanji:     '附',
@@ -21233,7 +21234,7 @@ const primerDeck = {
       kunyomi:   'つ.ける、つ.く',
       nanori:    'ずき, づけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1339-apologize',
       kanji:     '謝',
@@ -21248,7 +21249,7 @@ const primerDeck = {
       kunyomi:   'あやま.る',
       nanori:    'さ, ざ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1228-inquire',
       kanji:     '尋',
@@ -21263,7 +21264,7 @@ const primerDeck = {
       kunyomi:   'たず.ねる、ひろ',
       nanori:    'ず, つぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1176-military-officer',
       kanji:     '尉',
@@ -21277,7 +21278,7 @@ const primerDeck = {
       onyomi:    'イ、ジョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0258-hunt',
       kanji:     '狩',
@@ -21292,7 +21293,7 @@ const primerDeck = {
       kunyomi:   'か.る、か.り、-が.り',
       nanori:    'かり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1050-waiter',
       kanji:     '侍',
@@ -21307,7 +21308,7 @@ const primerDeck = {
       kunyomi:   'さむらい、はべ.る',
       nanori:    'かみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1076-token',
       kanji:     '符',
@@ -21321,7 +21322,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1177-consolation',
       kanji:     '慰',
@@ -21335,7 +21336,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'なぐさ.める、なぐさ.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0470-bell',
       kanji:     '鐘',
@@ -21349,7 +21350,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'かね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2268-phoenix',
       kanji:     '鳳',
@@ -21364,7 +21365,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おおとり, ふげ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1552-drum',
       kanji:     '鼓',
@@ -21378,7 +21379,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'つづみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0993-chic',
       kanji:     '粋',
@@ -21392,7 +21393,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'いき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2358-muster',
       kanji:     '揃',
@@ -21407,7 +21408,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'そろ.える, そろ.う, そろ.い, き.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2146-captive',
       kanji:     '虜',
@@ -21421,7 +21422,7 @@ const primerDeck = {
       onyomi:    'リョ、ロ',
       kunyomi:   'とりこ、とりく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2437-hawthorn',
       kanji:     '莉',
@@ -21435,7 +21436,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1074-greatness',
       kanji:     '傑',
@@ -21450,7 +21451,7 @@ const primerDeck = {
       kunyomi:   'すぐ.れる',
       nanori:    'すぐ, たけ, まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2744-vendetta',
       kanji:     '讐',
@@ -21464,7 +21465,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'あだ, むく.いる, あ.たる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1650-lass',
       kanji:     '嬢',
@@ -21478,7 +21479,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'むすめ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2971-abyss-old',
       kanji:     '淵',
@@ -21492,7 +21493,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'ふち, かた.い, はなわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1099-rot',
       kanji:     '腐',
@@ -21506,7 +21507,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'くさ.る、-くさ.る、くさ.れる、くさ.れ、くさ.らす、くさ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1903-go',
       kanji:     '碁',
@@ -21520,7 +21521,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2118-swing',
       kanji:     '揺',
@@ -21534,7 +21535,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'ゆ.れる、ゆ.る、ゆ.らぐ、ゆ.るぐ、ゆ.する、ゆ.さぶる、ゆ.すぶる、うご.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1161-hearth',
       kanji:     '炉',
@@ -21548,7 +21549,7 @@ const primerDeck = {
       onyomi:    'ロ',
       kunyomi:   'いろり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0559-rainbow',
       kanji:     '虹',
@@ -21562,7 +21563,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'にじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1796-imperial-order',
       kanji:     '勅',
@@ -21577,7 +21578,7 @@ const primerDeck = {
       kunyomi:   'いまし.める、みことのり',
       nanori:    'て, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1160-fan',
       kanji:     '扇',
@@ -21592,7 +21593,7 @@ const primerDeck = {
       kunyomi:   'おうぎ',
       nanori:    'おう, おおぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1741-camphor-tree',
       kanji:     '楠',
@@ -21607,7 +21608,7 @@ const primerDeck = {
       kunyomi:   'くす, くすのき',
       nanori:    'くず, な',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0162-spit',
       kanji:     '吐',
@@ -21621,7 +21622,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'は.く、つ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1824-epidemic',
       kanji:     '疫',
@@ -21635,7 +21636,7 @@ const primerDeck = {
       onyomi:    'エキ、ヤク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1939-deluge',
       kanji:     '洪',
@@ -21650,7 +21651,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ほん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1626-shout',
       kanji:     '叫',
@@ -21664,7 +21665,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'さけ.ぶ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0343-robust',
       kanji:     '壮',
@@ -21679,7 +21680,7 @@ const primerDeck = {
       kunyomi:   'さかん',
       nanori:    'つよし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0425-attire',
       kanji:     '装',
@@ -21693,7 +21694,7 @@ const primerDeck = {
       onyomi:    'ソウ、ショウ',
       kunyomi:   'よそお.う、よそお.い',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0344-villa',
       kanji:     '荘',
@@ -21708,7 +21709,7 @@ const primerDeck = {
       kunyomi:   'ほうき、おごそ.か',
       nanori:    'そ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0771-limb',
       kanji:     '肢',
@@ -21722,7 +21723,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2200-sign-of-the-snake',
       kanji:     '巳',
@@ -21736,7 +21737,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2993-enshrine',
       kanji:     '祀',
@@ -21750,7 +21751,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'まつ.る, まつり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0545-frozen',
       kanji:     '凍',
@@ -21765,7 +21766,7 @@ const primerDeck = {
       kunyomi:   'こお.る、こご.える、こご.る、い.てる、し.みる',
       nanori:    'こおり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0586-sheep',
       kanji:     '羊',
@@ -21780,7 +21781,7 @@ const primerDeck = {
       kunyomi:   'ひつじ',
       nanori:    'よ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1931-profession',
       kanji:     '業',
@@ -21795,7 +21796,7 @@ const primerDeck = {
       kunyomi:   'わざ',
       nanori:    'なり, のぶ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0587-beauty',
       kanji:     '美',
@@ -21810,7 +21811,7 @@ const primerDeck = {
       kunyomi:   'うつく.しい',
       nanori:    'はる, よし, よしみ, り',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0691-righteousness',
       kanji:     '義',
@@ -21825,7 +21826,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ただし, ちか, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0692-deliberation',
       kanji:     '議',
@@ -21840,7 +21841,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'かた, のり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1003-esq',
       kanji:     '様',
@@ -21854,7 +21855,7 @@ const primerDeck = {
       onyomi:    'ヨウ、ショウ',
       kunyomi:   'さま、さん',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0594-don',
       kanji:     '着',
@@ -21868,7 +21869,7 @@ const primerDeck = {
       onyomi:    'チャク、ジャク',
       kunyomi:   'き.る、-ぎ、き.せる、-き.せ、つ.く、つ.ける',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0591-accomplished',
       kanji:     '達',
@@ -21883,7 +21884,7 @@ const primerDeck = {
       kunyomi:   'たち',
       nanori:    'かつ, さと, て, てつ, とおる, みち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0588-ocean',
       kanji:     '洋',
@@ -21898,7 +21899,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'なだ, ひろ, ひろし, よ, よし',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0593-distinction',
       kanji:     '差',
@@ -21912,7 +21913,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'さ.す、さ.し',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1247-flock',
       kanji:     '群',
@@ -21927,7 +21928,7 @@ const primerDeck = {
       kunyomi:   'む.れる、む.れ、むら、むら.がる',
       nanori:    'ぐり, ぐ, こお, こおり, ごうり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1591-foster',
       kanji:     '養',
@@ -21942,7 +21943,7 @@ const primerDeck = {
       kunyomi:   'やしな.う',
       nanori:    'や',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1112-virtuous',
       kanji:     '善',
@@ -21957,7 +21958,7 @@ const primerDeck = {
       kunyomi:   'よ.い、い.い、よ.く、よし.とする',
       nanori:    'たる, よし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0589-detailed',
       kanji:     '詳',
@@ -21972,7 +21973,7 @@ const primerDeck = {
       kunyomi:   'くわ.しい、つまび.らか',
       nanori:    'よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0590-fresh',
       kanji:     '鮮',
@@ -21986,7 +21987,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'あざ.やか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1059-ceremony',
       kanji:     '儀',
@@ -22001,7 +22002,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1148-slow',
       kanji:     '遅',
@@ -22016,7 +22017,7 @@ const primerDeck = {
       kunyomi:   'おく.れる、おく.らす、おそ.い',
       nanori:    'じ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1169-auspicious',
       kanji:     '祥',
@@ -22031,7 +22032,7 @@ const primerDeck = {
       kunyomi:   'さいわ.い、きざ.し、よ.い、つまび.らか',
       nanori:    'あき, さか, さち, ひろ, まさ, やす, ゆき, よし, あきら, さき, さむ, ただ, なか, なが',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2940-soar',
       kanji:     '翔',
@@ -22046,7 +22047,7 @@ const primerDeck = {
       kunyomi:   'かけ.る, と.ぶ',
       nanori:    'か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2904-conglomerate',
       kanji:     '叢',
@@ -22060,7 +22061,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くさむら, むら.がる, むら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0693-sacrifice',
       kanji:     '犠',
@@ -22074,7 +22075,7 @@ const primerDeck = {
       onyomi:    'ギ、キ',
       kunyomi:   'いけにえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1421-depression',
       kanji:     '窪',
@@ -22088,7 +22089,7 @@ const primerDeck = {
       onyomi:    'ワ',
       kunyomi:   'くぼ.む, くぼ.み, くぼ.まる, くぼ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2013-liner',
       kanji:     '舶',
@@ -22102,7 +22103,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2460-germinate',
       kanji:     '萌',
@@ -22117,7 +22118,7 @@ const primerDeck = {
       kunyomi:   'も.える, きざ.す, めばえ, きざ.し',
       nanori:    'もえ, きざし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1826-mannerism',
       kanji:     '癖',
@@ -22131,7 +22132,7 @@ const primerDeck = {
       onyomi:    'ヘキ',
       kunyomi:   'くせ、くせ.に',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1929-slender',
       kanji:     '繊',
@@ -22145,7 +22146,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0767-husk',
       kanji:     '殻',
@@ -22159,7 +22160,7 @@ const primerDeck = {
       onyomi:    'カク、コク、バイ',
       kunyomi:   'から、がら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1772-admirable',
       kanji:     '偉',
@@ -22174,7 +22175,7 @@ const primerDeck = {
       kunyomi:   'えら.い',
       nanori:    'ひで',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2479-pale-blue',
       kanji:     '蒼',
@@ -22188,7 +22189,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あお.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0250-portent',
       kanji:     '兆',
@@ -22202,7 +22203,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'きざ.す、きざ.し',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0301-escape',
       kanji:     '逃',
@@ -22216,7 +22217,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'に.げる、に.がす、のが.す、のが.れる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0710-challenge',
       kanji:     '挑',
@@ -22230,7 +22231,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'いど.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0251-peach-tree',
       kanji:     '桃',
@@ -22245,7 +22246,7 @@ const primerDeck = {
       kunyomi:   'もも',
       nanori:    'み, もの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1378-hop',
       kanji:     '跳',
@@ -22259,7 +22260,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'は.ねる、と.ぶ、-と.び',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0828-tempt',
       kanji:     '唆',
@@ -22273,7 +22274,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'そそ.る、そそのか.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1026-however',
       kanji:     '但',
@@ -22288,7 +22289,7 @@ const primerDeck = {
       kunyomi:   'ただ.し',
       nanori:    'たじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1600-reap',
       kanji:     '刈',
@@ -22303,7 +22304,7 @@ const primerDeck = {
       kunyomi:   'か.る',
       nanori:    'かっ, かり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2108-corner',
       kanji:     '隅',
@@ -22317,7 +22318,7 @@ const primerDeck = {
       onyomi:    'グウ',
       kunyomi:   'すみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0825-sulfur',
       kanji:     '硫',
@@ -22331,7 +22332,7 @@ const primerDeck = {
       onyomi:    'リュウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0280-display',
       kanji:     '呈',
@@ -22345,7 +22346,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0960-extent',
       kanji:     '程',
@@ -22360,7 +22361,7 @@ const primerDeck = {
       kunyomi:   'ほど、-ほど',
       nanori:    'ほと',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1807-tumor',
       kanji:     '腫',
@@ -22374,7 +22375,7 @@ const primerDeck = {
       onyomi:    'シュ、ショウ',
       kunyomi:   'は.れる、は.れ、は.らす、く.む、はれもの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2564-oar',
       kanji:     '梶',
@@ -22388,7 +22389,7 @@ const primerDeck = {
       onyomi:    'ビ',
       kunyomi:   'かじ, こずえ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2472-hollyhock',
       kanji:     '葵',
@@ -22403,7 +22404,7 @@ const primerDeck = {
       kunyomi:   'あおい',
       nanori:    'まもる, け',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2891-peregrine-falcon',
       kanji:     '隼',
@@ -22418,7 +22419,7 @@ const primerDeck = {
       kunyomi:   'はやぶさ',
       nanori:    'はや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0606-semi',
       kanji:     '準',
@@ -22432,7 +22433,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'じゅん.じる、じゅん.ずる、なぞら.える、のり、ひと.しい、みずもり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1205-naked',
       kanji:     '裸',
@@ -22446,7 +22447,7 @@ const primerDeck = {
       onyomi:    'ラ',
       kunyomi:   'はだか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2076-miss',
       kanji:     '喪',
@@ -22460,7 +22461,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'も',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0194-trunk',
       kanji:     '胴',
@@ -22474,7 +22475,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1094-captured',
       kanji:     '囚',
@@ -22488,7 +22489,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'とら.われる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2822-tame',
       kanji:     '馴',
@@ -22502,7 +22503,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'な.れる, な.らす, したが.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0019-companion',
       kanji:     '朋',
@@ -22516,7 +22517,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'とも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0836-crumble',
       kanji:     '崩',
@@ -22530,7 +22531,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'くず.れる、-くず.れ、くず.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1467-cotton',
       kanji:     '綿',
@@ -22545,7 +22546,7 @@ const primerDeck = {
       kunyomi:   'わた',
       nanori:    'う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2125-countenance',
       kanji:     '貌',
@@ -22559,7 +22560,7 @@ const primerDeck = {
       onyomi:    'ボウ、バク',
       kunyomi:   'かたち、かたどる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1388-pot',
       kanji:     '鍋',
@@ -22573,7 +22574,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'なべ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2747-compliment',
       kanji:     '讃',
@@ -22588,7 +22589,7 @@ const primerDeck = {
       kunyomi:   'ほ.める, たた.える',
       nanori:    'さぬ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1832-hinge',
       kanji:     '枢',
@@ -22602,7 +22603,7 @@ const primerDeck = {
       onyomi:    'スウ、シュ',
       kunyomi:   'とぼそ、からくり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2094-crow',
       kanji:     '烏',
@@ -22616,7 +22617,7 @@ const primerDeck = {
       onyomi:    'ウ',
       kunyomi:   'からす, いずくんぞ, なんぞ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1151-shaku',
       kanji:     '尺',
@@ -22631,7 +22632,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'せき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2138-station',
       kanji:     '駅',
@@ -22645,7 +22646,7 @@ const primerDeck = {
       onyomi:    'エキ',
       kunyomi:   '',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1153-swamp',
       kanji:     '沢',
@@ -22660,7 +22661,7 @@ const primerDeck = {
       kunyomi:   'さわ、うるお.い、うるお.す、つや',
       nanori:    'おも, さ, さわん, わさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1154-translate',
       kanji:     '訳',
@@ -22674,7 +22675,7 @@ const primerDeck = {
       onyomi:    'ヤク',
       kunyomi:   'わけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2057-explanation',
       kanji:     '釈',
@@ -22689,7 +22690,7 @@ const primerDeck = {
       kunyomi:   'とく、す.てる、ゆる.す',
       nanori:    'しゃ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1155-choose',
       kanji:     '択',
@@ -22703,7 +22704,7 @@ const primerDeck = {
       onyomi:    'タク',
       kunyomi:   'えら.ぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1156-daytime',
       kanji:     '昼',
@@ -22717,7 +22718,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'ひる',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1152-exhaust',
       kanji:     '尽',
@@ -22731,7 +22732,7 @@ const primerDeck = {
       onyomi:    'ジン、サン',
       kunyomi:   'つ.くす、-つ.くす、-づ.くし、-つ.く、-づ.く、-ず.く、つ.きる、つ.かす、さかづき、ことごと.く、つか、つき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1109-flower-pot',
       kanji:     '瓶',
@@ -22746,7 +22747,7 @@ const primerDeck = {
       kunyomi:   'かめ',
       nanori:    'へい, べ, ぺ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2537-uncivilized',
       kanji:     '胡',
@@ -22761,7 +22762,7 @@ const primerDeck = {
       kunyomi:   'なんぞ',
       nanori:    'えびす, くる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0159-lake',
       kanji:     '湖',
@@ -22776,7 +22777,7 @@ const primerDeck = {
       kunyomi:   'みずうみ',
       nanori:    'うみ, み',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1603-villain',
       kanji:     '凶',
@@ -22790,7 +22791,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2084-brain',
       kanji:     '脳',
@@ -22804,7 +22805,7 @@ const primerDeck = {
       onyomi:    'ノウ、ドウ',
       kunyomi:   'のうずる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2085-trouble',
       kanji:     '悩',
@@ -22818,7 +22819,7 @@ const primerDeck = {
       onyomi:    'ノウ',
       kunyomi:   'なや.む、なや.ます、なや.ましい、なやみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0681-yearn',
       kanji:     '憧',
@@ -22832,7 +22833,7 @@ const primerDeck = {
       onyomi:    'ショウ、トウ、ドウ',
       kunyomi:   'あこが.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1561-lid',
       kanji:     '蓋',
@@ -22846,7 +22847,7 @@ const primerDeck = {
       onyomi:    'ガイ、カイ、コウ',
       kunyomi:   'ふた、けだ.し、おお.う、かさ、かこう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0214-shelf',
       kanji:     '棚',
@@ -22860,7 +22861,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'たな、-だな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2336-mountaintop',
       kanji:     '嶺',
@@ -22875,7 +22876,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'みね, ね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1485-livestock',
       kanji:     '畜',
@@ -22889,7 +22890,7 @@ const primerDeck = {
       onyomi:    'チク',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1486-amass',
       kanji:     '蓄',
@@ -22903,7 +22904,7 @@ const primerDeck = {
       onyomi:    'チク',
       kunyomi:   'たくわ.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0644-mourning',
       kanji:     '忌',
@@ -22918,7 +22919,7 @@ const primerDeck = {
       kunyomi:   'い.む、い.み、い.まわしい',
       nanori:    'いまわ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0607-stirred-up',
       kanji:     '奮',
@@ -22932,7 +22933,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'ふる.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0041-tongue',
       kanji:     '舌',
@@ -22946,7 +22947,7 @@ const primerDeck = {
       onyomi:    'ゼツ',
       kunyomi:   'した',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0368-tale',
       kanji:     '話',
@@ -22960,7 +22961,7 @@ const primerDeck = {
       onyomi:    'ワ',
       kunyomi:   'はな.す、はなし',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0154-lively',
       kanji:     '活',
@@ -22974,7 +22975,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'い.きる、い.かす、い.ける',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0076-riot',
       kanji:     '乱',
@@ -22989,7 +22990,7 @@ const primerDeck = {
       kunyomi:   'みだ.れる、みだ.る、みだ.す、みだ、おさ.める、わた.る',
       nanori:    'ら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1613-resign',
       kanji:     '辞',
@@ -23003,7 +23004,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'や.める、いな.む',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0714-fasten',
       kanji:     '括',
@@ -23017,7 +23018,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'くく.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1448-strangle',
       kanji:     '絞',
@@ -23031,7 +23032,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'しぼ.る、し.める、し.まる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2184-atmosphere',
       kanji:     '雰',
@@ -23045,7 +23046,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2361-disseminate',
       kanji:     '播',
@@ -23060,7 +23061,7 @@ const primerDeck = {
       kunyomi:   'ま.く',
       nanori:    'はり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1196-headland',
       kanji:     '岬',
@@ -23075,7 +23076,7 @@ const primerDeck = {
       kunyomi:   'みさき',
       nanori:    'さき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2099-warmth',
       kanji:     '暖',
@@ -23089,7 +23090,7 @@ const primerDeck = {
       onyomi:    'ダン、ノン',
       kunyomi:   'あたた.か、あたた.かい、あたた.まる、あたた.める',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2850-wild-duck',
       kanji:     '鴨',
@@ -23103,7 +23104,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'かも, あひる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1385-marrow',
       kanji:     '髄',
@@ -23117,7 +23118,7 @@ const primerDeck = {
       onyomi:    'ズイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0772-stalk',
       kanji:     '茎',
@@ -23131,7 +23132,7 @@ const primerDeck = {
       onyomi:    'ケイ、キョウ',
       kunyomi:   'くき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0100-cavity',
       kanji:     '孔',
@@ -23146,7 +23147,7 @@ const primerDeck = {
       kunyomi:   'あな',
       nanori:    'のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0720-pick-up',
       kanji:     '拾',
@@ -23160,7 +23161,7 @@ const primerDeck = {
       onyomi:    'シュウ、ジュウ',
       kunyomi:   'ひろ.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1476-truss',
       kanji:     '縛',
@@ -23174,7 +23175,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'しば.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2497-tryst',
       kanji:     '逢',
@@ -23189,7 +23190,7 @@ const primerDeck = {
       kunyomi:   'あ.う, むか.える',
       nanori:    'あい, おう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2560-nestle',
       kanji:     '栖',
@@ -23204,7 +23205,7 @@ const primerDeck = {
       kunyomi:   'す.む',
       nanori:    'す, すみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2607-tug',
       kanji:     '牽',
@@ -23218,7 +23219,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'ひ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2898-stalwart',
       kanji:     '毅',
@@ -23233,7 +23234,7 @@ const primerDeck = {
       kunyomi:   'つよ.い',
       nanori:    'つよし, こわし, たけし, たけ, はたす, あつし, つよ, とし, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2800-haze',
       kanji:     '霞',
@@ -23247,7 +23248,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'かすみ, かす.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2402-port',
       kanji:     '湊',
@@ -23261,7 +23262,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'みなと, あつ.まる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0070-texture',
       kanji:     '肌',
@@ -23275,7 +23276,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'はだ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0583-intestines',
       kanji:     '腸',
@@ -23289,7 +23290,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'はらわた、わた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0704-clap',
       kanji:     '拍',
@@ -23303,7 +23304,7 @@ const primerDeck = {
       onyomi:    'ハク、ヒョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2909-within',
       kanji:     '於',
@@ -23317,7 +23318,7 @@ const primerDeck = {
       onyomi:    'オ',
       kunyomi:   'おい.て, お.ける, ああ, より',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0187-black-ink',
       kanji:     '墨',
@@ -23332,7 +23333,7 @@ const primerDeck = {
       kunyomi:   'すみ',
       nanori:    'すの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2963-bo-tree',
       kanji:     '菩',
@@ -23346,7 +23347,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0999-watchtower',
       kanji:     '楼',
@@ -23360,7 +23361,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'たかどの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0953-penal',
       kanji:     '懲',
@@ -23374,7 +23375,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'こ.りる、こ.らす、こ.らしめる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1132-urine',
       kanji:     '尿',
@@ -23388,7 +23389,7 @@ const primerDeck = {
       onyomi:    'ニョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1464-accumulate',
       kanji:     '累',
@@ -23402,7 +23403,7 @@ const primerDeck = {
       onyomi:    'ルイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1040-performing-artist',
       kanji:     '伎',
@@ -23416,7 +23417,7 @@ const primerDeck = {
       onyomi:    'ギ、キ',
       kunyomi:   'わざ、わざおぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0989-sticky',
       kanji:     '粘',
@@ -23430,7 +23431,7 @@ const primerDeck = {
       onyomi:    'ネン',
       kunyomi:   'ねば.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2053-tusk',
       kanji:     '牙',
@@ -23444,7 +23445,7 @@ const primerDeck = {
       onyomi:    'ガ、ゲ',
       kunyomi:   'きば、は',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2056-gracious',
       kanji:     '雅',
@@ -23459,7 +23460,7 @@ const primerDeck = {
       kunyomi:   'みや.び',
       nanori:    'う, お, か, ただし, のり, まさ, まさし, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2054-bud',
       kanji:     '芽',
@@ -23474,7 +23475,7 @@ const primerDeck = {
       kunyomi:   'め',
       nanori:    'じ, めぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0599-char',
       kanji:     '焦',
@@ -23488,7 +23489,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'こ.げる、こ.がす、こ.がれる、あせ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1855-swell',
       kanji:     '膨',
@@ -23502,7 +23503,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'ふく.らむ、ふく.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1329-adroit',
       kanji:     '巧',
@@ -23517,7 +23518,7 @@ const primerDeck = {
       kunyomi:   'たく.み、たく.む、うま.い',
       nanori:    'かつ, たくみ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1192-flute',
       kanji:     '笛',
@@ -23532,7 +23533,7 @@ const primerDeck = {
       kunyomi:   'ふえ',
       nanori:    'う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2004-forge',
       kanji:     '鍛',
@@ -23547,7 +23548,7 @@ const primerDeck = {
       kunyomi:   'きた.える',
       nanori:    'か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2580-downspout',
       kanji:     '樋',
@@ -23562,7 +23563,7 @@ const primerDeck = {
       kunyomi:   'ひ, とい',
       nanori:    'て, と, とよ, とわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1710-surplus',
       kanji:     '剰',
@@ -23576,7 +23577,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'あまつさえ、あま.り、あま.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2925-dry-field',
       kanji:     '畠',
@@ -23591,7 +23592,7 @@ const primerDeck = {
       kunyomi:   'はたけ, はた',
       nanori:    'はな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1149-leak',
       kanji:     '漏',
@@ -23605,7 +23606,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'も.る、も.れる、も.らす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1857-wretched',
       kanji:     '惨',
@@ -23619,7 +23620,7 @@ const primerDeck = {
       onyomi:    'サン、ザン',
       kunyomi:   'みじ.め、いた.む、むご.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2168-with-child',
       kanji:     '娠',
@@ -23633,7 +23634,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0121-smash',
       kanji:     '砕',
@@ -23647,7 +23648,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'くだ.く、くだ.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2626-cancer',
       kanji:     '癌',
@@ -23661,7 +23662,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1394-chink',
       kanji:     '隙',
@@ -23675,7 +23676,7 @@ const primerDeck = {
       onyomi:    'ゲキ、キャク、ケキ',
       kunyomi:   'すき、す.く、す.かす、ひま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2893-ebisu',
       kanji:     '夷',
@@ -23690,7 +23691,7 @@ const primerDeck = {
       kunyomi:   'えびす, えみし, ころ.す, たい.らげる',
       nanori:    'し',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0889-daring',
       kanji:     '敢',
@@ -23704,7 +23705,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'あ.えて、あ.えない、あ.えず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2086-stern',
       kanji:     '厳',
@@ -23719,7 +23720,7 @@ const primerDeck = {
       kunyomi:   'おごそ.か、きび.しい、いか.めしい、いつくし',
       nanori:    'いつ, いづ, きゅうら, とし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1778-liver',
       kanji:     '肝',
@@ -23733,7 +23734,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'きも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0065-stubborn',
       kanji:     '頑',
@@ -23747,7 +23748,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'かたく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0666-ecstasy',
       kanji:     '悦',
@@ -23762,7 +23763,7 @@ const primerDeck = {
       kunyomi:   'よろこ.ぶ、よろこ.ばす',
       nanori:    'や, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0515-compensation',
       kanji:     '賠',
@@ -23776,7 +23777,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1374-nab',
       kanji:     '捉',
@@ -23790,7 +23791,7 @@ const primerDeck = {
       onyomi:    'ソク、サク',
       kunyomi:   'とら.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0612-delight',
       kanji:     '歓',
@@ -23805,7 +23806,7 @@ const primerDeck = {
       kunyomi:   'よろこ.ぶ',
       nanori:    'ぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2562-temple-grove',
       kanji:     '杜',
@@ -23819,7 +23820,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'もり, ふさ.ぐ, やまなし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2140-burdensome',
       kanji:     '駄',
@@ -23833,7 +23834,7 @@ const primerDeck = {
       onyomi:    'ダ、タ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0764-thigh',
       kanji:     '股',
@@ -23847,7 +23848,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'また、もも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2186-tempering',
       kanji:     '錬',
@@ -23861,7 +23862,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'ね.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1227-peel-off',
       kanji:     '剥',
@@ -23875,7 +23876,7 @@ const primerDeck = {
       onyomi:    'ハク、 ホク',
       kunyomi:   'へ.ぐ, へず.る, む.く, む.ける, は.がれる, は.ぐ, は.げる, は.がす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2539-purple-willow',
       kanji:     '楊',
@@ -23890,7 +23891,7 @@ const primerDeck = {
       kunyomi:   'かわ, やなぎ',
       nanori:    'やな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2416-abyss',
       kanji:     '渕',
@@ -23904,7 +23905,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'ふち, かた.い, はなわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1189-sleeve',
       kanji:     '袖',
@@ -23918,7 +23919,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'そで',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2286-fib',
       kanji:     '嘘',
@@ -23932,7 +23933,7 @@ const primerDeck = {
       onyomi:    'キョ',
       kunyomi:   'うそ, ふ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1668-undefiled',
       kanji:     '潔',
@@ -23947,7 +23948,7 @@ const primerDeck = {
       kunyomi:   'いさぎよ.い',
       nanori:    'きよ, きよし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2396-old-kyoto',
       kanji:     '洛',
@@ -23961,7 +23962,7 @@ const primerDeck = {
       onyomi:    'ラク',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0320-fall',
       kanji:     '落',
@@ -23976,7 +23977,7 @@ const primerDeck = {
       kunyomi:   'お.ちる、お.ち、お.とす',
       nanori:    'おち',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2499-remote-rtk3',
       kanji:     '遼',
@@ -23991,7 +23992,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'はるか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1746-clique',
       kanji:     '閥',
@@ -24005,7 +24006,7 @@ const primerDeck = {
       onyomi:    'バツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2952-shakyamuni-buddha',
       kanji:     '陀',
@@ -24019,7 +24020,7 @@ const primerDeck = {
       onyomi:    'タ',
       kunyomi:   'けわ.しい, ななめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2096-pigeon',
       kanji:     '鳩',
@@ -24034,7 +24035,7 @@ const primerDeck = {
       kunyomi:   'はと, あつ.める',
       nanori:    'やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1002-knee',
       kanji:     '膝',
@@ -24048,7 +24049,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'ひざ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0428-pathetic',
       kanji:     '哀',
@@ -24062,7 +24063,7 @@ const primerDeck = {
       onyomi:    'アイ',
       kunyomi:   'あわ.れ、あわ.れむ、かな.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0257-reed',
       kanji:     '荻',
@@ -24076,7 +24077,7 @@ const primerDeck = {
       onyomi:    'テキ',
       kunyomi:   'おぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0128-stinking',
       kanji:     '臭',
@@ -24090,7 +24091,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'くさ.い、-くさ.い、にお.う、にお.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2298-ingest',
       kanji:     '喰',
@@ -24105,7 +24106,7 @@ const primerDeck = {
       kunyomi:   'く.う, く.らう',
       nanori:    'じき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2983-summit-alternate',
       kanji:     '峯',
@@ -24119,7 +24120,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'みね, ね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0902-aid',
       kanji:     '扶',
@@ -24133,7 +24134,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'たす.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1331-decay',
       kanji:     '朽',
@@ -24148,7 +24149,7 @@ const primerDeck = {
       kunyomi:   'く.ちる',
       nanori:    'くつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0957-equilibrium',
       kanji:     '衡',
@@ -24163,7 +24164,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ひら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2965-moo',
       kanji:     '牟',
@@ -24177,7 +24178,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1870-solemn',
       kanji:     '粛',
@@ -24191,7 +24192,7 @@ const primerDeck = {
       onyomi:    'シュク、スク',
       kunyomi:   'つつし.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1833-assault',
       kanji:     '殴',
@@ -24205,7 +24206,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'なぐ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1606-crystal',
       kanji:     '璃',
@@ -24220,7 +24221,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2097-chicken',
       kanji:     '鶏',
@@ -24234,7 +24235,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'にわとり、とり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1300-destitution',
       kanji:     '乏',
@@ -24248,7 +24249,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'とぼ.しい、とも.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1420-cavern',
       kanji:     '窟',
@@ -24262,7 +24263,7 @@ const primerDeck = {
       onyomi:    'クツ、コツ',
       kunyomi:   'いわや、いはや、あな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0228-parch',
       kanji:     '燥',
@@ -24276,7 +24277,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'はしゃ.ぐ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0673-hate',
       kanji:     '憎',
@@ -24290,7 +24291,7 @@ const primerDeck = {
       onyomi:    'ゾウ',
       kunyomi:   'にく.む、にく.い、にく.らしい、にく.しみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2116-tin-can',
       kanji:     '缶',
@@ -24305,7 +24306,7 @@ const primerDeck = {
       kunyomi:   'かま',
       nanori:    'ふ, べ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2117-pottery',
       kanji:     '陶',
@@ -24320,7 +24321,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'す, すえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0119-resemblance',
       kanji:     '肖',
@@ -24334,7 +24335,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'あやか.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0155-extinguish',
       kanji:     '消',
@@ -24348,7 +24349,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'き.える、け.す',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0124-plane',
       kanji:     '削',
@@ -24363,7 +24364,7 @@ const primerDeck = {
       kunyomi:   'けず.る、はつ.る、そ.ぐ',
       nanori:    'げ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2277-scout',
       kanji:     '哨',
@@ -24377,7 +24378,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'みはり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1649-lot',
       kanji:     '壌',
@@ -24391,7 +24392,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'つち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0991-cosmetics',
       kanji:     '粧',
@@ -24406,7 +24407,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2291-within-my-ability',
       kanji:     '叶',
@@ -24421,7 +24422,7 @@ const primerDeck = {
       kunyomi:   'かな.える, かな.う',
       nanori:    'かの, かのう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0699-extract',
       kanji:     '抄',
@@ -24436,7 +24437,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さ, り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1523-garden',
       kanji:     '苑',
@@ -24451,7 +24452,7 @@ const primerDeck = {
       kunyomi:   'その, う.つ',
       nanori:    'あや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0472-legitimate-wife',
       kanji:     '嫡',
@@ -24465,7 +24466,7 @@ const primerDeck = {
       onyomi:    'チャク、テキ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2576-lance',
       kanji:     '槍',
@@ -24480,7 +24481,7 @@ const primerDeck = {
       kunyomi:   'やり',
       nanori:    'うつ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1688-casting',
       kanji:     '鋳',
@@ -24494,7 +24495,7 @@ const primerDeck = {
       onyomi:    'チュウ、イ、シュ、シュウ',
       kunyomi:   'い.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2559-roost',
       kanji:     '棲',
@@ -24509,7 +24510,7 @@ const primerDeck = {
       kunyomi:   'す.む',
       nanori:    'ずみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0322-hades',
       kanji:     '冥',
@@ -24523,7 +24524,7 @@ const primerDeck = {
       onyomi:    'メイ、ミョウ',
       kunyomi:   'くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2281-quarrel',
       kanji:     '嘩',
@@ -24537,7 +24538,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'かまびす.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0203-banquet',
       kanji:     '宴',
@@ -24552,7 +24553,7 @@ const primerDeck = {
       kunyomi:   'うたげ',
       nanori:    'うた, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0218-chair',
       kanji:     '椅',
@@ -24566,7 +24567,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0784-claw',
       kanji:     '爪',
@@ -24580,7 +24581,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'つめ、つま-',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0794-accept',
       kanji:     '受',
@@ -24595,7 +24596,7 @@ const primerDeck = {
       kunyomi:   'う.ける、-う.け、う.かる',
       nanori:    'じょ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0796-love',
       kanji:     '愛',
@@ -24610,7 +24611,7 @@ const primerDeck = {
       kunyomi:   'いと.しい、かな.しい、め.でる、お.しむ、まな',
       nanori:    'あ, あし, え, かな, なる, めぐ, めぐみ, よし, ちか',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0789-leader',
       kanji:     '将',
@@ -24625,7 +24626,7 @@ const primerDeck = {
       kunyomi:   'まさ.に、はた、まさ、ひきい.る、もって',
       nanori:    'かつ, かつり, すすむ, たか, ゆき',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0795-impart',
       kanji:     '授',
@@ -24639,7 +24640,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   'さず.ける、さず.かる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1573-baron',
       kanji:     '爵',
@@ -24653,7 +24654,7 @@ const primerDeck = {
       onyomi:    'シャク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0976-rice-plant',
       kanji:     '稲',
@@ -24668,7 +24669,7 @@ const primerDeck = {
       kunyomi:   'いね、いな-',
       nanori:    'いの, しね, せ, な',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1410-conceal',
       kanji:     '隠',
@@ -24683,7 +24684,7 @@ const primerDeck = {
       kunyomi:   'かく.す、かく.し、かく.れる、かか.す、よ.る',
       nanori:    'お, がくし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0790-exhort',
       kanji:     '奨',
@@ -24698,7 +24699,7 @@ const primerDeck = {
       kunyomi:   'すす.める',
       nanori:    'まさし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0797-equivocal',
       kanji:     '曖',
@@ -24712,7 +24713,7 @@ const primerDeck = {
       onyomi:    'アイ',
       kunyomi:   'くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2498-far-off',
       kanji:     '遥',
@@ -24726,7 +24727,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'はる.か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1230-calm',
       kanji:     '穏',
@@ -24740,7 +24741,7 @@ const primerDeck = {
       onyomi:    'オン',
       kunyomi:   'おだ.やか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1814-stupid',
       kanji:     '痴',
@@ -24754,7 +24755,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'し.れる、おろか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1911-defile',
       kanji:     '潰',
@@ -24768,7 +24769,7 @@ const primerDeck = {
       onyomi:    'カイ、エ',
       kunyomi:   'つぶ.す、つぶ.れる、つい.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1699-trifle',
       kanji:     '僅',
@@ -24782,7 +24783,7 @@ const primerDeck = {
       onyomi:    'キン、ゴン',
       kunyomi:   'わず.か',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2364-dedicate-rtk3',
       kanji:     '捧',
@@ -24796,7 +24797,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'ささ.げる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0060-affix',
       kanji:     '貼',
@@ -24810,7 +24811,7 @@ const primerDeck = {
       onyomi:    'テン、チョウ',
       kunyomi:   'は.る、つ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2896-circling',
       kanji:     '廻',
@@ -24825,7 +24826,7 @@ const primerDeck = {
       kunyomi:   'まわ.る, まわ.す, もとお.る, めぐ.る, めぐ.らす',
       nanori:    'ざこ, じゃく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2031-vapor',
       kanji:     '汽',
@@ -24839,7 +24840,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1531-mortar',
       kanji:     '臼',
@@ -24853,7 +24854,7 @@ const primerDeck = {
       onyomi:    'キュウ、グ',
       kunyomi:   'うす、うすづ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1533-entertain',
       kanji:     '興',
@@ -24868,7 +24869,7 @@ const primerDeck = {
       kunyomi:   'おこ.る、おこ.す',
       nanori:    'おき, おこっ, とも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2974-ten-thousand-old',
       kanji:     '萬',
@@ -24883,7 +24884,7 @@ const primerDeck = {
       kunyomi:   'よろず',
       nanori:    'かず, ま, ゆる, よし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1632-intimate',
       kanji:     '睦',
@@ -24898,7 +24899,7 @@ const primerDeck = {
       kunyomi:   'むつ.まじい、むつ.む、むつ.ぶ',
       nanori:    'むつ, ちか, よし, あつ, む, むね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1223-lie',
       kanji:     '詐',
@@ -24912,7 +24913,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'いつわ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2575-birch',
       kanji:     '樺',
@@ -24927,7 +24928,7 @@ const primerDeck = {
       kunyomi:   'かば, かんば',
       nanori:    'から, かも, かん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0150-soup',
       kanji:     '汁',
@@ -24941,7 +24942,7 @@ const primerDeck = {
       onyomi:    'ジュウ',
       kunyomi:   'しる、-しる、つゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1899-deceit',
       kanji:     '欺',
@@ -24955,7 +24956,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'あざむ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0276-toy',
       kanji:     '玩',
@@ -24969,7 +24970,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'もちあそ.ぶ、もてあそ.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2696-foxtail-millet',
       kanji:     '粟',
@@ -24984,7 +24985,7 @@ const primerDeck = {
       kunyomi:   'あわ, もみ',
       nanori:    'あ, さっ, そう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2685-winnowing-fan',
       kanji:     '箕',
@@ -24999,7 +25000,7 @@ const primerDeck = {
       kunyomi:   'み',
       nanori:    'みの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0490-brown',
       kanji:     '褐',
@@ -25013,7 +25014,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2165-embarrass',
       kanji:     '辱',
@@ -25027,7 +25028,7 @@ const primerDeck = {
       onyomi:    'ジョク',
       kunyomi:   'はずかし.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2237-comma-design',
       kanji:     '巴',
@@ -25042,7 +25043,7 @@ const primerDeck = {
       kunyomi:   'ともえ, うずまき',
       nanori:    'とも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1890-color',
       kanji:     '色',
@@ -25057,7 +25058,7 @@ const primerDeck = {
       kunyomi:   'いろ',
       nanori:    'しか, しこ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1891-discontinue',
       kanji:     '絶',
@@ -25071,7 +25072,7 @@ const primerDeck = {
       onyomi:    'ゼツ',
       kunyomi:   'た.える、た.やす、た.つ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1893-fertilizer',
       kanji:     '肥',
@@ -25086,7 +25087,7 @@ const primerDeck = {
       kunyomi:   'こ.える、こえ、こ.やす、こ.やし、ふと.る',
       nanori:    'い, こい, ひえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2296-city-walls',
       kanji:     '邑',
@@ -25101,7 +25102,7 @@ const primerDeck = {
       kunyomi:   'うれ.える, くに, むら',
       nanori:    'お, おう, おお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1988-section',
       kanji:     '部',
@@ -25116,7 +25117,7 @@ const primerDeck = {
       kunyomi:   'へ、-べ',
       nanori:    'とり, ふ, ぺ, ま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1995-son',
       kanji:     '郎',
@@ -25131,7 +25132,7 @@ const primerDeck = {
       kunyomi:   'おとこ',
       nanori:    'いら, お, とう, もん, ろ, ろお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1986-county',
       kanji:     '郡',
@@ -25145,7 +25146,7 @@ const primerDeck = {
       onyomi:    'グン',
       kunyomi:   'こおり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1993-hometown',
       kanji:     '郷',
@@ -25160,7 +25161,7 @@ const primerDeck = {
       kunyomi:   'さと',
       nanori:    'くに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1994-echo',
       kanji:     '響',
@@ -25174,7 +25175,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'ひび.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1991-home-country',
       kanji:     '邦',
@@ -25188,7 +25189,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'くに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1990-mail',
       kanji:     '郵',
@@ -25202,7 +25203,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1992-interrogative',
       kanji:     '那',
@@ -25217,7 +25218,7 @@ const primerDeck = {
       kunyomi:   'なに、なんぞ、いかん',
       nanori:    'とも, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1987-outskirts',
       kanji:     '郊',
@@ -25231,7 +25232,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1984-residence',
       kanji:     '邸',
@@ -25246,7 +25247,7 @@ const primerDeck = {
       kunyomi:   'やしき',
       nanori:    'むら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2055-wicked',
       kanji:     '邪',
@@ -25260,7 +25261,7 @@ const primerDeck = {
       onyomi:    'ジャ',
       kunyomi:   'よこし.ま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1985-enclosure',
       kanji:     '郭',
@@ -25275,7 +25276,7 @@ const primerDeck = {
       kunyomi:   'くるわ',
       nanori:    'ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1996-corridor',
       kanji:     '廊',
@@ -25289,7 +25290,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2720-exclamation',
       kanji:     '耶',
@@ -25303,7 +25304,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1691-camellia',
       kanji:     '椿',
@@ -25318,7 +25319,7 @@ const primerDeck = {
       kunyomi:   'つばき',
       nanori:    'つば',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0031-gall-bladder',
       kanji:     '胆',
@@ -25333,7 +25334,7 @@ const primerDeck = {
       kunyomi:   'きも',
       nanori:    'い, まこと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0800-flexed',
       kanji:     '勾',
@@ -25348,7 +25349,7 @@ const primerDeck = {
       kunyomi:   'かぎ、ま.がる',
       nanori:    'まがり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0857-lead-metal',
       kanji:     '鉛',
@@ -25362,7 +25363,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'なまり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0672-repent',
       kanji:     '悔',
@@ -25376,7 +25377,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'く.いる、く.やむ、くや.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1756-column',
       kanji:     '欄',
@@ -25390,7 +25391,7 @@ const primerDeck = {
       onyomi:    'ラン',
       kunyomi:   'てすり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0708-kidnap',
       kanji:     '拐',
@@ -25404,7 +25405,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2919-nephew',
       kanji:     '甥',
@@ -25418,7 +25419,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'おい, むこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1822-scar',
       kanji:     '痕',
@@ -25432,7 +25433,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'あと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2222-mend',
       kanji:     '綴',
@@ -25446,7 +25447,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'と.じる, つづ.る, つづり, すみ.やか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2700-ties',
       kanji:     '絆',
@@ -25460,7 +25461,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'きずな, ほだ.す, つな.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1823-tired',
       kanji:     '疲',
@@ -25474,7 +25475,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'つか.れる、-づか.れ、つか.らす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0668-lament',
       kanji:     '悼',
@@ -25488,7 +25489,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'いた.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2653-bear-fruit',
       kanji:     '稔',
@@ -25503,7 +25504,7 @@ const primerDeck = {
       kunyomi:   'みの.る, みのり',
       nanori:    'とし, なる, なり, みのる, ね, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1269-confused',
       kanji:     '錯',
@@ -25517,7 +25518,7 @@ const primerDeck = {
       onyomi:    'サク、シャク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2263-pull-through',
       kanji:     '凌',
@@ -25531,7 +25532,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'しの.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0995-provisions',
       kanji:     '糧',
@@ -25545,7 +25546,7 @@ const primerDeck = {
       onyomi:    'リョウ、ロウ',
       kunyomi:   'かて',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0600-reef',
       kanji:     '礁',
@@ -25559,7 +25560,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0841-bluffs',
       kanji:     '崖',
@@ -25573,7 +25574,7 @@ const primerDeck = {
       onyomi:    'ガイ、ゲ、ギ',
       kunyomi:   'がけ、きし、はて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2713-gimp',
       kanji:     '綬',
@@ -25587,7 +25588,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   'ひも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0886-shame',
       kanji:     '恥',
@@ -25601,7 +25602,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'は.じる、はじ、は.じらう、は.ずかしい',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0984-cereals',
       kanji:     '穀',
@@ -25616,7 +25617,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0219-wither',
       kanji:     '枯',
@@ -25630,7 +25631,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'か.れる、か.らす',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0810-womb',
       kanji:     '胎',
@@ -25644,7 +25645,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2634-blue-green',
       kanji:     '碧',
@@ -25659,7 +25660,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'みどり, あお, たま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0694-rub',
       kanji:     '抹',
@@ -25673,7 +25674,7 @@ const primerDeck = {
       onyomi:    'マツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0369-recitation',
       kanji:     '詠',
@@ -25688,7 +25689,7 @@ const primerDeck = {
       kunyomi:   'よ.む、うた.う',
       nanori:    'うた, え, ええ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1424-hard-up',
       kanji:     '窮',
@@ -25702,7 +25703,7 @@ const primerDeck = {
       onyomi:    'キュウ、キョウ',
       kunyomi:   'きわ.める、きわ.まる、きわ.まり、きわ.み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0375-consent',
       kanji:     '諾',
@@ -25716,7 +25717,7 @@ const primerDeck = {
       onyomi:    'ダク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1461-sire',
       kanji:     '紳',
@@ -25731,7 +25732,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'まこと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0328-pit',
       kanji:     '坑',
@@ -25745,7 +25746,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0577-pork',
       kanji:     '豚',
@@ -25759,7 +25760,7 @@ const primerDeck = {
       onyomi:    'トン',
       kunyomi:   'ぶた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0696',
       kanji:     '拉',
@@ -25773,7 +25774,7 @@ const primerDeck = {
       onyomi:    'ラツ、ラ、ロウ',
       kunyomi:   'らっ.する、ひし.ぐ、くだ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1468-silk',
       kanji:     '絹',
@@ -25787,7 +25788,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'きぬ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2027-spare-time',
       kanji:     '暇',
@@ -25801,7 +25802,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'ひま、いとま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1457-spinning',
       kanji:     '紡',
@@ -25815,7 +25816,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'つむ.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2506-possessed',
       kanji:     '憑',
@@ -25829,7 +25830,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'つ.く, つか.れる, よ.る, たの.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0649-shish-kebab',
       kanji:     '串',
@@ -25843,7 +25844,7 @@ const primerDeck = {
       onyomi:    'カン、ケン、セン',
       kunyomi:   'くし、つらぬ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0650-afflicted',
       kanji:     '患',
@@ -25858,7 +25859,7 @@ const primerDeck = {
       kunyomi:   'わずら.う',
       nanori:    'くろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0147-pan',
       kanji:     '汎',
@@ -25873,7 +25874,7 @@ const primerDeck = {
       kunyomi:   'ただよ.う、ひろ.い',
       nanori:    'ひろ, ひろし, みな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1889-grasp',
       kanji:     '把',
@@ -25888,7 +25889,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たば',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1510-bubble-up',
       kanji:     '湧',
@@ -25903,7 +25904,7 @@ const primerDeck = {
       kunyomi:   'わ.く',
       nanori:    'わき, わく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2223-suit-of-armor',
       kanji:     '鎧',
@@ -25917,7 +25918,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'よろ.う, よろい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0663-melancholy',
       kanji:     '憂',
@@ -25932,7 +25933,7 @@ const primerDeck = {
       kunyomi:   'うれ.える、うれ.い、う.い、う.き',
       nanori:    'ゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1068-tenderness',
       kanji:     '優',
@@ -25947,7 +25948,7 @@ const primerDeck = {
       kunyomi:   'やさ.しい、すぐ.れる、まさ.る',
       nanori:    'ゆ, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2107-foolish',
       kanji:     '愚',
@@ -25961,7 +25962,7 @@ const primerDeck = {
       onyomi:    'グ',
       kunyomi:   'おろ.か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2162-sign-of-the-tiger',
       kanji:     '寅',
@@ -25976,7 +25977,7 @@ const primerDeck = {
       kunyomi:   'とら',
       nanori:    'とも, のぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2163-performance',
       kanji:     '演',
@@ -25990,7 +25991,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1965-everywhere',
       kanji:     '遍',
@@ -26004,7 +26005,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'あまね.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1702-sigh',
       kanji:     '嘆',
@@ -26018,7 +26019,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'なげ.く、なげ.かわしい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0032-span',
       kanji:     '亘',
@@ -26033,7 +26034,7 @@ const primerDeck = {
       kunyomi:   'わた.る, もと.める',
       nanori:    'せん, のぶ, とうる, わたる, ひさし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0200-proclaim',
       kanji:     '宣',
@@ -26048,7 +26049,7 @@ const primerDeck = {
       kunyomi:   'のたま.う',
       nanori:    'とおる, のぶ, のぼる, のり, ひさ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0165-hedge',
       kanji:     '垣',
@@ -26063,7 +26064,7 @@ const primerDeck = {
       kunyomi:   'かき',
       nanori:    'がい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0667-constancy',
       kanji:     '恒',
@@ -26078,7 +26079,7 @@ const primerDeck = {
       kunyomi:   'つね、つねに',
       nanori:    'のぶ, ひさ, ひさし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2284-clamor',
       kanji:     '喧',
@@ -26092,7 +26093,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'やかま.しい, かまびす.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1667-bag',
       kanji:     '俵',
@@ -26106,7 +26107,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'たわら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1733-drift',
       kanji:     '漂',
@@ -26120,7 +26121,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'ただよ.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0526-delusion',
       kanji:     '妄',
@@ -26134,7 +26135,7 @@ const primerDeck = {
       onyomi:    'モウ、ボウ',
       kunyomi:   'みだ.りに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1727-bargain',
       kanji:     '廉',
@@ -26149,7 +26150,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'きよ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2308-violate',
       kanji:     '姦',
@@ -26163,7 +26164,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'かん.する, かしま.しい, みだら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0778-graceful',
       kanji:     '淑',
@@ -26178,7 +26179,7 @@ const primerDeck = {
       kunyomi:   'しと.やか',
       nanori:    'すく, とし, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1144-set',
       kanji:     '据',
@@ -26192,7 +26193,7 @@ const primerDeck = {
       onyomi:    'キョ',
       kunyomi:   'す.える、す.わる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1001-lacquer',
       kanji:     '漆',
@@ -26207,7 +26208,7 @@ const primerDeck = {
       kunyomi:   'うるし',
       nanori:    'うる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2406-large-goose',
       kanji:     '鴻',
@@ -26221,7 +26222,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'おおとり, ひしくい, おおがり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0867-old-woman',
       kanji:     '婆',
@@ -26235,7 +26236,7 @@ const primerDeck = {
       onyomi:    'バ',
       kunyomi:   'ばば、ばあ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1310-shove',
       kanji:     '挨',
@@ -26249,7 +26250,7 @@ const primerDeck = {
       onyomi:    'アイ',
       kunyomi:   'ひら.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2884-almost',
       kanji:     '殆',
@@ -26263,7 +26264,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'ほとほと, ほとん.ど, あやうい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0713-imminent',
       kanji:     '拶',
@@ -26277,7 +26278,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   'せま.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1780-sweat',
       kanji:     '汗',
@@ -26291,7 +26292,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'あせ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2929-blood-relative',
       kanji:     '胤',
@@ -26306,7 +26307,7 @@ const primerDeck = {
       kunyomi:   'たね',
       nanori:    'つぎ, つぐ, かず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0220-crude',
       kanji:     '朴',
@@ -26320,7 +26321,7 @@ const primerDeck = {
       onyomi:    'ボク',
       kunyomi:   'ほう、ほお、えのき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2705-summarize',
       kanji:     '纏',
@@ -26334,7 +26335,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'まつ.わる, まと.う, まと.める, まと.まる, まと.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0141-gland',
       kanji:     '腺',
@@ -26348,7 +26349,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1865-speckled',
       kanji:     '斑',
@@ -26363,7 +26364,7 @@ const primerDeck = {
       kunyomi:   'ふ、まだら',
       nanori:    'い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0422-bridegroom',
       kanji:     '婿',
@@ -26377,7 +26378,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'むこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2412-rough-seas',
       kanji:     '灘',
@@ -26392,7 +26393,7 @@ const primerDeck = {
       kunyomi:   'なだ, せ',
       nanori:    'だな, なん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1817',
       kanji:     '瘍',
@@ -26406,7 +26407,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'かさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2015-gunwale',
       kanji:     '舷',
@@ -26420,7 +26421,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'ふなばた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2354-clutch',
       kanji:     '掴',
@@ -26434,7 +26435,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'つか.む, つか.まえる, つか.まる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1521-address',
       kanji:     '宛',
@@ -26448,7 +26449,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'あ.てる、-あて、-づつ、あたか.も',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1522-arm',
       kanji:     '腕',
@@ -26462,7 +26463,7 @@ const primerDeck = {
       onyomi:    'ワン',
       kunyomi:   'うで',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2844-roc',
       kanji:     '鵬',
@@ -26476,7 +26477,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'おおとり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2040-noodles',
       kanji:     '麺',
@@ -26490,7 +26491,7 @@ const primerDeck = {
       onyomi:    'メン、ベン',
       kunyomi:   'むぎこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0385-relatives',
       kanji:     '戚',
@@ -26504,7 +26505,7 @@ const primerDeck = {
       onyomi:    'ソク、セキ',
       kunyomi:   'いた.む、うれ.える、みうち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1570-resentment',
       kanji:     '恨',
@@ -26518,7 +26519,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'うら.む、うら.めしい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0596-piled-high',
       kanji:     '堆',
@@ -26532,7 +26533,7 @@ const primerDeck = {
       onyomi:    'タイ、ツイ',
       kunyomi:   'うずたか.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1588-feed',
       kanji:     '餌',
@@ -26546,7 +26547,7 @@ const primerDeck = {
       onyomi:    'ジ、ニ',
       kunyomi:   'え、えば、えさ、もち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1222-yesterday',
       kanji:     '昨',
@@ -26560,7 +26561,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0665-busy',
       kanji:     '忙',
@@ -26574,7 +26575,7 @@ const primerDeck = {
       onyomi:    'ボウ、モウ',
       kunyomi:   'いそが.しい、せわ.しい、おそ.れる、うれえるさま',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2008-pay-respects',
       kanji:     '伺',
@@ -26588,7 +26589,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'うかが.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0400-agreement',
       kanji:     '肯',
@@ -26602,7 +26603,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'がえんじ.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0474-drip',
       kanji:     '滴',
@@ -26616,7 +26617,7 @@ const primerDeck = {
       onyomi:    'テキ',
       kunyomi:   'しずく、したた.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1325-seethe',
       kanji:     '沸',
@@ -26630,7 +26631,7 @@ const primerDeck = {
       onyomi:    'フツ',
       kunyomi:   'わ.く、わ.かす',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1611-dull',
       kanji:     '鈍',
@@ -26644,7 +26645,7 @@ const primerDeck = {
       onyomi:    'ドン',
       kunyomi:   'にぶ.い、にぶ.る、にぶ-、なま.る、なまく.ら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1555-dish',
       kanji:     '皿',
@@ -26658,7 +26659,7 @@ const primerDeck = {
       onyomi:    'ベイ',
       kunyomi:   'さら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1562-oversee',
       kanji:     '監',
@@ -26673,7 +26674,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'けん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2020-warship',
       kanji:     '艦',
@@ -26687,7 +26688,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2017-tray',
       kanji:     '盤',
@@ -26702,7 +26703,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ち, わ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1556-blood',
       kanji:     '血',
@@ -26716,7 +26717,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'ち',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2001-masses',
       kanji:     '衆',
@@ -26730,7 +26731,7 @@ const primerDeck = {
       onyomi:    'シュウ、シュ',
       kunyomi:   'おお.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1560-warm',
       kanji:     '温',
@@ -26745,7 +26746,7 @@ const primerDeck = {
       kunyomi:   'あたた.か、あたた.かい、あたた.まる、あたた.める、ぬく',
       nanori:    'あつ, あつし, なお, はる, ゆ, ゆたか',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1558-alliance',
       kanji:     '盟',
@@ -26759,7 +26760,7 @@ const primerDeck = {
       onyomi:    'メイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1567-boom',
       kanji:     '盛',
@@ -26774,7 +26775,7 @@ const primerDeck = {
       kunyomi:   'も.る、さか.る、さか.ん',
       nanori:    'もり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1568-salt',
       kanji:     '塩',
@@ -26788,7 +26789,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'しお',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1564-specimen',
       kanji:     '鑑',
@@ -26803,7 +26804,7 @@ const primerDeck = {
       kunyomi:   'かんが.みる、かがみ',
       nanori:    'あき, あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2026-benefit',
       kanji:     '益',
@@ -26818,7 +26819,7 @@ const primerDeck = {
       kunyomi:   'ま.す',
       nanori:    'まし, ます',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1559-steal',
       kanji:     '盗',
@@ -26832,7 +26833,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ぬす.む、ぬす.み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1565-indigo',
       kanji:     '藍',
@@ -26846,7 +26847,7 @@ const primerDeck = {
       onyomi:    'ラン',
       kunyomi:   'あい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1557-basin',
       kanji:     '盆',
@@ -26860,7 +26861,7 @@ const primerDeck = {
       onyomi:    'ボン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0619-laundry',
       kanji:     '濯',
@@ -26874,7 +26875,7 @@ const primerDeck = {
       onyomi:    'タク',
       kunyomi:   'すす.ぐ、ゆす.ぐ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0223-desk',
       kanji:     '机',
@@ -26888,7 +26889,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'つくえ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0029-stomach',
       kanji:     '胃',
@@ -26902,7 +26903,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2147-skin',
       kanji:     '膚',
@@ -26916,7 +26917,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'はだ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2372-spoils',
       kanji:     '捷',
@@ -26931,7 +26932,7 @@ const primerDeck = {
       kunyomi:   'はや.い',
       nanori:    'かつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2541-hazel',
       kanji:     '榛',
@@ -26946,7 +26947,7 @@ const primerDeck = {
       kunyomi:   'はしばみ, はり',
       nanori:    'はい, はる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1784-potato',
       kanji:     '芋',
@@ -26960,7 +26961,7 @@ const primerDeck = {
       onyomi:    'ウ',
       kunyomi:   'いも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0517-divide',
       kanji:     '剖',
@@ -26974,7 +26975,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2520-morrow',
       kanji:     '晨',
@@ -26988,7 +26989,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あした, とき, あさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2738-stole',
       kanji:     '袈',
@@ -27002,7 +27003,7 @@ const primerDeck = {
       onyomi:    'ケ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1364-coffin',
       kanji:     '棺',
@@ -27016,7 +27017,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2827-sea-bream',
       kanji:     '鯛',
@@ -27030,7 +27031,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'たい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0872-martyrdom',
       kanji:     '殉',
@@ -27044,7 +27045,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2383-glistening',
       kanji:     '洸',
@@ -27059,7 +27060,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ひろ, ひろし, たけし, ひかり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2448-lotus-blossom',
       kanji:     '蓉',
@@ -27074,7 +27075,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'はす, よ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2525-elevate',
       kanji:     '昂',
@@ -27089,7 +27090,7 @@ const primerDeck = {
       kunyomi:   'あ.がる, たか.い, たか.ぶる',
       nanori:    'あき, あきら, たか, たかし, のぼる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2631-carpenter-s-square',
       kanji:     '矩',
@@ -27104,7 +27105,7 @@ const primerDeck = {
       kunyomi:   'かね, かねざし, さしがね',
       nanori:    'のり, つね, ただし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0562-silkworm',
       kanji:     '蚕',
@@ -27118,7 +27119,7 @@ const primerDeck = {
       onyomi:    'サン、テン',
       kunyomi:   'かいこ、こ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0379-ii-two',
       kanji:     '弐',
@@ -27132,7 +27133,7 @@ const primerDeck = {
       onyomi:    'ニ、ジ',
       kunyomi:   'ふた.つ、そえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0671-disconcerted',
       kanji:     '慌',
@@ -27146,7 +27147,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あわ.てる、あわ.ただしい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0533-obese',
       kanji:     '肪',
@@ -27160,7 +27161,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0288-pig-iron',
       kanji:     '銑',
@@ -27174,7 +27175,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0072-ladle',
       kanji:     '勺',
@@ -27188,7 +27189,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0073-bull-s-eye',
       kanji:     '的',
@@ -27203,7 +27204,7 @@ const primerDeck = {
       kunyomi:   'まと',
       nanori:    'いくは, ゆくは',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1462-promise',
       kanji:     '約',
@@ -27217,7 +27218,7 @@ const primerDeck = {
       onyomi:    'ヤク',
       kunyomi:   'つづ.まる、つづ.める、つづま.やか',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0291-angling',
       kanji:     '釣',
@@ -27232,7 +27233,7 @@ const primerDeck = {
       kunyomi:   'つ.る、つ.り、つ.り-',
       nanori:    'つり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2123-sociable',
       kanji:     '懇',
@@ -27246,7 +27247,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'ねんご.ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2628-apple-of-the-eye',
       kanji:     '眸',
@@ -27260,7 +27261,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひとみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2266-lull',
       kanji:     '凪',
@@ -27274,7 +27275,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'なぎ, な.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0084-bribe',
       kanji:     '賄',
@@ -27288,7 +27289,7 @@ const primerDeck = {
       onyomi:    'ワイ',
       kunyomi:   'まかな.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1881-pardon',
       kanji:     '赦',
@@ -27302,7 +27303,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1096-third-class',
       kanji:     '丙',
@@ -27316,7 +27317,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'ひのえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1813-ill',
       kanji:     '病',
@@ -27330,7 +27331,7 @@ const primerDeck = {
       onyomi:    'ビョウ、ヘイ',
       kunyomi:   'や.む、-や.み、やまい',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1097-design',
       kanji:     '柄',
@@ -27345,7 +27346,7 @@ const primerDeck = {
       kunyomi:   'がら、え、つか',
       nanori:    'から, ら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0777-loneliness',
       kanji:     '寂',
@@ -27359,7 +27360,7 @@ const primerDeck = {
       onyomi:    'ジャク、セキ',
       kunyomi:   'さび、さび.しい、さび.れる、さみ.しい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1614-catalpa',
       kanji:     '梓',
@@ -27373,7 +27374,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'あずさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2672-chinese-panpipe',
       kanji:     '笙',
@@ -27387,7 +27388,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1884-barbarian',
       kanji:     '蛮',
@@ -27401,7 +27402,7 @@ const primerDeck = {
       onyomi:    'バン',
       kunyomi:   'えびす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2702-synthesis',
       kanji:     '綜',
@@ -27415,7 +27416,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'おさ.める, す.べる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2742-counsel',
       kanji:     '詢',
@@ -27429,7 +27430,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'はか.る, まこと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0678-remorse',
       kanji:     '憾',
@@ -27443,7 +27444,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'うら.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2492-way',
       kanji:     '迪',
@@ -27458,7 +27459,7 @@ const primerDeck = {
       kunyomi:   'みち, みちび.く, すす.む, いた.る',
       nanori:    'すすむ, すすみ, いたる, ゆう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1637-sign-of-the-hog',
       kanji:     '亥',
@@ -27473,7 +27474,7 @@ const primerDeck = {
       kunyomi:   'い',
       nanori:    'り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1639-engrave',
       kanji:     '刻',
@@ -27487,7 +27488,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'きざ.む、きざ.み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1638-nucleus',
       kanji:     '核',
@@ -27501,7 +27502,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1640-above-stated',
       kanji:     '該',
@@ -27515,7 +27516,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1641-remains',
       kanji:     '骸',
@@ -27529,7 +27530,7 @@ const primerDeck = {
       onyomi:    'ガイ、カイ',
       kunyomi:   'むくろ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2255-integrity',
       kanji:     '侃',
@@ -27544,7 +27545,7 @@ const primerDeck = {
       kunyomi:   'つよ.い',
       nanori:    'あきら, ただし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0278-effulgent',
       kanji:     '旺',
@@ -27558,7 +27559,7 @@ const primerDeck = {
       onyomi:    'オウ、キョウ、ゴウ',
       kunyomi:   'かがや.き、うつくし.い、さかん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2384-bounding-main',
       kanji:     '滉',
@@ -27572,7 +27573,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひろ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0849-venerable-old-man',
       kanji:     '翁',
@@ -27587,7 +27588,7 @@ const primerDeck = {
       kunyomi:   'おきな',
       nanori:    'お, おな',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2515-aglow',
       kanji:     '晟',
@@ -27601,7 +27602,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あきらか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2595-watchfire',
       kanji:     '燎',
@@ -27615,7 +27616,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'かがりび',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2943-bold',
       kanji:     '赳',
@@ -27630,7 +27631,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たけ, たけし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2335-rugged-mountains',
       kanji:     '崚',
@@ -27644,7 +27645,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1288-paddy-ridge',
       kanji:     '畔',
@@ -27659,7 +27660,7 @@ const primerDeck = {
       kunyomi:   'あぜ、くろ、ほとり',
       nanori:    'ぐろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1419-stealth',
       kanji:     '窃',
@@ -27673,7 +27674,7 @@ const primerDeck = {
       onyomi:    'セツ',
       kunyomi:   'ぬす.む、ひそ.か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1642-censure',
       kanji:     '劾',
@@ -27687,7 +27688,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1266-comfortable',
       kanji:     '庸',
@@ -27702,7 +27703,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'つね, のぶ, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2865-comet',
       kanji:     '彗',
@@ -27717,7 +27718,7 @@ const primerDeck = {
       kunyomi:   'ほうき',
       nanori:    'とし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2866-astute',
       kanji:     '慧',
@@ -27732,7 +27733,7 @@ const primerDeck = {
       kunyomi:   'さとい',
       nanori:    'さと, さとし, さとる, あきら, とし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1753-leisure',
       kanji:     '閑',
@@ -27747,7 +27748,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'が, より',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0321-superfluous',
       kanji:     '冗',
@@ -27761,7 +27762,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1685-sew',
       kanji:     '縫',
@@ -27776,7 +27777,7 @@ const primerDeck = {
       kunyomi:   'ぬ.う',
       nanori:    'ぬい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0827-license',
       kanji:     '允',
@@ -27791,7 +27792,7 @@ const primerDeck = {
       kunyomi:   'じょう, まこと.に, ゆるす',
       nanori:    'まこと, のぶ, まさ, みつ, すけ, よし, ちか, とも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0823-allot',
       kanji:     '充',
@@ -27806,7 +27807,7 @@ const primerDeck = {
       kunyomi:   'あ.てる、み.たす',
       nanori:    'あつ, のぶ, まさ, みち, みつ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1447-overall',
       kanji:     '統',
@@ -27821,7 +27822,7 @@ const primerDeck = {
       kunyomi:   'す.べる、ほび.る',
       nanori:    'のり, むね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0824-gun',
       kanji:     '銃',
@@ -27835,7 +27836,7 @@ const primerDeck = {
       onyomi:    'ジュウ',
       kunyomi:   'つつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2218-complete-a-job',
       kanji:     '竣',
@@ -27849,7 +27850,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   'わらわ, わらべ, おわ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2216-steed',
       kanji:     '駿',
@@ -27864,7 +27865,7 @@ const primerDeck = {
       kunyomi:   'すぐ.れる',
       nanori:    'する, とし, はやし, はやお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2124-groundbreaking',
       kanji:     '墾',
@@ -27878,7 +27879,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0831-bungling',
       kanji:     '拙',
@@ -27892,7 +27893,7 @@ const primerDeck = {
       onyomi:    'セツ',
       kunyomi:   'つたな.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1843-obvious',
       kanji:     '瞭',
@@ -27906,7 +27907,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'あきらか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0055-only',
       kanji:     '只',
@@ -27920,7 +27921,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'ただ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2602-dazzling',
       kanji:     '燦',
@@ -27934,7 +27935,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'さん.たる, あき.らか, きらめ.く, きら.めく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1815-pox',
       kanji:     '痘',
@@ -27948,7 +27949,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0676-lazy',
       kanji:     '惰',
@@ -27962,7 +27963,7 @@ const primerDeck = {
       onyomi:    'ダ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1093-furrow',
       kanji:     '畝',
@@ -27976,7 +27977,7 @@ const primerDeck = {
       onyomi:    'ボウ、ホ、モ、ム',
       kunyomi:   'せ、うね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2456-eggplant',
       kanji:     '茄',
@@ -27990,7 +27991,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1696-stipend',
       kanji:     '俸',
@@ -28004,7 +28005,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1534-sign-of-the-bird',
       kanji:     '酉',
@@ -28019,7 +28020,7 @@ const primerDeck = {
       kunyomi:   'とり',
       nanori:    'なが, みのる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1544-distribute',
       kanji:     '配',
@@ -28033,7 +28034,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'くば.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1545-acid',
       kanji:     '酸',
@@ -28047,7 +28048,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'す.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1535-sake',
       kanji:     '酒',
@@ -28062,7 +28063,7 @@ const primerDeck = {
       kunyomi:   'さけ、さか-',
       nanori:    'き, さ, し',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1539-cruel',
       kanji:     '酷',
@@ -28076,7 +28077,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'ひど.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1543-drunk',
       kanji:     '酔',
@@ -28091,7 +28092,7 @@ const primerDeck = {
       kunyomi:   'よ.う、よ.い、よ',
       nanori:    'よい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1540-repay',
       kanji:     '酬',
@@ -28105,7 +28106,7 @@ const primerDeck = {
       onyomi:    'シュウ、シュ、トウ',
       kunyomi:   'むく.いる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1677-awakening',
       kanji:     '醒',
@@ -28119,7 +28120,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'さ.ます、さ.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1647-brew',
       kanji:     '醸',
@@ -28133,7 +28134,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'かも.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0627-matrimony',
       kanji:     '姻',
@@ -28147,7 +28148,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1053-emulate',
       kanji:     '倣',
@@ -28161,7 +28162,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'なら.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1707-drowsy',
       kanji:     '睡',
@@ -28175,7 +28176,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'ねむ.る、ねむ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0550-v-i-p',
       kanji:     '賓',
@@ -28189,7 +28190,7 @@ const primerDeck = {
       onyomi:    'ヒン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2549-citron',
       kanji:     '柚',
@@ -28203,7 +28204,7 @@ const primerDeck = {
       onyomi:    'ユ',
       kunyomi:   'ゆず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0337-whale',
       kanji:     '鯨',
@@ -28217,7 +28218,7 @@ const primerDeck = {
       onyomi:    'ゲイ',
       kunyomi:   'くじら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0808-metallurgy',
       kanji:     '冶',
@@ -28232,7 +28233,7 @@ const primerDeck = {
       kunyomi:   'い.る',
       nanori:    'じ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2180-clod',
       kanji:     '塊',
@@ -28246,7 +28247,7 @@ const primerDeck = {
       onyomi:    'カイ、ケ',
       kunyomi:   'かたまり、つちくれ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2656-imperial-authority',
       kanji:     '稜',
@@ -28260,7 +28261,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'いつ, かど',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0289-bowl',
       kanji:     '鉢',
@@ -28274,7 +28275,7 @@ const primerDeck = {
       onyomi:    'ハチ、ハツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1864-mosquito',
       kanji:     '蚊',
@@ -28288,7 +28289,7 @@ const primerDeck = {
       onyomi:    'ブン',
       kunyomi:   'か',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1396-auxiliary',
       kanji:     '陪',
@@ -28302,7 +28303,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2217-steep',
       kanji:     '峻',
@@ -28317,7 +28318,7 @@ const primerDeck = {
       kunyomi:   'けわ.しい, たか.い',
       nanori:    'たか, たかし, ちか, とし, おか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1185-grate',
       kanji:     '擦',
@@ -28331,7 +28332,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   'す.る、す.れる、-ず.れ、こす.る、こす.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2176-ugly',
       kanji:     '醜',
@@ -28345,7 +28346,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'みにく.い、しこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2832-sweet-smelt',
       kanji:     '鮎',
@@ -28360,7 +28361,7 @@ const primerDeck = {
       kunyomi:   'あゆ, なまず',
       nanori:    'あい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0213-treetops',
       kanji:     '梢',
@@ -28374,7 +28375,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'こずえ, くすのき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2447-lotus-flower',
       kanji:     '芙',
@@ -28389,7 +28390,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'はす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1714-versify',
       kanji:     '吟',
@@ -28403,7 +28404,7 @@ const primerDeck = {
       onyomi:    'ギン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2589-copious',
       kanji:     '彬',
@@ -28418,7 +28419,7 @@ const primerDeck = {
       kunyomi:   'うるわ.しい, あき.らか',
       nanori:    'あきら, あき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1536-bartending',
       kanji:     '酌',
@@ -28432,7 +28433,7 @@ const primerDeck = {
       onyomi:    'シャク',
       kunyomi:   'く.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1319-condolences',
       kanji:     '弔',
@@ -28446,7 +28447,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'とむら.う、とぶら.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1327-no',
       kanji:     '第',
@@ -28460,7 +28461,7 @@ const primerDeck = {
       onyomi:    'ダイ、テイ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1328-younger-brother',
       kanji:     '弟',
@@ -28475,7 +28476,7 @@ const primerDeck = {
       kunyomi:   'おとうと',
       nanori:    'て',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2847-cormorant',
       kanji:     '鵜',
@@ -28489,7 +28490,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0507-cook',
       kanji:     '炊',
@@ -28504,7 +28505,7 @@ const primerDeck = {
       kunyomi:   'た.く、-だ.き',
       nanori:    'い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1542-vinegar',
       kanji:     '酢',
@@ -28518,7 +28519,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   'す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1387-whirlpool',
       kanji:     '渦',
@@ -28532,7 +28533,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'うず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0175-anxiety',
       kanji:     '煩',
@@ -28546,7 +28547,7 @@ const primerDeck = {
       onyomi:    'ハン、ボン',
       kunyomi:   'わずら.う、わずら.わす、うるさ.がる、うるさ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1541-dairy-products',
       kanji:     '酪',
@@ -28560,7 +28561,7 @@ const primerDeck = {
       onyomi:    'ラク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1280-bustle',
       kanji:     '奔',
@@ -28574,7 +28575,7 @@ const primerDeck = {
       onyomi:    'ホン',
       kunyomi:   'はし.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2639-illustrious',
       kanji:     '碩',
@@ -28588,7 +28589,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'おお.きい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2063-decrease',
       kanji:     '耗',
@@ -28602,7 +28603,7 @@ const primerDeck = {
       onyomi:    'モウ、コウ、カウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2927-helping-hand',
       kanji:     '丞',
@@ -28617,7 +28618,7 @@ const primerDeck = {
       kunyomi:   'すく.う, たす.ける',
       nanori:    'すけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0686-ooze',
       kanji:     '泌',
@@ -28631,7 +28632,7 @@ const primerDeck = {
       onyomi:    'ヒツ、ヒ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0846-partition',
       kanji:     '頒',
@@ -28645,7 +28646,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'わか.つ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0034-convex',
       kanji:     '凸',
@@ -28659,7 +28660,7 @@ const primerDeck = {
       onyomi:    'トツ',
       kunyomi:   'でこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0298-swift',
       kanji:     '迅',
@@ -28673,7 +28674,7 @@ const primerDeck = {
       onyomi:    'ジン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0282-plug',
       kanji:     '栓',
@@ -28687,7 +28688,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2045-eyebrow',
       kanji:     '眉',
@@ -28701,7 +28702,7 @@ const primerDeck = {
       onyomi:    'ビ、ミ',
       kunyomi:   'まゆ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0366-imperial-edict',
       kanji:     '詔',
@@ -28716,7 +28717,7 @@ const primerDeck = {
       kunyomi:   'みことのり',
       nanori:    'さとし, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2892-shimmering',
       kanji:     '耀',
@@ -28731,7 +28732,7 @@ const primerDeck = {
       kunyomi:   'かがや.く, ひかり',
       nanori:    'あかる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2488-candle-rush',
       kanji:     '莞',
@@ -28745,7 +28746,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2104-entrust',
       kanji:     '嘱',
@@ -28759,7 +28760,7 @@ const primerDeck = {
       onyomi:    'ショク',
       kunyomi:   'しょく.する、たの.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1433-darning',
       kanji:     '繕',
@@ -28773,7 +28774,7 @@ const primerDeck = {
       onyomi:    'ゼン',
       kunyomi:   'つくろ.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2455-butterbur',
       kanji:     '蕗',
@@ -28787,7 +28788,7 @@ const primerDeck = {
       onyomi:    'ロ',
       kunyomi:   'ふき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1206-ax',
       kanji:     '斤',
@@ -28801,7 +28802,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1619-new',
       kanji:     '新',
@@ -28816,7 +28817,7 @@ const primerDeck = {
       kunyomi:   'あたら.しい、あら.た、あら-、にい-',
       nanori:    'あせ, あたらし, し, に, にっ, につ, よし',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-1208-place',
       kanji:     '所',
@@ -28831,7 +28832,7 @@ const primerDeck = {
       kunyomi:   'ところ、-ところ、どころ、とこ',
       nanori:    'せ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1210-near',
       kanji:     '近',
@@ -28846,7 +28847,7 @@ const primerDeck = {
       kunyomi:   'ちか.い',
       nanori:    'おう, おお, この',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1219-substance',
       kanji:     '質',
@@ -28860,7 +28861,7 @@ const primerDeck = {
       onyomi:    'シツ、シチ、チ',
       kunyomi:   'たち、ただ.す、もと、わりふ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1218-severance',
       kanji:     '断',
@@ -28874,7 +28875,7 @@ const primerDeck = {
       onyomi:    'ダン',
       kunyomi:   'た.つ、ことわ.る、さだ.める',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1427-hill',
       kanji:     '丘',
@@ -28889,7 +28890,7 @@ const primerDeck = {
       kunyomi:   'おか',
       nanori:    'たかし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1429-soldier',
       kanji:     '兵',
@@ -28904,7 +28905,7 @@ const primerDeck = {
       kunyomi:   'つわもの',
       nanori:    'へ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1430-seacoast',
       kanji:     '浜',
@@ -28918,7 +28919,7 @@ const primerDeck = {
       onyomi:    'ヒン',
       kunyomi:   'はま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1211-fold',
       kanji:     '折',
@@ -28933,7 +28934,7 @@ const primerDeck = {
       kunyomi:   'お.る、おり、お.り、-お.り、お.れる',
       nanori:    'せき',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1212-philosophy',
       kanji:     '哲',
@@ -28948,7 +28949,7 @@ const primerDeck = {
       kunyomi:   'さとい、あき.らか',
       nanori:    'あき, あきら, さと, さとし, さとる, てっ, てつん, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1207-chop',
       kanji:     '析',
@@ -28962,7 +28963,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1428-point',
       kanji:     '岳',
@@ -28977,7 +28978,7 @@ const primerDeck = {
       kunyomi:   'たけ',
       nanori:    'おか, たか, たけん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1215-chop-off',
       kanji:     '斬',
@@ -28991,7 +28992,7 @@ const primerDeck = {
       onyomi:    'ザン、サン、セン、ゼン',
       kunyomi:   'き.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1828-artisan',
       kanji:     '匠',
@@ -29005,7 +29006,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'たくみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1209-pray',
       kanji:     '祈',
@@ -29020,7 +29021,7 @@ const primerDeck = {
       kunyomi:   'いの.る',
       nanori:    'のり, れい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1214-vow',
       kanji:     '誓',
@@ -29034,7 +29035,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'ちか.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1216-temporarily',
       kanji:     '暫',
@@ -29048,7 +29049,7 @@ const primerDeck = {
       onyomi:    'ザン',
       kunyomi:   'しばら.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1213-departed',
       kanji:     '逝',
@@ -29062,7 +29063,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'ゆ.く、い.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2612-burnish',
       kanji:     '瑳',
@@ -29076,7 +29077,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みが.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2812-accolade',
       kanji:     '頌',
@@ -29091,7 +29092,7 @@ const primerDeck = {
       kunyomi:   'かたち, たた.える, ほめ.る',
       nanori:    'つぐ, のぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2244-yamato',
       kanji:     '倭',
@@ -29106,7 +29107,7 @@ const primerDeck = {
       kunyomi:   'したが.う',
       nanori:    'まさ, やす, やまと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0898-voiced',
       kanji:     '濁',
@@ -29121,7 +29122,7 @@ const primerDeck = {
       kunyomi:   'にご.る、にご.す',
       nanori:    'にごり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2746-verify',
       kanji:     '諒',
@@ -29136,7 +29137,7 @@ const primerDeck = {
       kunyomi:   'あきら.か, まことに',
       nanori:    'あき, まさ, まこと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1499-wholesale',
       kanji:     '卸',
@@ -29150,7 +29151,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'おろ.す、おろし、おろ.し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1500-honorable',
       kanji:     '御',
@@ -29165,7 +29166,7 @@ const primerDeck = {
       kunyomi:   'おん-、お-、み-',
       nanori:    'う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1306-rectify',
       kanji:     '矯',
@@ -29179,7 +29180,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'た.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2487-madder-red',
       kanji:     '茜',
@@ -29193,7 +29194,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'あかね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0806-neglect',
       kanji:     '怠',
@@ -29207,7 +29208,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'おこた.る、なま.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1627-twist',
       kanji:     '糾',
@@ -29221,7 +29222,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'ただ.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2972-v',
       kanji:     '伍',
@@ -29236,7 +29237,7 @@ const primerDeck = {
       kunyomi:   'いつつ',
       nanori:    'くみ, あつむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0190-rin',
       kanji:     '厘',
@@ -29250,7 +29251,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0675-pleasure',
       kanji:     '愉',
@@ -29265,7 +29266,7 @@ const primerDeck = {
       kunyomi:   'たの.しい、たの.しむ',
       nanori:    'ゆう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0572-bubble',
       kanji:     '泡',
@@ -29279,7 +29280,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'あわ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2711-catgut',
       kanji:     '絃',
@@ -29293,7 +29294,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'いと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2709-ornate',
       kanji:     '綺',
@@ -29307,7 +29308,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'あや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1592-sated',
       kanji:     '飽',
@@ -29322,7 +29323,7 @@ const primerDeck = {
       kunyomi:   'あ.きる、あ.かす、あ.く',
       nanori:    'あき, あく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1519-unlucky',
       kanji:     '厄',
@@ -29336,7 +29337,7 @@ const primerDeck = {
       onyomi:    'ヤク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1520-dangerous',
       kanji:     '危',
@@ -29350,7 +29351,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'あぶ.ない、あや.うい、あや.ぶむ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2377-quickwitted',
       kanji:     '怜',
@@ -29365,7 +29366,7 @@ const primerDeck = {
       kunyomi:   'あわ.れむ, さと.い',
       nanori:    'さと, さとし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1698-discreet',
       kanji:     '謹',
@@ -29379,7 +29380,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'つつし.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1595-rue',
       kanji:     '慨',
@@ -29393,7 +29394,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0252-stare',
       kanji:     '眺',
@@ -29407,7 +29408,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'なが.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0489-audience',
       kanji:     '謁',
@@ -29421,7 +29422,7 @@ const primerDeck = {
       onyomi:    'エツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2914-sapience',
       kanji:     '叡',
@@ -29435,7 +29436,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'あき.らか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2322-soothe',
       kanji:     '宥',
@@ -29449,7 +29450,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'なだ.める, ゆる.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1665-pickling',
       kanji:     '漬',
@@ -29463,7 +29464,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'つ.ける、つ.かる、-づ.け、-づけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1180-collar',
       kanji:     '襟',
@@ -29477,7 +29478,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'えり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0491-hoarse',
       kanji:     '喝',
@@ -29491,7 +29492,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1283-aroused',
       kanji:     '憤',
@@ -29505,7 +29506,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'いきどお.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2706-gorgeous',
       kanji:     '絢',
@@ -29520,7 +29521,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'じゅん, あや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1892-glossy',
       kanji:     '艶',
@@ -29535,7 +29536,7 @@ const primerDeck = {
       kunyomi:   'つや、なま.めかしい、あで.やか、つや.めく、なま.めく',
       nanori:    'もろ, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1629-lowly',
       kanji:     '卑',
@@ -29549,7 +29550,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'いや.しい、いや.しむ、いや.しめる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1630-tombstone',
       kanji:     '碑',
@@ -29563,7 +29564,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'いしぶみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0748-officer',
       kanji:     '吏',
@@ -29578,7 +29579,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'さと, し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1065-use',
       kanji:     '使',
@@ -29592,7 +29593,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'つか.う、つか.い、-つか.い、-づか.い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1260-vat',
       kanji:     '槽',
@@ -29606,7 +29607,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'ふね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2593-furball',
       kanji:     '毬',
@@ -29620,7 +29621,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'いが, まり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2901-set-straight',
       kanji:     '匡',
@@ -29635,7 +29636,7 @@ const primerDeck = {
       kunyomi:   'すく.う',
       nanori:    'ただ, ただし, ただす, まさ, まさし, きよ, ひと, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0488-thirst',
       kanji:     '渇',
@@ -29649,7 +29650,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'かわ.く',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0525-blind',
       kanji:     '盲',
@@ -29663,7 +29664,7 @@ const primerDeck = {
       onyomi:    'モウ',
       kunyomi:   'めくら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1827-hide',
       kanji:     '匿',
@@ -29677,7 +29678,7 @@ const primerDeck = {
       onyomi:    'トク',
       kunyomi:   'かくま.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0120-nitrate',
       kanji:     '硝',
@@ -29691,7 +29692,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0201-wee-hours',
       kanji:     '宵',
@@ -29705,7 +29706,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'よい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0393-scaffold',
       kanji:     '桟',
@@ -29720,7 +29721,7 @@ const primerDeck = {
       kunyomi:   'かけはし',
       nanori:    'さ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1311-halberd',
       kanji:     '矛',
@@ -29734,7 +29735,7 @@ const primerDeck = {
       onyomi:    'ム、ボウ',
       kunyomi:   'ほこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1313-task',
       kanji:     '務',
@@ -29749,7 +29750,7 @@ const primerDeck = {
       kunyomi:   'つと.める',
       nanori:    'つかさ, み',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1312-tender',
       kanji:     '柔',
@@ -29764,7 +29765,7 @@ const primerDeck = {
       kunyomi:   'やわ.らか、やわ.らかい、やわ、やわ.ら',
       nanori:    'とお',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1314-fog',
       kanji:     '霧',
@@ -29778,7 +29779,7 @@ const primerDeck = {
       onyomi:    'ム、ボウ、ブ',
       kunyomi:   'きり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2557-mandarin-orange',
       kanji:     '橘',
@@ -29793,7 +29794,7 @@ const primerDeck = {
       kunyomi:   'たちばな',
       nanori:    'きっ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2468-grassy-reed',
       kanji:     '茅',
@@ -29808,7 +29809,7 @@ const primerDeck = {
       kunyomi:   'かや, ちがや',
       nanori:    'ち, じ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2191-seaweed',
       kanji:     '藻',
@@ -29822,7 +29823,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'も',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1608-bracing',
       kanji:     '爽',
@@ -29836,7 +29837,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あき.らか、さわ.やか、たがう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1620-firewood',
       kanji:     '薪',
@@ -29850,7 +29851,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'たきぎ、まき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2169-lips',
       kanji:     '唇',
@@ -29864,7 +29865,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'くちびる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2897-elation',
       kanji:     '欣',
@@ -29879,7 +29880,7 @@ const primerDeck = {
       kunyomi:   'よろこ.ぶ, よろこ.び',
       nanori:    'やすし, よし, し',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2038-inmost',
       kanji:     '衷',
@@ -29893,7 +29894,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2224-triumph',
       kanji:     '凱',
@@ -29907,7 +29908,7 @@ const primerDeck = {
       onyomi:    'ガイ',
       kunyomi:   'かちどき, やわらぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1821-diarrhea',
       kanji:     '痢',
@@ -29921,7 +29922,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2477-parsley',
       kanji:     '芹',
@@ -29936,7 +29937,7 @@ const primerDeck = {
       kunyomi:   'せり',
       nanori:    'せい, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2615-coral-reef',
       kanji:     '瑚',
@@ -29950,7 +29951,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1585-hungry',
       kanji:     '飢',
@@ -29964,7 +29965,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'う.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2150-uneasiness',
       kanji:     '虞',
@@ -29979,7 +29980,7 @@ const primerDeck = {
       kunyomi:   'おそれ、おもんぱか.る、はか.る、うれ.える、あざむ.く、あやま.る、のぞ.む、たの.しむ',
       nanori:    'すけ, もち, やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2251-look-after',
       kanji:     '伽',
@@ -29993,7 +29994,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'とぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1411-degenerate',
       kanji:     '堕',
@@ -30007,7 +30008,7 @@ const primerDeck = {
       onyomi:    'ダ',
       kunyomi:   'お.ちる、くず.す、くず.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2902-founding',
       kanji:     '肇',
@@ -30022,7 +30023,7 @@ const primerDeck = {
       kunyomi:   'はじ.める, はじめ',
       nanori:    'とし, ただし, はつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2261-sharp',
       kanji:     '冴',
@@ -30037,7 +30038,7 @@ const primerDeck = {
       kunyomi:   'さ.える, こお.る, ひ.える',
       nanori:    'さえ, さえる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2452-iris',
       kanji:     '菖',
@@ -30051,7 +30052,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2256-memorial',
       kanji:     '偲',
@@ -30065,7 +30066,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'しの.ぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0520-rhyme',
       kanji:     '韻',
@@ -30079,7 +30080,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0967-distress',
       kanji:     '愁',
@@ -30093,7 +30094,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'うれ.える、うれ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1217-steadily',
       kanji:     '漸',
@@ -30107,7 +30108,7 @@ const primerDeck = {
       onyomi:    'ゼン',
       kunyomi:   'ようや.く、やや、ようよ.う、すす.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2613-hone',
       kanji:     '琢',
@@ -30122,7 +30123,7 @@ const primerDeck = {
       kunyomi:   'みが.く',
       nanori:    'あや, たか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1220-reject',
       kanji:     '斥',
@@ -30136,7 +30137,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'しりぞ.ける',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1221-accusation',
       kanji:     '訴',
@@ -30150,7 +30151,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'うった.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1386-calamity',
       kanji:     '禍',
@@ -30164,7 +30165,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'わざわい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2704-chinstrap',
       kanji:     '紘',
@@ -30179,7 +30180,7 @@ const primerDeck = {
       kunyomi:   'おおづな, つな, つなぐ',
       nanori:    'ひろ, ひろし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2375-ponder',
       kanji:     '惟',
@@ -30194,7 +30195,7 @@ const primerDeck = {
       kunyomi:   'おも.んみる, これ, おも.うに',
       nanori:    'ただ, よし, のぶ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1178-goodwill',
       kanji:     '款',
@@ -30209,7 +30210,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'まさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1804-frugal',
       kanji:     '倹',
@@ -30223,7 +30224,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'つま.しい、つづまやか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0042-measuring-box',
       kanji:     '升',
@@ -30238,7 +30239,7 @@ const primerDeck = {
       kunyomi:   'ます',
       nanori:    'のぼる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2032-fly',
       kanji:     '飛',
@@ -30253,7 +30254,7 @@ const primerDeck = {
       kunyomi:   'と.ぶ、と.ばす、-と.ばす',
       nanori:    'あす, とび',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0043-rise-up',
       kanji:     '昇',
@@ -30268,7 +30269,7 @@ const primerDeck = {
       kunyomi:   'のぼ.る',
       nanori:    'しゅう, のり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2436-jasmine',
       kanji:     '茉',
@@ -30283,7 +30284,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2405-water-s-edge',
       kanji:     '汀',
@@ -30298,7 +30299,7 @@ const primerDeck = {
       kunyomi:   'みぎわ, なぎさ',
       nanori:    'て',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2867-let-it-be',
       kanji:     '爾',
@@ -30313,7 +30314,7 @@ const primerDeck = {
       kunyomi:   'なんじ, しかり, その, のみ, おれ, しか',
       nanori:    'ちか, み',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2025-cocoon',
       kanji:     '繭',
@@ -30327,7 +30328,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'まゆ、きぬ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2239-violet',
       kanji:     '菫',
@@ -30341,7 +30342,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すみれ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1700-diligence',
       kanji:     '勤',
@@ -30355,7 +30356,7 @@ const primerDeck = {
       onyomi:    'キン、ゴン',
       kunyomi:   'つと.める、-づと.め、つと.まる、いそ.しむ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0514-consult-with',
       kanji:     '諮',
@@ -30369,7 +30370,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'はか.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2073-dilate',
       kanji:     '脹',
@@ -30383,7 +30384,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'は.れる, ふく.らむ, ふく.れる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2199-sign-of-the-hare',
       kanji:     '卯',
@@ -30398,7 +30399,7 @@ const primerDeck = {
       kunyomi:   'う',
       nanori:    'あきら, しげる, い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1527-detain',
       kanji:     '留',
@@ -30413,7 +30414,7 @@ const primerDeck = {
       kunyomi:   'と.める、と.まる、とど.める、とど.まる、るうぶる',
       nanori:    'とめ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1525-willow',
       kanji:     '柳',
@@ -30428,7 +30429,7 @@ const primerDeck = {
       kunyomi:   'やなぎ',
       nanori:    'なぎ, や, やい, やぎ, やな, やない',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1526-egg',
       kanji:     '卵',
@@ -30442,7 +30443,7 @@ const primerDeck = {
       onyomi:    'ラン',
       kunyomi:   'たまご',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2270-slaughter',
       kanji:     '劉',
@@ -30457,7 +30458,7 @@ const primerDeck = {
       kunyomi:   'ころ.す',
       nanori:    'らう, のぶ, みずち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1529-trade',
       kanji:     '貿',
@@ -30471,7 +30472,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1528-marine-blue',
       kanji:     '瑠',
@@ -30486,7 +30487,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'るり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2415-cumulation',
       kanji:     '溜',
@@ -30500,7 +30501,7 @@ const primerDeck = {
       onyomi:    'リュウ',
       kunyomi:   'た.まる, たま.る, た.める, したた.る, たまり, ため',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2513-overarching',
       kanji:     '昴',
@@ -30514,7 +30515,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すばる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2617-jet',
       kanji:     '玖',
@@ -30529,7 +30530,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たま, き, ひさ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2555-chinese-black-pine',
       kanji:     '槙',
@@ -30543,7 +30544,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'まき, こずえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2002-parcel-post',
       kanji:     '逓',
@@ -30557,7 +30558,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'かわ.る、たがいに',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2992-formidable',
       kanji:     '勁',
@@ -30571,7 +30572,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'つよ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2287-peck-at',
       kanji:     '啄',
@@ -30586,7 +30587,7 @@ const primerDeck = {
       kunyomi:   'ついば.む, つつ.く',
       nanori:    'くち, はし, ばし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1586-starve',
       kanji:     '餓',
@@ -30600,7 +30601,7 @@ const primerDeck = {
       onyomi:    'ガ',
       kunyomi:   'う.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2540-oriental-elm',
       kanji:     '椋',
@@ -30615,7 +30616,7 @@ const primerDeck = {
       kunyomi:   'むく',
       nanori:    'ぐら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2584-coconut-tree',
       kanji:     '椰',
@@ -30629,7 +30630,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'やし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2355-impress',
       kanji:     '捺',
@@ -30643,7 +30644,7 @@ const primerDeck = {
       onyomi:    'ナツ',
       kunyomi:   'さ.す, お.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2548-holly',
       kanji:     '柊',
@@ -30657,7 +30658,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'ひいらぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2319-overjoyed',
       kanji:     '嬉',
@@ -30672,7 +30673,7 @@ const primerDeck = {
       kunyomi:   'うれ.しい, たの.しむ',
       nanori:    'うらし, うれし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2552-spindle-tree',
       kanji:     '柾',
@@ -30686,7 +30687,7 @@ const primerDeck = {
       onyomi:    'まさ',
       kunyomi:   'まさ, まさめ, まさき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2649-felicitation',
       kanji:     '禎',
@@ -30701,7 +30702,7 @@ const primerDeck = {
       kunyomi:   'さいわ.い',
       nanori:    'さだ, ただし, よし, さち, とも, のり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2618-crystal-stone',
       kanji:     '瑛',
@@ -30716,7 +30717,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'よう, あき, あきら, てる, え',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2698-twine',
       kanji:     '綸',
@@ -30730,7 +30731,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   'いと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2903-utamaro',
       kanji:     '麿',
@@ -30745,7 +30746,7 @@ const primerDeck = {
       kunyomi:   'まろ',
       nanori:    'ま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1120-abuse',
       kanji:     '弊',
@@ -30759,7 +30760,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2411-moisten',
       kanji:     '渥',
@@ -30774,7 +30775,7 @@ const primerDeck = {
       kunyomi:   'あつ.い, うるお.う',
       nanori:    'あつし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2933-ambrosial',
       kanji:     '馨',
@@ -30789,7 +30790,7 @@ const primerDeck = {
       kunyomi:   'かお.る, かおり',
       nanori:    'か, かおる, きよ, よし, かほる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0658-recess',
       kanji:     '憩',
@@ -30803,7 +30804,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'いこ.い、いこ.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2382-canal',
       kanji:     '澪',
@@ -30817,7 +30818,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2220-lunar-month',
       kanji:     '皐',
@@ -30832,7 +30833,7 @@ const primerDeck = {
       kunyomi:   'さつき',
       nanori:    'たかし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2453-banana',
       kanji:     '蕉',
@@ -30846,7 +30847,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1104-monme',
       kanji:     '匁',
@@ -30860,7 +30861,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'もんめ, め',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1271-pity',
       kanji:     '惜',
@@ -30874,7 +30875,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'お.しい、お.しむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2941-beaming',
       kanji:     '皓',
@@ -30889,7 +30890,7 @@ const primerDeck = {
       kunyomi:   'しろ.い, ひか.る',
       nanori:    'あきら, てる, あき, ひろ, ひろし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2701-scarlet',
       kanji:     '緋',
@@ -30903,7 +30904,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'あけ, あか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2583-bookmark',
       kanji:     '栞',
@@ -30917,7 +30918,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しおり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2538-maple-tree',
       kanji:     '楓',
@@ -30931,7 +30932,7 @@ const primerDeck = {
       onyomi:    'フウ',
       kunyomi:   'かえで',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0188-carp',
       kanji:     '鯉',
@@ -30945,7 +30946,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'こい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2512-sensitive',
       kanji:     '恕',
@@ -30959,7 +30960,7 @@ const primerDeck = {
       onyomi:    'ジョ',
       kunyomi:   'ゆる.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2585-sandalwood',
       kanji:     '檀',
@@ -30973,7 +30974,7 @@ const primerDeck = {
       onyomi:    'ダン',
       kunyomi:   'まゆみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0115-eventide',
       kanji:     '汐',
@@ -30988,7 +30989,7 @@ const primerDeck = {
       kunyomi:   'しお, うしお, せい',
       nanori:    'いそ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2708-pongee',
       kanji:     '紬',
@@ -31002,7 +31003,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'つむぎ, つむ.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0974-harvest',
       kanji:     '穫',
@@ -31016,7 +31017,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2258-dried-meat',
       kanji:     '脩',
@@ -31031,7 +31032,7 @@ const primerDeck = {
       kunyomi:   'おさ.める, なが.い, ほじし',
       nanori:    'おさむ, おさ, なが, のぶ, はる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2777-strong-sak',
       kanji:     '醇',
@@ -31045,7 +31046,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'もっぱら, こい, あつい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0791-grab',
       kanji:     '采',
@@ -31059,7 +31060,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'と.る、いろどり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0792-pick',
       kanji:     '採',
@@ -31073,7 +31074,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'と.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1850-coloring',
       kanji:     '彩',
@@ -31088,7 +31089,7 @@ const primerDeck = {
       kunyomi:   'いろど.る',
       nanori:    'あや, さ, さえ, つや',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0793-vegetable',
       kanji:     '菜',
@@ -31103,7 +31104,7 @@ const primerDeck = {
       kunyomi:   'な',
       nanori:    'よう',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-2664-rustling',
       kanji:     '颯',
@@ -31117,7 +31118,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   'さっ.と',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2183-majestic-plural',
       kanji:     '朕',
@@ -31131,7 +31132,7 @@ const primerDeck = {
       onyomi:    'チン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2610-chime',
       kanji:     '琳',
@@ -31145,7 +31146,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2876-jade-green',
       kanji:     '翠',
@@ -31160,7 +31161,7 @@ const primerDeck = {
       kunyomi:   'かわせみ, みどり',
       nanori:    'あきら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2932-pioneer',
       kanji:     '魁',
@@ -31174,7 +31175,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'さきがけ, かしら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2895-carefree',
       kanji:     '暢',
@@ -31189,7 +31190,7 @@ const primerDeck = {
       kunyomi:   'のび.る',
       nanori:    'いたる, のぶ, のぶる, なが, とうる, とおる, のり, まさ, みつる, よう',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2385-gargle',
       kanji:     '漱',
@@ -31203,7 +31204,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'くちすす.ぐ, くちそそ.ぐ, うがい, すす.ぐ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1708-spindle',
       kanji:     '錘',
@@ -31217,7 +31218,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つむ, おもり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2144-inflation',
       kanji:     '騰',
@@ -31231,7 +31232,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'あが.る、のぼ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1064-scorn',
       kanji:     '侮',
@@ -31245,7 +31246,7 @@ const primerDeck = {
       onyomi:    'ブ',
       kunyomi:   'あなど.る、あなず.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0149-cleanse',
       kanji:     '汰',
@@ -31259,7 +31260,7 @@ const primerDeck = {
       onyomi:    'タ、タイ',
       kunyomi:   'おご.る、にご.る、よな.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2476-sowing',
       kanji:     '蒔',
@@ -31274,7 +31275,7 @@ const primerDeck = {
       kunyomi:   'う.える, まく',
       nanori:    'まい, まか, まき',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2668-lapel',
       kanji:     '衿',
@@ -31288,7 +31289,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'えり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1296-facsimilie',
       kanji:     '謄',
@@ -31302,7 +31303,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2190-moreover',
       kanji:     '且',
@@ -31317,7 +31318,7 @@ const primerDeck = {
       kunyomi:   'か.つ',
       nanori:    'あき, かつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1914-association',
       kanji:     '組',
@@ -31331,7 +31332,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'く.む、くみ、-ぐみ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1920-investigate',
       kanji:     '査',
@@ -31345,7 +31346,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1921-help',
       kanji:     '助',
@@ -31359,7 +31360,7 @@ const primerDeck = {
       onyomi:    'ジョ',
       kunyomi:   'たす.ける、たす.かる、す.ける、すけ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1918-ancestor',
       kanji:     '祖',
@@ -31374,7 +31375,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'い',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1917-aim-at',
       kanji:     '狙',
@@ -31388,7 +31389,7 @@ const primerDeck = {
       onyomi:    'ソ、ショ',
       kunyomi:   'ねら.う、ねら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1919-thwart',
       kanji:     '阻',
@@ -31402,7 +31403,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'はば.む',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1922-best-regards',
       kanji:     '宜',
@@ -31417,7 +31418,7 @@ const primerDeck = {
       kunyomi:   'よろ.しい、よろ.しく',
       nanori:    'き, たか, のぶ, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1923-tatami-mat',
       kanji:     '畳',
@@ -31431,7 +31432,7 @@ const primerDeck = {
       onyomi:    'ジョウ、チョウ',
       kunyomi:   'たた.む、たたみ、かさ.なる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2751-familiarity',
       kanji:     '誼',
@@ -31445,7 +31446,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'よしみ, よい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0785-gentle',
       kanji:     '妥',
@@ -31460,7 +31461,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2387-swirling-waters',
       kanji:     '洵',
@@ -31474,7 +31475,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'の.ぶ, まこと.に',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2095-vine',
       kanji:     '蔦',
@@ -31489,7 +31490,7 @@ const primerDeck = {
       kunyomi:   'つた',
       nanori:    'たつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0910-alternate',
       kanji:     '迭',
@@ -31503,7 +31504,7 @@ const primerDeck = {
       onyomi:    'テツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2047-recreation',
       kanji:     '娯',
@@ -31517,7 +31518,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2378-considerate',
       kanji:     '惇',
@@ -31532,7 +31533,7 @@ const primerDeck = {
       kunyomi:   'あつ.い',
       nanori:    'あつし, あつ, まこと, とし, つとむ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2594-twinkle',
       kanji:     '燿',
@@ -31546,7 +31547,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'かがや.く, ひかり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0404-levy',
       kanji:     '賦',
@@ -31561,7 +31562,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'うた',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0455-frost',
       kanji:     '霜',
@@ -31575,7 +31576,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'しも',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0033-concave',
       kanji:     '凹',
@@ -31589,7 +31590,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'くぼ.む、へこ.む、ぼこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2655-bumper-crop',
       kanji:     '穣',
@@ -31604,7 +31605,7 @@ const primerDeck = {
       kunyomi:   'わら, ゆたか',
       nanori:    'しげ, みのる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1418-plug-up',
       kanji:     '窒',
@@ -31618,7 +31619,7 @@ const primerDeck = {
       onyomi:    'チツ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2743-polite',
       kanji:     '諄',
@@ -31632,7 +31633,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひちくど.い, くど.い, くどくど, ねんご.ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2381-respect-for-elders',
       kanji:     '悌',
@@ -31647,7 +31648,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'とも, やす, やすし, よし, ちか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2519-clear-skies',
       kanji:     '晏',
@@ -31661,7 +31662,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おそ.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1423-kiln',
       kanji:     '窯',
@@ -31675,7 +31676,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'かま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0664-widow',
       kanji:     '寡',
@@ -31689,7 +31690,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2517-glitter',
       kanji:     '暉',
@@ -31704,7 +31705,7 @@ const primerDeck = {
       kunyomi:   'かが.やく',
       nanori:    'てる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1916-tariff',
       kanji:     '租',
@@ -31718,7 +31719,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2939-andromeda',
       kanji:     '奎',
@@ -31732,7 +31733,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2862-first-day-of-the-month',
       kanji:     '朔',
@@ -31747,7 +31748,7 @@ const primerDeck = {
       kunyomi:   'ついたち',
       nanori:    'たち',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2110-model',
       kanji:     '塑',
@@ -31761,7 +31762,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'でく',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1563-overflow',
       kanji:     '濫',
@@ -31775,7 +31776,7 @@ const primerDeck = {
       onyomi:    'ラン',
       kunyomi:   'みだ.りに、みだ.りがましい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2877-blue-black',
       kanji:     '黛',
@@ -31789,7 +31790,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'まゆずみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2197-sign-of-the-cow',
       kanji:     '丑',
@@ -31804,7 +31805,7 @@ const primerDeck = {
       kunyomi:   'うし',
       nanori:    'ひろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1915-coarse',
       kanji:     '粗',
@@ -31818,7 +31819,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'あら.い、あら-',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2739-monk-s-sash',
       kanji:     '裟',
@@ -31832,7 +31833,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2334-high-reaching',
       kanji:     '嵩',
@@ -31847,7 +31848,7 @@ const primerDeck = {
       kunyomi:   'かさ, かさ.む, たか.い',
       nanori:    'たかし, たか, たけ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2194-imperial-seal',
       kanji:     '璽',
@@ -31861,7 +31862,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0557-lightning-bug',
       kanji:     '蛍',
@@ -31875,7 +31876,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'ほたる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0054-derision',
       kanji:     '嘲',
@@ -31889,7 +31890,7 @@ const primerDeck = {
       onyomi:    'チョウ、トウ',
       kunyomi:   'あざけ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2392-gushing',
       kanji:     '渾',
@@ -31903,7 +31904,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'すべ.て, にご.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1324-drowning',
       kanji:     '溺',
@@ -31917,7 +31918,7 @@ const primerDeck = {
       onyomi:    'デキ、ジョウ、ニョウ',
       kunyomi:   'いばり、おぼ.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2221-rice-field-footpath',
       kanji:     '畷',
@@ -31931,7 +31932,7 @@ const primerDeck = {
       onyomi:    'テツ',
       kunyomi:   'なわて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2478-thatching',
       kanji:     '苫',
@@ -31945,7 +31946,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'とま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2651-millet',
       kanji:     '黍',
@@ -31959,7 +31960,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'きび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2942-tenebrous',
       kanji:     '黎',
@@ -31974,7 +31975,7 @@ const primerDeck = {
       kunyomi:   'くろ.い',
       nanori:    'れ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2988-longing-old',
       kanji:     '慾',
@@ -31988,7 +31989,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2686-backpack',
       kanji:     '笈',
@@ -32003,7 +32004,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'おい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2533-fragile',
       kanji:     '脆',
@@ -32017,7 +32018,7 @@ const primerDeck = {
       onyomi:    'ゼイ',
       kunyomi:   'もろ.い, よわい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0268-spinal-column',
       kanji:     '脊',
@@ -32031,7 +32032,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'せ、せい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2809-overturn',
       kanji:     '顛',
@@ -32045,7 +32046,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'いただき, たお.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2923-forked',
       kanji:     '叉',
@@ -32059,7 +32060,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'また',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2984-plains-old',
       kanji:     '埜',
@@ -32073,7 +32074,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'の',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2400-moat',
       kanji:     '濠',
@@ -32087,7 +32088,7 @@ const primerDeck = {
       onyomi:    'ゴウ',
       kunyomi:   'ほり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2426-cunning',
       kanji:     '狡',
@@ -32101,7 +32102,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ずる.い, こす.い, わるがしこ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2659-peep',
       kanji:     '窺',
@@ -32115,7 +32116,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'うかが.う, のぞく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2309-handmaiden',
       kanji:     '婢',
@@ -32129,7 +32130,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はしため',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2545-ladder',
       kanji:     '梯',
@@ -32144,7 +32145,7 @@ const primerDeck = {
       kunyomi:   'はしご',
       nanori:    'だい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2976-candlelight',
       kanji:     '燭',
@@ -32158,7 +32159,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'ともしび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2458-wormwood',
       kanji:     '蓬',
@@ -32172,7 +32173,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'よもぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0623',
       kanji:     '錮',
@@ -32186,7 +32187,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'ふさ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2837-bonito',
       kanji:     '鰹',
@@ -32200,7 +32201,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'かつお',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2924',
       kanji:     '乖',
@@ -32214,7 +32215,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0986-numb',
       kanji:     '萎',
@@ -32228,7 +32229,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'な、しお.れる、しな.びる、しぼ.む、な.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0360-elucidate',
       kanji:     '詮',
@@ -32243,7 +32244,7 @@ const primerDeck = {
       kunyomi:   'せん.ずる、かい、あき.らか',
       nanori:    'あき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2793-rust',
       kanji:     '錆',
@@ -32257,7 +32258,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'さび, くわ.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2796-flash',
       kanji:     '閃',
@@ -32271,7 +32272,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひらめ.く, ひらめ.き, うかが.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2504',
       kanji:     '隕',
@@ -32285,7 +32286,7 @@ const primerDeck = {
       onyomi:    'イン ウン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2295-miso',
       kanji:     '噌',
@@ -32299,7 +32300,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'かまびす.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2305-dam',
       kanji:     '堰',
@@ -32313,7 +32314,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'せき, せ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2996-longevity-old',
       kanji:     '壽',
@@ -32328,7 +32329,7 @@ const primerDeck = {
       kunyomi:   'ことぶき, ことぶ.く, ことほ.ぐ',
       nanori:    'かず, じ, とし, ひさ, ひさし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2693-unhulled-rice',
       kanji:     '籾',
@@ -32342,7 +32343,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'もみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2745-remonstrate',
       kanji:     '諌',
@@ -32356,7 +32357,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'いさ.め, いさ.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2764-panther',
       kanji:     '豹',
@@ -32370,7 +32371,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1532-break',
       kanji:     '毀',
@@ -32384,7 +32385,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'こぼ.つ、こわ.す、こぼ.れる、こわ.れる、そし.る、やぶ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2732-frog',
       kanji:     '蛙',
@@ -32398,7 +32399,7 @@ const primerDeck = {
       onyomi:    'ア',
       kunyomi:   'かえる, かわず',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2997-hesitate',
       kanji:     '躊',
@@ -32412,7 +32413,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'ためら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2788-nail',
       kanji:     '釘',
@@ -32426,7 +32427,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'くぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2888',
       kanji:     '齬',
@@ -32440,7 +32441,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2759-parable',
       kanji:     '譬',
@@ -32454,7 +32455,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たと.える, たと.え',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2502-standstill',
       kanji:     '逗',
@@ -32468,7 +32469,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'とど.まる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2781-plow',
       kanji:     '鋤',
@@ -32482,7 +32483,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'す.く, すき, くわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2887',
       kanji:     '齟',
@@ -32496,7 +32497,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2321-assiduous',
       kanji:     '孜',
@@ -32510,7 +32511,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つと.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2542-comb',
       kanji:     '櫛',
@@ -32524,7 +32525,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'くし, くしけず.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2750-beg-pardon',
       kanji:     '詫',
@@ -32539,7 +32540,7 @@ const primerDeck = {
       kunyomi:   'わび, わび.しい, かこつ, わ.びる, わび.る',
       nanori:    'たく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2784-hoe',
       kanji:     '鍬',
@@ -32553,7 +32554,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'くわ, すき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2835-mackerel',
       kanji:     '鯖',
@@ -32567,7 +32568,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'さば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2246-fed-up',
       kanji:     '倦',
@@ -32581,7 +32582,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あき.る, あぐ.む, あぐ.ねる, う.む, つか.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2508-without-exception',
       kanji:     '悉',
@@ -32595,7 +32596,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つ.きる, ことごと, ことごと.く, つ.くす, つぶさ.に',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2991-shin',
       kanji:     '脛',
@@ -32609,7 +32610,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すね, はぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2838-bullhead',
       kanji:     '鰍',
@@ -32623,7 +32624,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'かじか, いなだ, どじょう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2937-sorceress',
       kanji:     '巫',
@@ -32637,7 +32638,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みこ, かんなぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2521-bleaching',
       kanji:     '晒',
@@ -32651,7 +32652,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さら.す, さらし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2530-bladder',
       kanji:     '胱',
@@ -32665,7 +32666,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2828-sardine',
       kanji:     '鰯',
@@ -32679,7 +32680,7 @@ const primerDeck = {
       onyomi:    'いわし',
       kunyomi:   'いわし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2843-seagull',
       kanji:     '鴎',
@@ -32693,7 +32694,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'かもめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2248-work-a-field',
       kanji:     '佃',
@@ -32707,7 +32708,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'つくだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2427-racoon-dog',
       kanji:     '狸',
@@ -32721,7 +32722,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'たぬき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0655-cowardice',
       kanji:     '臆',
@@ -32735,7 +32736,7 @@ const primerDeck = {
       onyomi:    'オク、ヨク',
       kunyomi:   'むね、おくする',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2949-upbringing',
       kanji:     '躾',
@@ -32749,7 +32750,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しつ.ける, しつけ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2910-hackneyed',
       kanji:     '套',
@@ -32763,7 +32764,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'かさ.ねる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2363-receptable',
       kanji:     '托',
@@ -32777,7 +32778,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たく.する, たの.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2601-firing',
       kanji:     '煉',
@@ -32791,7 +32792,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'ね.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2792-carillion',
       kanji:     '鉦',
@@ -32805,7 +32806,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'かね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2789-javelin',
       kanji:     '鑓',
@@ -32819,7 +32820,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'やり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2347-strengthen',
       kanji:     '彊',
@@ -32834,7 +32835,7 @@ const primerDeck = {
       kunyomi:   'つよ.い',
       nanori:    'つよし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2605-flames',
       kanji:     '焔',
@@ -32848,7 +32849,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ほのお',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2531-embryo',
       kanji:     '胚',
@@ -32862,7 +32863,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'はらみ, はら.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0240-bullying',
       kanji:     '苛',
@@ -32876,7 +32877,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'いじ.める、さいな.む、いらだ.つ、からい、こまかい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2790-sword-s-point',
       kanji:     '鋒',
@@ -32890,7 +32891,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'きっさき, とかり, ほこさき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2817-sweets',
       kanji:     '飴',
@@ -32904,7 +32905,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'あめ, やしな.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2957-mile',
       kanji:     '哩',
@@ -32918,7 +32919,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'まいる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2964-babble',
       kanji:     '唖',
@@ -32932,7 +32933,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2333-folding-screen',
       kanji:     '屏',
@@ -32946,7 +32947,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'おお.う, しりぞ.く, びょう.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1136-fence',
       kanji:     '塀',
@@ -32960,7 +32961,7 @@ const primerDeck = {
       onyomi:    'ヘイ、ベイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2918-supinate',
       kanji:     '臥',
@@ -32974,7 +32975,7 @@ const primerDeck = {
       onyomi:    'ガ',
       kunyomi:   'ふせ.る, ふ.せる, ふ.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2489-collector',
       kanji:     '蒐',
@@ -32988,7 +32989,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'あかね, あつ.まる, あつ.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2438-strawberry',
       kanji:     '苺',
@@ -33002,7 +33003,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'いちご',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2783-awl',
       kanji:     '錐',
@@ -33016,7 +33017,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'きり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2799-trickle',
       kanji:     '雫',
@@ -33030,7 +33031,7 @@ const primerDeck = {
       onyomi:    'ダ',
       kunyomi:   'しずく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2544-mallet',
       kanji:     '樵',
@@ -33044,7 +33045,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'きこ.る, こ.る, きこり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2647-ancestral-shrine',
       kanji:     '祢',
@@ -33058,7 +33059,7 @@ const primerDeck = {
       onyomi:    'ネ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2461-grape',
       kanji:     '葡',
@@ -33072,7 +33073,7 @@ const primerDeck = {
       onyomi:    'ブ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2871',
       kanji:     '靄',
@@ -33086,7 +33087,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2778-malt',
       kanji:     '麹',
@@ -33100,7 +33101,7 @@ const primerDeck = {
       onyomi:    'キク',
       kunyomi:   'こうじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2271-shave',
       kanji:     '剃',
@@ -33114,7 +33115,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'まい, そ.る, す.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2283-cough',
       kanji:     '咳',
@@ -33128,7 +33129,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'せ.く, しわぶ.く, せき, しわぶき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2279-whisper',
       kanji:     '囁',
@@ -33142,7 +33143,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ささや.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2561-bellflower',
       kanji:     '桔',
@@ -33157,7 +33158,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'き',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2931-ointment',
       kanji:     '膏',
@@ -33171,7 +33172,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あぶら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2264-stately',
       kanji:     '凛',
@@ -33185,7 +33186,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   'きびし.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2323-imply',
       kanji:     '寓',
@@ -33199,7 +33200,7 @@ const primerDeck = {
       onyomi:    'グウ',
       kunyomi:   'ぐう.する, かこつ.ける, よ.せる, よ.る, かりずまい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2234-a',
       kanji:     '或',
@@ -33213,7 +33214,7 @@ const primerDeck = {
       onyomi:    'ワク',
       kunyomi:   'あ.る, あるい, あるいは',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0380-range',
       kanji:     '域',
@@ -33227,7 +33228,7 @@ const primerDeck = {
       onyomi:    'イキ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0661-beguile',
       kanji:     '惑',
@@ -33241,7 +33242,7 @@ const primerDeck = {
       onyomi:    'ワク',
       kunyomi:   'まど.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2990-country-old',
       kanji:     '國',
@@ -33256,7 +33257,7 @@ const primerDeck = {
       kunyomi:   'くに',
       nanori:    'こ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2979-back-old',
       kanji:     '裡',
@@ -33270,7 +33271,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'うち, うら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2760-rumble',
       kanji:     '轟',
@@ -33284,7 +33285,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とどろ.かす, とどろ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2643-fend-off',
       kanji:     '禦',
@@ -33298,7 +33299,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふせ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2715-rudder',
       kanji:     '舵',
@@ -33312,7 +33313,7 @@ const primerDeck = {
       onyomi:    'ダ',
       kunyomi:   'かじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2475-mushroom',
       kanji:     '茸',
@@ -33326,7 +33327,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'きのこ, たけ, しげ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2763-assemble',
       kanji:     '輯',
@@ -33340,7 +33341,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あつ.める, やわ.らぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2260-make-do',
       kanji:     '做',
@@ -33354,7 +33355,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'な.す, つく.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2391-teardrops',
       kanji:     '泪',
@@ -33368,7 +33369,7 @@ const primerDeck = {
       onyomi:    'ルイ',
       kunyomi:   'なみだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2699-carpet-yarn',
       kanji:     '絨',
@@ -33382,7 +33383,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2712-stripe',
       kanji:     '縞',
@@ -33396,7 +33397,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'しま, しろぎぬ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2480-straw',
       kanji:     '藁',
@@ -33410,7 +33411,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'わら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2247-abrupt',
       kanji:     '俄',
@@ -33424,7 +33425,7 @@ const primerDeck = {
       onyomi:    'ガ',
       kunyomi:   'にわか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1768-throat',
       kanji:     '喉',
@@ -33438,7 +33439,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'のど',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2894-cyst',
       kanji:     '嚢',
@@ -33452,7 +33453,7 @@ const primerDeck = {
       onyomi:    'ノウ',
       kunyomi:   'ふくろ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2307-suckling-infant',
       kanji:     '嬰',
@@ -33466,7 +33467,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふ.れる, みどりご, あかご',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1617',
       kanji:     '璧',
@@ -33480,7 +33481,7 @@ const primerDeck = {
       onyomi:    'ヘキ',
       kunyomi:   'たま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2970-bridle-s-bit',
       kanji:     '轡',
@@ -33494,7 +33495,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くつわ, たづな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2330-rubbish',
       kanji:     '屑',
@@ -33508,7 +33509,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くず, いさぎよ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2646-local-god',
       kanji:     '祇',
@@ -33522,7 +33523,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'くにつかみ, ただ, まさに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2768',
       kanji:     '贖',
@@ -33536,7 +33537,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2842-fish-fin',
       kanji:     '鰭',
@@ -33550,7 +33551,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひれ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2300-authochthonous',
       kanji:     '坤',
@@ -33564,7 +33565,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'つち, ひつじさる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2352-disguise',
       kanji:     '扮',
@@ -33578,7 +33579,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'ふん.する, やつ.す, よそお.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2240-mandala',
       kanji:     '曼',
@@ -33592,7 +33593,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'なが.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0893-loose',
       kanji:     '漫',
@@ -33606,7 +33607,7 @@ const primerDeck = {
       onyomi:    'マン',
       kunyomi:   'みだり.に、そぞ.ろ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0892-ridicule',
       kanji:     '慢',
@@ -33620,7 +33621,7 @@ const primerDeck = {
       onyomi:    'マン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2022-melon',
       kanji:     '瓜',
@@ -33635,7 +33636,7 @@ const primerDeck = {
       kunyomi:   'うり',
       nanori:    'う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2024-orphan',
       kanji:     '孤',
@@ -33649,7 +33650,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2023-arc',
       kanji:     '弧',
@@ -33663,7 +33664,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2466-rush-mat',
       kanji:     '菰',
@@ -33677,7 +33678,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'こも, まこも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2535-body-cavity',
       kanji:     '腔',
@@ -33691,7 +33692,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2469-plantain',
       kanji:     '芭',
@@ -33705,7 +33706,7 @@ const primerDeck = {
       onyomi:    'バ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1601-moment',
       kanji:     '刹',
@@ -33719,7 +33720,7 @@ const primerDeck = {
       onyomi:    'セチ、セツ、サツ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2536-armrest',
       kanji:     '肱',
@@ -33733,7 +33734,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'かいな, ひじ, まるい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2435-tobacco',
       kanji:     '莨',
@@ -33747,7 +33748,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たばこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2861-sitting-in-mediation',
       kanji:     '坐',
@@ -33761,7 +33762,7 @@ const primerDeck = {
       onyomi:    'ザ',
       kunyomi:   'すわ.る, おわす, そぞろに, まします',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1100-sit',
       kanji:     '座',
@@ -33775,7 +33776,7 @@ const primerDeck = {
       onyomi:    'ザ',
       kunyomi:   'すわ.る',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2349-rice-gruel',
       kanji:     '粥',
@@ -33789,7 +33790,7 @@ const primerDeck = {
       onyomi:    'イク',
       kunyomi:   'かゆ, かい, ひさ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2722-crab',
       kanji:     '蟹',
@@ -33803,7 +33804,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'かに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2303-flat',
       kanji:     '坦',
@@ -33818,7 +33819,7 @@ const primerDeck = {
       kunyomi:   'たいら',
       nanori:    'やす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2644-beseech',
       kanji:     '祷',
@@ -33832,7 +33833,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'いの.る, いの.り, まつ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2462-grape-vine',
       kanji:     '萄',
@@ -33846,7 +33847,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2445-tendril',
       kanji:     '蔓',
@@ -33860,7 +33861,7 @@ const primerDeck = {
       onyomi:    'マン',
       kunyomi:   'はびこ.る, つる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2721-flea',
       kanji:     '蚤',
@@ -33874,7 +33875,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'のみ, はやい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2961-brahman',
       kanji:     '梵',
@@ -33888,7 +33889,7 @@ const primerDeck = {
       onyomi:    'ボン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2582-enjoyment',
       kanji:     '槃',
@@ -33902,7 +33903,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2637-teacup',
       kanji:     '碗',
@@ -33916,7 +33917,7 @@ const primerDeck = {
       onyomi:    'ワン',
       kunyomi:   'こばち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2767-bustling',
       kanji:     '賑',
@@ -33930,7 +33931,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'にぎ.わい, にぎ.やか, にぎ.わす, にぎ.わう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2273-wild-goose',
       kanji:     '雁',
@@ -33944,7 +33945,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'かり, かりがね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2998-bean-jam',
       kanji:     '饅',
@@ -33958,7 +33959,7 @@ const primerDeck = {
       onyomi:    'マン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2950-plentiful',
       kanji:     '夥',
@@ -33972,7 +33973,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おびただ.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2421-fabrication',
       kanji:     '涅',
@@ -33986,7 +33987,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'そ.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2635-inkstone',
       kanji:     '硯',
@@ -34000,7 +34001,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すずり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2966-sanskrit-ka',
       kanji:     '迦',
@@ -34014,7 +34015,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2821-cheat',
       kanji:     '騙',
@@ -34028,7 +34029,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'かた.る, だま.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2211-scaled',
       kanji:     '鱗',
@@ -34042,7 +34043,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'うろこ, こけ, こけら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2276-insinuate',
       kanji:     '仄',
@@ -34056,7 +34057,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'ほの.か, ほの-, ほの.めかす, ほの.めく, かたむ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2262-wilt',
       kanji:     '凋',
@@ -34070,7 +34071,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'しぼ.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2554-evergreen-oak',
       kanji:     '樫',
@@ -34084,7 +34085,7 @@ const primerDeck = {
       onyomi:    'かし',
       kunyomi:   'かし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2663-longness',
       kanji:     '竪',
@@ -34098,7 +34099,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   'たて, た.てる, こども',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2695-excrement',
       kanji:     '糞',
@@ -34112,7 +34113,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'くそ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2973-x',
       kanji:     '什',
@@ -34126,7 +34127,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2885-mahjong-tiles',
       kanji:     '牌',
@@ -34140,7 +34141,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'ぱい, ふだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2707-embroidery',
       kanji:     '繍',
@@ -34154,7 +34155,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'ぬいとり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0129',
       kanji:     '嗅',
@@ -34168,7 +34169,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'か.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0166-stuff-up',
       kanji:     '填',
@@ -34183,7 +34184,7 @@ const primerDeck = {
       kunyomi:   'は.まる, は.める, うず.める, しず.める, ふさ.ぐ',
       nanori:    'まき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2566-cane',
       kanji:     '杖',
@@ -34197,7 +34198,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   'つえ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2946-cast-a-spell',
       kanji:     '祟',
@@ -34211,7 +34212,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'たた.る, たた.り',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0592-envious',
       kanji:     '羨',
@@ -34225,7 +34226,7 @@ const primerDeck = {
       onyomi:    'セン、エン',
       kunyomi:   'うらや.む、あまり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2779-button',
       kanji:     '釦',
@@ -34239,7 +34240,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ぼたん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2249-animal-offspring',
       kanji:     '仔',
@@ -34253,7 +34254,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'こ, た.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2948-pruning',
       kanji:     '剪',
@@ -34267,7 +34268,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'き.る, つ.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2873-bemoan',
       kanji:     '歎',
@@ -34281,7 +34282,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'なげ.く, なげ.き',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2733-moth',
       kanji:     '蛾',
@@ -34295,7 +34296,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひむし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0363',
       kanji:     '訃',
@@ -34309,7 +34310,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'しらせ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2872-kalpa',
       kanji:     '劫',
@@ -34323,7 +34324,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'おびや.かす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1736',
       kanji:     '慄',
@@ -34337,7 +34338,7 @@ const primerDeck = {
       onyomi:    'リツ',
       kunyomi:   'ふる.える、おそ.れる、おのの.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2373-gouge-out',
       kanji:     '抉',
@@ -34351,7 +34352,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'えぐ.る, こじ.る, くじ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2360-press-down-on',
       kanji:     '按',
@@ -34365,7 +34366,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おさ.える, しら.べる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2366-counter-for-tools',
       kanji:     '挺',
@@ -34379,7 +34380,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'ぬ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2371-rubbing',
       kanji:     '摺',
@@ -34394,7 +34395,7 @@ const primerDeck = {
       kunyomi:   'す.る, ひだ',
       nanori:    'する, ずり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2978-lamp-old',
       kanji:     '燈',
@@ -34408,7 +34409,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ひ, ほ-, ともしび, とも.す, あかり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2209-phosphorus',
       kanji:     '燐',
@@ -34422,7 +34423,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2243-and-then',
       kanji:     '而',
@@ -34436,7 +34437,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'しこ.うして, しか.して, しか.も, しか.れども, すなわち, なんじ, しかるに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1248-name',
       kanji:     '耐',
@@ -34451,7 +34452,7 @@ const primerDeck = {
       kunyomi:   'た.える',
       nanori:    'たえ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2616-fortunate',
       kanji:     '瑞',
@@ -34466,7 +34467,7 @@ const primerDeck = {
       kunyomi:   'みず-, しるし',
       nanori:    'たま, ず, みつ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1249-demand',
       kanji:     '需',
@@ -34480,7 +34481,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1250-confucian',
       kanji:     '儒',
@@ -34494,7 +34495,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2315-mistress',
       kanji:     '嬬',
@@ -34509,7 +34510,7 @@ const primerDeck = {
       kunyomi:   'よわ.い',
       nanori:    'つま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2671-sliding-door',
       kanji:     '襖',
@@ -34523,7 +34524,7 @@ const primerDeck = {
       onyomi:    'オウ',
       kunyomi:   'ふすま, あお',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2836-shark',
       kanji:     '鮫',
@@ -34537,7 +34538,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さめ, みずち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-3000-snapping-turtle',
       kanji:     '鼈',
@@ -34551,7 +34552,7 @@ const primerDeck = {
       onyomi:    'ベツ',
       kunyomi:   'すっぽん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2379-as-if',
       kanji:     '恰',
@@ -34565,7 +34566,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あたか.も',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2563-grain-rake',
       kanji:     '杷',
@@ -34580,7 +34581,7 @@ const primerDeck = {
       kunyomi:   'つか',
       nanori:    'わ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2401-spray',
       kanji:     '溌',
@@ -34594,7 +34595,7 @@ const primerDeck = {
       onyomi:    'ハツ',
       kunyomi:   'も.る, とびち.る, そそ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2728-shrimp',
       kanji:     '蝦',
@@ -34609,7 +34610,7 @@ const primerDeck = {
       kunyomi:   'えび',
       nanori:    'えみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2772-straddle',
       kanji:     '跨',
@@ -34623,7 +34624,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'また.がる, またが.る, また.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2798-side-gate',
       kanji:     '閤',
@@ -34637,7 +34638,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'くぐりど',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2269',
       kanji:     '剽',
@@ -34651,7 +34652,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2550-wooden-bowl',
       kanji:     '椀',
@@ -34665,7 +34666,7 @@ const primerDeck = {
       onyomi:    'ワン',
       kunyomi:   'はち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2069-apprehensive',
       kanji:     '畏',
@@ -34679,7 +34680,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'おそ.れる、かしこま.る、かしこ、かしこ.し',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2505-nook',
       kanji:     '隈',
@@ -34693,7 +34694,7 @@ const primerDeck = {
       onyomi:    'ワイ',
       kunyomi:   'くま, すみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2676-pole',
       kanji:     '竿',
@@ -34707,7 +34708,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'さお',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2493-track-down',
       kanji:     '辿',
@@ -34721,7 +34722,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'たど.る, たどり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2782-handsaw',
       kanji:     '鋸',
@@ -34735,7 +34736,7 @@ const primerDeck = {
       onyomi:    'キョ',
       kunyomi:   'のこ, のこぎり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2403-solitude',
       kanji:     '淋',
@@ -34749,7 +34750,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   'さび.しい, さみ.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1022-cage',
       kanji:     '篭',
@@ -34764,7 +34765,7 @@ const primerDeck = {
       kunyomi:   'かご, こ.める, こも.る, こ.む',
       nanori:    'ごめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0916-kidney',
       kanji:     '腎',
@@ -34778,7 +34779,7 @@ const primerDeck = {
       onyomi:    'ジン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2753',
       kanji:     '訝',
@@ -34792,7 +34793,7 @@ const primerDeck = {
       onyomi:    'ガ いぶか.る',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2274-counterfeit',
       kanji:     '贋',
@@ -34806,7 +34807,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'にせ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2774-soy-sauce',
       kanji:     '醤',
@@ -34820,7 +34821,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ひしお',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2348-loosen',
       kanji:     '弛',
@@ -34834,7 +34835,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'たる.む, たる.める, たゆ.む, ゆる.む, ゆる.み',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1716-wrenching',
       kanji:     '捻',
@@ -34848,7 +34849,7 @@ const primerDeck = {
       onyomi:    'ネン、ジョウ',
       kunyomi:   'ね.じる、ねじ.る、ひね.くる、ひね.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2419-drench',
       kanji:     '濡',
@@ -34862,7 +34863,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   'ぬれ.る, ぬら.す, ぬ.れる, ぬ.らす, うるお.い, うるお.う, うるお.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2425-indecent',
       kanji:     '猥',
@@ -34876,7 +34877,7 @@ const primerDeck = {
       onyomi:    'ワイ',
       kunyomi:   'みだ.ら, みだり.に',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2718-summons',
       kanji:     '聘',
@@ -34890,7 +34891,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'へい.する, と.う, め.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2776-ghee',
       kanji:     '醐',
@@ -34904,7 +34905,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2981-shop-alternate',
       kanji:     '鋪',
@@ -34919,7 +34920,7 @@ const primerDeck = {
       kunyomi:   'しく, みせ',
       nanori:    'しき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1358-cheek',
       kanji:     '頬',
@@ -34933,7 +34934,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'ほお, ほほ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1437',
       kanji:     '緻',
@@ -34947,7 +34948,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'こまか.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2908-fiddle-with',
       kanji:     '翫',
@@ -34961,7 +34962,7 @@ const primerDeck = {
       onyomi:    'ガン',
       kunyomi:   'もてあそ.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2443-moss',
       kanji:     '苔',
@@ -34975,7 +34976,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'こけ, こけら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2730-screw',
       kanji:     '螺',
@@ -34989,7 +34990,7 @@ const primerDeck = {
       onyomi:    'ラ',
       kunyomi:   'にし, にな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1537-hooch',
       kanji:     '酎',
@@ -35003,7 +35004,7 @@ const primerDeck = {
       onyomi:    'チュウ、チュ',
       kunyomi:   'かも.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1610-immediate',
       kanji:     '頓',
@@ -35017,7 +35018,7 @@ const primerDeck = {
       onyomi:    'トン、トツ',
       kunyomi:   'にわか.に、とん.と、つまず.く、とみ.に、ぬかずく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2826-eel',
       kanji:     '鰻',
@@ -35031,7 +35032,7 @@ const primerDeck = {
       onyomi:    'マン',
       kunyomi:   'うなぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1968-palisade',
       kanji:     '柵',
@@ -35046,7 +35047,7 @@ const primerDeck = {
       kunyomi:   'しがら.む、しがらみ、とりで、やらい',
       nanori:    'ませ, やな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2598-moxa',
       kanji:     '灸',
@@ -35060,7 +35061,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'やいと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1818-lose-weight',
       kanji:     '痩',
@@ -35074,7 +35075,7 @@ const primerDeck = {
       onyomi:    'ソウ、チュウ、シュウ、シュ',
       kunyomi:   'や.せる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2629-dizzy',
       kanji:     '眩',
@@ -35088,7 +35089,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'げん.す, くるめ.く, まぶ.しい, くら.む, まど.う, めま.い, まばゆ.い, くれ.る, ま.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2734-clam',
       kanji:     '蛤',
@@ -35102,7 +35103,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はまぐり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1333-chin',
       kanji:     '顎',
@@ -35116,7 +35117,7 @@ const primerDeck = {
       onyomi:    'ガク',
       kunyomi:   'あご、あぎと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2870-helmet',
       kanji:     '兜',
@@ -35130,7 +35131,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'かぶと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2399-on-the-verge-of',
       kanji:     '瀕',
@@ -35144,7 +35145,7 @@ const primerDeck = {
       onyomi:    'ヒン',
       kunyomi:   'ほとり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2658-obeisant',
       kanji:     '穆',
@@ -35158,7 +35159,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'やわ.らぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2143-insult',
       kanji:     '罵',
@@ -35172,7 +35173,7 @@ const primerDeck = {
       onyomi:    'バ',
       kunyomi:   'ののし.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2858-small-craft',
       kanji:     '艘',
@@ -35186,7 +35187,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ふね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2881-reserved',
       kanji:     '虔',
@@ -35200,7 +35201,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'つつし.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2496-elude-rtk3',
       kanji:     '遁',
@@ -35214,7 +35215,7 @@ const primerDeck = {
       onyomi:    'トン',
       kunyomi:   'のが.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2302-blemish',
       kanji:     '垢',
@@ -35228,7 +35229,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あか, はじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2310-well-finished',
       kanji:     '婉',
@@ -35242,7 +35243,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'うつく.しい, したが.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2752-fallible',
       kanji:     '謬',
@@ -35256,7 +35257,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あやま.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2813-neck-and-throat',
       kanji:     '頚',
@@ -35270,7 +35271,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'くび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2614-coral',
       kanji:     '珊',
@@ -35284,7 +35285,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'センチ, さんち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2692-paste',
       kanji:     '糊',
@@ -35298,7 +35299,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'のり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2749-split-up',
       kanji:     '訣',
@@ -35312,7 +35313,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'わかれ, わかれ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2370-outstanding',
       kanji:     '擢',
@@ -35326,7 +35327,7 @@ const primerDeck = {
       onyomi:    'テキ',
       kunyomi:   'ぬ.く, ぬき.んでる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2389-rinse',
       kanji:     '洒',
@@ -35340,7 +35341,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'すす.ぐ, あら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2719-addiction',
       kanji:     '耽',
@@ -35354,7 +35355,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふ.ける',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1113-dining-tray',
       kanji:     '膳',
@@ -35369,7 +35370,7 @@ const primerDeck = {
       kunyomi:   'かしわ、すす.める、そな.える',
       nanori:    'ぜ, よし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2724-hibernation',
       kanji:     '蟄',
@@ -35383,7 +35384,7 @@ const primerDeck = {
       onyomi:    'チツ',
       kunyomi:   'ちっ.する, かく.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2795-scissors',
       kanji:     '鋏',
@@ -35397,7 +35398,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はさみ, はさ.む, つるぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2278-reprehend',
       kanji:     '咎',
@@ -35411,7 +35412,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とが.める, とが',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2945-thornbush',
       kanji:     '棘',
@@ -35425,7 +35426,7 @@ const primerDeck = {
       onyomi:    'キョク',
       kunyomi:   'いばら, とげ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2573-escutcheon',
       kanji:     '楯',
@@ -35439,7 +35440,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2198',
       kanji:     '羞',
@@ -35453,7 +35454,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'はじ.る、すすめ.る、は.ずかしい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2716-strung-together',
       kanji:     '聯',
@@ -35467,7 +35468,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'つら.なる, つら.ねる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2467-darken',
       kanji:     '蒙',
@@ -35481,7 +35482,7 @@ const primerDeck = {
       onyomi:    'モウ',
       kunyomi:   'こうむ.る, おお.う, くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2474-stamen',
       kanji:     '蕊',
@@ -35495,7 +35496,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しべ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2816-eclipse',
       kanji:     '蝕',
@@ -35509,7 +35510,7 @@ const primerDeck = {
       onyomi:    'ショク',
       kunyomi:   'むしば.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0232-splash',
       kanji:     '沫',
@@ -35523,7 +35524,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あわ, しぶき, つばき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2603-refulgent',
       kanji:     '灼',
@@ -35537,7 +35538,7 @@ const primerDeck = {
       onyomi:    'シャク',
       kunyomi:   'あらた, やく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2599-fanning',
       kanji:     '煽',
@@ -35551,7 +35552,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'あお.る, おだ.てる, おこ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0863-skirt',
       kanji:     '裳',
@@ -35565,7 +35566,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'も, もすそ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2820-rush',
       kanji:     '馳',
@@ -35579,7 +35580,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'は.せる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2879-rocksalt',
       kanji:     '鹵',
@@ -35593,7 +35594,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しお, しおち, たて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2596-torch',
       kanji:     '炬',
@@ -35608,7 +35609,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2470-mow',
       kanji:     '苅',
@@ -35623,7 +35624,7 @@ const primerDeck = {
       kunyomi:   'か.る',
       nanori:    'かり, かる, かん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2726-ant',
       kanji:     '蟻',
@@ -35637,7 +35638,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'あり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2880-lye',
       kanji:     '鹸',
@@ -35651,7 +35652,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'あ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2967-jeweled-hairpin',
       kanji:     '珈',
@@ -35665,7 +35666,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'かみかざり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2623-phlegm',
       kanji:     '痰',
@@ -35679,7 +35680,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0647-wick',
       kanji:     '芯',
@@ -35693,7 +35694,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2120',
       kanji:     '鬱',
@@ -35707,7 +35708,7 @@ const primerDeck = {
       onyomi:    'ウツ',
       kunyomi:   'うっ.する、ふさ.ぐ、しげ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0731-tinker-with',
       kanji:     '弄',
@@ -35721,7 +35722,7 @@ const primerDeck = {
       onyomi:    'ロウ、ル',
       kunyomi:   'いじく.る、ろう.する、いじ.る、ひねく.る、たわむ.れる、もてあそ.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2852-owl',
       kanji:     '梟',
@@ -35735,7 +35736,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふくろう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2652-bald',
       kanji:     '禿',
@@ -35749,7 +35750,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ちび.る, かむろ, は.げる, はげ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2471-onion',
       kanji:     '葱',
@@ -35763,7 +35764,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'ねぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2762-spoke',
       kanji:     '輻',
@@ -35777,7 +35778,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'や',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2503-courtesy',
       kanji:     '鄭',
@@ -35791,7 +35792,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1590-mochi',
       kanji:     '餅',
@@ -35805,7 +35806,7 @@ const primerDeck = {
       onyomi:    'ヘイ、ヒョウ',
       kunyomi:   'もち、もちい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2342-licensed-quarters',
       kanji:     '廓',
@@ -35819,7 +35820,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くるわ, とりで',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2374-wince',
       kanji:     '怯',
@@ -35833,7 +35834,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'ひる.む, おびえ.る, おじる, おび.える, おそ.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2228-penitential',
       kanji:     '懺',
@@ -35847,7 +35848,7 @@ const primerDeck = {
       onyomi:    'ザン',
       kunyomi:   'くい.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2591-ellipse',
       kanji:     '楕',
@@ -35861,7 +35862,7 @@ const primerDeck = {
       onyomi:    'ダ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2660-tight',
       kanji:     '窄',
@@ -35875,7 +35876,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   'すぼ.める, つぼ.める, せま.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1422-squeeze',
       kanji:     '搾',
@@ -35889,7 +35890,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   'しぼ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2495-detour',
       kanji:     '迂',
@@ -35903,7 +35904,7 @@ const primerDeck = {
       onyomi:    'ウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2317-mother-in-law',
       kanji:     '姑',
@@ -35917,7 +35918,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'しゅうとめ, しゅうと, おば, しばらく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1274-twenty',
       kanji:     '廿',
@@ -35932,7 +35933,7 @@ const primerDeck = {
       kunyomi:   'にじゅう',
       nanori:    'はつ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0028-generation',
       kanji:     '世',
@@ -35947,7 +35948,7 @@ const primerDeck = {
       kunyomi:   'よ、さんじゅう',
       nanori:    'とし, ゆ, ゆき',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1278-degrees',
       kanji:     '度',
@@ -35962,7 +35963,7 @@ const primerDeck = {
       kunyomi:   'たび、-た.い',
       nanori:    'のり',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0243-leaf',
       kanji:     '葉',
@@ -35977,7 +35978,7 @@ const primerDeck = {
       kunyomi:   'は',
       nanori:    'よ, わ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1279-transit',
       kanji:     '渡',
@@ -35992,7 +35993,7 @@ const primerDeck = {
       kunyomi:   'わた.る、-わた.る、わた.す',
       nanori:    'お, たり, わたな, わたら, わたり',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1253-full',
       kanji:     '満',
@@ -36007,7 +36008,7 @@ const primerDeck = {
       kunyomi:   'み.ちる、み.つ、み.たす',
       nanori:    'ま, みち, みつ, みつる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2041-leather',
       kanji:     '革',
@@ -36021,7 +36022,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'かわ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2043-hegemony',
       kanji:     '覇',
@@ -36036,7 +36037,7 @@ const primerDeck = {
       kunyomi:   'はたがしら',
       nanori:    'はる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1894-sweet',
       kanji:     '甘',
@@ -36051,7 +36052,7 @@ const primerDeck = {
       kunyomi:   'あま.い、あま.える、あま.やかす、うま.い',
       nanori:    'かも',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1010-bamboo-grass',
       kanji:     '笹',
@@ -36066,7 +36067,7 @@ const primerDeck = {
       kunyomi:   'ささ',
       nanori:    'さ, さき, しの, じね',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1275-commoner',
       kanji:     '庶',
@@ -36080,7 +36081,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0560-butterfly',
       kanji:     '蝶',
@@ -36094,7 +36095,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2803-saddle',
       kanji:     '鞍',
@@ -36108,7 +36109,7 @@ const primerDeck = {
       onyomi:    'アン',
       kunyomi:   'くら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2804-whip',
       kanji:     '鞭',
@@ -36122,7 +36123,7 @@ const primerDeck = {
       onyomi:    'ベン',
       kunyomi:   'むち, むちうつ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1905-tremendously',
       kanji:     '甚',
@@ -36137,7 +36138,7 @@ const primerDeck = {
       kunyomi:   'はなは.だ、はなは.だしい',
       nanori:    'じ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1906-intuition',
       kanji:     '勘',
@@ -36152,7 +36153,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'か, さとる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1276-intercept',
       kanji:     '遮',
@@ -36166,7 +36167,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'さえぎ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1895-navy-blue',
       kanji:     '紺',
@@ -36180,7 +36181,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2808-terminate',
       kanji:     '鞠',
@@ -36195,7 +36196,7 @@ const primerDeck = {
       kunyomi:   'まり',
       nanori:    'まい',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1896-so-and-so',
       kanji:     '某',
@@ -36209,7 +36210,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'それがし、なにがし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1897-conspire',
       kanji:     '謀',
@@ -36223,7 +36224,7 @@ const primerDeck = {
       onyomi:    'ボウ、ム',
       kunyomi:   'はか.る、たばか.る、はかりごと',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1898-mediator',
       kanji:     '媒',
@@ -36237,7 +36238,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'なこうど',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1907-withstand',
       kanji:     '堪',
@@ -36251,7 +36252,7 @@ const primerDeck = {
       onyomi:    'カン、タン',
       kunyomi:   'た.える、たま.る、こら.える、こた.える',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2600-soot',
       kanji:     '煤',
@@ -36265,7 +36266,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2757-secret-agent',
       kanji:     '諜',
@@ -36279,7 +36280,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ちょう.ずる, うかが.う, しめ.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2934-label',
       kanji:     '牒',
@@ -36293,7 +36294,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2805-saddle-straps',
       kanji:     '鞘',
@@ -36307,7 +36308,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'さや',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2369-sprinkle',
       kanji:     '撒',
@@ -36321,7 +36322,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'ま.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2417-chaos',
       kanji:     '沌',
@@ -36335,7 +36336,7 @@ const primerDeck = {
       onyomi:    'トン',
       kunyomi:   'くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2968-beaded-hairpin',
       kanji:     '琲',
@@ -36349,7 +36350,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'つらぬく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2758-footnote',
       kanji:     '註',
@@ -36363,7 +36364,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2989-point-old',
       kanji:     '嶽',
@@ -36378,7 +36379,7 @@ const primerDeck = {
       kunyomi:   'たけ',
       nanori:    'たき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2944-stop-short',
       kanji:     '已',
@@ -36393,7 +36394,7 @@ const primerDeck = {
       kunyomi:   'や.む, すで.に, のみ, はなはだ',
       nanori:    'み',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2368-petting',
       kanji:     '撫',
@@ -36408,7 +36409,7 @@ const primerDeck = {
       kunyomi:   'な.でる',
       nanori:    'なで, なでし, む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2418-strainer',
       kanji:     '濾',
@@ -36422,7 +36423,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'こ.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2206-fowl',
       kanji:     '禽',
@@ -36436,7 +36437,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'とり, とりこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2690-settlings',
       kanji:     '粕',
@@ -36450,7 +36451,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'かす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2528-pus',
       kanji:     '膿',
@@ -36464,7 +36465,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'う.む, うみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2606-stew',
       kanji:     '烹',
@@ -36478,7 +36479,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'に.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2219-rhinoceros',
       kanji:     '犀',
@@ -36492,7 +36493,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2473-shingling',
       kanji:     '葺',
@@ -36506,7 +36507,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'あし, ふ.く, ふき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2454-buckwheat',
       kanji:     '蕎',
@@ -36520,7 +36521,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'そば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2754-proverb',
       kanji:     '諺',
@@ -36534,7 +36535,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'ことわざ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2834-cod',
       kanji:     '鱈',
@@ -36548,7 +36549,7 @@ const primerDeck = {
       onyomi:    'セツ',
       kunyomi:   'たら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2294-spin-a-tale',
       kanji:     '噺',
@@ -36562,7 +36563,7 @@ const primerDeck = {
       onyomi:    'はなし',
       kunyomi:   'はなし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2327-venison',
       kanji:     '宍',
@@ -36577,7 +36578,7 @@ const primerDeck = {
       kunyomi:   'しし',
       nanori:    'し, しん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0695-wipe',
       kanji:     '拭',
@@ -36591,7 +36592,7 @@ const primerDeck = {
       onyomi:    'ショク、シキ',
       kunyomi:   'ぬぐ.う、ふ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2570-wooden-ladle',
       kanji:     '杓',
@@ -36605,7 +36606,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひしゃく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2034-pillow',
       kanji:     '枕',
@@ -36619,7 +36620,7 @@ const primerDeck = {
       onyomi:    'チン、シン',
       kunyomi:   'まくら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2969-japanese-cypress-old',
       kanji:     '檜',
@@ -36633,7 +36634,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'ひのき, ひ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1798',
       kanji:     '辣',
@@ -36647,7 +36648,7 @@ const primerDeck = {
       onyomi:    'ラツ',
       kunyomi:   'から.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2785-rivet',
       kanji:     '鋲',
@@ -36661,7 +36662,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'びょう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2586-plotosid',
       kanji:     '樗',
@@ -36676,7 +36677,7 @@ const primerDeck = {
       kunyomi:   'おおち, おうち',
       nanori:    'ちょう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2624-measles',
       kanji:     '疹',
@@ -36690,7 +36691,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'はしか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2935-glimpse',
       kanji:     '瞥',
@@ -36704,7 +36705,7 @@ const primerDeck = {
       onyomi:    'ベツ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2917-incandescent',
       kanji:     '赫',
@@ -36718,7 +36719,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'あかい, あか, かがや.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2182-upbraid',
       kanji:     '嚇',
@@ -36732,7 +36733,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'おど.す',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2494-crawl',
       kanji:     '這',
@@ -36746,7 +36747,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'は.う, は.い, むか.える, この',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2848-heron',
       kanji:     '鷺',
@@ -36760,7 +36761,7 @@ const primerDeck = {
       onyomi:    'ロ',
       kunyomi:   'さぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1947-domburi',
       kanji:     '丼',
@@ -36774,7 +36775,7 @@ const primerDeck = {
       onyomi:    'トン、タン、ショウ、セイ',
       kunyomi:   'どんぶり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2320-expecting',
       kanji:     '孕',
@@ -36789,7 +36790,7 @@ const primerDeck = {
       kunyomi:   'はら.む',
       nanori:    'はらみ, もと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2863-drag',
       kanji:     '曳',
@@ -36804,7 +36805,7 @@ const primerDeck = {
       kunyomi:   'ひ.く',
       nanori:    'ひき, びき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2409-inundate',
       kanji:     '湛',
@@ -36819,7 +36820,7 @@ const primerDeck = {
       kunyomi:   'しず.む, たた.える',
       nanori:    'かん, きよ, たたう, たたえ, やす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2604-branding',
       kanji:     '烙',
@@ -36833,7 +36834,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'や.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2913-crock',
       kanji:     '壷',
@@ -36847,7 +36848,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つぼ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1518-widespread',
       kanji:     '氾',
@@ -36861,7 +36862,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'ひろ.がる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2864-dribble-out',
       kanji:     '洩',
@@ -36875,7 +36876,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'も.らす, の.びる, も.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2424-sly',
       kanji:     '猾',
@@ -36889,7 +36890,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'わるがしこ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2920-gourd',
       kanji:     '瓢',
@@ -36903,7 +36904,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'ひさご, ふくべ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2627-paralysis',
       kanji:     '痺',
@@ -36917,7 +36918,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しび.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2811-exceedingly',
       kanji:     '頗',
@@ -36931,7 +36932,7 @@ const primerDeck = {
       onyomi:    'ハ',
       kunyomi:   'すこぶ.る, かたよ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2253-emigrant',
       kanji:     '僑',
@@ -36946,7 +36947,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'きゅう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2299-clay',
       kanji:     '埴',
@@ -36960,7 +36961,7 @@ const primerDeck = {
       onyomi:    'ショク',
       kunyomi:   'はに, へな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2346-tomb-sanctuary',
       kanji:     '廟',
@@ -36974,7 +36975,7 @@ const primerDeck = {
       onyomi:    'ビョウ',
       kunyomi:   'たまや, みたまや, やしろ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2362-interpretation',
       kanji:     '揖',
@@ -36989,7 +36990,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1259-rowing',
       kanji:     '漕',
@@ -37003,7 +37004,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'こ.ぐ, はこ.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2675-rattan-box',
       kanji:     '箪',
@@ -37017,7 +37018,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'はこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2442-straw-raincoat',
       kanji:     '蓑',
@@ -37031,7 +37032,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2986-patronage',
       kanji:     '寵',
@@ -37045,7 +37046,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'めぐ.み, めぐ.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2367-commotion',
       kanji:     '擾',
@@ -37059,7 +37060,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みだ.れる, みだ.す, わずら.わしい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2994-exorcism',
       kanji:     '祓',
@@ -37073,7 +37074,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2673-raft',
       kanji:     '筏',
@@ -37087,7 +37088,7 @@ const primerDeck = {
       onyomi:    'バツ',
       kunyomi:   'いかだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2674-bamboo-blinds',
       kanji:     '簾',
@@ -37102,7 +37103,7 @@ const primerDeck = {
       kunyomi:   'すだれ, す',
       nanori:    'みす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2691-lees',
       kanji:     '糟',
@@ -37117,7 +37118,7 @@ const primerDeck = {
       kunyomi:   'ぬか',
       nanori:    'かす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2737-ruled-lines',
       kanji:     '罫',
@@ -37131,7 +37132,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2926-vegetable-patch',
       kanji:     '圃',
@@ -37145,7 +37146,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はたけ, にわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0751-spiny',
       kanji:     '梗',
@@ -37159,7 +37160,7 @@ const primerDeck = {
       onyomi:    'コウ、キョウ',
       kunyomi:   'ふさぐ、やまにれ、おおむね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2388-seep',
       kanji:     '滲',
@@ -37173,7 +37174,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'し.みる, にじ.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2423-grandpa',
       kanji:     '爺',
@@ -37187,7 +37188,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'じい, じじい, おやじ, じじ, ちち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2678-foil',
       kanji:     '箔',
@@ -37201,7 +37202,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'すだれ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2500-pressing',
       kanji:     '逼',
@@ -37215,7 +37216,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'せま.る, むかばき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2791-hammer',
       kanji:     '鎚',
@@ -37229,7 +37230,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1706-saliva',
       kanji:     '唾',
@@ -37243,7 +37244,7 @@ const primerDeck = {
       onyomi:    'ダ、タ',
       kunyomi:   'つば、つばき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2588-cryptomeria',
       kanji:     '椙',
@@ -37257,7 +37258,7 @@ const primerDeck = {
       onyomi:    'すぎ',
       kunyomi:   'すぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2688-should',
       kanji:     '筈',
@@ -37271,7 +37272,7 @@ const primerDeck = {
       onyomi:    'カツ',
       kunyomi:   'はず, やはず',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2534-rib',
       kanji:     '肋',
@@ -37285,7 +37286,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あばら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1012-muscle',
       kanji:     '筋',
@@ -37299,7 +37300,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'すじ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2630-pheasant',
       kanji:     '雉',
@@ -37314,7 +37315,7 @@ const primerDeck = {
       kunyomi:   'きじ',
       nanori:    'き',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2814-repast',
       kanji:     '餐',
@@ -37328,7 +37329,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'の.む, くら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2823-rebuttal',
       kanji:     '駁',
@@ -37342,7 +37343,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'ぶち, まじ.る, まだら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2259-my-son',
       kanji:     '倅',
@@ -37356,7 +37357,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'せがれ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1128-not',
       kanji:     '勿',
@@ -37370,7 +37371,7 @@ const primerDeck = {
       onyomi:    'モチ',
       kunyomi:   'なか.れ, なし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1129-thing',
       kanji:     '物',
@@ -37384,7 +37385,7 @@ const primerDeck = {
       onyomi:    'ブツ、モツ',
       kunyomi:   'もの、もの-',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1130-easy',
       kanji:     '易',
@@ -37398,7 +37399,7 @@ const primerDeck = {
       onyomi:    'エキ、イ',
       kunyomi:   'やさ.しい、やす.い',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1131-grant',
       kanji:     '賜',
@@ -37412,7 +37413,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'たまわ.る、たま.う、たも.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2510-firstborn-son',
       kanji:     '惣',
@@ -37427,7 +37428,7 @@ const primerDeck = {
       kunyomi:   'いそが.しい, そうじて',
       nanori:    'ふさ, そ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2292-sides-of-the-mouth',
       kanji:     '吻',
@@ -37441,7 +37442,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くちわき, くちさき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2288-barking',
       kanji:     '吠',
@@ -37455,7 +37456,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'ほえ.る, ほ.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2297-dumbfounded',
       kanji:     '呆',
@@ -37469,7 +37470,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'ほけ.る, ぼ.ける, あき.れる, おろか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1072-protect',
       kanji:     '保',
@@ -37484,7 +37485,7 @@ const primerDeck = {
       kunyomi:   'たも.つ',
       nanori:    'う, お, ぶ, もり, やす, やすし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1073-praise',
       kanji:     '褒',
@@ -37498,7 +37499,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'ほ.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0461-attractive',
       kanji:     '嬌',
@@ -37512,7 +37513,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'なまめか.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2441-trim',
       kanji:     '薙',
@@ -37526,7 +37527,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'な.ぐ, なぎ, か.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2725-housefly',
       kanji:     '蝿',
@@ -37540,7 +37541,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はえ, はい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2748-query',
       kanji:     '訊',
@@ -37554,7 +37555,7 @@ const primerDeck = {
       onyomi:    'ジン',
       kunyomi:   'き.く, と.う, たず.ねる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2869-evil',
       kanji:     '兇',
@@ -37568,7 +37569,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'おそ.れる, わる.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1979',
       kanji:     '哺',
@@ -37582,7 +37583,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'はぐく.む、ふく.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2380-enlarge',
       kanji:     '恢',
@@ -37596,7 +37597,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'ひろ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2740-incision',
       kanji:     '截',
@@ -37610,7 +37611,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'き.る, たつ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1101-sprain',
       kanji:     '挫',
@@ -37624,7 +37625,7 @@ const primerDeck = {
       onyomi:    'ザ、サ',
       kunyomi:   'くじ.く、くじ.ける',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2954-centimeter',
       kanji:     '糎',
@@ -37638,7 +37639,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'センチ, センチメートル',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0682',
       kanji:     '憬',
@@ -37652,7 +37653,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'あこが.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2353',
       kanji:     '捏',
@@ -37666,7 +37667,7 @@ const primerDeck = {
       onyomi:    'ネツ ネチ ね.る',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2365-twirl',
       kanji:     '撚',
@@ -37680,7 +37681,7 @@ const primerDeck = {
       onyomi:    'ネン',
       kunyomi:   'よ.る, よ.れる, より, ひね.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2574-hackberry',
       kanji:     '榎',
@@ -37695,7 +37696,7 @@ const primerDeck = {
       kunyomi:   'えのき',
       nanori:    'え, えの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2207-apple',
       kanji:     '檎',
@@ -37709,7 +37710,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2669-lined-kimono',
       kanji:     '袷',
@@ -37723,7 +37724,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あわせ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2235-rabbit',
       kanji:     '兎',
@@ -37737,7 +37738,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'うさぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0308',
       kanji:     '喩',
@@ -37751,7 +37752,7 @@ const primerDeck = {
       onyomi:    'ユ',
       kunyomi:   'たと.える、さと.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2314-niece',
       kanji:     '姪',
@@ -37765,7 +37766,7 @@ const primerDeck = {
       onyomi:    'テツ',
       kunyomi:   'めい, おい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2899-this',
       kanji:     '斯',
@@ -37779,7 +37780,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'か, こう, か.く, この, これ, ここに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2325-jail',
       kanji:     '牢',
@@ -37793,7 +37794,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'かた.い, ひとや',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2947-resucitate',
       kanji:     '甦',
@@ -37807,7 +37808,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'よみがえ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2636-grindstone',
       kanji:     '砥',
@@ -37821,7 +37822,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'と, といし, と.ぐ, みが.く, たいら.にする',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2801-quill',
       kanji:     '翰',
@@ -37835,7 +37836,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'はね, ふで, やまどり, ふみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2831-tuna',
       kanji:     '鮪',
@@ -37849,7 +37850,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'まぐろ, しび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2912-sharp-point',
       kanji:     '尖',
@@ -37863,7 +37864,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'とが.る, さき, するど.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2422-hatchet',
       kanji:     '斧',
@@ -37877,7 +37878,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'おの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2578-bale',
       kanji:     '梱',
@@ -37891,7 +37892,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'こう.る, こうり, こり, しきみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0046-elbow',
       kanji:     '肘',
@@ -37905,7 +37906,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'ひじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1713',
       kanji:     '貪',
@@ -37919,7 +37920,7 @@ const primerDeck = {
       onyomi:    'タン、トン',
       kunyomi:   'むさぼ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2857-bore',
       kanji:     '鑿',
@@ -37933,7 +37934,7 @@ const primerDeck = {
       onyomi:    'サク',
       kunyomi:   'のみ, うが.つ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2840-crucian',
       kanji:     '鮒',
@@ -37947,7 +37948,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2304-wharf',
       kanji:     '埠',
@@ -37961,7 +37962,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'つか, はとば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2267-earlybird',
       kanji:     '夙',
@@ -37975,7 +37976,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つとに, はやい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1237-glossary',
       kanji:     '彙',
@@ -37989,7 +37990,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'はりねずみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2484-garlic',
       kanji:     '蒜',
@@ -38003,7 +38004,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'にんにく, ひる, のびる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2769-stumble',
       kanji:     '躓',
@@ -38017,7 +38018,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'つまず.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2977-tough',
       kanji:     '逞',
@@ -38031,7 +38032,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たくま.しい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2786-tin',
       kanji:     '錫',
@@ -38045,7 +38046,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'すず, たま.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2819-piebald',
       kanji:     '騨',
@@ -38059,7 +38060,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0501-beg',
       kanji:     '乞',
@@ -38073,7 +38074,7 @@ const primerDeck = {
       onyomi:    'コツ、キツ、キ、キケ、コチ',
       kunyomi:   'こ.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0502-drought',
       kanji:     '乾',
@@ -38087,7 +38088,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'かわ.く、かわ.かす、ほ.す、ひ.る、いぬい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2293-stammer',
       kanji:     '吃',
@@ -38101,7 +38102,7 @@ const primerDeck = {
       onyomi:    'キツ',
       kunyomi:   'ども.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2960-feet',
       kanji:     '呎',
@@ -38115,7 +38116,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ふいいと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2999-retch',
       kanji:     '嘔',
@@ -38129,7 +38130,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'は.く, むかつ.く, うた.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2351-bump-into',
       kanji:     '撞',
@@ -38143,7 +38144,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'つ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2543-wooden-hammer',
       kanji:     '槌',
@@ -38157,7 +38158,7 @@ const primerDeck = {
       onyomi:    'ツイ',
       kunyomi:   'つち',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2429-flustered',
       kanji:     '狽',
@@ -38171,7 +38172,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2680-arrow-shaft',
       kanji:     '箭',
@@ -38185,7 +38186,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'や',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2766-get',
       kanji:     '貰',
@@ -38199,7 +38200,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'もら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2818-stretcher',
       kanji:     '駕',
@@ -38213,7 +38214,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'かご, が.する, しのぐ, のる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2622-itch',
       kanji:     '痒',
@@ -38227,7 +38228,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'かゆ.がる, かさ, かゆ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2650-balancing-scales',
       kanji:     '秤',
@@ -38241,7 +38242,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'はかり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2731-cicada',
       kanji:     '蝉',
@@ -38255,7 +38256,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'せみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2226-leek',
       kanji:     '韮',
@@ -38269,7 +38270,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'にら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2911-rebellion',
       kanji:     '叛',
@@ -38283,7 +38284,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'そむ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2212-encompassing',
       kanji:     '奄',
@@ -38298,7 +38299,7 @@ const primerDeck = {
       kunyomi:   'おお.う, たちまち',
       nanori:    'あま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1091-myself',
       kanji:     '俺',
@@ -38312,7 +38313,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'おれ、われ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2213-hermitage',
       kanji:     '庵',
@@ -38327,7 +38328,7 @@ const primerDeck = {
       kunyomi:   'いおり, いお',
       nanori:    'あ, い, いほり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2214-shrouded',
       kanji:     '掩',
@@ -38341,7 +38342,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おお.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2395-sediment',
       kanji:     '澱',
@@ -38355,7 +38356,7 @@ const primerDeck = {
       onyomi:    'デン',
       kunyomi:   'おり, ど.ろ, よど.み, よど.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2431-fox',
       kanji:     '狐',
@@ -38369,7 +38370,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'きつね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2922-lute',
       kanji:     '琶',
@@ -38383,7 +38384,7 @@ const primerDeck = {
       onyomi:    'ハ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2936-testicle',
       kanji:     '睾',
@@ -38397,7 +38398,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2878-tripod',
       kanji:     '鼎',
@@ -38411,7 +38412,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'かなえ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0476-spoon',
       kanji:     '匕',
@@ -38425,7 +38426,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1083-change',
       kanji:     '化',
@@ -38439,7 +38440,7 @@ const primerDeck = {
       onyomi:    'カ、ケ',
       kunyomi:   'ば.ける、ば.かす、ふ.ける、け.する',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0480-north',
       kanji:     '北',
@@ -38454,7 +38455,7 @@ const primerDeck = {
       kunyomi:   'きた',
       nanori:    'きら, ほう, ほっ, ほつ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2160-ability',
       kanji:     '能',
@@ -38469,7 +38470,7 @@ const primerDeck = {
       kunyomi:   'よ.く',
       nanori:    'たか, の, のり, よし',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0878-death',
       kanji:     '死',
@@ -38483,7 +38484,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'し.ぬ、し.に-',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1084-flower',
       kanji:     '花',
@@ -38498,7 +38499,7 @@ const primerDeck = {
       kunyomi:   'はな',
       nanori:    'わ',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-2161-attitude',
       kanji:     '態',
@@ -38512,7 +38513,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'わざ.と',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0482-compare',
       kanji:     '比',
@@ -38527,7 +38528,7 @@ const primerDeck = {
       kunyomi:   'くら.べる',
       nanori:    'い, ぴっ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0479-about-that-time',
       kanji:     '頃',
@@ -38542,7 +38543,7 @@ const primerDeck = {
       kunyomi:   'ころ、ごろ、しばら.く',
       nanori:    'ころも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0481-stature',
       kanji:     '背',
@@ -38556,7 +38557,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'せ、せい、そむ.く、そむ.ける',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2154-deer',
       kanji:     '鹿',
@@ -38571,7 +38572,7 @@ const primerDeck = {
       kunyomi:   'しか、か',
       nanori:    'しし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2159-bear',
       kanji:     '熊',
@@ -38585,7 +38586,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'くま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1340-old-man',
       kanji:     '老',
@@ -38600,7 +38601,7 @@ const primerDeck = {
       kunyomi:   'お.いる、ふ.ける',
       nanori:    'えび, おい, び',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1345-someone',
       kanji:     '者',
@@ -38614,7 +38615,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'もの',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1989-metropolis',
       kanji:     '都',
@@ -38629,7 +38630,7 @@ const primerDeck = {
       kunyomi:   'みやこ',
       nanori:    'くに, ず, ち, づめ, みや',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1341-consider',
       kanji:     '考',
@@ -38644,7 +38645,7 @@ const primerDeck = {
       kunyomi:   'かんが.える、かんが.え',
       nanori:    'たか',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1347-renowned',
       kanji:     '著',
@@ -38658,7 +38659,7 @@ const primerDeck = {
       onyomi:    'チョ、チャク',
       kunyomi:   'あらわ.す、いちじる.しい',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1351-various',
       kanji:     '諸',
@@ -38672,7 +38673,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   'もろ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1085-freight',
       kanji:     '貨',
@@ -38686,7 +38687,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'たから',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1349-signature',
       kanji:     '署',
@@ -38700,7 +38701,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0701-criticism',
       kanji:     '批',
@@ -38714,7 +38715,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1444-thong',
       kanji:     '緒',
@@ -38729,7 +38730,7 @@ const primerDeck = {
       kunyomi:   'お、いとぐち',
       nanori:    'ほ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1342-filial-piety',
       kanji:     '孝',
@@ -38744,7 +38745,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'たか, たかし, のり, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1343-teach',
       kanji:     '教',
@@ -38759,7 +38760,7 @@ const primerDeck = {
       kunyomi:   'おし.える、おそ.わる',
       nanori:    'のり, ひさ',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1086-lean',
       kanji:     '傾',
@@ -38773,7 +38774,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かたむ.く、かたむ.ける、かたぶ.く、かた.げる、かし.げる',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0879-interment',
       kanji:     '葬',
@@ -38788,7 +38789,7 @@ const primerDeck = {
       kunyomi:   'ほうむ.る',
       nanori:    'はふり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2158-lovely',
       kanji:     '麗',
@@ -38803,7 +38804,7 @@ const primerDeck = {
       kunyomi:   'うるわ.しい、うら.らか',
       nanori:    'ま, よし, り',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0493-delicious',
       kanji:     '旨',
@@ -38817,7 +38818,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'むね、うま.い',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0711-finger',
       kanji:     '指',
@@ -38832,7 +38833,7 @@ const primerDeck = {
       kunyomi:   'ゆび、さ.す、-さ.し',
       nanori:    'い, いぶ, さし, さす',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0484-all',
       kanji:     '皆',
@@ -38847,7 +38848,7 @@ const primerDeck = {
       kunyomi:   'みな、みんな',
       nanori:    'むな',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1406-story',
       kanji:     '階',
@@ -38862,7 +38863,7 @@ const primerDeck = {
       kunyomi:   'きざはし',
       nanori:    'しな, と, はし',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0494-fat',
       kanji:     '脂',
@@ -38876,7 +38877,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'あぶら',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1133-nun',
       kanji:     '尼',
@@ -38890,7 +38891,7 @@ const primerDeck = {
       onyomi:    'ニ',
       kunyomi:   'あま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1538-fermentation',
       kanji:     '酵',
@@ -38904,7 +38905,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1352-boar',
       kanji:     '猪',
@@ -38919,7 +38920,7 @@ const primerDeck = {
       kunyomi:   'い, いのしし',
       nanori:    'いの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0483-descendants',
       kanji:     '昆',
@@ -38933,7 +38934,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0487-mix',
       kanji:     '混',
@@ -38947,7 +38948,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'ま.じる、-ま.じり、ま.ざる、ま.ぜる、こ.む',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1135-mud',
       kanji:     '泥',
@@ -38962,7 +38963,7 @@ const primerDeck = {
       kunyomi:   'どろ',
       nanori:    'ひじ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2042-shoes',
       kanji:     '靴',
@@ -38976,7 +38977,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'くつ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2608-female-animal',
       kanji:     '牝',
@@ -38990,7 +38991,7 @@ const primerDeck = {
       onyomi:    'ヒン',
       kunyomi:   'めす, め-, めん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1354-gamble',
       kanji:     '賭',
@@ -39004,7 +39005,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'か.ける、かけ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2155-foot-of-a-mountain',
       kanji:     '麓',
@@ -39018,7 +39019,7 @@ const primerDeck = {
       onyomi:    'ロク',
       kunyomi:   'ふもと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2882-swallow',
       kanji:     '燕',
@@ -39032,7 +39033,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'つばめ, つばくら, つばくろ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1346-boil',
       kanji:     '煮',
@@ -39046,7 +39047,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'に.る、-に、に.える、に.やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1350-sultry',
       kanji:     '暑',
@@ -39060,7 +39061,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   'あつ.い',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1407-highness',
       kanji:     '陛',
@@ -39074,7 +39075,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2188-quit',
       kanji:     '罷',
@@ -39088,7 +39089,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'まか.り-、や.める',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2210-camelopard',
       kanji:     '麟',
@@ -39102,7 +39103,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1344-torture',
       kanji:     '拷',
@@ -39116,7 +39117,7 @@ const primerDeck = {
       onyomi:    'ゴウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1353-strand',
       kanji:     '渚',
@@ -39131,7 +39132,7 @@ const primerDeck = {
       kunyomi:   'なぎさ',
       nanori:    'なぎ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0496-i-one',
       kanji:     '壱',
@@ -39146,7 +39147,7 @@ const primerDeck = {
       kunyomi:   'ひとつ',
       nanori:    'い, かず',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2524-dawn',
       kanji:     '曙',
@@ -39160,7 +39161,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   'あけぼの',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2329-fart',
       kanji:     '屁',
@@ -39174,7 +39175,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'へ, おなら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2841-sushi',
       kanji:     '鮨',
@@ -39188,7 +39189,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'すし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2201-this-here',
       kanji:     '此',
@@ -39202,7 +39203,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'これ, この, ここ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1475-purple',
       kanji:     '紫',
@@ -39217,7 +39218,7 @@ const primerDeck = {
       kunyomi:   'むらさき',
       nanori:    'さい, ゆかり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2202-brushwood',
       kanji:     '柴',
@@ -39231,7 +39232,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'しば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2204-fort',
       kanji:     '砦',
@@ -39245,7 +39246,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'とりで',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0605-feminine',
       kanji:     '雌',
@@ -39259,7 +39260,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'め-、めす、めん',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2398-filter',
       kanji:     '漉',
@@ -39273,7 +39274,7 @@ const primerDeck = {
       onyomi:    'ロク',
       kunyomi:   'こ.し, こ.す, す.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0478-aroma',
       kanji:     '匂',
@@ -39288,7 +39289,7 @@ const primerDeck = {
       kunyomi:   'にお.う、にお.い、にお.わせる',
       nanori:    'おり, こう, さぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0492-kudzu',
       kanji:     '葛',
@@ -39303,7 +39304,7 @@ const primerDeck = {
       kunyomi:   'つづら、くず',
       nanori:    'か, かず, かずら, かっ, かつら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2853-dust',
       kanji:     '塵',
@@ -39317,7 +39318,7 @@ const primerDeck = {
       onyomi:    'チン',
       kunyomi:   'ちり, ごみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0495-visit-a-shrine',
       kanji:     '詣',
@@ -39331,7 +39332,7 @@ const primerDeck = {
       onyomi:    'ケイ、ゲイ',
       kunyomi:   'けい.する、まい.る、いた.る、もう.でる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2332-corpse',
       kanji:     '屍',
@@ -39345,7 +39346,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しかばね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2252-make-a-profit',
       kanji:     '儲',
@@ -39359,7 +39360,7 @@ const primerDeck = {
       onyomi:    'チョ',
       kunyomi:   'もう.ける, もう.かる, もうけ, たくわ.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2343-overhang',
       kanji:     '庇',
@@ -39373,7 +39374,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'ひさし, おお.う, かば.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2205-beard',
       kanji:     '髭',
@@ -39387,7 +39388,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'ひげ, くちひげ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2883-lick',
       kanji:     '嘗',
@@ -39401,7 +39402,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'かつ.て, こころ.みる, な.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1348-chopsticks',
       kanji:     '箸',
@@ -39415,7 +39416,7 @@ const primerDeck = {
       onyomi:    'チョ、チャク',
       kunyomi:   'はし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2203-whit',
       kanji:     '些',
@@ -39429,7 +39430,7 @@ const primerDeck = {
       onyomi:    'サ',
       kunyomi:   'ち.と, ち.っと, いささか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2995-dither',
       kanji:     '躇',
@@ -39443,7 +39444,7 @@ const primerDeck = {
       onyomi:    'チョ',
       kunyomi:   'ためら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2579-loquat',
       kanji:     '枇',
@@ -39457,7 +39458,7 @@ const primerDeck = {
       onyomi:    'ビ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2921-biwa',
       kanji:     '琵',
@@ -39471,7 +39472,7 @@ const primerDeck = {
       onyomi:    'ビ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2306-railing',
       kanji:     '堵',
@@ -39485,7 +39486,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'かき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2451-yam',
       kanji:     '薯',
@@ -39499,7 +39500,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2854-giraffe',
       kanji:     '麒',
@@ -39513,7 +39514,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0486',
       kanji:     '諧',
@@ -39527,7 +39528,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'かな.う、やわ.らぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2328-butchering',
       kanji:     '屠',
@@ -39541,7 +39542,7 @@ const primerDeck = {
       onyomi:    'ト',
       kunyomi:   'ほふ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2316-aged-woman',
       kanji:     '姥',
@@ -39555,7 +39556,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'うば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0485',
       kanji:     '楷',
@@ -39569,7 +39570,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2810-brush-tip',
       kanji:     '穎',
@@ -39583,7 +39584,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ほさき, のぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0477-scold',
       kanji:     '叱',
@@ -39597,7 +39598,7 @@ const primerDeck = {
       onyomi:    'シツ、 シチ',
       kunyomi:   'しか.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2956-ton',
       kanji:     '噸',
@@ -39611,7 +39612,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0680',
       kanji:     '惧',
@@ -39625,7 +39626,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'おそ.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2511-in-the-nick-of-time',
       kanji:     '愈',
@@ -39639,7 +39640,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いよいよ, まさ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2193-healing',
       kanji:     '癒',
@@ -39653,7 +39654,7 @@ const primerDeck = {
       onyomi:    'ユ',
       kunyomi:   'い.える、いや.す、い.やす',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2756-so-called',
       kanji:     '謂',
@@ -39667,7 +39668,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'い.う, いい, おも.う, いわゆる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2839-alligator',
       kanji:     '鰐',
@@ -39681,7 +39682,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'わに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2036-nifty',
       kanji:     '凄',
@@ -39695,7 +39696,7 @@ const primerDeck = {
       onyomi:    'セイ、サイ',
       kunyomi:   'さむ.い、すご.い、すさ.まじい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2390-douse',
       kanji:     '沐',
@@ -39709,7 +39710,7 @@ const primerDeck = {
       onyomi:    'モク',
       kunyomi:   'もく.する, あら.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2642-mill',
       kanji:     '碓',
@@ -39724,7 +39725,7 @@ const primerDeck = {
       kunyomi:   'たし.か, かく.たる',
       nanori:    'う, うす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2242-shalt',
       kanji:     '莫',
@@ -39738,7 +39739,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'くれ, なか.れ, なし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0244-imitation',
       kanji:     '模',
@@ -39753,7 +39754,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'がみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0925-recruit',
       kanji:     '募',
@@ -39767,7 +39768,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'つの.る',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0246-grave',
       kanji:     '墓',
@@ -39781,7 +39782,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'はか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0247-livelihood',
       kanji:     '暮',
@@ -39796,7 +39797,7 @@ const primerDeck = {
       kunyomi:   'く.れる、く.らす',
       nanori:    'ぐらし, ぐれ, ぽ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0248-membrane',
       kanji:     '膜',
@@ -39810,7 +39811,7 @@ const primerDeck = {
       onyomi:    'マク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0683-pining',
       kanji:     '慕',
@@ -39824,7 +39825,7 @@ const primerDeck = {
       onyomi:    'ボ',
       kunyomi:   'した.う',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0245-vague',
       kanji:     '漠',
@@ -39838,7 +39839,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2667-concubine',
       kanji:     '妾',
@@ -39852,7 +39853,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'めかけ, そばめ, わらわ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0725-touch',
       kanji:     '接',
@@ -39866,7 +39867,7 @@ const primerDeck = {
       onyomi:    'セツ、ショウ',
       kunyomi:   'つ.ぐ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2620-lastly',
       kanji:     '畢',
@@ -39880,7 +39881,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おわ.る, あみ, おわ.り, ことごとく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2677-spatula',
       kanji:     '箆',
@@ -39894,7 +39895,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'へら, の, くし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2485-bracken',
       kanji:     '蕨',
@@ -39908,7 +39909,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'わらび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2830-salmon',
       kanji:     '鮭',
@@ -39922,7 +39923,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'さけ, しゃけ, ふぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2516-halo',
       kanji:     '暈',
@@ -39936,7 +39937,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ぼか.す, ぼか.る, かさ, くま, ぼかし, めまい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2625-hemorrhoids',
       kanji:     '痔',
@@ -39950,7 +39951,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しもがさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2694-rice-bran',
       kanji:     '糠',
@@ -39964,7 +39965,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ぬか',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2851-kite-falcon',
       kanji:     '鳶',
@@ -39978,7 +39979,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とび, とんび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0728-make-headway',
       kanji:     '捗',
@@ -39992,7 +39993,7 @@ const primerDeck = {
       onyomi:    'チョク、ホ',
       kunyomi:   'はかど.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2356-scratch',
       kanji:     '掻',
@@ -40006,7 +40007,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'か.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2859-close-the-eyes',
       kanji:     '瞑',
@@ -40020,7 +40021,7 @@ const primerDeck = {
       onyomi:    'メイ',
       kunyomi:   'めい.する, つぶ.る, つむ.る, くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2486-grow-plentiful',
       kanji:     '蔚',
@@ -40034,7 +40035,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'うち, おとこよもぎ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2464-grow-wild',
       kanji:     '蕃',
@@ -40049,7 +40050,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'しげ, しげる, ば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2501-until',
       kanji:     '迄',
@@ -40063,7 +40064,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'まで, およ.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2272-despondent',
       kanji:     '厭',
@@ -40077,7 +40078,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'いや, あ.きる, いと.う, おさ.える',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2341-cleaver',
       kanji:     '庖',
@@ -40091,7 +40092,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くりや',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2359-deal-with',
       kanji:     '捌',
@@ -40105,7 +40106,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さば.く, さば.ける, は.け',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2905-entreat',
       kanji:     '肴',
@@ -40119,7 +40120,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'さかな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2482-sweet-potato',
       kanji:     '藷',
@@ -40133,7 +40134,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2290-chew',
       kanji:     '噛',
@@ -40147,7 +40148,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'か.む, か.じる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2958-nautical-mile',
       kanji:     '浬',
@@ -40161,7 +40162,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'かいり, のっと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0310-roast',
       kanji:     '煎',
@@ -40176,7 +40177,7 @@ const primerDeck = {
       kunyomi:   'せん.じる、い.る、に.る',
       nanori:    'いり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2794-cluster',
       kanji:     '鍾',
@@ -40190,7 +40191,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'あつ.める, さかずき, かね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2815-feast',
       kanji:     '饗',
@@ -40205,7 +40206,7 @@ const primerDeck = {
       kunyomi:   'う.ける, もてな.す',
       nanori:    'あい, あえ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2846-parrot',
       kanji:     '鵡',
@@ -40219,7 +40220,7 @@ const primerDeck = {
       onyomi:    'ブ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2245-chivalry',
       kanji:     '侠',
@@ -40233,7 +40234,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'きゃん, おとこだて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2233-immense',
       kanji:     '厖',
@@ -40247,7 +40248,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おおき.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2331-frequently',
       kanji:     '屡',
@@ -40261,7 +40262,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しばしば',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2581-sled',
       kanji:     '橇',
@@ -40275,7 +40276,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'そり, かんじき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2915-chieftain',
       kanji:     '酋',
@@ -40289,7 +40290,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'おさ, ふるざけ, さけのつかさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1547-revered',
       kanji:     '尊',
@@ -40304,7 +40305,7 @@ const primerDeck = {
       kunyomi:   'たっと.い、とうと.い、たっと.ぶ、とうと.ぶ',
       nanori:    'さだ, たか, たけ, みこと',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2282-gossip',
       kanji:     '噂',
@@ -40318,7 +40319,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'うわさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2567-barrel',
       kanji:     '樽',
@@ -40332,7 +40333,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'たる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1546-waver',
       kanji:     '猶',
@@ -40346,7 +40347,7 @@ const primerDeck = {
       onyomi:    'ユウ、ユ',
       kunyomi:   'なお',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2187-abide-by',
       kanji:     '遵',
@@ -40360,7 +40361,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2829-trout',
       kanji:     '鱒',
@@ -40374,7 +40375,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'ます',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2280-chatter',
       kanji:     '喋',
@@ -40388,7 +40389,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しゃべ.る, ついば.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2568-turret',
       kanji:     '櫓',
@@ -40402,7 +40403,7 @@ const primerDeck = {
       onyomi:    'ロ',
       kunyomi:   'やぐら, おおだて',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2529-viscera',
       kanji:     '腑',
@@ -40416,7 +40417,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'はらわた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2229-hay',
       kanji:     '芻',
@@ -40430,7 +40431,7 @@ const primerDeck = {
       onyomi:    'スウ',
       kunyomi:   'まぐさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2230-chick',
       kanji:     '雛',
@@ -40444,7 +40445,7 @@ const primerDeck = {
       onyomi:    'スウ',
       kunyomi:   'ひな, ひよこ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1524-grudge',
       kanji:     '怨',
@@ -40458,7 +40459,7 @@ const primerDeck = {
       onyomi:    'エン、オン、ウン',
       kunyomi:   'うら.む、うらみ、うら.めしい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2802-auspices',
       kanji:     '斡',
@@ -40472,7 +40473,7 @@ const primerDeck = {
       onyomi:    'アツ',
       kunyomi:   'めぐ.る, めぐ.らす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2527-last-day-of-the-month',
       kanji:     '晦',
@@ -40487,7 +40488,7 @@ const primerDeck = {
       kunyomi:   'つごもり, くら.い, みそか, くら.む',
       nanori:    'もり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2238-critters',
       kanji:     '疋',
@@ -40501,7 +40502,7 @@ const primerDeck = {
       onyomi:    'ヒキ',
       kunyomi:   'あし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0408-determine',
       kanji:     '定',
@@ -40516,7 +40517,7 @@ const primerDeck = {
       kunyomi:   'さだ.める、さだ.まる、さだ.か',
       nanori:    'さた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0942-accompany',
       kanji:     '従',
@@ -40530,7 +40531,7 @@ const primerDeck = {
       onyomi:    'ジュウ、ショウ、ジュ',
       kunyomi:   'したが.う、したが.える、より',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1513-doubt',
       kanji:     '疑',
@@ -40544,7 +40545,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'うたが.う',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1436-vertical',
       kanji:     '縦',
@@ -40558,7 +40559,7 @@ const primerDeck = {
       onyomi:    'ジュウ',
       kunyomi:   'たて',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1125-rotation',
       kanji:     '旋',
@@ -40572,7 +40573,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2420-eddy',
       kanji:     '淀',
@@ -40586,7 +40587,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'よど.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1797-alienate',
       kanji:     '疎',
@@ -40600,7 +40601,7 @@ const primerDeck = {
       onyomi:    'ソ、ショ',
       kunyomi:   'うと.い、うと.む、まば.ら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1514-mimic',
       kanji:     '擬',
@@ -40614,7 +40615,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'まが.い、もど.き',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0414-just-so',
       kanji:     '是',
@@ -40629,7 +40630,7 @@ const primerDeck = {
       kunyomi:   'これ、この、ここ',
       nanori:    'すなお, ただし, つな, ゆき, よし',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0415-topic',
       kanji:     '題',
@@ -40643,7 +40644,7 @@ const primerDeck = {
       onyomi:    'ダイ',
       kunyomi:   '',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0718-propose',
       kanji:     '提',
@@ -40657,7 +40658,7 @@ const primerDeck = {
       onyomi:    'テイ、チョウ、ダイ',
       kunyomi:   'さ.げる',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0416-dike',
       kanji:     '堤',
@@ -40671,7 +40672,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'つつみ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1515-congeal',
       kanji:     '凝',
@@ -40685,7 +40686,7 @@ const primerDeck = {
       onyomi:    'ギョウ',
       kunyomi:   'こ.る、こ.らす、こご.らす、こご.らせる、こご.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0409-lock',
       kanji:     '錠',
@@ -40699,7 +40700,7 @@ const primerDeck = {
       onyomi:    'ジョウ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2900-wooden-spoon',
       kanji:     '匙',
@@ -40713,7 +40714,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2633-grapnel',
       kanji:     '碇',
@@ -40727,7 +40728,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いかり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2350-lathe',
       kanji:     '挽',
@@ -40742,7 +40743,7 @@ const primerDeck = {
       kunyomi:   'ひ.く',
       nanori:    'ひき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0838-honey',
       kanji:     '蜜',
@@ -40756,7 +40757,7 @@ const primerDeck = {
       onyomi:    'ミツ、ビツ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1145-hem',
       kanji:     '裾',
@@ -40770,7 +40771,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'すそ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2231-scurry',
       kanji:     '趨',
@@ -40784,7 +40785,7 @@ const primerDeck = {
       onyomi:    'スウ',
       kunyomi:   'しゅ, おもむ.く, はし.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2807-pliable',
       kanji:     '靭',
@@ -40799,7 +40800,7 @@ const primerDeck = {
       kunyomi:   'うつぼ, しな.やか, ゆぎ',
       nanori:    'ゆき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2393-blaspheme',
       kanji:     '涜',
@@ -40813,7 +40814,7 @@ const primerDeck = {
       onyomi:    'トク',
       kunyomi:   'けが.す, けが.れ, みぞ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0788-lewd',
       kanji:     '淫',
@@ -40827,7 +40828,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'ひた.す、ほしいまま、みだ.ら、みだ.れる、みだり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2953-kilometer',
       kanji:     '粁',
@@ -40841,7 +40842,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'キロメートル',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2824-gallop',
       kanji:     '駈',
@@ -40855,7 +40856,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'か.ける, か.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1025-partner',
       kanji:     '侶',
@@ -40869,7 +40870,7 @@ const primerDeck = {
       onyomi:    'リョ、ロ',
       kunyomi:   'とも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2959-inch',
       kanji:     '吋',
@@ -40883,7 +40884,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'インチ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2590-bucket',
       kanji:     '桶',
@@ -40897,7 +40898,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'おけ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2430-pup',
       kanji:     '狗',
@@ -40911,7 +40912,7 @@ const primerDeck = {
       onyomi:    'ク',
       kunyomi:   'いぬ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0313-graft',
       kanji:     '賂',
@@ -40925,7 +40926,7 @@ const primerDeck = {
       onyomi:    'ロ',
       kunyomi:   'まいな.い、まいな.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2806-briefcase',
       kanji:     '鞄',
@@ -40939,7 +40940,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'かばん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1054',
       kanji:     '傲',
@@ -40953,7 +40954,7 @@ const primerDeck = {
       onyomi:    'ゴウ',
       kunyomi:   'おご.る、あなど.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2507-attract',
       kanji:     '惹',
@@ -40967,7 +40968,7 @@ const primerDeck = {
       onyomi:    'ジャク',
       kunyomi:   'ひ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2357-assortment',
       kanji:     '撰',
@@ -40981,7 +40982,7 @@ const primerDeck = {
       onyomi:    'サン',
       kunyomi:   'せん.する, えら.む, えら.ぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2572-raw-cotton',
       kanji:     '棉',
@@ -40995,7 +40996,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'わた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2556-japanese-oak',
       kanji:     '楢',
@@ -41009,7 +41010,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'なら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2459-mustard',
       kanji:     '芥',
@@ -41023,7 +41024,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'からし, ごみ, あくた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2975-pass-through',
       kanji:     '邁',
@@ -41038,7 +41039,7 @@ const primerDeck = {
       kunyomi:   'ゆ.く',
       nanori:    'すす.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0123-jealous',
       kanji:     '妬',
@@ -41052,7 +41053,7 @@ const primerDeck = {
       onyomi:    'ト、ツ',
       kunyomi:   'ねた.む、そね.む、つも.る、ふさ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2434-baboon',
       kanji:     '狒',
@@ -41066,7 +41067,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひひ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1011-stationary',
       kanji:     '箋',
@@ -41080,7 +41081,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'ふだ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2703-string',
       kanji:     '紐',
@@ -41094,7 +41095,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'ひも',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2491-ditch-reed',
       kanji:     '葦',
@@ -41109,7 +41110,7 @@ const primerDeck = {
       kunyomi:   'しお.れる, しな.びる, しぼ.む, な.える',
       nanori:    'あし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2773-kneel',
       kanji:     '跪',
@@ -41123,7 +41124,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひざまず.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0628-windpipe',
       kanji:     '咽',
@@ -41137,7 +41138,7 @@ const primerDeck = {
       onyomi:    'イン、エン、エツ',
       kunyomi:   'むせ.ぶ、むせ.る、のど、の.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2301-dugout',
       kanji:     '壕',
@@ -41151,7 +41152,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ほり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2232-understandably',
       kanji:     '尤',
@@ -41165,7 +41166,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'もっと.も, とが.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2121-concerning',
       kanji:     '就',
@@ -41180,7 +41181,7 @@ const primerDeck = {
       kunyomi:   'つ.く、つ.ける',
       nanori:    'たか, なり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2122-kick',
       kanji:     '蹴',
@@ -41194,7 +41195,7 @@ const primerDeck = {
       onyomi:    'シュク、シュウ',
       kunyomi:   'け.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2849-eagle',
       kanji:     '鷲',
@@ -41209,7 +41210,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'す, わ, わせ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0983-training',
       kanji:     '稽',
@@ -41223,7 +41224,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'かんが.える、とど.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2408-brimming',
       kanji:     '溢',
@@ -41237,7 +41238,7 @@ const primerDeck = {
       onyomi:    'イツ',
       kunyomi:   'こぼ.れる, あふ.れる, み.ちる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2654-crabgrass',
       kanji:     '稗',
@@ -41251,7 +41252,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   'ひえ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2955-millimeter',
       kanji:     '粍',
@@ -41265,7 +41266,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ミリ, ミリメートル',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2845-parakeet',
       kanji:     '鸚',
@@ -41279,7 +41280,7 @@ const primerDeck = {
       onyomi:    'オオ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2592-star-anise',
       kanji:     '樒',
@@ -41293,7 +41294,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'しきみ, じんこう',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2227-lottery',
       kanji:     '籤',
@@ -41307,7 +41308,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くじ, かずとり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0392-revile',
       kanji:     '蔑',
@@ -41321,7 +41322,7 @@ const primerDeck = {
       onyomi:    'ベツ',
       kunyomi:   'ないがしろ、なみ.する、くらい、さげす.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2444-prodigal',
       kanji:     '蕩',
@@ -41335,7 +41336,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'とろ.かす, とろ.ける, うご.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2735-leech',
       kanji:     '蛭',
@@ -41350,7 +41351,7 @@ const primerDeck = {
       kunyomi:   'ひる',
       nanori:    'えび',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2670-pleated-skirt',
       kanji:     '袴',
@@ -41364,7 +41365,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'はかま, ずぼん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2546-citrus-tree',
       kanji:     '柑',
@@ -41378,7 +41379,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0459-irrigate',
       kanji:     '沃',
@@ -41392,7 +41393,7 @@ const primerDeck = {
       onyomi:    'ヨウ、ヨク、オク',
       kunyomi:   'そそ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2621-paddy-field-ridge',
       kanji:     '畦',
@@ -41406,7 +41407,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あぜ, うね',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2662-kitchen-stove',
       kanji:     '竃',
@@ -41420,7 +41421,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'かまど, かま, へっつい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1624',
       kanji:     '摯',
@@ -41434,7 +41435,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'いた.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2526-dusk',
       kanji:     '昏',
@@ -41448,7 +41449,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'くら.い, くれ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1972-marriage',
       kanji:     '婚',
@@ -41462,7 +41463,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-2565-wooden-pestle',
       kanji:     '杵',
@@ -41477,7 +41478,7 @@ const primerDeck = {
       kunyomi:   'きね',
       nanori:    'き',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2413-draw-water',
       kanji:     '汲',
@@ -41492,7 +41493,7 @@ const primerDeck = {
       kunyomi:   'く.む',
       nanori:    'くみ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2987-deafness',
       kanji:     '聾',
@@ -41506,7 +41507,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ろう.する, つんぼ, みみしい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2765-despicable',
       kanji:     '賎',
@@ -41520,7 +41521,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いや.しい, いや.しむ, いや.しめる, しず, やす.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2215-make-amends',
       kanji:     '悛',
@@ -41534,7 +41535,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あらた.める',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2208-sympathize-with',
       kanji:     '憐',
@@ -41548,7 +41549,7 @@ const primerDeck = {
       onyomi:    'レン',
       kunyomi:   'あわ.れむ, あわ.れ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2547-picket',
       kanji:     '杭',
@@ -41563,7 +41564,7 @@ const primerDeck = {
       kunyomi:   'くい',
       nanori:    'わたる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2432-a-un',
       kanji:     '狛',
@@ -41577,7 +41578,7 @@ const primerDeck = {
       onyomi:    'ハク',
       kunyomi:   'こま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2855-father-in-law',
       kanji:     '舅',
@@ -41591,7 +41592,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'しゅうと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2275-kitchen',
       kanji:     '厨',
@@ -41605,7 +41606,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'くりや',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1820-envy',
       kanji:     '嫉',
@@ -41619,7 +41620,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'そね.む、ねた.む、にく.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0641',
       kanji:     '恣',
@@ -41633,7 +41634,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'ほしいまま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2797-agony',
       kanji:     '悶',
@@ -41647,7 +41648,7 @@ const primerDeck = {
       onyomi:    'モン',
       kunyomi:   'もだ.える, もだえ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2465-cocklebur',
       kanji:     '苓',
@@ -41661,7 +41662,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'みみなぐさ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2825-donkey',
       kanji:     '驢',
@@ -41675,7 +41676,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'うさぎうま',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2250-foe',
       kanji:     '仇',
@@ -41689,7 +41690,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'あだ, あた, かたき, つれあい',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2509-instantaneously',
       kanji:     '忽',
@@ -41704,7 +41705,7 @@ const primerDeck = {
       kunyomi:   'たちま.ち, ゆるが.せ',
       nanori:    'ぬ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2376-infatuation',
       kanji:     '惚',
@@ -41718,7 +41719,7 @@ const primerDeck = {
       onyomi:    'コツ',
       kunyomi:   'ほけ.る, ぼ.ける, ほ.れる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2518-dry-weather',
       kanji:     '旱',
@@ -41732,7 +41733,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ひでり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2875-warped',
       kanji:     '歪',
@@ -41746,7 +41747,7 @@ const primerDeck = {
       onyomi:    'ワイ',
       kunyomi:   'いが.む, いびつ, ひず.む, ゆが.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2638-obstacle',
       kanji:     '碍',
@@ -41760,7 +41761,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'さまた.げる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1439-come-apart-at-the-seams',
       kanji:     '綻',
@@ -41774,7 +41775,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'ほころ.びる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2833-horse-mackerel',
       kanji:     '鯵',
@@ -41788,7 +41789,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2225-quaff',
       kanji:     '呑',
@@ -41802,7 +41803,7 @@ const primerDeck = {
       onyomi:    'トン',
       kunyomi:   'の.む',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0432-towel',
       kanji:     '巾',
@@ -41816,7 +41817,7 @@ const primerDeck = {
       onyomi:    'キン、フク',
       kunyomi:   'おお.い、ちきり、きれ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0440-market',
       kanji:     '市',
@@ -41831,7 +41832,7 @@ const primerDeck = {
       kunyomi:   'いち',
       nanori:    'い, ち',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-0447-system',
       kanji:     '制',
@@ -41845,7 +41846,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0448-made-in',
       kanji:     '製',
@@ -41859,7 +41860,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   '',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1361-expert',
       kanji:     '師',
@@ -41874,7 +41875,7 @@ const primerDeck = {
       kunyomi:   'いくさ',
       nanori:    'のし, のり, もろ, かず, つかさ, みつ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0466-sovereign',
       kanji:     '帝',
@@ -41888,7 +41889,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'みかど',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0444-sash',
       kanji:     '帯',
@@ -41903,7 +41904,7 @@ const primerDeck = {
       kunyomi:   'お.びる、おび',
       nanori:    'たて',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0437-curtain',
       kanji:     '幕',
@@ -41917,7 +41918,7 @@ const primerDeck = {
       onyomi:    'マク、バク',
       kunyomi:   'とばり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-1277-seat',
       kanji:     '席',
@@ -41931,7 +41932,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'むしろ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0433-linen',
       kanji:     '布',
@@ -41946,7 +41947,7 @@ const primerDeck = {
       kunyomi:   'ぬの',
       nanori:    'う, の, ほ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1440-tighten',
       kanji:     '締',
@@ -41960,7 +41961,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'し.まる、し.まり、し.める、-し.め、-じ.め',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0435-hanging-scroll',
       kanji:     '幅',
@@ -41974,7 +41975,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'はば',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1602-hope',
       kanji:     '希',
@@ -41989,7 +41990,7 @@ const primerDeck = {
       kunyomi:   'まれ',
       nanori:    'のぞ, のぞみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-0442-elder-sister',
       kanji:     '姉',
@@ -42003,7 +42004,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'あね、はは',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1587-decorate',
       kanji:     '飾',
@@ -42018,7 +42019,7 @@ const primerDeck = {
       kunyomi:   'かざ.る、かざ.り',
       nanori:    'しか',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0438-canopy',
       kanji:     '幌',
@@ -42032,7 +42033,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ほろ, とばり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2339-banner',
       kanji:     '幡',
@@ -42047,7 +42048,7 @@ const primerDeck = {
       kunyomi:   'はた',
       nanori:    'は, わた',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1150-printing',
       kanji:     '刷',
@@ -42061,7 +42062,7 @@ const primerDeck = {
       onyomi:    'サツ',
       kunyomi:   'す.る、-ず.り、-ずり、は.く',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2072-notebook',
       kanji:     '帳',
@@ -42075,7 +42076,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'とばり',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0445-stagnate',
       kanji:     '滞',
@@ -42089,7 +42090,7 @@ const primerDeck = {
       onyomi:    'タイ、テイ',
       kunyomi:   'とどこお.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0670-dreadful',
       kanji:     '怖',
@@ -42103,7 +42104,7 @@ const primerDeck = {
       onyomi:    'フ、ホ',
       kunyomi:   'こわ.い、こわ.がる、お.じる、おそ.れる',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1118-cash',
       kanji:     '幣',
@@ -42118,7 +42119,7 @@ const primerDeck = {
       kunyomi:   'ぬさ',
       nanori:    'しで',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0434-sail',
       kanji:     '帆',
@@ -42132,7 +42133,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'ほ',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0436-cap',
       kanji:     '帽',
@@ -42146,7 +42147,7 @@ const primerDeck = {
       onyomi:    'ボウ、モウ',
       kunyomi:   'ずきん、おお.う',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2657-sparse',
       kanji:     '稀',
@@ -42160,7 +42161,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'まれ, まばら',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0443-lungs',
       kanji:     '肺',
@@ -42174,7 +42175,7 @@ const primerDeck = {
       onyomi:    'ハイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2433-lion',
       kanji:     '獅',
@@ -42188,7 +42189,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'しし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2338-quire',
       kanji:     '帖',
@@ -42202,7 +42203,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'かきもの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0441-persimmon',
       kanji:     '柿',
@@ -42216,7 +42217,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'かき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2289-dangle',
       kanji:     '吊',
@@ -42230,7 +42231,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'つ.る, つる.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0862-usual',
       kanji:     '常',
@@ -42245,7 +42246,7 @@ const primerDeck = {
       kunyomi:   'つね、とこ-',
       nanori:    'とき, のぶ, ひ, ひた',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-1362-commander',
       kanji:     '帥',
@@ -42259,7 +42260,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   '',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-0467-give-up',
       kanji:     '諦',
@@ -42273,7 +42274,7 @@ const primerDeck = {
       onyomi:    'テイ、タイ',
       kunyomi:   'あきら.める、つまびらか、まこと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2265-kite',
       kanji:     '凧',
@@ -42287,7 +42288,7 @@ const primerDeck = {
       onyomi:    'いかのぼり',
       kunyomi:   'いかのぼり, たこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2340-pennant',
       kanji:     '幟',
@@ -42301,7 +42302,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'のぼり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2770-hoof',
       kanji:     '蹄',
@@ -42315,7 +42316,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'ひづめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2665-outpost',
       kanji:     '站',
@@ -42329,7 +42330,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2689-winnow',
       kanji:     '簸',
@@ -42343,7 +42344,7 @@ const primerDeck = {
       onyomi:    'ハ',
       kunyomi:   'ひ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2980-park-alternate',
       kanji:     '薗',
@@ -42358,7 +42359,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'ぞの',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2775-whey',
       kanji:     '醍',
@@ -42372,7 +42373,7 @@ const primerDeck = {
       onyomi:    'ダイ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2780-keg',
       kanji:     '銚',
@@ -42386,7 +42387,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'なべ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2553-sacred-shinto-tree',
       kanji:     '榊',
@@ -42400,7 +42401,7 @@ const primerDeck = {
       onyomi:    'さかき',
       kunyomi:   'さかき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2569-sturdy-oak',
       kanji:     '橿',
@@ -42414,7 +42415,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'かし, もちのき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2723-protein',
       kanji:     '蛋',
@@ -42428,7 +42429,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2886-peek',
       kanji:     '覗',
@@ -42442,7 +42443,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'のぞ.く, うかが.う',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2916-nightingale',
       kanji:     '鴬',
@@ -42456,7 +42457,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'うぐいす',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2951-snore',
       kanji:     '鼾',
@@ -42470,7 +42471,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いびき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2241-quote',
       kanji:     '云',
@@ -42484,7 +42485,7 @@ const primerDeck = {
       onyomi:    'ウン',
       kunyomi:   'い.う, ここに',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0814-meeting',
       kanji:     '会',
@@ -42499,7 +42500,7 @@ const primerDeck = {
       kunyomi:   'あ.う、あ.わせる、あつ.まる',
       nanori:    'あい, い',
       jlpt:      5,
-    },
+    },,
     {
       id:        'rtk-0449-revolve',
       kanji:     '転',
@@ -42513,7 +42514,7 @@ const primerDeck = {
       onyomi:    'テン',
       kunyomi:   'ころ.がる、ころ.げる、ころ.がす、ころ.ぶ、まろ.ぶ、うたた、うつ.る、くる.めく',
       jlpt:      4,
-    },
+    },,
     {
       id:        'rtk-1036-transmit',
       kanji:     '伝',
@@ -42528,7 +42529,7 @@ const primerDeck = {
       kunyomi:   'つた.わる、つた.える、つた.う、つだ.う、-づた.い、つて',
       nanori:    'つたえ',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0450-technique',
       kanji:     '芸',
@@ -42543,7 +42544,7 @@ const primerDeck = {
       kunyomi:   'う.える、のり、わざ',
       nanori:    'き, げ, なり',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1446-picture',
       kanji:     '絵',
@@ -42557,7 +42558,7 @@ const primerDeck = {
       onyomi:    'カイ、エ',
       kunyomi:   '',
       jlpt:      3,
-    },
+    },,
     {
       id:        'rtk-0452-cloud',
       kanji:     '雲',
@@ -42572,7 +42573,7 @@ const primerDeck = {
       kunyomi:   'くも、-ぐも',
       nanori:    'き, ずも, のめ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-1718-shade',
       kanji:     '陰',
@@ -42586,7 +42587,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'かげ、かげ.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2177-soul',
       kanji:     '魂',
@@ -42600,7 +42601,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'たましい、たま',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2440-technique-old',
       kanji:     '藝',
@@ -42614,7 +42615,7 @@ const primerDeck = {
       onyomi:    'ゲイ',
       kunyomi:   'う.える, のり, わざ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-0453-cloudy-weather',
       kanji:     '曇',
@@ -42629,7 +42630,7 @@ const primerDeck = {
       kunyomi:   'くも.る',
       nanori:    'ど, ずみ',
       jlpt:      2,
-    },
+    },,
     {
       id:        'rtk-2457-behind-the-scenes',
       kanji:     '蔭',
@@ -42643,7 +42644,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'かげ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2558-japanese-cypress',
       kanji:     '桧',
@@ -42657,7 +42658,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'ひのき, ひ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2257-as-is',
       kanji:     '侭',
@@ -42671,7 +42672,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'まま, ことごとく',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2930-transcription',
       kanji:     '疏',
@@ -42685,7 +42686,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'あら.い, うと.い, うと.む, とお.る, とお.す, まばら',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2641-whetstone',
       kanji:     '砺',
@@ -42700,7 +42701,7 @@ const primerDeck = {
       kunyomi:   'あらと, みが.く',
       nanori:    'と',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2755-slander',
       kanji:     '誹',
@@ -42714,7 +42715,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'そし.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1382',
       kanji:     '踪',
@@ -42728,7 +42729,7 @@ const primerDeck = {
       onyomi:    'ソウ、ショウ',
       kunyomi:   'あと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2856-mouse',
       kanji:     '鼠',
@@ -42742,7 +42743,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'ねずみ, ねず',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2090-game-hunting',
       kanji:     '猟',
@@ -42756,7 +42757,7 @@ const primerDeck = {
       onyomi:    'リョウ、レフ',
       kunyomi:   'かり、か.る',
       jlpt:      1,
-    },
+    },,
     {
       id:        'rtk-2727-wax',
       kanji:     '蝋',
@@ -42771,7 +42772,7 @@ const primerDeck = {
       kunyomi:   'みつろう, ろうそく',
       nanori:    'あじ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2312-courtesan',
       kanji:     '妓',
@@ -42785,7 +42786,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'わざおぎ, うたいめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2397-thou',
       kanji:     '汝',
@@ -42799,7 +42800,7 @@ const primerDeck = {
       onyomi:    'ジョ',
       kunyomi:   'なんじ, なれ, い, うぬ, いまし, し, しゃ, な, なむち, まし, みまし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2532-anus',
       kanji:     '肛',
@@ -42813,7 +42814,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   '',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2481-turnip',
       kanji:     '蕪',
@@ -42827,7 +42828,7 @@ const primerDeck = {
       onyomi:    'ブ',
       kunyomi:   'かぶ, かぶら, あれる',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2736-oyster',
       kanji:     '蛎',
@@ -42841,7 +42842,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'かき',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1496-modest',
       kanji:     '遜',
@@ -42855,7 +42856,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'したが.う、へりくだ.る、ゆず.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2787-anchor',
       kanji:     '錨',
@@ -42869,7 +42870,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'いかり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2313-fair',
       kanji:     '娃',
@@ -42884,7 +42885,7 @@ const primerDeck = {
       kunyomi:   'うつく.しい',
       nanori:    'い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2523-air-out',
       kanji:     '曝',
@@ -42898,7 +42899,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'さら.す',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2577-wild-mulberry',
       kanji:     '柘',
@@ -42913,7 +42914,7 @@ const primerDeck = {
       kunyomi:   'そ, つげ, やまぐわ',
       nanori:    'つ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2414-river-pool',
       kanji:     '瀞',
@@ -42927,7 +42928,7 @@ const primerDeck = {
       onyomi:    'セイ',
       kunyomi:   'とろ, きよ.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2679-wardrobe',
       kanji:     '笥',
@@ -42941,7 +42942,7 @@ const primerDeck = {
       onyomi:    'ス',
       kunyomi:   'け, はこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2771-vestiges',
       kanji:     '蹟',
@@ -42955,7 +42956,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'あと',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2874-palanquin',
       kanji:     '輿',
@@ -42969,7 +42970,7 @@ const primerDeck = {
       onyomi:    'ヨ',
       kunyomi:   'かご, こし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2111-go-upstream',
       kanji:     '遡',
@@ -42983,7 +42984,7 @@ const primerDeck = {
       onyomi:    'ソ、サク',
       kunyomi:   'さかのぼ.る',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2311-harlot',
       kanji:     '娼',
@@ -42997,7 +42998,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'あそびめ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2337-fit-into',
       kanji:     '嵌',
@@ -43011,7 +43012,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'は.める, は.まる, あな',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1938-accept-humbly',
       kanji:     '戴',
@@ -43025,7 +43026,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'いただ.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2407-souse',
       kanji:     '潅',
@@ -43039,7 +43040,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'そそ.ぐ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2597-kindle',
       kanji:     '焚',
@@ -43053,7 +43054,7 @@ const primerDeck = {
       onyomi:    'フン',
       kunyomi:   'た.く, や.く, やきがり',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2661-drill',
       kanji:     '穿',
@@ -43067,7 +43068,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'うが.つ, は.く',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2483-quack',
       kanji:     '薮',
@@ -43081,7 +43082,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'やぶ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2729-octopus',
       kanji:     '蛸',
@@ -43095,7 +43096,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'たこ',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2318-young-miss',
       kanji:     '姐',
@@ -43109,7 +43110,7 @@ const primerDeck = {
       onyomi:    'ソ',
       kunyomi:   'あね, ねえさん',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2860-murky',
       kanji:     '暝',
@@ -43123,7 +43124,7 @@ const primerDeck = {
       onyomi:    '',
       kunyomi:   'くら.い',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2551-hemlock',
       kanji:     '栂',
@@ -43137,7 +43138,7 @@ const primerDeck = {
       onyomi:    'つが',
       kunyomi:   'つが, とが',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-2684-bamboo-cane',
       kanji:     '竺',
@@ -43152,7 +43153,7 @@ const primerDeck = {
       kunyomi:   '',
       nanori:    'あつし',
       jlpt:      0,
-    },
+    },,
     {
       id:        'rtk-1119-cover-over',
       kanji:     '蔽',
@@ -43166,7 +43167,7 @@ const primerDeck = {
       onyomi:    'ヘイ、ヘツ、フツ',
       kunyomi:   'おお.う、おお.い',
       jlpt:      0,
-    },
+    },,
   ],
 }
 
