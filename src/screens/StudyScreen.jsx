@@ -309,8 +309,13 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId, feedback }) 
         </div>
       )}
 
-      <p className="font-mono text-[9px] text-parchment-500/60 tracking-[3px] uppercase mb-8">{isMF ? 'What is the kanji?' : 'What does this mean?'}</p>
-      {isMF ? (
+      <p className="font-mono text-[9px] text-parchment-500/60 tracking-[3px] uppercase mb-8">{deckId === 'primitives' ? 'What is this primitive?' : isMF ? 'What is the kanji?' : 'What does this mean?'}</p>
+      {deckId === 'primitives' ? (
+        <div className="flex flex-col items-center">
+          <p className={`font-kanji text-[96px] text-parchment-100 leading-none ${card.isPua ? '' : ''}`}>{card.kanji}</p>
+          {card.strokeCount && <p className="font-mono text-[10px] text-parchment-500/40 mt-4 tracking-widest">{card.strokeCount} stroke{card.strokeCount !== 1 ? 's' : ''}</p>}
+        </div>
+      ) : isMF ? (
         <div className="text-center">
           <p className="font-display italic text-3xl text-parchment-100 mb-3 leading-tight">{card.meaning}</p>
           <p className="font-mono text-sm text-parchment-500">{card.romaji}</p>
@@ -355,10 +360,50 @@ function UserStorySection({ cardId }) {
 
 // ─── CardBack dispatcher — picks layout based on deck type ───────────────
 function CardBack({ card, mode, deckId }) {
+  if (deckId === 'primitives') return <PrimitivesCardBack card={card} />
   const isFoundation = deckId === 'primer' || deckId === 'radicals'
   return isFoundation
     ? <FoundationCardBack card={card} mode={mode} deckId={deckId} />
     : <GameCardBack card={card} mode={mode} deckId={deckId} />
+}
+
+// ─── Primitives Card Back ────────────────────────────────────────────────
+// Minimal layout: big primitive, meaning, stroke count, Heisig page.
+function PrimitivesCardBack({ card }) {
+  return (
+    <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
+      {/* Ghost primitive watermark */}
+      <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
+
+      <div className="h-full overflow-y-auto p-5 flex flex-col items-center justify-center text-center">
+        {/* Big primitive character */}
+        <p className="font-kanji text-[88px] text-parchment-100 leading-none mb-6 animate-fade-up">{card.kanji}</p>
+
+        {/* Gold divider */}
+        <div className="flex items-center gap-3 w-24 mb-6 animate-fade-up delay-100">
+          <div className="flex-1 h-px bg-gold-400/20" />
+          <span className="font-kanji text-gold-400/25 text-xs">·</span>
+          <div className="flex-1 h-px bg-gold-400/20" />
+        </div>
+
+        {/* Meaning — the answer */}
+        <p className="font-display italic text-3xl text-gold-400 mb-8 animate-fade-up delay-200">{card.meaning}</p>
+
+        {/* Metadata */}
+        <div className="flex items-center gap-6 animate-fade-up delay-300">
+          <div className="text-center">
+            <p className="font-mono text-[8px] text-parchment-500/40 tracking-[2px] uppercase mb-1">Strokes</p>
+            <p className="font-mono text-[14px] text-parchment-400">{card.strokeCount}</p>
+          </div>
+          <div className="w-px h-6 bg-gold-400/10" />
+          <div className="text-center">
+            <p className="font-mono text-[8px] text-parchment-500/40 tracking-[2px] uppercase mb-1">RTK Page</p>
+            <p className="font-mono text-[14px] text-parchment-400">{card.heisigPage}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // ─── Foundation Card Back (primer + radicals) ────────────────────────────

@@ -78,7 +78,7 @@ const GENERIC_MILESTONES = [
 
 export default function GameReadiness({ deckId, learnedPct, learned, total }) {
   const milestones = DECK_MILESTONES[deckId] || GENERIC_MILESTONES
-  const isFoundation = deckId === 'primer' || deckId === 'radicals'
+  const isFoundation = deckId === 'primer' || deckId === 'radicals' || deckId === 'primitives'
 
   // Don't show for foundation decks (they don't map to a game)
   if (isFoundation) return null

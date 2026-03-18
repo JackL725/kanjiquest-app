@@ -30,7 +30,7 @@ export default function DeckScreen() {
   const [filter, setFilter]         = useState('all')
   const [showComponentLib, setShowComponentLib] = useState(false)
 
-  const isFoundation = id === 'primer' || id === 'radicals'
+  const isFoundation = id === 'primer' || id === 'radicals' || id === 'primitives'
   const needsGuide = isFoundation && !isPrimerGuideComplete()
 
   function handleStudy(mode) {
@@ -386,7 +386,7 @@ export default function DeckScreen() {
                 <span className="font-kanji text-xl text-parchment-200">{card.kanji}</span>
                 <div>
                   <p className="font-mono text-[11px] text-parchment-400">{card.meaning}</p>
-                  <p className="font-mono text-[10px] text-parchment-500">{card.romaji}</p>
+                  <p className="font-mono text-[10px] text-parchment-500">{card.romaji || (card.strokeCount ? `${card.strokeCount} strokes` : '')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
