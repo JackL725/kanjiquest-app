@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force KQP into font-kanji stack — must come after @tailwind utilities */
+.font-kanji {
+  font-family: 'KQP', 'Zen Kaku Gothic New', sans-serif !important;
+}
+
 /* ─── Design Tokens ─────────────────────────────── */
 :root {
   --gold:        #C9A84C;
