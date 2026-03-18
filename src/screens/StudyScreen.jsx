@@ -363,7 +363,7 @@ function CardBack({ card, mode, deckId }) {
 
 // ─── Foundation Card Back (primer + radicals) ────────────────────────────
 // Rich educational layout: big kanji, structured readings grid,
-// RTK stories with prominence, components, JLPT badge, context.
+// Mnemonic stories with prominence, components, JLPT badge, context.
 function FoundationCardBack({ card, mode, deckId }) {
   const isMF = mode === 'kanji'
   const hasReadings = card.onyomi || card.kunyomi
@@ -441,19 +441,19 @@ function FoundationCardBack({ card, mode, deckId }) {
           </>
         )}
 
-        {/* ── 3. RTK Mnemonic Stories ── */}
-        {card.rtk1 && (
+        {/* ── 3. Mnemonic Stories ── */}
+        {card.story1 && (
           <>
             <BSection label="Mnemonic Stories">
               <div className="space-y-2.5">
                 <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
                   <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">1</span>
-                  <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.rtk1}</p>
+                  <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story1}</p>
                 </div>
-                {card.rtk2 && (
+                {card.story2 && (
                   <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
                     <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">2</span>
-                    <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.rtk2}</p>
+                    <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story2}</p>
                   </div>
                 )}
               </div>
