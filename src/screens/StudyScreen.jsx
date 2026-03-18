@@ -6,6 +6,45 @@ import { useSettings } from '@/hooks/useSettings'
 import { getMasteryStage, STAGES } from '@/hooks/useMastery'
 import { useAudio } from '@/hooks/useAudio'
 
+// ─── Part format helpers ──────────────────────────────────────────────────
+// Primer parts are objects: { c: '日', n: 'sun, day', p: 0 }
+// Game deck parts are strings: '日: day; sun; Japan'
+function isObjectPart(p) { return p && typeof p === 'object' && 'n' in p }
+function partLabel(p) {
+  if (isObjectPart(p)) return p.c ? `${p.c} ${p.n}` : p.n
+  return String(p)
+}
+function partKey(p) {
+  if (isObjectPart(p)) return p.c ?? p.n
+  return String(p)
+}
+
+// Render a single structured part as inline elements (char + name)
+function PartInline({ part }) {
+  if (!isObjectPart(part)) return <span className="font-mono">{String(part)}</span>
+  return (
+    <span className="inline-flex items-center gap-1">
+      {part.c && <span className={`font-kanji text-parchment-300 ${part.p ? 'font-kanji' : ''}`}>{part.c}</span>}
+      <span className="font-mono text-parchment-500/70">{part.n}</span>
+    </span>
+  )
+}
+
+// Render a part badge (card back / component section)
+function PartBadge({ part, size = 'md' }) {
+  if (!isObjectPart(part)) {
+    return <span className={`font-mono ${size === 'sm' ? 'text-[10px]' : 'text-[11px]'} text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1`}>{String(part)}</span>
+  }
+  const charSize = size === 'sm' ? 'text-[14px]' : 'text-[18px]'
+  const nameSize = size === 'sm' ? 'text-[9px]' : 'text-[10px]'
+  return (
+    <span className={`inline-flex items-center gap-1.5 bg-ink-700/60 border border-gold-400/10 rounded-lg ${size === 'sm' ? 'px-2 py-0.5' : 'px-2.5 py-1'}`}>
+      {part.c && <span className={`font-kanji ${charSize} text-parchment-200 leading-none`}>{part.c}</span>}
+      <span className={`font-mono ${nameSize} text-parchment-500`}>{part.n}</span>
+    </span>
+  )
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────
 const STORIES_KEY = 'kq-user-stories'
 function readUserStories() { try { return JSON.parse(localStorage.getItem(STORIES_KEY) || '{}') } catch { return {} } }
@@ -325,7 +364,17 @@ function CardFront({ card, mode, peekActive, onBurn, isNew, deckId, feedback }) 
           <p className="font-kanji text-[96px] text-parchment-100 leading-none mb-6">{card.kanji}</p>
           {card.disambig && <span className="font-mono text-[9px] text-gold-400/70 tracking-[1.5px] uppercase border border-gold-400/20 rounded-full px-3 py-1 mb-4 bg-gold-400/5 select-none">{card.disambig}</span>}
           {!hideHint && (<>
-            <p className={`font-mono text-[11px] text-parchment-500/70 text-center leading-relaxed px-4 transition-all duration-300 ${peekActive ? '' : 'blur-reveal'}`}>{card.parts.join(' · ')}</p>
+            <div className={`text-center leading-relaxed px-4 transition-all duration-300 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 ${peekActive ? '' : 'blur-reveal'}`}>
+              {(card.parts || []).map((p, i) => (
+                <span key={i} className="inline-flex items-center gap-1">
+                  {i > 0 && <span className="font-mono text-[10px] text-parchment-500/30 mr-0.5">·</span>}
+                  {isObjectPart(p) ? (<>
+                    {p.c && <span className="font-kanji text-[16px] text-parchment-300/80 leading-none">{p.c}</span>}
+                    <span className="font-mono text-[11px] text-parchment-500/70">{p.n}</span>
+                  </>) : <span className="font-mono text-[11px] text-parchment-500/70">{String(p)}</span>}
+                </span>
+              ))}
+            </div>
             <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">hover or shake to peek</p>
           </>)}
         </div>
@@ -452,8 +501,8 @@ function FoundationCardBack({ card, mode, deckId }) {
         {/* ── 2. Components / Radicals ── */}
         <BSection label="Components">
           <div className="flex flex-wrap gap-1.5">
-            {card.parts.map(p => (
-              <span key={p} className="font-mono text-[11px] text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1">{p}</span>
+            {card.parts.map((p, i) => (
+              <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} />
             ))}
           </div>
         </BSection>
@@ -568,7 +617,7 @@ function GameCardBack({ card, mode, deckId }) {
 
         {/* 3. Components */}
         <BSection label="Components">
-          <div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div>
+          <div className="flex flex-wrap gap-1.5">{card.parts.map((p, i) => <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : p} part={p} size="sm" />)}</div>
         </BSection>
 
         {/* 4. In-game context */}
@@ -1039,19 +1088,26 @@ export function ComponentLibrary({ deckId, onClose }) {
     deck.cards.forEach(card => {
       if (!card.parts) return
       card.parts.forEach(part => {
-        // part can be 'kanji' or 'kanji: description'
-        const colonIdx = part.indexOf(':')
-        const char = colonIdx > 0 ? part.substring(0, colonIdx).trim() : part.trim()
-        const desc = colonIdx > 0 ? part.substring(colonIdx + 1).trim() : ''
+        let char, desc, pua
+        if (isObjectPart(part)) {
+          char = part.c ?? part.n
+          desc = part.n
+          pua = !!part.p
+        } else {
+          // Legacy string format: 'kanji: description'
+          const colonIdx = part.indexOf(':')
+          char = colonIdx > 0 ? part.substring(0, colonIdx).trim() : part.trim()
+          desc = colonIdx > 0 ? part.substring(colonIdx + 1).trim() : ''
+          pua = false
+        }
 
         if (!seen.has(char)) {
-          seen.set(char, { char, desc, cards: [card.kanji] })
+          seen.set(char, { char, desc, pua, cards: [card.kanji] })
         } else {
           const existing = seen.get(char)
           if (!existing.cards.includes(card.kanji)) {
             existing.cards.push(card.kanji)
           }
-          // Keep the longer description
           if (desc.length > existing.desc.length) existing.desc = desc
         }
       })

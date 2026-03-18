@@ -16,19 +16,19 @@ function markGuideComplete() {
 const TUTORIAL_CARDS = [
   {
     kanji: '日', reading: 'ニチ', romaji: 'nichi', meaning: 'day / sun',
-    parts: ['日: sun, day, sun radical (no. 72)'],
+    parts: [{ c: '日', n: 'sun, day', p: 0 }],
     story1: 'A window with the curtains open — sunlight streams in, marking the start of a new day.',
     context: '日本（にほん）', contextEn: 'Japan (lit. "origin of the sun")',
   },
   {
     kanji: '月', reading: 'ゲツ', romaji: 'getsu', meaning: 'month / moon',
-    parts: ['月: moon, month, moon radical (no. 74)'],
+    parts: [{ c: '月', n: 'moon, month, flesh, part of the body', p: 0 }],
     story1: 'A crescent moon with two horizontal lines — like the moon\'s surface marked by craters.',
     context: '月曜日（げつようび）', contextEn: 'Monday (lit. "moon day")',
   },
   {
     kanji: '明', reading: 'メイ', romaji: 'mei', meaning: 'bright',
-    parts: ['日: day; sun', '月: month; moon'],
+    parts: [{ c: '日', n: 'sun, day', p: 0 }, { c: '月', n: 'moon, month, flesh, part of the body', p: 0 }],
     story1: 'The sun and the moon shine together in the sky — the two brightest things you can see. Together they make "bright."',
     context: '明日（あした）', contextEn: 'tomorrow (lit. "bright day")',
   },
@@ -374,9 +374,17 @@ function CardTutorialStep({ onNext }) {
               <p className="font-kanji text-[88px] text-parchment-100 leading-none mb-5">
                 {card.kanji}
               </p>
-              <p className="font-mono text-[11px] text-parchment-500/70 blur-reveal text-center leading-relaxed">
-                {card.parts.join(' · ')}
-              </p>
+              <div className="font-mono text-[11px] text-parchment-500/70 blur-reveal text-center leading-relaxed flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+                {card.parts.map((p, i) => (
+                  <span key={i} className="inline-flex items-center gap-1">
+                    {i > 0 && <span className="text-[10px] text-parchment-500/30 mr-0.5">·</span>}
+                    {p && typeof p === 'object' && 'n' in p ? (<>
+                      {p.c && <span className="font-kanji text-[16px] text-parchment-300/80 leading-none">{p.c}</span>}
+                      <span>{p.n}</span>
+                    </>) : <span>{String(p)}</span>}
+                  </span>
+                ))}
+              </div>
               <p className="font-mono text-[9px] text-parchment-500/25 mt-2.5 tracking-widest">
                 hover to peek at components
               </p>
@@ -450,12 +458,16 @@ function CardTutorialStep({ onNext }) {
                     Components
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {card.parts.map(p => (
-                      <span key={p} className="font-mono text-[10px] text-parchment-500
-                                               border border-gold-400/15 rounded px-2 py-0.5">
-                        {p}
-                      </span>
-                    ))}
+                    {card.parts.map((p, i) => {
+                      const isObj = p && typeof p === 'object' && 'n' in p
+                      return (
+                        <span key={isObj ? (p.c ?? p.n) + i : p}
+                          className="inline-flex items-center gap-1.5 border border-gold-400/15 rounded px-2 py-0.5">
+                          {isObj && p.c && <span className="font-kanji text-[14px] text-parchment-200 leading-none">{p.c}</span>}
+                          <span className="font-mono text-[10px] text-parchment-500">{isObj ? p.n : String(p)}</span>
+                        </span>
+                      )
+                    })}
                   </div>
                 </div>
 
@@ -682,9 +694,17 @@ function PracticeStep({ onNext }) {
               <p className="font-kanji text-[80px] text-parchment-100 leading-none mb-4">
                 {card.kanji}
               </p>
-              <p className="font-mono text-[11px] text-parchment-500/70 blur-reveal text-center">
-                {card.parts.join(' · ')}
-              </p>
+              <div className="font-mono text-[11px] text-parchment-500/70 blur-reveal text-center flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+                {card.parts.map((p, i) => (
+                  <span key={i} className="inline-flex items-center gap-1">
+                    {i > 0 && <span className="text-[10px] text-parchment-500/30 mr-0.5">·</span>}
+                    {p && typeof p === 'object' && 'n' in p ? (<>
+                      {p.c && <span className="font-kanji text-[16px] text-parchment-300/80 leading-none">{p.c}</span>}
+                      <span>{p.n}</span>
+                    </>) : <span>{String(p)}</span>}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Back */}
