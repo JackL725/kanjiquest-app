@@ -707,6 +707,848 @@ glyphs[120] = () => {
   return g
 }
 
+// PUA(121) = shredder (12 strokes — 敝+攵 like compound)
+glyphs[121] = () => {
+  const g = p()
+  // Left part: vertical with small horizontals
+  vStroke(g, 250, 780, 200, 50)
+  hStroke(g, 150, 650, 400, 45)
+  hStroke(g, 150, 500, 400, 45)
+  vStroke(g, 400, 780, 200, 50)
+  hStroke(g, 150, 350, 400, 45)
+  leftFall(g, 300, 350, 150, 150, 50, 20)
+  rightFall(g, 300, 350, 450, 150, 50)
+  // Right: taskmaster (攵)
+  dStroke(g, 600, 750, 550, 550, 45)
+  hStroke(g, 500, 550, 800, 50)
+  leftFall(g, 650, 550, 500, 200, 50, 20)
+  rightFall(g, 650, 550, 850, 200, 50)
+  return g
+}
+
+// PUA(122) = banner (6 strokes — 方+something)
+glyphs[122] = () => {
+  const g = p()
+  dot(g, 400, 800, 55)
+  hStroke(g, 200, 680, 700, 55)
+  leftFall(g, 450, 680, 200, 300, 55, 20)
+  g.moveTo(500, 650); g.lineTo(650, 650)
+  g.quadraticCurveTo(700, 500, 650, 300)
+  g.lineTo(590, 320)
+  g.quadraticCurveTo(640, 490, 600, 600)
+  g.lineTo(450, 600); g.close()
+  hStroke(g, 350, 450, 600, 45)
+  return g
+}
+
+// PUA(123) = rag (4 strokes — 亻+ト like)
+glyphs[123] = () => {
+  const g = p()
+  dStroke(g, 350, 750, 250, 500, 55)
+  vStroke(g, 350, 550, 200, 55)
+  vStroke(g, 600, 750, 200, 55)
+  rightFall(g, 600, 550, 750, 300, 50)
+  return g
+}
+
+// PUA(126) = saw (5 strokes — like 午 with person)
+glyphs[126] = () => {
+  const g = p()
+  dStroke(g, 400, 780, 280, 580, 55)
+  vStroke(g, 400, 620, 200, 55)
+  hStroke(g, 250, 580, 700, 50)
+  hStroke(g, 350, 400, 700, 50)
+  hStroke(g, 350, 250, 700, 55)
+  return g
+}
+
+// PUA(127) = broom (3 strokes — ヨ shape, three horizontals with right vertical)
+glyphs[127] = () => {
+  const g = p()
+  hStroke(g, 250, 700, 650, 55)
+  hStroke(g, 250, 500, 650, 55)
+  hStroke(g, 250, 300, 700, 60)
+  vStroke(g, 650, 720, 280, 50)
+  return g
+}
+
+// PUA(128) = broom alt (3 strokes — ヨ but left-connected)
+glyphs[128] = () => {
+  const g = p()
+  hStroke(g, 300, 700, 700, 55)
+  hStroke(g, 250, 500, 700, 55)
+  hStroke(g, 300, 300, 700, 60)
+  vStroke(g, 300, 720, 280, 50)
+  return g
+}
+
+// PUA(129) = broom old (3 strokes — 巳 variant with horizontal)
+glyphs[129] = () => {
+  const g = p()
+  vStroke(g, 350, 700, 350, 55)
+  hStroke(g, 350, 350, 650, 55)
+  g.moveTo(650, 700); g.lineTo(700, 700)
+  g.quadraticCurveTo(750, 450, 650, 200)
+  g.lineTo(590, 220)
+  g.quadraticCurveTo(690, 460, 640, 700); g.close()
+  return g
+}
+
+// PUA(130) = rake (4 strokes — 聿 variant, vertical with two short horizontals + hook)
+glyphs[130] = () => {
+  const g = p()
+  vStroke(g, 450, 800, 200, 55)
+  hStroke(g, 300, 650, 600, 50)
+  hStroke(g, 300, 480, 600, 50)
+  // Hook at bottom
+  g.moveTo(420, 250); g.quadraticCurveTo(400, 180, 350, 160)
+  g.lineTo(370, 110); g.quadraticCurveTo(430, 130, 480, 250); g.close()
+  return g
+}
+
+// PUA(135) = salad (4 strokes — 土 with extra vertical on left, like 圭 bottom)
+glyphs[135] = () => {
+  const g = p()
+  vStroke(g, 300, 700, 300, 55)
+  vStroke(g, 550, 700, 300, 55)
+  hStroke(g, 200, 500, 750, 55)
+  hStroke(g, 200, 300, 750, 60)
+  return g
+}
+
+// PUA(137) = caverns (7 strokes — 厂+古 like)
+glyphs[137] = () => {
+  const g = p()
+  hStroke(g, 200, 750, 750, 55)
+  vStroke(g, 200, 750, 200, 50)
+  // Inner: 古 (cross + box)
+  hStroke(g, 350, 600, 700, 50)
+  vStroke(g, 525, 600, 200, 50)
+  vStroke(g, 350, 450, 250, 45)
+  vStroke(g, 700, 450, 250, 45)
+  hStroke(g, 350, 250, 700, 50)
+  return g
+}
+
+// PUA(138) = strawman (8 strokes — 充 like)
+glyphs[138] = () => {
+  const g = p()
+  dot(g, 500, 800, 55)
+  hStroke(g, 250, 680, 750, 55)
+  vStroke(g, 500, 680, 450, 50)
+  hStroke(g, 300, 450, 700, 55)
+  // Two spreading legs
+  g.moveTo(380, 420); g.quadraticCurveTo(350, 300, 200, 180)
+  g.lineTo(260, 150); g.quadraticCurveTo(400, 270, 440, 420); g.close()
+  g.moveTo(580, 420); g.quadraticCurveTo(620, 300, 780, 180)
+  g.lineTo(720, 150); g.quadraticCurveTo(560, 270, 520, 420); g.close()
+  hStroke(g, 200, 200, 800, 50)
+  return g
+}
+
+// PUA(139) = quarter (6 strokes — 兴 like)
+glyphs[139] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 800, 55)
+  dot(g, 350, 600, 50)
+  dot(g, 650, 600, 50)
+  vStroke(g, 300, 500, 300, 50)
+  vStroke(g, 700, 500, 300, 50)
+  hStroke(g, 200, 300, 800, 60)
+  return g
+}
+
+// PUA(140) = spear (2 strokes — two vertical lines side by side, left one shorter)
+glyphs[140] = () => {
+  const g = p()
+  g.moveTo(370, 700); g.quadraticCurveTo(360, 450, 350, 300)
+  g.lineTo(410, 300); g.quadraticCurveTo(420, 450, 430, 700); g.close()
+  vStroke(g, 570, 750, 200, 55)
+  return g
+}
+
+// PUA(142) = dollarsign alt (5 strokes — 弗 variant)
+glyphs[142] = () => {
+  const g = p()
+  vStroke(g, 350, 800, 200, 50)
+  vStroke(g, 650, 800, 200, 50)
+  g.moveTo(250, 650); g.lineTo(750, 650); g.lineTo(750, 600)
+  g.lineTo(250, 600); g.close()
+  g.moveTo(250, 450); g.lineTo(750, 450); g.lineTo(750, 400)
+  g.lineTo(250, 400); g.close()
+  hStroke(g, 250, 250, 750, 55)
+  return g
+}
+
+// PUA(146) = old man (4 strokes — like 歩 top but different)
+glyphs[146] = () => {
+  const g = p()
+  vStroke(g, 350, 700, 350, 50)
+  dStroke(g, 350, 700, 250, 550, 50)
+  hStroke(g, 300, 500, 700, 55)
+  rightFall(g, 500, 500, 700, 250, 55)
+  return g
+}
+
+// PUA(148) = maestro (6 strokes — 自 like)
+glyphs[148] = () => {
+  const g = p()
+  dot(g, 500, 830, 55)
+  vStroke(g, 300, 730, 250, 50)
+  vStroke(g, 700, 730, 250, 50)
+  hStroke(g, 300, 730, 700, 50)
+  hStroke(g, 300, 500, 700, 50)
+  hStroke(g, 300, 250, 700, 55)
+  return g
+}
+
+// PUA(149) = jawbone (9 strokes — 高-like top with mouth)
+glyphs[149] = () => {
+  const g = p()
+  dot(g, 500, 830, 50)
+  hStroke(g, 200, 730, 800, 50)
+  vStroke(g, 250, 680, 450, 45)
+  vStroke(g, 750, 680, 450, 45)
+  hStroke(g, 250, 680, 750, 45)
+  hStroke(g, 250, 450, 750, 45)
+  // Inner box
+  vStroke(g, 350, 450, 250, 40)
+  vStroke(g, 650, 450, 250, 40)
+  hStroke(g, 350, 250, 650, 45)
+  return g
+}
+
+// PUA(150) = pinnacle (3 strokes — β with dots, like 阝 variant)
+glyphs[150] = () => {
+  const g = p()
+  // Left vertical with hook at top
+  g.moveTo(350, 800); g.quadraticCurveTo(450, 780, 450, 650)
+  g.lineTo(450, 350); g.quadraticCurveTo(450, 250, 350, 200)
+  g.lineTo(320, 250); g.quadraticCurveTo(400, 300, 400, 380)
+  g.lineTo(400, 650); g.quadraticCurveTo(400, 740, 340, 760); g.close()
+  // Two dots on the right
+  dot(g, 580, 600, 65)
+  dot(g, 620, 420, 65)
+  return g
+}
+
+// PUA(151) = miss universe / paper punch (4 strokes — 宄 crown+L)
+glyphs[151] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 700, 55)
+  leftFall(g, 450, 700, 200, 450, 55, 25)
+  g.moveTo(480, 500); g.lineTo(650, 500)
+  g.lineTo(650, 440); g.lineTo(480, 440); g.close()
+  g.moveTo(620, 500); g.lineTo(620, 250)
+  g.lineTo(680, 250); g.lineTo(680, 500); g.close()
+  return g
+}
+
+// PUA(153) = stamp (2 strokes — 卩 vertical with curve top)
+glyphs[153] = () => {
+  const g = p()
+  g.moveTo(350, 750); g.lineTo(600, 750)
+  g.quadraticCurveTo(650, 600, 600, 400)
+  g.lineTo(540, 420); g.quadraticCurveTo(590, 580, 550, 700)
+  g.lineTo(350, 700); g.close()
+  vStroke(g, 550, 400, 180, 55)
+  return g
+}
+
+// PUA(154) = chop-seal (2 strokes — 卩 with overhead horizontal)
+glyphs[154] = () => {
+  const g = p()
+  hStroke(g, 250, 750, 600, 55)
+  vStroke(g, 500, 750, 200, 55)
+  g.moveTo(450, 450); g.quadraticCurveTo(400, 300, 350, 200)
+  g.lineTo(410, 180); g.quadraticCurveTo(460, 280, 510, 450); g.close()
+  return g
+}
+
+// PUA(155) = chop-seal small (2 strokes — マ shape)
+glyphs[155] = () => {
+  const g = p()
+  hStroke(g, 250, 700, 700, 55)
+  g.moveTo(600, 700); g.quadraticCurveTo(550, 500, 400, 400)
+  g.lineTo(440, 350); g.quadraticCurveTo(600, 450, 660, 680); g.close()
+  return g
+}
+
+// PUA(157) = mailbox (5 strokes — 宛 like)
+glyphs[157] = () => {
+  const g = p()
+  leftFall(g, 400, 800, 200, 500, 55, 25)
+  hStroke(g, 250, 500, 700, 55)
+  g.moveTo(500, 500); g.lineTo(700, 500)
+  g.quadraticCurveTo(720, 350, 650, 200)
+  g.lineTo(590, 220)
+  g.quadraticCurveTo(660, 340, 640, 450)
+  g.lineTo(460, 450); g.close()
+  vStroke(g, 500, 450, 200, 50)
+  return g
+}
+
+// PUA(158) = receipt (3 strokes — 厄 bottom, like hook)
+glyphs[158] = () => {
+  const g = p()
+  hStroke(g, 250, 650, 600, 55)
+  vStroke(g, 250, 650, 250, 50)
+  g.moveTo(250, 300); g.quadraticCurveTo(350, 200, 550, 250)
+  g.lineTo(540, 310); g.quadraticCurveTo(370, 270, 300, 340); g.close()
+  return g
+}
+
+// PUA(159) = staples (4 strokes — 巨 variant without bottom)
+glyphs[159] = () => {
+  const g = p()
+  vStroke(g, 300, 750, 200, 55)
+  hStroke(g, 300, 750, 650, 50)
+  hStroke(g, 300, 500, 600, 50)
+  hStroke(g, 300, 250, 650, 55)
+  return g
+}
+
+// PUA(161) = silver alt (5 strokes — 艮 without bottom stroke)
+glyphs[161] = () => {
+  const g = p()
+  hStroke(g, 250, 750, 650, 55)
+  vStroke(g, 300, 750, 400, 50)
+  hStroke(g, 300, 550, 650, 50)
+  hStroke(g, 300, 400, 650, 50)
+  g.moveTo(500, 400); g.quadraticCurveTo(550, 280, 650, 200)
+  g.lineTo(620, 160); g.quadraticCurveTo(500, 240, 440, 380); g.close()
+  return g
+}
+
+// PUA(164) = waitress (4 strokes — 无 shape)
+glyphs[164] = () => {
+  const g = p()
+  hStroke(g, 200, 650, 700, 55)
+  vStroke(g, 450, 650, 300, 55)
+  hStroke(g, 250, 300, 750, 60)
+  g.moveTo(650, 300); g.quadraticCurveTo(700, 200, 750, 150)
+  g.lineTo(700, 130); g.quadraticCurveTo(640, 180, 590, 280); g.close()
+  return g
+}
+
+// PUA(167) = red pepper (9 strokes — 亲 like)
+glyphs[167] = () => {
+  const g = p()
+  dot(g, 500, 830, 50)
+  hStroke(g, 250, 720, 750, 50)
+  vStroke(g, 500, 720, 450, 50)
+  hStroke(g, 300, 550, 700, 50)
+  hStroke(g, 200, 450, 800, 55)
+  vStroke(g, 500, 450, 250, 50)
+  leftFall(g, 500, 350, 250, 150, 50, 20)
+  rightFall(g, 500, 350, 750, 150, 50)
+  hStroke(g, 200, 250, 800, 50)
+  return g
+}
+
+// PUA(168) = ketchup (13 strokes — 辟 like)
+glyphs[168] = () => {
+  const g = p()
+  // Left: 辛-like
+  dot(g, 280, 800, 40)
+  hStroke(g, 180, 700, 440, 40)
+  vStroke(g, 310, 700, 350, 40)
+  hStroke(g, 180, 530, 440, 40)
+  hStroke(g, 180, 350, 440, 45)
+  vStroke(g, 310, 350, 180, 40)
+  // Right: 口+刂 like
+  vStroke(g, 520, 700, 400, 40)
+  vStroke(g, 720, 700, 400, 40)
+  hStroke(g, 520, 700, 720, 40)
+  hStroke(g, 520, 550, 720, 40)
+  hStroke(g, 520, 400, 720, 40)
+  vStroke(g, 780, 750, 200, 40)
+  dStroke(g, 620, 380, 550, 200, 35)
+  return g
+}
+
+// PUA(169) = cornucopia (2 strokes — two verticals, left short, right long)
+glyphs[169] = () => {
+  const g = p()
+  vStroke(g, 380, 600, 350, 55)
+  vStroke(g, 580, 750, 200, 55)
+  return g
+}
+
+// PUA(170) = rice seedling (5 strokes — 元-like with left-fall)
+glyphs[170] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 800, 55)
+  leftFall(g, 400, 700, 200, 400, 55, 25)
+  hStroke(g, 300, 450, 700, 55)
+  vStroke(g, 550, 450, 200, 55)
+  g.moveTo(520, 250); g.quadraticCurveTo(600, 180, 700, 200)
+  g.lineTo(690, 260); g.quadraticCurveTo(610, 240, 550, 290); g.close()
+  return g
+}
+
+// PUA(171) = resin (5 strokes — 木 with dot instead of left-fall)
+glyphs[171] = () => {
+  const g = p()
+  hStroke(g, 200, 500, 800, 55)
+  vStroke(g, 500, 800, 200, 55)
+  dot(g, 320, 620, 60)
+  rightFall(g, 500, 500, 750, 200, 55)
+  dot(g, 680, 350, 55)
+  return g
+}
+
+// PUA(172) = celery (5 strokes — 圭 with extra vertical)
+glyphs[172] = () => {
+  const g = p()
+  vStroke(g, 350, 700, 300, 55)
+  vStroke(g, 600, 700, 300, 55)
+  hStroke(g, 200, 700, 750, 55)
+  hStroke(g, 250, 500, 700, 55)
+  hStroke(g, 200, 300, 750, 60)
+  return g
+}
+
+// PUA(173) = grass skirt (13 strokes — 裏 variant)
+glyphs[173] = () => {
+  const g = p()
+  hStroke(g, 200, 800, 800, 45)
+  vStroke(g, 250, 750, 550, 40)
+  vStroke(g, 750, 750, 550, 40)
+  hStroke(g, 250, 660, 750, 40)
+  hStroke(g, 250, 550, 750, 40)
+  dot(g, 500, 830, 40)
+  hStroke(g, 300, 450, 700, 45)
+  vStroke(g, 500, 450, 300, 40)
+  leftFall(g, 500, 350, 250, 150, 45, 18)
+  rightFall(g, 500, 350, 750, 150, 45)
+  hStroke(g, 200, 300, 800, 45)
+  dot(g, 350, 220, 40)
+  dot(g, 650, 220, 40)
+  return g
+}
+
+// PUA(174) = grow (4 strokes — 主 with different proportions)
+glyphs[174] = () => {
+  const g = p()
+  dot(g, 500, 780, 60)
+  hStroke(g, 250, 600, 750, 55)
+  vStroke(g, 500, 600, 250, 55)
+  hStroke(g, 200, 250, 800, 60)
+  return g
+}
+
+// PUA(176) = christmas tree (6 strokes — 未+extra horizontal like 来)
+glyphs[176] = () => {
+  const g = p()
+  hStroke(g, 300, 700, 700, 50)
+  hStroke(g, 200, 500, 800, 60)
+  vStroke(g, 500, 800, 150, 55)
+  leftFall(g, 500, 500, 250, 200, 55, 25)
+  rightFall(g, 500, 500, 750, 200, 55)
+  hStroke(g, 350, 300, 650, 45)
+  return g
+}
+
+// PUA(177) = cornstalk (3 strokes — 十 with extra horizontal near top)
+glyphs[177] = () => {
+  const g = p()
+  hStroke(g, 250, 650, 750, 55)
+  hStroke(g, 300, 450, 700, 55)
+  vStroke(g, 500, 800, 200, 55)
+  return g
+}
+
+// PUA(178) = bush alt (4 strokes — 丰 with left-fall from top)
+glyphs[178] = () => {
+  const g = p()
+  leftFall(g, 500, 800, 250, 550, 55, 25)
+  hStroke(g, 250, 600, 750, 55)
+  hStroke(g, 300, 400, 700, 55)
+  vStroke(g, 500, 700, 200, 55)
+  return g
+}
+
+// PUA(179) = bonsai (5 strokes — 夫 shape)
+glyphs[179] = () => {
+  const g = p()
+  hStroke(g, 250, 600, 750, 55)
+  hStroke(g, 200, 400, 800, 60)
+  leftFall(g, 500, 750, 200, 400, 55, 25)
+  vStroke(g, 500, 700, 200, 55)
+  rightFall(g, 500, 400, 750, 150, 55)
+  return g
+}
+
+// PUA(180) = cabbage (10 strokes — 董 like)
+glyphs[180] = () => {
+  const g = p()
+  // Top: flower radical
+  hStroke(g, 200, 800, 800, 45)
+  vStroke(g, 350, 800, 700, 40)
+  vStroke(g, 650, 800, 700, 40)
+  // Middle: 重-like
+  hStroke(g, 250, 650, 750, 45)
+  vStroke(g, 500, 650, 350, 45)
+  hStroke(g, 300, 500, 700, 40)
+  vStroke(g, 300, 500, 350, 40)
+  vStroke(g, 700, 500, 350, 40)
+  hStroke(g, 300, 350, 700, 45)
+  hStroke(g, 200, 200, 800, 50)
+  return g
+}
+
+// PUA(181) = scarecrow (10 strokes — 莫 variant)
+glyphs[181] = () => {
+  const g = p()
+  hStroke(g, 200, 800, 800, 45)
+  vStroke(g, 350, 800, 700, 40)
+  vStroke(g, 650, 800, 700, 40)
+  // Inner: 大 area
+  hStroke(g, 250, 600, 750, 50)
+  vStroke(g, 500, 600, 350, 45)
+  hStroke(g, 250, 350, 750, 50)
+  leftFall(g, 500, 350, 250, 150, 50, 20)
+  rightFall(g, 500, 350, 750, 150, 50)
+  dot(g, 350, 500, 45)
+  dot(g, 650, 500, 45)
+  return g
+}
+
+// PUA(182) = silage (6 strokes — 幸 variant with dots)
+glyphs[182] = () => {
+  const g = p()
+  hStroke(g, 250, 700, 750, 50)
+  vStroke(g, 500, 750, 250, 55)
+  hStroke(g, 300, 500, 700, 50)
+  hStroke(g, 200, 300, 800, 55)
+  dot(g, 300, 550, 45)
+  dot(g, 700, 550, 45)
+  return g
+}
+
+// PUA(184) = key (2 strokes — horizontal then vertical down-right, like コ rotated)
+glyphs[184] = () => {
+  const g = p()
+  hStroke(g, 200, 600, 700, 55)
+  vStroke(g, 650, 600, 250, 55)
+  return g
+}
+
+// PUA(185) = guillotine (4 strokes — 大 with hook/dot on right)
+glyphs[185] = () => {
+  const g = p()
+  hStroke(g, 250, 500, 750, 55)
+  leftFall(g, 500, 750, 250, 300, 60, 25)
+  rightFall(g, 500, 500, 750, 200, 55)
+  dot(g, 650, 650, 60)
+  return g
+}
+
+// PUA(188) = awl (8 strokes — 免 like)
+glyphs[188] = () => {
+  const g = p()
+  leftFall(g, 500, 800, 250, 550, 55, 25)
+  hStroke(g, 300, 650, 700, 50)
+  vStroke(g, 300, 580, 350, 45)
+  vStroke(g, 680, 650, 250, 50)
+  hStroke(g, 300, 450, 680, 45)
+  hStroke(g, 300, 350, 680, 45)
+  g.moveTo(420, 350); g.quadraticCurveTo(380, 250, 300, 180)
+  g.lineTo(340, 140); g.quadraticCurveTo(420, 210, 480, 330); g.close()
+  g.moveTo(580, 300); g.quadraticCurveTo(630, 200, 720, 150)
+  g.lineTo(690, 110); g.quadraticCurveTo(590, 170, 520, 280); g.close()
+  return g
+}
+
+// PUA(192) = teepee (5 strokes — 兆 variant)
+glyphs[192] = () => {
+  const g = p()
+  vStroke(g, 350, 700, 400, 50)
+  vStroke(g, 650, 700, 400, 50)
+  g.moveTo(300, 400); g.quadraticCurveTo(250, 300, 200, 200)
+  g.lineTo(260, 180); g.quadraticCurveTo(300, 270, 360, 380); g.close()
+  g.moveTo(700, 400); g.quadraticCurveTo(740, 300, 800, 200)
+  g.lineTo(740, 180); g.quadraticCurveTo(680, 270, 640, 380); g.close()
+  dot(g, 450, 550, 55)
+  return g
+}
+
+// PUA(193) = pop tent (12 strokes — 祭 like)
+glyphs[193] = () => {
+  const g = p()
+  // Top: 夕-like with 示
+  leftFall(g, 350, 800, 200, 600, 45, 18)
+  rightFall(g, 350, 800, 500, 600, 45)
+  dot(g, 550, 780, 40)
+  hStroke(g, 200, 600, 800, 45)
+  leftFall(g, 500, 600, 250, 350, 50, 20)
+  rightFall(g, 500, 600, 750, 350, 50)
+  // Bottom: 示 like
+  hStroke(g, 250, 350, 750, 45)
+  vStroke(g, 500, 350, 150, 45)
+  dot(g, 350, 250, 40)
+  dot(g, 650, 250, 40)
+  dStroke(g, 300, 200, 200, 120, 35)
+  dStroke(g, 700, 200, 800, 120, 35)
+  return g
+}
+
+// PUA(195) = fenceposts (2 strokes — left curved + right straight vertical)
+glyphs[195] = () => {
+  const g = p()
+  g.moveTo(350, 700); g.quadraticCurveTo(320, 500, 280, 300)
+  g.lineTo(340, 290); g.quadraticCurveTo(380, 490, 410, 700); g.close()
+  vStroke(g, 600, 700, 300, 55)
+  return g
+}
+
+// PUA(196) = sparkler (4 strokes — X with thickened ends)
+glyphs[196] = () => {
+  const g = p()
+  dStroke(g, 250, 700, 700, 300, 60)
+  dStroke(g, 700, 700, 250, 300, 60)
+  dot(g, 250, 720, 50)
+  dot(g, 700, 720, 50)
+  return g
+}
+
+// PUA(200) = purse (5 strokes — 虫 simplified)
+glyphs[200] = () => {
+  const g = p()
+  vStroke(g, 300, 700, 350, 50)
+  vStroke(g, 700, 700, 350, 50)
+  hStroke(g, 300, 700, 700, 50)
+  hStroke(g, 300, 350, 700, 50)
+  vStroke(g, 500, 700, 200, 50)
+  return g
+}
+
+// PUA(202) = oaken tub (6 strokes — 世 variant with feet)
+glyphs[202] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 800, 55)
+  vStroke(g, 250, 700, 300, 50)
+  vStroke(g, 500, 700, 300, 50)
+  vStroke(g, 750, 700, 300, 50)
+  hStroke(g, 250, 500, 750, 50)
+  hStroke(g, 200, 300, 800, 55)
+  return g
+}
+
+// PUA(204) = funnel (10 strokes — 聿+日 compound)
+glyphs[204] = () => {
+  const g = p()
+  // Top: brush-like
+  hStroke(g, 250, 780, 750, 45)
+  hStroke(g, 250, 650, 750, 45)
+  vStroke(g, 500, 800, 500, 45)
+  // Bottom: 日 box
+  vStroke(g, 300, 500, 250, 45)
+  vStroke(g, 700, 500, 250, 45)
+  hStroke(g, 300, 500, 700, 45)
+  hStroke(g, 300, 370, 700, 40)
+  hStroke(g, 300, 250, 700, 45)
+  hStroke(g, 200, 550, 800, 45)
+  hStroke(g, 200, 200, 800, 50)
+  return g
+}
+
+// PUA(207) = dog tag (7 strokes — 甫 like)
+glyphs[207] = () => {
+  const g = p()
+  dot(g, 500, 830, 55)
+  hStroke(g, 200, 720, 800, 55)
+  vStroke(g, 250, 670, 300, 50)
+  vStroke(g, 750, 670, 300, 50)
+  hStroke(g, 250, 500, 750, 50)
+  vStroke(g, 500, 670, 200, 50)
+  hStroke(g, 250, 300, 750, 55)
+  return g
+}
+
+// PUA(209) = drag (2 strokes — horizontal then down-curve like 厂 variant)
+glyphs[209] = () => {
+  const g = p()
+  hStroke(g, 300, 700, 600, 50)
+  g.moveTo(570, 700); g.quadraticCurveTo(540, 450, 450, 200)
+  g.lineTo(510, 190); g.quadraticCurveTo(600, 430, 630, 680); g.close()
+  return g
+}
+
+// PUA(210) = drag alt (2 strokes — ク top-right shape)
+glyphs[210] = () => {
+  const g = p()
+  dStroke(g, 400, 700, 300, 500, 55)
+  dStroke(g, 500, 650, 600, 350, 55)
+  return g
+}
+
+// PUA(211) = clothes hanger (1 stroke — フ hook shape)
+glyphs[211] = () => {
+  const g = p()
+  g.moveTo(250, 700); g.lineTo(600, 700); g.lineTo(600, 640)
+  g.quadraticCurveTo(580, 450, 500, 300)
+  g.lineTo(440, 330)
+  g.quadraticCurveTo(520, 460, 540, 640)
+  g.lineTo(250, 640); g.close()
+  return g
+}
+
+// PUA(212) = stapler (5 strokes — 乍 like)
+glyphs[212] = () => {
+  const g = p()
+  dStroke(g, 400, 800, 300, 600, 55)
+  hStroke(g, 250, 650, 700, 55)
+  hStroke(g, 350, 480, 700, 50)
+  vStroke(g, 500, 650, 200, 55)
+  hStroke(g, 350, 300, 700, 50)
+  return g
+}
+
+// PUA(215) = tail feathers (5 strokes — 冉 like with hooks)
+glyphs[215] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 800, 55)
+  vStroke(g, 350, 700, 250, 50)
+  vStroke(g, 650, 700, 250, 50)
+  hStroke(g, 350, 500, 650, 50)
+  g.moveTo(500, 500); g.quadraticCurveTo(550, 350, 600, 200)
+  g.lineTo(540, 190); g.quadraticCurveTo(490, 340, 440, 480); g.close()
+  return g
+}
+
+// PUA(216) = hairpin (4 strokes — 区 without enclosure, like 又 under a horizontal)
+glyphs[216] = () => {
+  const g = p()
+  hStroke(g, 200, 700, 700, 55)
+  vStroke(g, 200, 700, 300, 50)
+  leftFall(g, 500, 600, 300, 300, 55, 25)
+  rightFall(g, 500, 600, 700, 300, 55)
+  return g
+}
+
+// PUA(218) = hair (7 strokes — 長 variant, long hair flowing down)
+glyphs[218] = () => {
+  const g = p()
+  hStroke(g, 250, 750, 650, 55)
+  vStroke(g, 300, 750, 300, 50)
+  hStroke(g, 300, 600, 650, 45)
+  hStroke(g, 300, 450, 650, 45)
+  hStroke(g, 300, 300, 650, 45)
+  leftFall(g, 350, 300, 200, 150, 50, 20)
+  rightFall(g, 450, 300, 650, 150, 50)
+  return g
+}
+
+// PUA(219) = owl (3 strokes — short ticks like ⺌ but lower)
+glyphs[219] = () => {
+  const g = p()
+  dStroke(g, 350, 650, 280, 450, 55)
+  dStroke(g, 500, 700, 500, 400, 55)
+  dStroke(g, 650, 650, 720, 450, 55)
+  return g
+}
+
+// PUA(220) = migrating ducks (9 strokes — 愛 top portion)
+glyphs[220] = () => {
+  const g = p()
+  leftFall(g, 450, 800, 200, 600, 50, 20)
+  hStroke(g, 300, 650, 700, 50)
+  hStroke(g, 250, 550, 750, 55)
+  vStroke(g, 500, 550, 350, 45)
+  dot(g, 350, 470, 40)
+  dot(g, 650, 470, 40)
+  leftFall(g, 500, 350, 300, 200, 50, 20)
+  rightFall(g, 500, 350, 700, 200, 50)
+  hStroke(g, 250, 200, 750, 50)
+  return g
+}
+
+// PUA(221) = mountain goat (6 strokes — 并 bottom like)
+glyphs[221] = () => {
+  const g = p()
+  dot(g, 350, 750, 55)
+  dot(g, 650, 750, 55)
+  hStroke(g, 200, 600, 800, 55)
+  vStroke(g, 350, 600, 200, 50)
+  vStroke(g, 650, 600, 200, 50)
+  hStroke(g, 200, 200, 800, 55)
+  return g
+}
+
+// PUA(222) = talking cricket (9 strokes — 禺 like)
+glyphs[222] = () => {
+  const g = p()
+  vStroke(g, 300, 800, 400, 50)
+  vStroke(g, 700, 800, 400, 50)
+  hStroke(g, 300, 800, 700, 50)
+  hStroke(g, 300, 600, 700, 45)
+  hStroke(g, 300, 400, 700, 50)
+  // Bottom legs
+  vStroke(g, 400, 400, 200, 45)
+  vStroke(g, 600, 400, 200, 45)
+  hStroke(g, 250, 200, 750, 55)
+  vStroke(g, 500, 600, 400, 40)
+  return g
+}
+
+// PUA(223) = condor (9 strokes — 蛍 top-like)
+glyphs[223] = () => {
+  const g = p()
+  hStroke(g, 200, 800, 800, 45)
+  vStroke(g, 350, 800, 600, 40)
+  vStroke(g, 650, 800, 600, 40)
+  hStroke(g, 200, 600, 800, 45)
+  vStroke(g, 300, 550, 350, 40)
+  vStroke(g, 700, 550, 350, 40)
+  hStroke(g, 300, 550, 700, 40)
+  hStroke(g, 300, 350, 700, 45)
+  hStroke(g, 200, 200, 800, 50)
+  return g
+}
+
+// PUA(224) = skunk (7 strokes — 务 like)
+glyphs[224] = () => {
+  const g = p()
+  leftFall(g, 500, 800, 250, 550, 55, 25)
+  hStroke(g, 350, 650, 700, 50)
+  dStroke(g, 550, 650, 700, 500, 50)
+  dot(g, 350, 500, 50)
+  leftFall(g, 500, 450, 250, 200, 55, 25)
+  rightFall(g, 500, 450, 750, 200, 55)
+  dot(g, 400, 350, 40)
+  return g
+}
+
+// PUA(226) = deer (7 strokes — 鹿 primitive form)
+glyphs[226] = () => {
+  const g = p()
+  hStroke(g, 200, 750, 700, 55)
+  vStroke(g, 200, 750, 200, 50)
+  // Inner grid
+  hStroke(g, 300, 600, 650, 45)
+  hStroke(g, 300, 450, 650, 45)
+  vStroke(g, 475, 600, 300, 40)
+  // Bottom curve
+  g.moveTo(500, 300); g.quadraticCurveTo(600, 250, 700, 200)
+  g.lineTo(680, 150); g.quadraticCurveTo(570, 200, 460, 270); g.close()
+  leftFall(g, 400, 450, 250, 200, 45, 18)
+  return g
+}
+
+// PUA(227) = gold calf (6 strokes — 关 like)
+glyphs[227] = () => {
+  const g = p()
+  dot(g, 350, 750, 55)
+  dot(g, 650, 750, 55)
+  hStroke(g, 200, 600, 800, 55)
+  leftFall(g, 500, 600, 200, 250, 60, 25)
+  rightFall(g, 500, 600, 800, 250, 60)
+  vStroke(g, 500, 600, 200, 50)
+  return g
+}
+
 // For brevity, define remaining PUA glyphs as simple placeholder rectangles
 // that will be refined in subsequent sessions. These are visually distinct
 // so they don't just show as empty boxes.
