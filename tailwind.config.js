@@ -41,7 +41,7 @@ export default {
       },
       fontFamily: {
         display: ['"Crimson Pro"', 'Georgia', 'serif'],
-        kanji:   ['"Zen Kaku Gothic New"', 'sans-serif'],
+        kanji:   ['"KanjiQuest Primitives"', '"Zen Kaku Gothic New"', 'sans-serif'],
         body:    ['"DM Sans"', 'sans-serif'],
         mono:    ['"IBM Plex Mono"', 'monospace'],
       },

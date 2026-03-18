@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap');
 
+/* KanjiQuest Primitives — custom PUA glyphs for Heisig primitives */
+@font-face {
+  font-family: 'KanjiQuest Primitives';
+  src: url('../assets/fonts/kanjiquest-primitives.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
