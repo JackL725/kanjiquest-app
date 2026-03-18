@@ -353,25 +353,187 @@ function UserStorySection({ cardId }) {
   )
 }
 
+// ─── CardBack dispatcher — picks layout based on deck type ───────────────
 function CardBack({ card, mode, deckId }) {
+  const isFoundation = deckId === 'primer' || deckId === 'radicals'
+  return isFoundation
+    ? <FoundationCardBack card={card} mode={mode} deckId={deckId} />
+    : <GameCardBack card={card} mode={mode} deckId={deckId} />
+}
+
+// ─── Foundation Card Back (primer + radicals) ────────────────────────────
+// Rich educational layout: big kanji, structured readings grid,
+// RTK stories with prominence, components, JLPT badge, context.
+function FoundationCardBack({ card, mode, deckId }) {
   const isMF = mode === 'kanji'
-  const isFoundationDeck = deckId === 'primer' || deckId === 'radicals'
+  const hasReadings = card.onyomi || card.kunyomi
+  const hasContext = card.context && card.context.trim()
+
+  return (
+    <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
+      {/* Ghost kanji watermark */}
+      <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
+
+      <div className="h-full overflow-y-auto p-5">
+
+        {/* ── 1. Kanji + Meaning header ── */}
+        {isMF ? (
+          <BSection label="Kanji">
+            <p className="font-kanji text-6xl text-parchment-100 leading-none mb-2">{card.kanji}</p>
+            {card.disambig && (
+              <span className="font-mono text-[9px] text-gold-400/70 tracking-[1.5px] uppercase border border-gold-400/20 rounded-full px-3 py-1 bg-gold-400/5 inline-block mb-2">{card.disambig}</span>
+            )}
+            <div className="flex items-center gap-2">
+              <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
+              <AudioButton text={card.kanji} reading={card.reading} />
+            </div>
+            <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
+          </BSection>
+        ) : (
+          <>
+            <BSection label="Meaning">
+              <p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p>
+            </BSection>
+            <BSection label="Reading">
+              <div className="flex items-center gap-2">
+                <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
+                <AudioButton text={card.kanji} reading={card.reading} />
+              </div>
+              <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
+            </BSection>
+          </>
+        )}
+
+        <Div />
+
+        {/* ── 2. Readings grid (On / Kun / Nanori) ── */}
+        {hasReadings && (
+          <>
+            <BSection label="Readings">
+              <div className="bg-ink-700/50 border border-gold-400/8 rounded-xl overflow-hidden">
+                {card.onyomi && (
+                  <div className="px-4 py-3 border-b border-gold-400/6">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[8px] text-gold-400/50 tracking-[2px] uppercase w-12 shrink-0">On</span>
+                      <p className="font-kanji text-[15px] text-parchment-200 leading-relaxed">{card.onyomi}</p>
+                    </div>
+                  </div>
+                )}
+                {card.kunyomi && (
+                  <div className={`px-4 py-3 ${card.nanori ? 'border-b border-gold-400/6' : ''}`}>
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[8px] text-gold-400/50 tracking-[2px] uppercase w-12 shrink-0">Kun</span>
+                      <p className="font-kanji text-[15px] text-parchment-200 leading-relaxed">{card.kunyomi}</p>
+                    </div>
+                  </div>
+                )}
+                {card.nanori && (
+                  <div className="px-4 py-3">
+                    <div className="flex items-start gap-3">
+                      <span className="font-mono text-[8px] text-parchment-500/40 tracking-[2px] uppercase w-12 shrink-0 mt-0.5">Name</span>
+                      <p className="font-kanji text-[13px] text-parchment-500/70 leading-relaxed">{card.nanori}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </BSection>
+            <Div />
+          </>
+        )}
+
+        {/* ── 3. RTK Mnemonic Stories ── */}
+        {card.rtk1 && (
+          <>
+            <BSection label="Mnemonic Stories">
+              <div className="space-y-2.5">
+                <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
+                  <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">1</span>
+                  <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.rtk1}</p>
+                </div>
+                {card.rtk2 && (
+                  <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
+                    <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">2</span>
+                    <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.rtk2}</p>
+                  </div>
+                )}
+              </div>
+            </BSection>
+          </>
+        )}
+
+        {/* ── 4. My Story ── */}
+        <UserStorySection cardId={card.id} />
+        <Div />
+
+        {/* ── 5. Components / Radicals ── */}
+        <BSection label="Components">
+          <div className="flex flex-wrap gap-1.5">
+            {card.parts.map(p => (
+              <span key={p} className="font-mono text-[11px] text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1">{p}</span>
+            ))}
+          </div>
+        </BSection>
+
+        {/* ── 6. Context example ── */}
+        {hasContext && (
+          <>
+            <Div />
+            <BSection label="Example">
+              <p className="font-kanji text-[15px] text-parchment-300 leading-relaxed">{card.context}</p>
+              {card.contextEn && <p className="font-mono text-[11px] text-parchment-500/60 mt-1.5 italic">{card.contextEn}</p>}
+            </BSection>
+          </>
+        )}
+
+        {/* ── 7. JLPT badge ── */}
+        {card.jlpt > 0 && (
+          <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
+            <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span>
+            <span className="font-mono text-[12px] tracking-widest font-medium px-3 py-1 rounded-md bg-gold-400/8 border border-gold-400/20 text-gold-400">N{card.jlpt}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─── Game / Manga Card Back ─────────────────────────────────────────────
+// Compact layout: meaning, reading, components, in-game context, frequency.
+// Used for P5R, Zelda, Chrono Trigger, Yotsuba, etc. — unchanged.
+function GameCardBack({ card, mode, deckId }) {
+  const isMF = mode === 'kanji'
 
   return (
     <div className="card-face card-face-back absolute inset-0 bg-ink-800 border border-gold-400/20 rounded-2xl cursor-pointer overflow-hidden">
       <span className="absolute top-3 right-4 font-kanji text-[80px] leading-none text-gold-400/60 select-none pointer-events-none">{card.kanji}</span>
       <div className="h-full overflow-y-auto p-5">
         {/* 1. Meaning + Reading */}
-        {isMF ? (<BSection label="Kanji"><p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p><div className="flex items-center gap-2"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><AudioButton text={card.kanji} reading={card.reading} /></div><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection>
-        ) : (<><BSection label="Meaning"><p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p></BSection><BSection label="Reading"><div className="flex items-center gap-2"><p className="font-display italic text-xl text-parchment-200">{card.reading}</p><AudioButton text={card.kanji} reading={card.reading} /></div><p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p></BSection></>)}
+        {isMF ? (
+          <BSection label="Kanji">
+            <p className="font-kanji text-6xl text-parchment-100 leading-none mb-1">{card.kanji}</p>
+            <div className="flex items-center gap-2">
+              <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
+              <AudioButton text={card.kanji} reading={card.reading} />
+            </div>
+            <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
+          </BSection>
+        ) : (
+          <>
+            <BSection label="Meaning">
+              <p className="font-display italic text-2xl text-parchment-100 leading-tight">{card.meaning}</p>
+            </BSection>
+            <BSection label="Reading">
+              <div className="flex items-center gap-2">
+                <p className="font-display italic text-xl text-parchment-200">{card.reading}</p>
+                <AudioButton text={card.kanji} reading={card.reading} />
+              </div>
+              <p className="font-mono text-[12px] text-parchment-500 mt-0.5">{card.romaji}</p>
+            </BSection>
+          </>
+        )}
         <Div />
 
-        {/* RTK stories — foundation decks only */}
-        {isFoundationDeck && card.rtk1 && (
-          <><BSection label="RTK stories"><div className="space-y-2"><Story n={1}>{card.rtk1}</Story><Story n={2}>{card.rtk2}</Story></div></BSection></>
-        )}
-
-        {/* 2. My Story — always shown */}
+        {/* 2. My Story */}
         <UserStorySection cardId={card.id} />
         <Div />
 
@@ -380,25 +542,22 @@ function CardBack({ card, mode, deckId }) {
           <div className="flex flex-wrap gap-1.5">{card.parts.map(p => <span key={p} className="font-mono text-[10px] text-parchment-500 border border-gold-400/15 rounded px-2 py-0.5">{p}</span>)}</div>
         </BSection>
 
-        {/* Foundation deck extras: onyomi/kunyomi */}
-        {isFoundationDeck && (card.onyomi || card.kunyomi) && (<><Div />{card.onyomi && <BSection label="On'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.onyomi}</p></BSection>}{card.kunyomi && <BSection label="Kun'yomi"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.kunyomi}</p></BSection>}{card.nanori && <BSection label="Nanori"><p className="font-kanji text-[12px] text-parchment-500 leading-relaxed">{card.nanori}</p></BSection>}</>)}
-
         {/* 4. In-game context */}
-        {card.context && (<><Div /><BSection label="In-game context"><p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p><p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p></BSection></>)}
+        {card.context && (
+          <>
+            <Div />
+            <BSection label="In-game context">
+              <p className="font-kanji text-sm text-parchment-300 leading-relaxed">{card.context}</p>
+              <p className="font-mono text-[10px] text-parchment-500/70 mt-1.5 italic">{card.contextEn}</p>
+            </BSection>
+          </>
+        )}
 
-        {/* 5. Frequency rank (game decks) */}
+        {/* 5. Frequency rank */}
         {card.frequency > 0 && (
           <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
             <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">Game frequency</span>
             <span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">#{card.frequency} / 500</span>
-          </div>
-        )}
-
-        {/* JLPT (foundation decks) */}
-        {isFoundationDeck && card.jlpt > 0 && (
-          <div className="mt-4 pt-3 border-t border-gold-400/8 flex items-center justify-between">
-            <span className="font-mono text-[9px] text-parchment-500/40 tracking-[2px] uppercase">JLPT Level</span>
-            <span className="font-mono text-[11px] text-gold-400/70 tracking-widest font-medium">N{card.jlpt}</span>
           </div>
         )}
       </div>
@@ -938,4 +1097,3 @@ export function ComponentLibrary({ deckId, onClose }) {
 // ─── Sub-components ───────────────────────────────────────────────────────
 function BSection({ label, children }) { return <div className="mb-4"><p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">{label}</p>{children}</div> }
 function Div() { return <div className="h-px bg-gold-400/10 my-4" /> }
-function Story({ n, children }) { return <div className="relative pl-6 bg-ink-700/70 rounded-lg p-3"><span className="absolute left-2.5 top-3 font-mono text-[9px] text-gold-400/40">{n}</span><p className="font-mono text-[11px] text-parchment-500 leading-relaxed">{children}</p></div> }
