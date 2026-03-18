@@ -1,8 +1,9 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getOwnedDecks } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { readProfile } from '@/hooks/useOnboarding'
+import { readActiveDecks, toggleDeckActive, filterActiveDecks } from '@/hooks/useActiveDecks'
 import ReviewForecast from '@/components/ui/ReviewForecast'
 import DailyQuestBoard from '@/components/ui/DailyQuestBoard'
 
@@ -115,7 +116,7 @@ function readStreakData() {
 }
 
 // ─── DeckCard ─────────────────────────────────────────────────────────────
-function DeckCard({ deck, delay = 0 }) {
+function DeckCard({ deck, delay = 0, active = true, onToggle }) {
   const navigate = useNavigate()
   const { getLearnedCount, getDueCount } = useSRS(deck.id)
 
@@ -124,12 +125,19 @@ function DeckCard({ deck, delay = 0 }) {
   const total   = deck.cards.length
   const pct     = total > 0 ? Math.round((learned / total) * 100) : 0
 
+  function handleToggle(e) {
+    e.stopPropagation()
+    onToggle?.(deck.id)
+  }
+
   return (
     <div
       onClick={() => navigate(`/deck/${deck.id}`)}
-      className="relative bg-ink-800 border border-gold-400/10 rounded-xl p-5 cursor-pointer
-                 hover:border-gold-400/30 hover:bg-ink-700/40
-                 transition-all duration-200 animate-fade-up overflow-hidden group"
+      className={`relative bg-ink-800 border rounded-xl p-5 cursor-pointer
+                 transition-all duration-200 animate-fade-up overflow-hidden group
+                 ${active
+                   ? 'border-gold-400/10 hover:border-gold-400/30 hover:bg-ink-700/40'
+                   : 'border-gold-400/5 opacity-50 hover:opacity-70'}`}
       style={{ animationDelay: `${delay}s` }}
     >
       {/* Ghost kanji watermark */}
@@ -140,8 +148,8 @@ function DeckCard({ deck, delay = 0 }) {
       </span>
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-4">
-        <div className="min-w-0">
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="min-w-0 flex-1">
           <p className="font-display italic text-parchment-100 text-lg leading-tight truncate">
             {deck.title}
           </p>
@@ -150,19 +158,38 @@ function DeckCard({ deck, delay = 0 }) {
           </p>
         </div>
 
-        {due > 0 ? (
-          <span className="shrink-0 font-mono text-[9px] tracking-widest uppercase
-                           bg-gold-400/10 text-gold-400 border border-gold-400/25
-                           rounded-md px-2 py-1 leading-none mt-0.5">
-            {due} due
-          </span>
-        ) : learned > 0 ? (
-          <span className="shrink-0 font-mono text-[9px] tracking-widest uppercase
-                           text-parchment-500/40 border border-parchment-500/10
-                           rounded-md px-2 py-1 leading-none mt-0.5">
-            ✓ current
-          </span>
-        ) : null}
+        <div className="flex items-center gap-2 shrink-0 mt-0.5">
+          {active && due > 0 ? (
+            <span className="font-mono text-[9px] tracking-widest uppercase
+                             bg-gold-400/10 text-gold-400 border border-gold-400/25
+                             rounded-md px-2 py-1 leading-none">
+              {due} due
+            </span>
+          ) : active && learned > 0 ? (
+            <span className="font-mono text-[9px] tracking-widest uppercase
+                             text-parchment-500/40 border border-parchment-500/10
+                             rounded-md px-2 py-1 leading-none">
+              ✓ current
+            </span>
+          ) : !active ? (
+            <span className="font-mono text-[9px] tracking-widest uppercase
+                             text-parchment-500/30 border border-parchment-500/8
+                             rounded-md px-2 py-1 leading-none">
+              paused
+            </span>
+          ) : null}
+
+          {/* Active toggle */}
+          <button
+            onClick={handleToggle}
+            className={`w-9 h-5 rounded-full border transition-colors duration-200 relative shrink-0
+              ${active ? 'bg-gold-400/20 border-gold-400/40' : 'bg-ink-700 border-ink-500'}`}
+            title={active ? 'Pause this deck from daily reviews' : 'Include in daily reviews'}
+          >
+            <div className={`absolute top-[2px] w-[14px] h-[14px] rounded-full transition-all duration-200
+              ${active ? 'left-[17px] bg-gold-400' : 'left-[2px] bg-parchment-500/40'}`} />
+          </button>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -368,13 +395,44 @@ export default function LibraryScreen() {
   const navigate           = useNavigate()
   const decks              = getOwnedDecks()
   const hasDecks           = decks.length > 0
-  const totalDue           = useMemo(() => readTotalDue(decks), [])
   const { streak, last7 }  = useMemo(() => readStreakData(), [])
   const profile            = useMemo(() => readProfile(), [])
+
+  // Active deck toggles — re-render when toggled
+  const [activeMap, setActiveMap] = useState(() => readActiveDecks())
+
+  const handleToggle = useCallback((deckId) => {
+    const newState = toggleDeckActive(deckId)
+    setActiveMap(readActiveDecks())
+  }, [])
+
+  // Only count due for active decks
+  const activeDecks = useMemo(
+    () => decks.filter(d => activeMap[d.id] !== false),
+    [decks, activeMap]
+  )
+  const totalDue = useMemo(() => readTotalDue(activeDecks), [activeDecks])
+
+  // Find first active deck with due cards for the "Begin study" button
+  const firstDueDeck = useMemo(() => {
+    return activeDecks.find(d => {
+      try {
+        const prog = JSON.parse(localStorage.getItem('kq-srs-progress') || '{}')
+        const dp = prog[d.id] || {}
+        return d.cards.some(c => {
+          const p = dp[c.id]
+          if (!p) return true  // new card
+          return new Date(p.due) <= new Date()
+        })
+      } catch { return false }
+    })
+  }, [activeDecks])
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric',
   })
+
+  const pausedCount = decks.length - activeDecks.length
 
   return (
     <div className="px-5 py-6 space-y-5 pb-10">
@@ -392,7 +450,7 @@ export default function LibraryScreen() {
 
       {/* ── Status Banner ───────────────────────────────── */}
       {hasDecks && totalDue > 0 && (
-        <DueBanner totalDue={totalDue} deckId={decks[0]?.id} />
+        <DueBanner totalDue={totalDue} deckId={firstDueDeck?.id || decks[0]?.id} />
       )}
       {hasDecks && totalDue === 0 && <CaughtUpBanner />}
 
@@ -402,10 +460,19 @@ export default function LibraryScreen() {
       {/* ── Library ─────────────────────────────────────── */}
       {hasDecks ? (
         <>
-          <div className="gold-divider animate-fade-up delay-200">
-            <span className="font-mono text-[9px] tracking-widest uppercase text-parchment-500">
-              My library
-            </span>
+          <div className="animate-fade-up delay-200">
+            <div className="flex items-center justify-between">
+              <div className="gold-divider flex-1">
+                <span className="font-mono text-[9px] tracking-widest uppercase text-parchment-500">
+                  My library
+                </span>
+              </div>
+              {pausedCount > 0 && (
+                <span className="font-mono text-[9px] text-parchment-500/30 tracking-wide ml-3">
+                  {pausedCount} paused
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -414,6 +481,8 @@ export default function LibraryScreen() {
                 key={deck.id}
                 deck={deck}
                 delay={(i + 3) * 0.08}
+                active={activeMap[deck.id] !== false}
+                onToggle={handleToggle}
               />
             ))}
             <button

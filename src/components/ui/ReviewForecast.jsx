@@ -1,16 +1,17 @@
 import { useMemo } from 'react'
 import { getOwnedDecks } from '@/data/decks'
+import { filterActiveDecks } from '@/hooks/useActiveDecks'
 
 // ─── ReviewForecast ─────────────────────────────────────────────────────
 // Shows how many reviews are coming over the next 7 days.
-// Reads FSRS due dates from localStorage progress data.
+// Only counts decks that are active (not paused).
 
 const SRS_KEY = 'kq-srs-progress'
 
 function readForecast() {
   try {
     const prog  = JSON.parse(localStorage.getItem(SRS_KEY) || '{}')
-    const decks = getOwnedDecks()
+    const decks = filterActiveDecks(getOwnedDecks())
 
     const today = new Date()
     today.setHours(0, 0, 0, 0)
