@@ -441,21 +441,12 @@ function FoundationCardBack({ card, mode, deckId }) {
           </>
         )}
 
-        {/* ── 3. Mnemonic Stories ── */}
+        {/* ── 3. Mnemonic Story ── */}
         {card.story1 && (
           <>
-            <BSection label="Mnemonic Stories">
-              <div className="space-y-2.5">
-                <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
-                  <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">1</span>
-                  <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story1}</p>
-                </div>
-                {card.story2 && (
-                  <div className="relative pl-7 bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
-                    <span className="absolute left-3 top-4 font-mono text-[10px] text-gold-400/50 font-medium">2</span>
-                    <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story2}</p>
-                  </div>
-                )}
+            <BSection label="Mnemonic">
+              <div className="bg-ink-700/70 border border-gold-400/8 rounded-xl p-4">
+                <p className="font-body text-[13px] text-parchment-400 leading-relaxed">{card.story1}</p>
               </div>
             </BSection>
           </>

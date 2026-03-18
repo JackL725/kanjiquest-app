@@ -18,21 +18,18 @@ const TUTORIAL_CARDS = [
     kanji: '日', reading: 'ニチ', romaji: 'nichi', meaning: 'day / sun',
     parts: ['日: sun, day, sun radical (no. 72)'],
     story1: 'A window with the curtains open — sunlight streams in, marking the start of a new day.',
-    story2: 'The ancient pictograph was a circle with a dot inside — a picture of the sun itself.',
     context: '日本（にほん）', contextEn: 'Japan (lit. "origin of the sun")',
   },
   {
     kanji: '月', reading: 'ゲツ', romaji: 'getsu', meaning: 'month / moon',
     parts: ['月: moon, month, moon radical (no. 74)'],
     story1: 'A crescent moon with two horizontal lines — like the moon\'s surface marked by craters.',
-    story2: 'The moon goes through its cycle once a month — that\'s why this kanji means both "moon" and "month."',
     context: '月曜日（げつようび）', contextEn: 'Monday (lit. "moon day")',
   },
   {
     kanji: '明', reading: 'メイ', romaji: 'mei', meaning: 'bright',
     parts: ['日: day; sun', '月: month; moon'],
-    story1: 'The sun and the moon together — the two brightest things in the sky. Together they make "bright."',
-    story2: 'At dawn, the sun is rising on one side while the moon is still visible on the other — the sky is at its most brilliant.',
+    story1: 'The sun and the moon shine together in the sky — the two brightest things you can see. Together they make "bright."',
     context: '明日（あした）', contextEn: 'tomorrow (lit. "bright day")',
   },
 ]
@@ -418,13 +415,13 @@ function CardTutorialStep({ onNext }) {
                 {/* Stories */}
                 <div className="mb-3">
                   <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">
-                    Mnemonic stories
+                    Mnemonic
                   </p>
                   <div className="space-y-2">
-                    {[card.story1, card.story2].map((s, i) => (
+                    {[card.story1].filter(Boolean).map((s, i) => (
                       <div key={i} className="relative pl-5 bg-ink-700/70 rounded-lg p-3">
                         <span className="absolute left-2.5 top-3 font-mono text-[9px] text-gold-400/40">
-                          {i + 1}
+                          
                         </span>
                         <p className="font-mono text-[11px] text-parchment-400 leading-relaxed">{s}</p>
                       </div>
@@ -714,13 +711,13 @@ function PracticeStep({ onNext }) {
                 <div className="h-px bg-gold-400/10 my-3" />
                 <div className="mb-3">
                   <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">
-                    Mnemonic stories
+                    Mnemonic
                   </p>
                   <div className="space-y-2">
-                    {[card.story1, card.story2].map((s, i) => (
+                    {[card.story1].filter(Boolean).map((s, i) => (
                       <div key={i} className="relative pl-5 bg-ink-700/70 rounded-lg p-3">
                         <span className="absolute left-2.5 top-3 font-mono text-[9px] text-gold-400/40">
-                          {i + 1}
+                          
                         </span>
                         <p className="font-mono text-[11px] text-parchment-400 leading-relaxed">{s}</p>
                       </div>
