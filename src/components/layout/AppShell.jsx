@@ -26,7 +26,7 @@ const NAV = [
   },
   {
     to: '/radicals',
-    label: 'Radicals',
+    label: 'Primitives',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M10 2v16M2 10h16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
