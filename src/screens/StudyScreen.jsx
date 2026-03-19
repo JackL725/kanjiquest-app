@@ -9,7 +9,7 @@ import { useAudio } from '@/hooks/useAudio'
 // ─── Part format helpers ──────────────────────────────────────────────────
 // Primer parts are objects: { c: '日', n: 'sun, day', p: 0 }
 // Game deck parts are strings: '日: day; sun; Japan'
-function isObjectPart(p) { return p && typeof p === 'object' && 'n' in p }
+export function isObjectPart(p) { return p && typeof p === 'object' && 'n' in p }
 function partLabel(p) {
   if (isObjectPart(p)) return p.c ? `${p.c} ${p.n}` : p.n
   return String(p)
@@ -31,7 +31,7 @@ function PartInline({ part }) {
 }
 
 // Render a part badge (card back / component section)
-function PartBadge({ part, size = 'md' }) {
+export function PartBadge({ part, size = 'md' }) {
   if (!isObjectPart(part)) {
     return <span className={`font-mono ${size === 'sm' ? 'text-[10px]' : 'text-[11px]'} text-parchment-400 bg-ink-700/60 border border-gold-400/10 rounded-lg px-2.5 py-1`}>{String(part)}</span>
   }

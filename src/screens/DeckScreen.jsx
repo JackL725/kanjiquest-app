@@ -4,7 +4,7 @@ import { getDeckById } from '@/data/decks'
 import { useSRS } from '@/hooks/useSRS'
 import { isPrimerGuideComplete } from '@/screens/PrimerGuideScreen'
 import { STAGES, getMasteryStage } from '@/hooks/useMastery'
-import { ComponentLibrary } from '@/screens/StudyScreen'
+import { ComponentLibrary, isObjectPart, PartBadge } from '@/screens/StudyScreen'
 import { readHighScore as readVoiceHS } from '@/screens/ComboBlitzScreen'
 import { readMemTestHighScore as readDragHS } from '@/screens/MemoryTestScreen'
 import GameReadiness from '@/components/ui/GameReadiness'
@@ -29,6 +29,7 @@ export default function DeckScreen() {
   const [search, setSearch]         = useState('')
   const [filter, setFilter]         = useState('all')
   const [showComponentLib, setShowComponentLib] = useState(false)
+  const [selectedCard, setSelectedCard] = useState(null)
 
   const isFoundation = id === 'primer' || id === 'radicals' || id === 'primitives'
   const needsGuide = isFoundation && !isPrimerGuideComplete()
@@ -379,8 +380,10 @@ export default function DeckScreen() {
                     isFirst={i === 0} />
                 )}
                 <div
+                  onClick={() => setSelectedCard(card)}
                   className="flex items-center justify-between bg-ink-800 rounded-lg px-4 py-3
-                             border border-gold-400/8 animate-fade-up"
+                             border border-gold-400/8 animate-fade-up cursor-pointer
+                             hover:border-gold-400/20 hover:bg-ink-700/50 transition-colors"
                   style={i < 20 ? { animationDelay: `${i * 0.03}s`, opacity: 0 } : undefined}>
               <div className="flex items-center gap-3">
                 <span className="font-kanji text-xl text-parchment-200">{card.kanji}</span>
@@ -420,6 +423,11 @@ export default function DeckScreen() {
         <div className="fixed inset-0 z-50">
           <ComponentLibrary deckId={id} onClose={() => setShowComponentLib(false)} />
         </div>
+      )}
+
+      {/* Card Detail modal */}
+      {selectedCard && (
+        <CardDetail card={selectedCard} onClose={() => setSelectedCard(null)} />
       )}
     </div>
   )
@@ -635,6 +643,112 @@ function StageGroupHeader({ stage, stageIndex, count, isFirst }) {
       <span className="font-mono text-[9px] text-parchment-500/20 tabular-nums">
         {count}
       </span>
+    </div>
+  )
+}
+// ─── Card Detail Modal ───────────────────────────────────────────────────
+function CardDetail({ card, onClose }) {
+  const hasParts = card.parts && card.parts.length > 0
+  const hasReadings = card.onyomi || card.kunyomi
+  const primNote = card.primNote
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-ink-950/80 backdrop-blur-sm" />
+      <div
+        className="relative bg-ink-800 border border-gold-400/25 rounded-2xl w-full max-w-[360px]
+                   max-h-[85vh] overflow-y-auto animate-fade-up shadow-xl shadow-black/40"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button onClick={onClose}
+          className="absolute top-3 right-3 z-10 font-mono text-[10px] text-parchment-500/40
+                     hover:text-parchment-300 transition-colors touch-manipulation">
+          ✕
+        </button>
+
+        {/* Ghost kanji watermark */}
+        <span className="absolute top-2 right-8 font-kanji text-[72px] leading-none
+                         text-parchment-100/[0.03] select-none pointer-events-none">
+          {card.kanji}
+        </span>
+
+        <div className="p-5">
+          {/* Kanji + meaning */}
+          <div className="text-center mb-5">
+            <p className="font-kanji text-[72px] text-parchment-100 leading-none mb-2">{card.kanji}</p>
+            <p className="font-display italic text-xl text-parchment-200">{card.meaning}</p>
+            {card.jlpt > 0 && (
+              <span className="inline-block font-mono text-[8px] text-parchment-500/40 tracking-widest mt-1.5">
+                JLPT N{card.jlpt}
+              </span>
+            )}
+          </div>
+
+          <div className="h-px bg-gold-400/10 mb-4" />
+
+          {/* Components */}
+          {hasParts && (
+            <div className="mb-4">
+              <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">Components</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {card.parts.map((p, i) => (
+                  <PartBadge key={isObjectPart(p) ? (p.c ?? p.n) + i : String(p) + i} part={p} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ★ As a Primitive */}
+          {primNote && Array.isArray(primNote) && primNote.length > 0 && (
+            <div className="mb-4">
+              <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">★ As a Primitive</p>
+              <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-3">
+                <p className="font-mono text-[10px] text-parchment-300 leading-relaxed">
+                  Can be remembered as {primNote.map((n, i) => (
+                    <span key={n}>{i > 0 && (i === primNote.length - 1 ? ', or ' : ', ')}<span className="text-gold-400 font-medium">{n}</span></span>
+                  ))} — use whichever fits your story best.
+                </p>
+              </div>
+            </div>
+          )}
+          {primNote === true && (
+            <div className="mb-4">
+              <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">★ As a Primitive</p>
+              <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-3">
+                <p className="font-mono text-[10px] text-parchment-300 leading-relaxed">
+                  This kanji is also used as a building block in other kanji.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Readings */}
+          {hasReadings && (
+            <div className="mb-2">
+              <p className="font-mono text-[9px] text-gold-400/60 tracking-[2px] uppercase mb-2">Readings</p>
+              <div className="bg-ink-700/50 border border-gold-400/8 rounded-xl overflow-hidden">
+                {card.onyomi && (
+                  <div className="px-4 py-2.5 border-b border-gold-400/6">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[8px] text-gold-400/50 tracking-[2px] uppercase w-10 shrink-0">On</span>
+                      <p className="font-kanji text-[13px] text-parchment-200 leading-relaxed">{card.onyomi}</p>
+                    </div>
+                  </div>
+                )}
+                {card.kunyomi && (
+                  <div className="px-4 py-2.5">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[8px] text-gold-400/50 tracking-[2px] uppercase w-10 shrink-0">Kun</span>
+                      <p className="font-kanji text-[13px] text-parchment-200 leading-relaxed">{card.kunyomi}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
