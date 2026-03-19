@@ -521,10 +521,12 @@ function FoundationCardBack({ card, mode, deckId }) {
         )}
 
         {/* ── ★ Primitive Alias Note ── */}
-        {card.primitiveNote && (
+        {card.primNote && (
           <BSection label="★ As a Primitive">
             <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-4">
-              <p className="font-mono text-[11px] text-parchment-300 leading-relaxed italic">{card.primitiveNote}</p>
+              <p className="font-mono text-[11px] text-parchment-300 leading-relaxed">
+                This kanji also appears as a building block in other kanji. When you see it as a component, remember it as <span className="text-gold-400 font-medium">"{card.primNote}"</span>.
+              </p>
             </div>
           </BSection>
         )}
