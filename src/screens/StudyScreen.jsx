@@ -520,6 +520,15 @@ function FoundationCardBack({ card, mode, deckId }) {
           </BSection>
         )}
 
+        {/* ── ★ Primitive Alias Note ── */}
+        {card.primitiveNote && (
+          <BSection label="★ As a Primitive">
+            <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-4">
+              <p className="font-mono text-[11px] text-parchment-300 leading-relaxed italic">{card.primitiveNote}</p>
+            </div>
+          </BSection>
+        )}
+
         {/* ── 3. Mnemonic Story ── */}
         {card.story1 && (
           <BSection label="Mnemonic">
