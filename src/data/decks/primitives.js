@@ -3,13 +3,13 @@ import PRIMITIVES from '@/data/primitives/registry'
 const primitivesDeck = {
   id: 'primitives',
   title: 'Kanji Primitives',
-  subtitle: 'Heisig Building Blocks',
+  subtitle: '696 Building Blocks',
   game: null,
   platforms: [],
   genre: 'Foundation',
   developer: 'KanjiQuest',
   difficulty: 'beginner',
-  cardCount: 227,
+  cardCount: 696,
   price: null,
   free: true,
   description:
