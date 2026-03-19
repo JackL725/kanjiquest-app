@@ -521,13 +521,22 @@ function FoundationCardBack({ card, mode, deckId }) {
         )}
 
         {/* ── ★ Primitive Alias Note ── */}
-        {card.primNote && card.primNote.length > 0 && (
+        {card.primNote && Array.isArray(card.primNote) && card.primNote.length > 0 && (
           <BSection label="★ As a Primitive">
             <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-4">
               <p className="font-mono text-[11px] text-parchment-300 leading-relaxed">
                 When this kanji appears as a building block in other kanji, it can be remembered as {card.primNote.map((n, i) => (
                   <span key={n}>{i > 0 && (i === card.primNote.length - 1 ? ', or ' : ', ')}<span className="text-gold-400 font-medium">{n}</span></span>
                 ))} — use whichever fits your story best.
+              </p>
+            </div>
+          </BSection>
+        )}
+        {card.primNote === true && (
+          <BSection label="★ As a Primitive">
+            <div className="bg-gold-400/5 border border-gold-400/15 rounded-xl p-4">
+              <p className="font-mono text-[11px] text-parchment-300 leading-relaxed">
+                This kanji is also used as a building block in other kanji.
               </p>
             </div>
           </BSection>

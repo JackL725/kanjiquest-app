@@ -40,7 +40,7 @@ const primerDeck = {
       onyomi:    'ニ、ジ',
       kunyomi:   'ふた、ふた.つ、ふたた.び',
       jlpt:      5,
-      primNote:  ['two'],
+      primNote:  true,
     },
     {
       id:        'k101-0003-three',
@@ -50,7 +50,7 @@ const primerDeck = {
       onyomi:    'サン、ゾウ',
       kunyomi:   'み、み.つ、みっ.つ',
       jlpt:      5,
-      primNote:  ['three'],
+      primNote:  true,
     },
     {
       id:        'k101-0004-four',
@@ -60,7 +60,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'よ、よ.つ、よっ.つ、よん',
       jlpt:      5,
-      primNote:  ['four'],
+      primNote:  true,
     },
     {
       id:        'k101-0005-five',
@@ -70,7 +70,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'いつ、いつ.つ',
       jlpt:      5,
-      primNote:  ['five'],
+      primNote:  true,
     },
     {
       id:        'k101-0007-seven',
@@ -90,7 +90,7 @@ const primerDeck = {
       onyomi:    'ハチ',
       kunyomi:   'や、や.つ、やっ.つ、よう',
       jlpt:      5,
-      primNote:  ['eight', 'animal legs'],
+      primNote:  true,
     },
     {
       id:        'k101-0006-six',
@@ -100,7 +100,7 @@ const primerDeck = {
       onyomi:    'ロク、リク',
       kunyomi:   'む、む.つ、むっ.つ、むい',
       jlpt:      5,
-      primNote:  ['six'],
+      primNote:  true,
     },
     {
       id:        'k101-0009-nine',
@@ -130,7 +130,7 @@ const primerDeck = {
       onyomi:    'コウ、ク',
       kunyomi:   'くち',
       jlpt:      4,
-      primNote:  ['mouth'],
+      primNote:  true,
     },
     {
       id:        'k101-0012-day',
@@ -179,7 +179,7 @@ const primerDeck = {
       parts:     [{ c: '五', n: 'five', p: 0 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'ゴ',
       kunyomi:   'われ、わが-、あ-',
-      primNote:  ['I'],
+      primNote:  true,
     },
     {
       id:        'k101-0018-risk',
@@ -189,7 +189,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'おか.す',
       jlpt:      1,
-      primNote:  ['risk'],
+      primNote:  true,
     },
     {
       id:        'k101-0019-companion',
@@ -199,7 +199,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'とも',
       jlpt:      1,
-      primNote:  ['companion'],
+      primNote:  true,
     },
     {
       id:        'k101-0020-bright',
@@ -209,7 +209,7 @@ const primerDeck = {
       onyomi:    'メイ、ミョウ、ミン',
       kunyomi:   'あ.かり、あか.るい、あか.るむ、あか.らむ、あき.らか、あ.ける、-あ.け、あ.く、あ.くる、あ.かす',
       jlpt:      4,
-      primNote:  ['bright'],
+      primNote:  true,
     },
     {
       id:        'k101-0022-sparkle',
@@ -227,7 +227,7 @@ const primerDeck = {
       onyomi:    'ヒン、ホン',
       kunyomi:   'しな',
       jlpt:      4,
-      primNote:  ['goods'],
+      primNote:  true,
     },
     {
       id:        'k101-0024-spine',
@@ -237,7 +237,7 @@ const primerDeck = {
       onyomi:    'ロ、リョ',
       kunyomi:   'せぼね',
       jlpt:      1,
-      primNote:  ['spine'],
+      primNote:  true,
     },
     {
       id:        'k101-0025-prosperous',
@@ -247,7 +247,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'さかん',
       jlpt:      1,
-      primNote:  ['prosperous'],
+      primNote:  true,
     },
     {
       id:        'k101-0021-chant',
@@ -275,7 +275,7 @@ const primerDeck = {
       parts:     [{ c: '田', n: 'rice field, brains', p: 0 }, { c: '月', n: 'moon, month, flesh, part of the body', p: 0 }],
       onyomi:    'イ',
       jlpt:      2,
-      primNote:  ['stomach'],
+      primNote:  true,
     },
     {
       id:        'k101-0030-nightbreak',
@@ -285,7 +285,7 @@ const primerDeck = {
       onyomi:    'タン、ダン',
       kunyomi:   'あき.らか、あきら、ただし、あさ、あした',
       jlpt:      1,
-      primNote:  ['nightbreak'],
+      primNote:  true,
     },
     {
       id:        'k101-0031-gall-bladder',
@@ -304,7 +304,7 @@ const primerDeck = {
       onyomi:    'コウ、カン',
       kunyomi:   'わた.る、もと.める',
       jlpt:      1,
-      primNote:  ['span'],
+      primNote:  true,
     },
     {
       id:        'k101-0033-concave',
@@ -332,7 +332,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'ふる.い、もと',
       jlpt:      2,
-      primNote:  ['olden times'],
+      primNote:  true,
     },
     {
       id:        'k101-0036-oneself',
@@ -362,7 +362,7 @@ const primerDeck = {
       onyomi:    'ヒャク、ビャク',
       kunyomi:   'もも',
       jlpt:      5,
-      primNote:  ['hundred'],
+      primNote:  true,
     },
     {
       id:        'k101-0039-in',
@@ -372,7 +372,7 @@ const primerDeck = {
       onyomi:    'チュウ',
       kunyomi:   'なか、うち、あた.る',
       jlpt:      5,
-      primNote:  ['in'],
+      primNote:  true,
     },
     {
       id:        'k101-0040-thousand',
@@ -382,7 +382,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'ち',
       jlpt:      5,
-      primNote:  ['thousand'],
+      primNote:  true,
     },
     {
       id:        'k101-0041-tongue',
@@ -392,7 +392,7 @@ const primerDeck = {
       onyomi:    'ゼツ',
       kunyomi:   'した',
       jlpt:      1,
-      primNote:  ['tongue'],
+      primNote:  true,
     },
     {
       id:        'k101-0042-measuring-box',
@@ -402,7 +402,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ます',
       jlpt:      1,
-      primNote:  ['measuring box'],
+      primNote:  true,
     },
     {
       id:        'k101-0043-rise-up',
@@ -438,7 +438,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'もっぱ.ら',
       jlpt:      2,
-      primNote:  ['specialty', 'acupuncturist'],
+      primNote:  true,
     },
     {
       id:        'k101-0048-dr.',
@@ -447,6 +447,7 @@ const primerDeck = {
       parts:     [{ c: '十', n: 'ten', p: 0 }, { c: '専', n: 'specialty', p: 0 }, { c: '丶', n: 'drop', p: 0 }, { c: '十', n: 'ten', p: 0 }, { c: '田', n: 'rice field, brains', p: 0 }, { c: '寸', n: 'glue', p: 0 }],
       onyomi:    'ハク、バク',
       jlpt:      1,
+      primNote:  ['Dr.', 'needle', 'acupuncturist'],
     },
     {
       id:        'k101-0049-fortune-telling',
@@ -456,7 +457,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'し.める、うらな.う',
       jlpt:      2,
-      primNote:  ['fortune-telling'],
+      primNote:  true,
     },
     {
       id:        'k101-0050-above',
@@ -466,7 +467,7 @@ const primerDeck = {
       onyomi:    'ジョウ、ショウ、シャン',
       kunyomi:   'うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、よ.す',
       jlpt:      5,
-      primNote:  ['above'],
+      primNote:  true,
     },
     {
       id:        'k101-0051-below',
@@ -476,7 +477,7 @@ const primerDeck = {
       onyomi:    'カ、ゲ',
       kunyomi:   'した、しも、もと、さ.げる、さ.がる、くだ.る、くだ.り、くだ.す、-くだ.す、くだ.さる、お.ろす、お.りる',
       jlpt:      5,
-      primNote:  ['below'],
+      primNote:  true,
     },
     {
       id:        'k101-0052-eminent',
@@ -485,7 +486,7 @@ const primerDeck = {
       parts:     [{ c: '尹', n: 'magic wand', p: 0 }, { c: '卜', n: 'augury', p: 0 }, { c: null, n: 'divinging rod', p: 0 }, { c: '早', n: 'sunflower', p: 0 }],
       onyomi:    'タク',
       jlpt:      1,
-      primNote:  ['eminent', 'mist'],
+      primNote:  true,
     },
     {
       id:        'k101-0053-morning',
@@ -495,7 +496,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'あさ',
       jlpt:      4,
-      primNote:  ['morning'],
+      primNote:  true,
     },
     {
       id:        'k101-0054-derision',
@@ -513,7 +514,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'み.る、み.える、み.せる',
       jlpt:      5,
-      primNote:  ['see'],
+      primNote:  true,
     },
     {
       id:        'k101-0062-newborn-babe',
@@ -532,7 +533,7 @@ const primerDeck = {
       onyomi:    'ゲン、ガン',
       kunyomi:   'もと',
       jlpt:      4,
-      primNote:  ['beginning'],
+      primNote:  true,
     },
     {
       id:        'k101-0068-ten-thousand',
@@ -542,7 +543,7 @@ const primerDeck = {
       onyomi:    'マン、バン',
       kunyomi:   'よろず',
       jlpt:      5,
-      primNote:  ['ten thousand'],
+      primNote:  true,
     },
     {
       id:        'k101-0069-phrase',
@@ -551,7 +552,7 @@ const primerDeck = {
       parts:     [{ c: '勹', n: 'bound up', p: 0 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'ク',
       jlpt:      1,
-      primNote:  ['phrase'],
+      primNote:  true,
     },
     {
       id:        'k101-0071-decameron',
@@ -560,7 +561,7 @@ const primerDeck = {
       parts:     [{ c: '勹', n: 'bound up', p: 0 }, { c: '日', n: 'sun, day', p: 0 }],
       onyomi:    'ジュン、シュン',
       jlpt:      1,
-      primNote:  ['decameron'],
+      primNote:  true,
     },
     {
       id:        'k101-0072-ladle',
@@ -578,7 +579,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'くび',
       jlpt:      3,
-      primNote:  ['neck'],
+      primNote:  true,
     },
     {
       id:        'k101-0075-fish-guts',
@@ -588,6 +589,7 @@ const primerDeck = {
       onyomi:    'オツ、イツ',
       kunyomi:   'おと-、きのと',
       jlpt:      1,
+      primNote:  ['fish guts', 'fishhook'],
     },
     {
       id:        'k101-0076-riot',
@@ -606,7 +608,7 @@ const primerDeck = {
       onyomi:    'チョク、ジキ、ジカ',
       kunyomi:   'ただ.ちに、なお.す、-なお.す、なお.る、なお.き、す.ぐ',
       jlpt:      3,
-      primNote:  ['straightaway'],
+      primNote:  true,
     },
     {
       id:        'k101-0080-craft',
@@ -625,7 +627,7 @@ const primerDeck = {
       onyomi:    'サ、シャ',
       kunyomi:   'ひだり',
       jlpt:      5,
-      primNote:  ['left'],
+      primNote:  true,
     },
     {
       id:        'k101-0082-right',
@@ -635,7 +637,7 @@ const primerDeck = {
       onyomi:    'ウ、ユウ',
       kunyomi:   'みぎ',
       jlpt:      5,
-      primNote:  ['right'],
+      primNote:  true,
     },
     {
       id:        'k101-0083-possess',
@@ -645,7 +647,7 @@ const primerDeck = {
       onyomi:    'ユウ、ウ',
       kunyomi:   'あ.る',
       jlpt:      4,
-      primNote:  ['possess'],
+      primNote:  true,
     },
     {
       id:        'k101-0087-sword',
@@ -665,7 +667,7 @@ const primerDeck = {
       onyomi:    'ジン、ニン',
       kunyomi:   'は、やいば、き.る',
       jlpt:      1,
-      primNote:  ['blade'],
+      primNote:  true,
     },
     {
       id:        'k101-0089-cut',
@@ -684,7 +686,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'め.す',
       jlpt:      2,
-      primNote:  ['seduce'],
+      primNote:  true,
     },
     {
       id:        'k101-0091-shining',
@@ -693,7 +695,7 @@ const primerDeck = {
       parts:     [{ c: '日', n: 'sun, day', p: 0 }, { c: '召', n: 'seduce, summon', p: 0 }],
       onyomi:    'ショウ',
       jlpt:      1,
-      primNote:  ['shining'],
+      primNote:  true,
     },
     {
       id:        'k101-0093-vice-',
@@ -730,7 +732,7 @@ const primerDeck = {
       onyomi:    'シ、ス、ツ',
       kunyomi:   'こ、-こ、ね',
       jlpt:      5,
-      primNote:  ['child'],
+      primNote:  true,
     },
     {
       id:        'k101-0100-cavity',
@@ -748,7 +750,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'child with arms wrapped up', p: 0 }],
       onyomi:    'リョウ',
       jlpt:      2,
-      primNote:  ['complete'],
+      primNote:  true,
     },
     {
       id:        'k101-0102-woman',
@@ -758,7 +760,7 @@ const primerDeck = {
       onyomi:    'ジョ、ニョ、ニョウ',
       kunyomi:   'おんな、め',
       jlpt:      5,
-      primNote:  ['woman'],
+      primNote:  true,
     },
     {
       id:        'k101-0103-fond',
@@ -823,7 +825,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ちい.さい、こ-、お-、さ-',
       jlpt:      5,
-      primNote:  ['little'],
+      primNote:  true,
     },
     {
       id:        'k101-0111-few',
@@ -833,7 +835,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'すく.ない、すこ.し',
       jlpt:      4,
-      primNote:  ['few'],
+      primNote:  true,
     },
     {
       id:        'k101-0112-large',
@@ -853,7 +855,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'ゆう',
       jlpt:      4,
-      primNote:  ['evening'],
+      primNote:  true,
     },
     {
       id:        'k101-0113-many',
@@ -863,7 +865,7 @@ const primerDeck = {
       onyomi:    'タ',
       kunyomi:   'おお.い、まさ.に、まさ.る',
       jlpt:      4,
-      primNote:  ['many'],
+      primNote:  true,
     },
     {
       id:        'k101-0115-eventide',
@@ -891,7 +893,7 @@ const primerDeck = {
       onyomi:    'メイ、ミョウ',
       kunyomi:   'な、-な',
       jlpt:      5,
-      primNote:  ['name'],
+      primNote:  true,
     },
     {
       id:        'k101-0118-stone',
@@ -955,7 +957,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ひか.る、ひかり',
       jlpt:      3,
-      primNote:  ['ray'],
+      primNote:  true,
     },
     {
       id:        'k101-0126-plump',
@@ -965,7 +967,7 @@ const primerDeck = {
       onyomi:    'タイ、タ',
       kunyomi:   'ふと.い、ふと.る',
       jlpt:      3,
-      primNote:  ['plump'],
+      primNote:  true,
     },
     {
       id:        'k101-0127-utensil',
@@ -1038,7 +1040,7 @@ const primerDeck = {
       onyomi:    'シュウ、ス',
       kunyomi:   'す',
       jlpt:      2,
-      primNote:  ['state'],
+      primNote:  true,
     },
     {
       id:        'k101-0137-water',
@@ -1066,7 +1068,7 @@ const primerDeck = {
       onyomi:    'エイ',
       kunyomi:   'なが.い',
       jlpt:      2,
-      primNote:  ['eternity'],
+      primNote:  true,
     },
     {
       id:        'k101-0140-spring',
@@ -1093,7 +1095,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'はら',
       jlpt:      3,
-      primNote:  ['meadow'],
+      primNote:  true,
     },
     {
       id:        'k101-0144-swim',
@@ -1274,7 +1276,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'てら',
       jlpt:      2,
-      primNote:  ['Buddhist temple'],
+      primNote:  true,
     },
     {
       id:        'k101-0171-time',
@@ -1303,7 +1305,7 @@ const primerDeck = {
       onyomi:    'エン',
       kunyomi:   'ほのお',
       jlpt:      1,
-      primNote:  ['inflammation'],
+      primNote:  true,
     },
     {
       id:        'k101-0176-thin',
@@ -1338,7 +1340,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'はい',
       jlpt:      2,
-      primNote:  ['ashes'],
+      primNote:  true,
     },
     {
       id:        'k101-0181-spot',
@@ -1366,7 +1368,7 @@ const primerDeck = {
       onyomi:    'ギョ',
       kunyomi:   'うお、さかな、-ざかな',
       jlpt:      4,
-      primNote:  ['fish'],
+      primNote:  true,
     },
     {
       id:        'k101-0184-fishing',
@@ -1430,7 +1432,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'なお',
       jlpt:      1,
-      primNote:  ['esteem'],
+      primNote:  true,
     },
     {
       id:        'k101-0197-character',
@@ -1449,7 +1451,7 @@ const primerDeck = {
       onyomi:    'シュ、ス',
       kunyomi:   'まも.る、まも.り、もり、-もり、かみ',
       jlpt:      3,
-      primNote:  ['guard'],
+      primNote:  true,
     },
     {
       id:        'k101-0199-perfect',
@@ -1458,7 +1460,7 @@ const primerDeck = {
       parts:     [{ c: '宀', n: 'house', p: 0 }, { c: '元', n: 'beginning', p: 0 }],
       onyomi:    'カン',
       jlpt:      3,
-      primNote:  ['perfect'],
+      primNote:  true,
     },
     {
       id:        'k101-0200-proclaim',
@@ -1486,7 +1488,7 @@ const primerDeck = {
       onyomi:    'アン',
       kunyomi:   'やす.い、やす.まる、やす、やす.らか',
       jlpt:      4,
-      primNote:  ['relax'],
+      primNote:  true,
     },
     {
       id:        'k101-0203-banquet',
@@ -1524,7 +1526,7 @@ const primerDeck = {
       onyomi:    'リン',
       kunyomi:   'はやし',
       jlpt:      2,
-      primNote:  ['grove'],
+      primNote:  true,
     },
     {
       id:        'k101-0209-forest',
@@ -1632,7 +1634,7 @@ const primerDeck = {
       onyomi:    'ホン',
       kunyomi:   'もと',
       jlpt:      5,
-      primNote:  ['book'],
+      primNote:  true,
     },
     {
       id:        'k101-0225-tag',
@@ -1678,7 +1680,7 @@ const primerDeck = {
       onyomi:    'ミ、ビ',
       kunyomi:   'いま.だ、ま.だ、ひつじ',
       jlpt:      3,
-      primNote:  ['not yet'],
+      primNote:  true,
     },
     {
       id:        'k101-0230-extremity',
@@ -1688,7 +1690,7 @@ const primerDeck = {
       onyomi:    'マツ、バツ',
       kunyomi:   'すえ',
       jlpt:      3,
-      primNote:  ['extremity'],
+      primNote:  true,
     },
     {
       id:        'k101-0231-obscure',
@@ -1732,7 +1734,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'あけ',
       jlpt:      1,
-      primNote:  ['vermilion'],
+      primNote:  true,
     },
     {
       id:        'k101-0236-stocks',
@@ -1751,7 +1753,7 @@ const primerDeck = {
       onyomi:    'ジャク、ニャク、ニャ',
       kunyomi:   'わか.い、わか-、も.しくわ、も.し、も.しくは',
       jlpt:      3,
-      primNote:  ['young'],
+      primNote:  true,
     },
     {
       id:        'k101-0238-grass',
@@ -1885,7 +1887,7 @@ const primerDeck = {
       onyomi:    'ゼン、ネン',
       kunyomi:   'しか、しか.り、しか.し、さ',
       jlpt:      3,
-      primNote:  ['sort of thing'],
+      primNote:  true,
     },
     {
       id:        'k101-0257-reed',
@@ -1938,7 +1940,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'つ.げる',
       jlpt:      3,
-      primNote:  ['revelation'],
+      primNote:  true,
     },
     {
       id:        'k101-0263-before',
@@ -1948,7 +1950,7 @@ const primerDeck = {
       onyomi:    'セン',
       kunyomi:   'さき、ま.ず',
       jlpt:      5,
-      primNote:  ['before'],
+      primNote:  true,
     },
     {
       id:        'k101-0264-wash',
@@ -1966,7 +1968,7 @@ const primerDeck = {
       parts:     [{ c: '𠆢', n: 'umbrella', p: 0 }, { c: null, n: 'stick', p: 0 }, { c: null, n: 'walking cane', p: 0 }],
       onyomi:    'カイ',
       jlpt:      2,
-      primNote:  ['jammed in'],
+      primNote:  true,
     },
     {
       id:        'k101-0266-world',
@@ -2000,7 +2002,7 @@ const primerDeck = {
       onyomi:    'ゴウ、ガッ、カッ',
       kunyomi:   'あ.う、-あ.う、あ.い、あい-、-あ.い、-あい、あ.わす、あ.わせる、-あ.わせる',
       jlpt:      3,
-      primNote:  ['fit'],
+      primNote:  true,
     },
     {
       id:        'k101-0270-pagoda',
@@ -2027,6 +2029,7 @@ const primerDeck = {
       onyomi:    'ギョク',
       kunyomi:   'たま、たま-、-だま',
       jlpt:      2,
+      primNote:  ['jewel', 'ball'],
     },
     {
       id:        'k101-0273-treasure',
@@ -2096,7 +2099,7 @@ const primerDeck = {
       parts:     [{ c: '口', n: 'mouth', p: 0 }, { c: '王', n: 'king, jewel, ball', p: 0 }],
       onyomi:    'テイ',
       jlpt:      1,
-      primNote:  ['display'],
+      primNote:  true,
     },
     {
       id:        'k101-0281-whole',
@@ -2106,7 +2109,7 @@ const primerDeck = {
       onyomi:    'ゼン',
       kunyomi:   'まった.く、すべ.て',
       jlpt:      3,
-      primNote:  ['whole'],
+      primNote:  true,
     },
     {
       id:        'k101-0282-plug',
@@ -2308,7 +2311,7 @@ const primerDeck = {
       onyomi:    'ゼン',
       kunyomi:   'まえ、-まえ',
       jlpt:      5,
-      primNote:  ['in front'],
+      primNote:  true,
     },
     {
       id:        'k101-0310-roast',
@@ -2326,7 +2329,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'おのおの',
       jlpt:      2,
-      primNote:  ['each'],
+      primNote:  true,
     },
     {
       id:        'k101-0312-status',
@@ -2352,7 +2355,7 @@ const primerDeck = {
       parts:     [{ c: '宀', n: 'house', p: 0 }, { c: '各', n: 'each', p: 0 }],
       onyomi:    'キャク、カク',
       jlpt:      3,
-      primNote:  ['guest'],
+      primNote:  true,
     },
     {
       id:        'k101-0317-summer',
@@ -2362,7 +2365,7 @@ const primerDeck = {
       onyomi:    'カ、ガ、ゲ',
       kunyomi:   'なつ',
       jlpt:      4,
-      primNote:  ['summer'],
+      primNote:  true,
     },
     {
       id:        'k101-0319-twig',
@@ -2443,7 +2446,7 @@ const primerDeck = {
       onyomi:    'キョウ、コウ',
       kunyomi:   'う.ける',
       jlpt:      1,
-      primNote:  ['receive'],
+      primNote:  true,
     },
     {
       id:        'k101-0334-capital',
@@ -2453,7 +2456,7 @@ const primerDeck = {
       onyomi:    'キョウ、ケイ、キン',
       kunyomi:   'みやこ',
       jlpt:      4,
-      primNote:  ['capital'],
+      primNote:  true,
     },
     {
       id:        'k101-0335-refreshing',
@@ -2471,7 +2474,7 @@ const primerDeck = {
       parts:     [{ c: '日', n: 'sun, day', p: 0 }, { c: '京', n: 'capital', p: 0 }],
       onyomi:    'ケイ',
       jlpt:      3,
-      primNote:  ['scenery'],
+      primNote:  true,
     },
     {
       id:        'k101-0337-whale',
@@ -2509,7 +2512,7 @@ const primerDeck = {
       onyomi:    'シャ、セキ',
       kunyomi:   'やど.る',
       jlpt:      1,
-      primNote:  ['cottage'],
+      primNote:  true,
     },
     {
       id:        'k101-0339-circumference',
@@ -2537,7 +2540,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'さかん',
       jlpt:      1,
-      primNote:  ['robust'],
+      primNote:  true,
     },
     {
       id:        'k101-0344-villa',
@@ -2556,7 +2559,7 @@ const primerDeck = {
       onyomi:    'バイ',
       kunyomi:   'う.る、う.れる',
       jlpt:      4,
-      primNote:  ['sell'],
+      primNote:  true,
     },
     {
       id:        'k101-0346-study',
@@ -2637,7 +2640,7 @@ const primerDeck = {
       onyomi:    'ケイ、キョウ',
       kunyomi:   'うやま.う',
       jlpt:      2,
-      primNote:  ['awe'],
+      primNote:  true,
     },
     {
       id:        'k101-0357-say',
@@ -2813,7 +2816,7 @@ const primerDeck = {
       parts:     [{ c: '弋', n: 'arrow', p: 0 }, { c: '工', n: 'craft', p: 0 }],
       onyomi:    'シキ',
       jlpt:      3,
-      primNote:  ['style'],
+      primNote:  true,
     },
     {
       id:        'k101-0378-test',
@@ -2883,7 +2886,7 @@ const primerDeck = {
       onyomi:    'セイ、ジョウ',
       kunyomi:   'な.る、な.す、-な.す',
       jlpt:      3,
-      primNote:  ['turn into'],
+      primNote:  true,
     },
     {
       id:        'k101-0387-castle',
@@ -2965,7 +2968,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'と.まる、-ど.まり、と.める、-と.める、-ど.め、とど.める、とど.め、とど.まる、や.める、や.む、-や.む、よ.す、-さ.す、-さ.し',
       jlpt:      4,
-      primNote:  ['stop'],
+      primNote:  true,
     },
     {
       id:        'k101-0397-walk',
@@ -2975,7 +2978,7 @@ const primerDeck = {
       onyomi:    'ホ、ブ、フ',
       kunyomi:   'ある.く、あゆ.む',
       jlpt:      4,
-      primNote:  ['walk'],
+      primNote:  true,
     },
     {
       id:        'k101-0398-ford',
@@ -3020,7 +3023,7 @@ const primerDeck = {
       onyomi:    'ブ、ム',
       kunyomi:   'たけ.し',
       jlpt:      2,
-      primNote:  ['warrior'],
+      primNote:  true,
     },
     {
       id:        'k101-0405-correct',
@@ -3039,7 +3042,7 @@ const primerDeck = {
       onyomi:    'テイ、ジョウ',
       kunyomi:   'さだ.める、さだ.まる、さだ.か',
       jlpt:      3,
-      primNote:  ['determine'],
+      primNote:  true,
     },
     {
       id:        'k101-0409-lock',
@@ -3057,7 +3060,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'はし.る',
       jlpt:      4,
-      primNote:  ['run'],
+      primNote:  true,
     },
     {
       id:        'k101-0411-transcend',
@@ -3094,7 +3097,7 @@ const primerDeck = {
       onyomi:    'ゼ、シ',
       kunyomi:   'これ、この、ここ',
       jlpt:      1,
-      primNote:  ['just so'],
+      primNote:  true,
     },
     {
       id:        'k101-0416-dike',
@@ -3113,7 +3116,7 @@ const primerDeck = {
       onyomi:    'ケン、コン',
       kunyomi:   'た.てる、た.て、-だ.て、た.つ',
       jlpt:      4,
-      primNote:  ['build'],
+      primNote:  true,
     },
     {
       id:        'k101-0418-key',
@@ -3166,7 +3169,7 @@ const primerDeck = {
       onyomi:    'アイ',
       kunyomi:   'あわ.れ、あわ.れむ、かな.しい',
       jlpt:      1,
-      primNote:  ['pathetic'],
+      primNote:  true,
     },
     {
       id:        'k101-0429-distant',
@@ -3202,7 +3205,7 @@ const primerDeck = {
       parts:     [],
       onyomi:    'キン、フク',
       kunyomi:   'おお.い、ちきり、きれ、はば',
-      primNote:  ['towel', 'apron'],
+      primNote:  true,
     },
     {
       id:        'k101-0433-linen',
@@ -3212,7 +3215,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'ぬの',
       jlpt:      2,
-      primNote:  ['linen'],
+      primNote:  true,
     },
     {
       id:        'k101-0435-hanging-scroll',
@@ -3266,7 +3269,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'いち',
       jlpt:      3,
-      primNote:  ['market'],
+      primNote:  true,
     },
     {
       id:        'k101-0441-persimmon',
@@ -3309,7 +3312,7 @@ const primerDeck = {
       parts:     [{ c: '牜', n: 'cow', p: 0 }, { c: '\uE03F', n: 'belt', p: 1 }, { c: '刀', n: 'sword', p: 0 }, { c: '刂', n: 'sabre, saber', p: 0 }],
       onyomi:    'セイ',
       jlpt:      3,
-      primNote:  ['system'],
+      primNote:  true,
     },
     {
       id:        'k101-0449-revolve',
@@ -3347,7 +3350,7 @@ const primerDeck = {
       onyomi:    'ウン',
       kunyomi:   'くも、-ぐも',
       jlpt:      2,
-      primNote:  ['cloud'],
+      primNote:  true,
     },
     {
       id:        'k101-0453-cloudy-weather',
@@ -3384,7 +3387,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'ふゆ',
       jlpt:      4,
-      primNote:  ['winter'],
+      primNote:  true,
     },
     {
       id:        'k101-0457-heavens',
@@ -3462,7 +3465,7 @@ const primerDeck = {
       meaning:   'aroma',
       parts:     [{ c: '勹', n: 'bound up', p: 0 }, { c: '匕', n: 'spoon', p: 0 }, { c: '灬', n: 'sitting on the ground', p: 0 }],
       kunyomi:   'にお.う、にお.い、にお.わせる',
-      primNote:  ['aroma'],
+      primNote:  true,
     },
     {
       id:        'k101-0480-north',
@@ -3472,7 +3475,7 @@ const primerDeck = {
       onyomi:    'ホク',
       kunyomi:   'きた',
       jlpt:      5,
-      primNote:  ['north'],
+      primNote:  true,
     },
     {
       id:        'k101-0481-stature',
@@ -3491,7 +3494,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'くら.べる',
       jlpt:      2,
-      primNote:  ['compare'],
+      primNote:  true,
     },
     {
       id:        'k101-0483-descendants',
@@ -3500,7 +3503,7 @@ const primerDeck = {
       parts:     [{ c: '日', n: 'sun, day', p: 0 }, { c: '比', n: 'compare', p: 0 }],
       onyomi:    'コン',
       jlpt:      1,
-      primNote:  ['descendants'],
+      primNote:  true,
     },
     {
       id:        'k101-0484-all',
@@ -3510,7 +3513,7 @@ const primerDeck = {
       onyomi:    'カイ',
       kunyomi:   'みな、みんな',
       jlpt:      3,
-      primNote:  ['all'],
+      primNote:  true,
     },
     {
       id:        'k101-0485-block-letters',
@@ -3585,7 +3588,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'むね、うま.い',
       jlpt:      1,
-      primNote:  ['delicious'],
+      primNote:  true,
     },
     {
       id:        'k101-0494-fat',
@@ -3621,7 +3624,7 @@ const primerDeck = {
       onyomi:    'マイ',
       kunyomi:   'ごと、-ごと.に',
       jlpt:      5,
-      primNote:  ['every'],
+      primNote:  true,
     },
     {
       id:        'k101-0498-cleverness',
@@ -3631,7 +3634,7 @@ const primerDeck = {
       onyomi:    'ビン',
       kunyomi:   'さとい',
       jlpt:      1,
-      primNote:  ['cleverness'],
+      primNote:  true,
     },
     {
       id:        'k101-0499-plum',
@@ -3785,7 +3788,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'あら.い、あら-、あ.れる、あ.らす、-あ.らし、すさ.む',
       jlpt:      2,
-      primNote:  ['laid waste'],
+      primNote:  true,
     },
     {
       id:        'k101-0528-ambition',
@@ -3823,7 +3826,7 @@ const primerDeck = {
       onyomi:    'セツ、ゼイ',
       kunyomi:   'と.く',
       jlpt:      3,
-      primNote:  ['explanation'],
+      primNote:  true,
     },
     {
       id:        'k101-0539-pointed',
@@ -3877,7 +3880,7 @@ const primerDeck = {
       parts:     [{ c: '壬', n: 'porter', p: 0 }, { c: '丶', n: 'drop', p: 0 }, { c: '士', n: 'samurai', p: 0 }, { c: '\uE038', n: 'stretch', p: 1 }],
       onyomi:    'テイ',
       jlpt:      1,
-      primNote:  ['courts'],
+      primNote:  true,
     },
     {
       id:        'k101-0549-burn',
@@ -3905,7 +3908,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'か.ける',
       jlpt:      2,
-      primNote:  ['prefecture'],
+      primNote:  true,
     },
     {
       id:        'k101-0553-horse-chestnut',
@@ -3939,7 +3942,7 @@ const primerDeck = {
       onyomi:    'チュウ、キ',
       kunyomi:   'むし',
       jlpt:      2,
-      primNote:  ['insect'],
+      primNote:  true,
     },
     {
       id:        'k101-0557-lightning-bug',
@@ -3994,7 +3997,7 @@ const primerDeck = {
       onyomi:    'フウ、フ',
       kunyomi:   'かぜ、かざ-、-かぜ',
       jlpt:      4,
-      primNote:  ['wind'],
+      primNote:  true,
     },
     {
       id:        'k101-0066-mediocre',
@@ -4004,7 +4007,7 @@ const primerDeck = {
       onyomi:    'ボン、ハン',
       kunyomi:   'およ.そ、おうよ.そ、すべ.て',
       jlpt:      1,
-      primNote:  ['mediocre'],
+      primNote:  true,
     },
     {
       id:        'k101-0070-texture',
@@ -4040,7 +4043,7 @@ const primerDeck = {
       onyomi:    'ショ',
       kunyomi:   'ところ、-こ、お.る',
       jlpt:      3,
-      primNote:  ['dispose'],
+      primNote:  true,
     },
     {
       id:        'k101-0321-superfluous',
@@ -4049,7 +4052,7 @@ const primerDeck = {
       parts:     [{ c: '冖', n: 'crown', p: 0 }, { c: null, n: 'weathercock', p: 0 }, { c: '風', n: 'wind', p: 0 }],
       onyomi:    'ジョウ',
       jlpt:      1,
-      primNote:  ['superfluous'],
+      primNote:  true,
     },
     {
       id:        'k101-0328-pit',
@@ -4157,6 +4160,7 @@ const primerDeck = {
       onyomi:    'キ、キュウ、キン',
       kunyomi:   'かめ',
       jlpt:      1,
+      primNote:  ['tortoise', 'eel'],
     },
     {
       id:        'k101-0574-electricity',
@@ -4341,7 +4345,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'こ.げる、こ.がす、こ.がれる、あせ.る',
       jlpt:      1,
-      primNote:  ['char'],
+      primNote:  true,
     },
     {
       id:        'k101-0600-reef',
@@ -4519,7 +4523,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'よ.る、ちな.む',
       jlpt:      3,
-      primNote:  ['cause'],
+      primNote:  true,
     },
     {
       id:        'k101-0627-matrimony',
@@ -4554,7 +4558,7 @@ const primerDeck = {
       onyomi:    'カイ、エ',
       kunyomi:   'まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える',
       jlpt:      3,
-      primNote:  ['-times'],
+      primNote:  true,
     },
     {
       id:        'k101-0631-podium',
@@ -4608,7 +4612,7 @@ const primerDeck = {
       onyomi:    'マ、マア',
       kunyomi:   'あさ',
       jlpt:      1,
-      primNote:  ['hemp'],
+      primNote:  true,
     },
     {
       id:        'k101-0638-grind',
@@ -4654,7 +4658,7 @@ const primerDeck = {
       onyomi:    'ニン',
       kunyomi:   'しの.ぶ、しの.ばせる',
       jlpt:      1,
-      primNote:  ['endure'],
+      primNote:  true,
     },
     {
       id:        'k101-0643-acknowledge',
@@ -4682,7 +4686,7 @@ const primerDeck = {
       onyomi:    'シ、シリング',
       kunyomi:   'こころざ.す、こころざし',
       jlpt:      1,
-      primNote:  ['intention'],
+      primNote:  true,
     },
     {
       id:        'k101-0646-document',
@@ -4714,7 +4718,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'kebab', p: 0 }, { c: '中', n: 'in', p: 0 }, { c: null, n: 'stick', p: 0 }, { c: '口', n: 'mouth, mouth2', p: 0 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'カン、ケン、セン',
       kunyomi:   'くし、つらぬ.く',
-      primNote:  ['shish kebab'],
+      primNote:  true,
     },
     {
       id:        'k101-0650-afflicted',
@@ -4733,7 +4737,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'おも.う、おもえら.く、おぼ.す',
       jlpt:      4,
-      primNote:  ['think'],
+      primNote:  true,
     },
     {
       id:        'k101-0652-grace',
@@ -4787,7 +4791,7 @@ const primerDeck = {
       onyomi:    'ケイ、エ',
       kunyomi:   'めぐ.む、めぐ.み',
       jlpt:      1,
-      primNote:  ['favor'],
+      primNote:  true,
     },
     {
       id:        'k101-0660-fear',
@@ -4814,7 +4818,7 @@ const primerDeck = {
       parts:     [{ c: '戌', n: 'march', p: 0 }, { c: '口', n: 'mouth', p: 0 }, { c: '心', n: 'heart', p: 0 }],
       onyomi:    'カン',
       jlpt:      3,
-      primNote:  ['emotion'],
+      primNote:  true,
     },
     {
       id:        'k101-0680-disquieting',
@@ -4858,7 +4862,7 @@ const primerDeck = {
       onyomi:    'ヒツ',
       kunyomi:   'かなら.ず',
       jlpt:      3,
-      primNote:  ['invariably'],
+      primNote:  true,
     },
     {
       id:        'k101-0686-ooze',
@@ -4876,7 +4880,7 @@ const primerDeck = {
       onyomi:    'シュ、ズ',
       kunyomi:   'て、て-、-て、た-',
       jlpt:      4,
-      primNote:  ['hand'],
+      primNote:  true,
     },
     {
       id:        'k101-0688-watch-over',
@@ -4904,7 +4908,7 @@ const primerDeck = {
       onyomi:    'ガ',
       kunyomi:   'われ、わ、わ.が-、わが-',
       jlpt:      1,
-      primNote:  ['ego'],
+      primNote:  true,
     },
     {
       id:        'k101-0691-righteousness',
@@ -4913,7 +4917,7 @@ const primerDeck = {
       parts:     [{ c: '羊', n: 'sheep', p: 0 }, { c: '我', n: 'ego', p: 0 }],
       onyomi:    'ギ',
       jlpt:      1,
-      primNote:  ['righteousness'],
+      primNote:  true,
     },
     {
       id:        'k101-0692-deliberation',
@@ -5242,7 +5246,7 @@ const primerDeck = {
       parts:     [{ c: '廾', n: 'two hands', p: 0 }, { c: '刀', n: 'sword', p: 0 }, { c: '刂', n: 'sabre, saber', p: 0 }],
       onyomi:    'ケイ',
       jlpt:      1,
-      primNote:  ['punish'],
+      primNote:  true,
     },
     {
       id:        'k101-0735-mould',
@@ -5295,7 +5299,7 @@ const primerDeck = {
       onyomi:    'ナイ、ダイ、ノ、アイ',
       kunyomi:   'の、すなわ.ち、なんじ',
       jlpt:      1,
-      primNote:  ['from', 'fist', 'snare'],
+      primNote:  ['from', 'fist'],
     },
     {
       id:        'k101-0742-portable',
@@ -5350,7 +5354,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'stick', p: 0 }, { c: '\uE00F', n: 'tucked under the arm', p: 1 }],
       onyomi:    'ジョウ',
       kunyomi:   'たけ、だけ',
-      primNote:  ['length'],
+      primNote:  true,
     },
     {
       id:        'k101-0747-history',
@@ -5359,7 +5363,7 @@ const primerDeck = {
       parts:     [{ c: '口', n: 'mouth', p: 0 }, { c: '\uE00F', n: 'tucked under the arm', p: 1 }],
       onyomi:    'シ',
       jlpt:      2,
-      primNote:  ['history'],
+      primNote:  true,
     },
     {
       id:        'k101-0748-officer',
@@ -5377,7 +5381,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'さら、さら.に、ふ.ける、ふ.かす',
       jlpt:      3,
-      primNote:  ['grow late'],
+      primNote:  true,
     },
     {
       id:        'k101-0750-stiff',
@@ -5431,7 +5435,7 @@ const primerDeck = {
       parts:     [{ c: '隹', n: 'turkey', p: 0 }, { c: '又', n: 'crotch', p: 0 }],
       onyomi:    'セキ',
       jlpt:      2,
-      primNote:  ['vessels'],
+      primNote:  true,
     },
     {
       id:        'k101-0756-safeguard',
@@ -5459,7 +5463,7 @@ const primerDeck = {
       onyomi:    'ド',
       kunyomi:   'やつ、やっこ',
       jlpt:      1,
-      primNote:  ['guy'],
+      primNote:  true,
     },
     {
       id:        'k101-0759-angry',
@@ -5478,7 +5482,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'とも',
       jlpt:      5,
-      primNote:  ['friend'],
+      primNote:  true,
     },
     {
       id:        'k101-0761-slip-out',
@@ -5550,7 +5554,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'ささ.える、つか.える、か.う、しんよう、じゅうまた',
       jlpt:      3,
-      primNote:  ['branch'],
+      primNote:  true,
     },
     {
       id:        'k101-0769-skill',
@@ -5585,7 +5589,7 @@ const primerDeck = {
       parts:     [{ c: '上', n: 'above', p: 0 }, { c: '小', n: 'small', p: 0 }, { c: '⺌', n: 'little', p: 0 }, { c: '又', n: 'crotch', p: 0 }],
       onyomi:    'シュク',
       jlpt:      1,
-      primNote:  ['uncle'],
+      primNote:  true,
     },
     {
       id:        'k101-0776-coach',
@@ -5621,7 +5625,7 @@ const primerDeck = {
       onyomi:    'ハン、ホン、タン、ホ',
       kunyomi:   'そ.る、そ.らす、かえ.す、かえ.る、-かえ.る',
       jlpt:      3,
-      primNote:  ['anti-'],
+      primNote:  true,
     },
     {
       id:        'k101-0784-claw',
@@ -5674,7 +5678,7 @@ const primerDeck = {
       onyomi:    'ショウ、ソウ',
       kunyomi:   'まさ.に、はた、まさ、ひきい.る、もって',
       jlpt:      2,
-      primNote:  ['leader'],
+      primNote:  true,
     },
     {
       id:        'k101-0790-exhort',
@@ -5693,7 +5697,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'と.る、いろどり',
       jlpt:      1,
-      primNote:  ['grab', 'animal tracks'],
+      primNote:  true,
     },
     {
       id:        'k101-0792-pick',
@@ -5721,7 +5725,7 @@ const primerDeck = {
       onyomi:    'ジュ',
       kunyomi:   'う.ける、-う.け、う.かる',
       jlpt:      3,
-      primNote:  ['accept'],
+      primNote:  true,
     },
     {
       id:        'k101-0795-impart',
@@ -5740,7 +5744,7 @@ const primerDeck = {
       onyomi:    'アイ',
       kunyomi:   'いと.しい',
       jlpt:      3,
-      primNote:  ['love'],
+      primNote:  true,
     },
     {
       id:        'k101-0797-unclear',
@@ -5767,7 +5771,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'ひろ.い、ひろ.まる、ひろ.める、ひろ.がる、ひろ.げる',
       jlpt:      4,
-      primNote:  ['wide'],
+      primNote:  true,
     },
     {
       id:        'k101-0800-hooked',
@@ -5812,7 +5816,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'お-、おす、おん',
       jlpt:      1,
-      primNote:  ['male'],
+      primNote:  true,
     },
     {
       id:        'k101-0805-pedestal',
@@ -5822,7 +5826,7 @@ const primerDeck = {
       onyomi:    'ダイ、タイ',
       kunyomi:   'うてな、われ、つかさ',
       jlpt:      4,
-      primNote:  ['pedestal'],
+      primNote:  true,
     },
     {
       id:        'k101-0806-neglect',
@@ -5876,7 +5880,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'さ.る、-さ.る',
       jlpt:      4,
-      primNote:  ['gone'],
+      primNote:  true,
     },
     {
       id:        'k101-0813-method',
@@ -5904,7 +5908,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'いた.る',
       jlpt:      1,
-      primNote:  ['climax'],
+      primNote:  true,
     },
     {
       id:        'k101-0816-room',
@@ -5923,7 +5927,7 @@ const primerDeck = {
       onyomi:    'トウ',
       kunyomi:   'いた.る',
       jlpt:      3,
-      primNote:  ['arrival'],
+      primNote:  true,
     },
     {
       id:        'k101-0818-doth',
@@ -5951,7 +5955,7 @@ const primerDeck = {
       onyomi:    'イク',
       kunyomi:   'そだ.つ、そだ.ち、そだ.てる、はぐく.む',
       jlpt:      3,
-      primNote:  ['bring up'],
+      primNote:  true,
     },
     {
       id:        'k101-0822-remove',
@@ -5969,7 +5973,7 @@ const primerDeck = {
       onyomi:    'ジュウ',
       kunyomi:   'あ.てる、み.たす',
       jlpt:      1,
-      primNote:  ['allot'],
+      primNote:  true,
     },
     {
       id:        'k101-0824-gun',
@@ -6005,7 +6009,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'じょう、まこと.に、ゆるす',
       jlpt:      1,
-      primNote:  ['license'],
+      primNote:  true,
     },
     {
       id:        'k101-0828-tempt',
@@ -6024,7 +6028,7 @@ const primerDeck = {
       onyomi:    'シュツ、スイ',
       kunyomi:   'で.る、-で、だ.す、-だ.す、い.でる、い.だす',
       jlpt:      5,
-      primNote:  ['exit'],
+      primNote:  true,
     },
     {
       id:        'k101-0830-mountain',
@@ -6034,7 +6038,7 @@ const primerDeck = {
       onyomi:    'サン、セン',
       kunyomi:   'やま',
       jlpt:      5,
-      primNote:  ['mountain'],
+      primNote:  true,
     },
     {
       id:        'k101-0831-bungling',
@@ -6167,7 +6171,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'さだ',
       jlpt:      1,
-      primNote:  ['upright'],
+      primNote:  true,
     },
     {
       id:        'k101-0059-employee',
@@ -6176,7 +6180,7 @@ const primerDeck = {
       parts:     [{ c: '口', n: 'mouth', p: 0 }, { c: '貝', n: 'shellfish, clam, oyster', p: 0 }],
       onyomi:    'イン',
       jlpt:      4,
-      primNote:  ['employee'],
+      primNote:  true,
     },
     {
       id:        'k101-0060-post-a-bill',
@@ -6230,7 +6234,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'ま、ま-、まこと',
       jlpt:      4,
-      primNote:  ['true'],
+      primNote:  true,
     },
     {
       id:        'k101-0084-bribe',
@@ -6267,7 +6271,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'のっと.る',
       jlpt:      2,
-      primNote:  ['rule'],
+      primNote:  true,
     },
     {
       id:        'k101-0106-pierce',
@@ -6277,7 +6281,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'つらぬ.く、ぬ.く、ぬき',
       jlpt:      1,
-      primNote:  ['pierce'],
+      primNote:  true,
     },
     {
       id:        'k101-0136-obey',
@@ -6397,7 +6401,7 @@ const primerDeck = {
       parts:     [{ c: '匕', n: 'spoon', p: 0 }, { c: '灬', n: 'sitting on the ground', p: 0 }, { c: '頁', n: 'head, page', p: 0 }],
       onyomi:    'ケイ、キョウ',
       kunyomi:   'ころ、ごろ、しばら.く',
-      primNote:  ['about that time'],
+      primNote:  true,
     },
     {
       id:        'k101-0512-assets',
@@ -6432,7 +6436,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'うれ.える、うれ.い、う.い、う.き',
       jlpt:      1,
-      primNote:  ['melancholy'],
+      primNote:  true,
     },
     {
       id:        'k101-0664-widow',
@@ -6599,7 +6603,7 @@ const primerDeck = {
       parts:     [{ c: '入', n: 'eight', p: 0 }, { c: '刀', n: 'sword, dagger', p: 0 }],
       onyomi:    'ブン、フン、ブ',
       kunyomi:   'わ.ける、わ.け、わ.かれる、わ.かる、わ.かつ',
-      primNote:  ['part'],
+      primNote:  true,
     },
     {
       id:        'k101-0845-poverty',
@@ -6627,7 +6631,7 @@ const primerDeck = {
       onyomi:    'コウ、ク',
       kunyomi:   'おおやけ',
       jlpt:      4,
-      primNote:  ['public'],
+      primNote:  true,
     },
     {
       id:        'k101-0848-pine-tree',
@@ -6663,7 +6667,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'たに、きわ.まる',
       jlpt:      2,
-      primNote:  ['valley'],
+      primNote:  true,
     },
     {
       id:        'k101-0852-bathe',
@@ -6682,7 +6686,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'い.れる',
       jlpt:      3,
-      primNote:  ['contain'],
+      primNote:  true,
     },
     {
       id:        'k101-0854-melt',
@@ -6736,7 +6740,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'ほ.める',
       jlpt:      2,
-      primNote:  ['prize'],
+      primNote:  true,
     },
     {
       id:        'k101-0860-party',
@@ -6781,7 +6785,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'かわ、けがわ',
       jlpt:      2,
-      primNote:  ['pelt'],
+      primNote:  true,
     },
     {
       id:        'k101-0866-waves',
@@ -6869,7 +6873,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'bones', p: 0 }, { c: '一', n: 'one, ceiling', p: 0 }, { c: '夕', n: 'evening', p: 0 }, { c: '刀', n: 'sword', p: 0 }, { c: '刂', n: 'sabre, saber', p: 0 }],
       onyomi:    'レツ、レ',
       jlpt:      3,
-      primNote:  ['file'],
+      primNote:  true,
     },
     {
       id:        'k101-0877-ardent',
@@ -6888,7 +6892,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'し.ぬ、し.に-',
       jlpt:      4,
-      primNote:  ['death'],
+      primNote:  true,
     },
     {
       id:        'k101-0879-interment',
@@ -6916,7 +6920,7 @@ const primerDeck = {
       onyomi:    'ジ',
       kunyomi:   'みみ',
       jlpt:      3,
-      primNote:  ['ear'],
+      primNote:  true,
     },
     {
       id:        'k101-0882-take',
@@ -6926,7 +6930,7 @@ const primerDeck = {
       onyomi:    'シュ',
       kunyomi:   'と.る、と.り、と.り-、とり、-ど.り',
       jlpt:      3,
-      primNote:  ['take'],
+      primNote:  true,
     },
     {
       id:        'k101-0883-gist',
@@ -6945,7 +6949,7 @@ const primerDeck = {
       onyomi:    'サイ、シュ',
       kunyomi:   'もっと.も、つま',
       jlpt:      3,
-      primNote:  ['utmost'],
+      primNote:  true,
     },
     {
       id:        'k101-0885-snapshot',
@@ -6982,7 +6986,7 @@ const primerDeck = {
       onyomi:    'フ、フウ、ブ',
       kunyomi:   'おっと、そ.れ',
       jlpt:      3,
-      primNote:  ['husband'],
+      primNote:  true,
     },
     {
       id:        'k101-0902-aid',
@@ -7018,7 +7022,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'か.える、か.え-、か.わる',
       jlpt:      2,
-      primNote:  ['exchange'],
+      primNote:  true,
     },
     {
       id:        'k101-0906-approve',
@@ -7046,7 +7050,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'うしな.う、う.せる',
       jlpt:      3,
-      primNote:  ['lose'],
+      primNote:  true,
     },
     {
       id:        'k101-0909-iron',
@@ -7091,7 +7095,7 @@ const primerDeck = {
       onyomi:    'ゾウ、ソウ',
       kunyomi:   'くら、おさ.める、かく.れる',
       jlpt:      2,
-      primNote:  ['storehouse'],
+      primNote:  true,
     },
     {
       id:        'k101-0914-entrails',
@@ -7152,7 +7156,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'Fafner', p: 0 }],
       onyomi:    'キョ',
       jlpt:      2,
-      primNote:  ['gigantic', 'mane'],
+      primNote:  true,
     },
     {
       id:        'k101-0921-repel',
@@ -7252,7 +7256,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'くわ.える、くわ.わる',
       jlpt:      3,
-      primNote:  ['add'],
+      primNote:  true,
     },
     {
       id:        'k101-0933-congratulations',
@@ -7322,7 +7326,7 @@ const primerDeck = {
       parts:     [{ c: '口', n: 'mouth', p: 0 }, { c: '行', n: 'street', p: 0 }, { c: '丁', n: 'nail', p: 0 }, { c: '屮', n: 'spike', p: 0 }],
       onyomi:    'カ、コク',
       kunyomi:   '-べ.き',
-      primNote:  ['can'],
+      primNote:  true,
     },
     {
       id:        'k101-0098-place-on-the-head',
@@ -7341,7 +7345,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'く.しき、あや.しい、くし、めずら.しい',
       jlpt:      1,
-      primNote:  ['strange'],
+      primNote:  true,
     },
     {
       id:        'k101-0157-river',
@@ -7393,7 +7397,7 @@ const primerDeck = {
       meaning:   'chair',
       parts:     [{ c: '木', n: 'tree, wood', p: 0 }, { c: '奇', n: 'strange', p: 0 }, { c: null, n: 'St. Bernard', p: 0 }, { c: '行', n: 'street', p: 0 }, { c: '丁', n: 'nail', p: 0 }, { c: '屮', n: 'spike', p: 0 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'イ',
-      primNote:  ['chair'],
+      primNote:  true,
     },
     {
       id:        'k101-0240-bullying',
@@ -7410,7 +7414,7 @@ const primerDeck = {
       parts:     [{ c: '\uE02A', n: 'tall', p: 1 }, { c: '亠', n: 'top hat', p: 0 }, { c: '口', n: 'mouth', p: 0 }, { c: '冖', n: 'crown', p: 0 }, { c: '行', n: 'street', p: 0 }, { c: '丁', n: 'nail', p: 0 }, { c: '屮', n: 'spike', p: 0 }],
       onyomi:    'テイ、チン',
       jlpt:      1,
-      primNote:  ['pavilion'],
+      primNote:  true,
     },
     {
       id:        'k101-0362-revise',
@@ -7464,7 +7468,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'あ.えて、あ.えない、あ.えず',
       jlpt:      1,
-      primNote:  ['daring'],
+      primNote:  true,
     },
     {
       id:        'k101-0939-rhythm',
@@ -7482,7 +7486,7 @@ const primerDeck = {
       onyomi:    'フク',
       kunyomi:   'また',
       jlpt:      2,
-      primNote:  ['restore'],
+      primNote:  true,
     },
     {
       id:        'k101-0941-gain',
@@ -7501,7 +7505,7 @@ const primerDeck = {
       onyomi:    'ジュウ、ショウ、ジュ',
       kunyomi:   'したが.う、したが.える、より',
       jlpt:      1,
-      primNote:  ['accompany'],
+      primNote:  true,
     },
     {
       id:        'k101-0943-junior',
@@ -7563,7 +7567,7 @@ const primerDeck = {
       onyomi:    'チョウ、チ',
       kunyomi:   'しるし',
       jlpt:      1,
-      primNote:  ['indications'],
+      primNote:  true,
     },
     {
       id:        'k101-0953-penal',
@@ -7686,7 +7690,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'あき、とき',
       jlpt:      4,
-      primNote:  ['autumn'],
+      primNote:  true,
     },
     {
       id:        'k101-0967-distress',
@@ -7740,7 +7744,7 @@ const primerDeck = {
       onyomi:    'リ',
       kunyomi:   'き.く',
       jlpt:      3,
-      primNote:  ['profit'],
+      primNote:  true,
     },
     {
       id:        'k101-0973-pear-tree',
@@ -7802,7 +7806,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'ゆだ.ねる',
       jlpt:      2,
-      primNote:  ['committee'],
+      primNote:  true,
     },
     {
       id:        'k101-0980-excel',
@@ -7812,7 +7816,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'ひい.でる',
       jlpt:      1,
-      primNote:  ['excel'],
+      primNote:  true,
     },
     {
       id:        'k101-0981-transparent',
@@ -7907,7 +7911,7 @@ const primerDeck = {
       onyomi:    'メイ',
       kunyomi:   'まよ.う',
       jlpt:      3,
-      primNote:  ['astray'],
+      primNote:  true,
     },
     {
       id:        'k101-0994-riddle',
@@ -7995,7 +7999,7 @@ const primerDeck = {
       onyomi:    'キュウ、グ',
       kunyomi:   'もと.める',
       jlpt:      3,
-      primNote:  ['request'],
+      primNote:  true,
     },
     {
       id:        'k101-1005-ball',
@@ -8476,7 +8480,7 @@ const primerDeck = {
       onyomi:    'バツ、ハツ、カ、ボチ',
       kunyomi:   'き.る、そむ.く、う.つ',
       jlpt:      1,
-      primNote:  ['fell'],
+      primNote:  true,
     },
     {
       id:        'k101-1070-inn',
@@ -8486,7 +8490,7 @@ const primerDeck = {
       onyomi:    'シュク',
       kunyomi:   'やど、やど.る、やど.す',
       jlpt:      3,
-      primNote:  ['inn'],
+      primNote:  true,
     },
     {
       id:        'k101-1072-protect',
@@ -8496,7 +8500,7 @@ const primerDeck = {
       onyomi:    'ホ、ホウ',
       kunyomi:   'たも.つ',
       jlpt:      1,
-      primNote:  ['protect'],
+      primNote:  true,
     },
     {
       id:        'k101-1073-praise',
@@ -8524,7 +8528,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'つ.ける、-つ.ける、-づ.ける、つ.け、つ.け-、-つ.け、-づ.け、-づけ、つ.く、-づ.く、つ.き、-つ.き、-つき、-づ.き、-づき',
       jlpt:      3,
-      primNote:  ['adhere'],
+      primNote:  true,
     },
     {
       id:        'k101-1076-token',
@@ -8541,7 +8545,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'borough', p: 0 }, { c: '广', n: 'cave', p: 0 }, { c: '付', n: 'adhere', p: 0 }, { c: null, n: 'sellotape', p: 0 }, { c: '亻', n: 'person', p: 0 }, { c: '寸', n: 'glue', p: 0 }],
       onyomi:    'フ',
       jlpt:      2,
-      primNote:  ['municipality'],
+      primNote:  true,
     },
     {
       id:        'k101-1078-responsibility',
@@ -8551,7 +8555,7 @@ const primerDeck = {
       onyomi:    'ニン',
       kunyomi:   'まか.せる、まか.す',
       jlpt:      3,
-      primNote:  ['responsibility'],
+      primNote:  true,
     },
     {
       id:        'k101-1079-fare',
@@ -8569,7 +8573,7 @@ const primerDeck = {
       onyomi:    'ダイ、タイ',
       kunyomi:   'か.わる、かわ.る、かわ.り、-がわ.り、か.える、よ、しろ',
       jlpt:      4,
-      primNote:  ['substitute'],
+      primNote:  true,
     },
     {
       id:        'k101-1082-lend',
@@ -8588,7 +8592,7 @@ const primerDeck = {
       onyomi:    'カ、ケ',
       kunyomi:   'ば.ける、ば.かす、ふ.ける、け.する',
       jlpt:      3,
-      primNote:  ['change'],
+      primNote:  true,
     },
     {
       id:        'k101-1084-flower',
@@ -8625,7 +8629,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'なに、なん、なに-、なん-',
       jlpt:      5,
-      primNote:  ['what'],
+      primNote:  true,
     },
     {
       id:        'k101-1088-baggage',
@@ -8660,7 +8664,7 @@ const primerDeck = {
       onyomi:    'キュウ、ク',
       kunyomi:   'ひさ.しい',
       jlpt:      2,
-      primNote:  ['long time'],
+      primNote:  true,
     },
     {
       id:        'k101-1093-furrow',
@@ -8688,7 +8692,7 @@ const primerDeck = {
       onyomi:    'ナイ、ダイ',
       kunyomi:   'うち',
       jlpt:      3,
-      primNote:  ['inside'],
+      primNote:  true,
     },
     {
       id:        'k101-1096-third-class',
@@ -8698,7 +8702,7 @@ const primerDeck = {
       onyomi:    'ヘイ',
       kunyomi:   'ひのえ',
       jlpt:      1,
-      primNote:  ['third class'],
+      primNote:  true,
     },
     {
       id:        'k101-1097-design',
@@ -8717,7 +8721,7 @@ const primerDeck = {
       onyomi:    'ニク',
       kunyomi:   'しし',
       jlpt:      4,
-      primNote:  ['meat'],
+      primNote:  true,
     },
     {
       id:        'k101-1099-rot',
@@ -8779,7 +8783,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'もっ.て',
       jlpt:      4,
-      primNote:  ['by means of'],
+      primNote:  true,
     },
     {
       id:        'k101-1106-similar',
@@ -8806,7 +8810,7 @@ const primerDeck = {
       parts:     [{ c: '一', n: 'one, ceiling', p: 0 }, { c: null, n: 'cane', p: 0 }, { c: null, n: 'stick', p: 0 }, { c: '丶', n: 'drop', p: 0 }, { c: '亅', n: 'fishhook', p: 0 }, { c: '冫', n: 'ice', p: 0 }],
       onyomi:    'ガ',
       kunyomi:   'かわら、ぐらむ',
-      primNote:  ['tile'],
+      primNote:  true,
     },
     {
       id:        'k101-1109-flower-pot',
@@ -8843,7 +8847,7 @@ const primerDeck = {
       onyomi:    'ゼン',
       kunyomi:   'よ.い、い.い、よ.く、よし.とする',
       jlpt:      1,
-      primNote:  ['virtuous'],
+      primNote:  true,
     },
     {
       id:        'k101-1113-dining-tray',
@@ -8870,7 +8874,7 @@ const primerDeck = {
       onyomi:    'ヤ',
       kunyomi:   'よ、よる',
       jlpt:      4,
-      primNote:  ['night'],
+      primNote:  true,
     },
     {
       id:        'k101-1116-fluid',
@@ -8966,7 +8970,7 @@ const primerDeck = {
       onyomi:    'エキ、イ',
       kunyomi:   'やさ.しい、やす.い',
       jlpt:      3,
-      primNote:  ['easy', 'piggy bank'],
+      primNote:  true,
     },
     {
       id:        'k101-0583-intestines',
@@ -9038,7 +9042,7 @@ const primerDeck = {
       onyomi:    'ニ',
       kunyomi:   'あま',
       jlpt:      1,
-      primNote:  ['nun'],
+      primNote:  true,
     },
     {
       id:        'k101-1135-mud',
@@ -9074,7 +9078,7 @@ const primerDeck = {
       onyomi:    'オク',
       kunyomi:   'や',
       jlpt:      4,
-      primNote:  ['roof'],
+      primNote:  true,
     },
     {
       id:        'k101-1139-grip',
@@ -9093,7 +9097,7 @@ const primerDeck = {
       onyomi:    'クツ',
       kunyomi:   'かが.む、かが.める',
       jlpt:      1,
-      primNote:  ['yield'],
+      primNote:  true,
     },
     {
       id:        'k101-1141-dig',
@@ -9164,6 +9168,7 @@ const primerDeck = {
       parts:     [{ c: '尸', n: 'flag', p: 0 }, { c: null, n: 'stick', p: 0 }],
       onyomi:    'シャク',
       jlpt:      1,
+      primNote:  ['shaku', 'shakuhachi'],
     },
     {
       id:        'k101-1152-exhaust',
@@ -9218,7 +9223,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'と',
       jlpt:      2,
-      primNote:  ['door'],
+      primNote:  true,
     },
     {
       id:        'k101-1158-shoulder',
@@ -9255,7 +9260,7 @@ const primerDeck = {
       onyomi:    'レイ',
       kunyomi:   'もど.す、もど.る',
       jlpt:      3,
-      primNote:  ['re-'],
+      primNote:  true,
     },
     {
       id:        'k101-1163-tears',
@@ -9274,7 +9279,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'やと.う',
       jlpt:      2,
-      primNote:  ['employ'],
+      primNote:  true,
     },
     {
       id:        'k101-1165-look-back',
@@ -9424,7 +9429,7 @@ const primerDeck = {
       parts:     [{ c: '尸', n: 'flag', p: 0 }, { c: '礻', n: 'altar', p: 0 }, { c: '示', n: 'show', p: 0 }, { c: '寸', n: 'glue', p: 0 }],
       onyomi:    'イ、ジョウ',
       jlpt:      1,
-      primNote:  ['military officer'],
+      primNote:  true,
     },
     {
       id:        'k101-1177-consolation',
@@ -9450,7 +9455,7 @@ const primerDeck = {
       parts:     [{ c: '林', n: 'grove', p: 0 }, { c: '礻', n: 'altar', p: 0 }, { c: '示', n: 'show', p: 0 }, { c: '木', n: 'tree2, wood2', p: 0 }, { c: '木', n: 'tree2', p: 0 }],
       onyomi:    'キン',
       jlpt:      2,
-      primNote:  ['prohibition'],
+      primNote:  true,
     },
     {
       id:        'k101-1180-collar',
@@ -9469,7 +9474,7 @@ const primerDeck = {
       onyomi:    'シュウ、ソウ',
       kunyomi:   'むね',
       jlpt:      1,
-      primNote:  ['religion'],
+      primNote:  true,
     },
     {
       id:        'k101-1182-adore',
@@ -9488,7 +9493,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'まつ.る、まつ.り、まつり',
       jlpt:      2,
-      primNote:  ['ritual'],
+      primNote:  true,
     },
     {
       id:        'k101-1184-guess',
@@ -9497,7 +9502,7 @@ const primerDeck = {
       parts:     [{ c: '宀', n: 'house', p: 0 }, { c: '祭', n: 'ritual', p: 0 }],
       onyomi:    'サツ',
       jlpt:      3,
-      primNote:  ['guess'],
+      primNote:  true,
     },
     {
       id:        'k101-1185-grate',
@@ -9633,7 +9638,7 @@ const primerDeck = {
       onyomi:    'コク',
       kunyomi:   'くろ、くろ.ずむ、くろ.い',
       jlpt:      4,
-      primNote:  ['black'],
+      primNote:  true,
     },
     {
       id:        'k101-0187-black-ink',
@@ -9661,7 +9666,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'はか.る',
       jlpt:      2,
-      primNote:  ['quantity'],
+      primNote:  true,
     },
     {
       id:        'k101-0190-rin',
@@ -9751,7 +9756,7 @@ const primerDeck = {
       onyomi:    'カ',
       kunyomi:   'は.たす、はた.す、-は.たす、は.てる、-は.てる、は.て',
       jlpt:      3,
-      primNote:  ['fruit'],
+      primNote:  true,
     },
     {
       id:        'k101-1203-confectionary',
@@ -9786,7 +9791,7 @@ const primerDeck = {
       onyomi:    'キン',
       kunyomi:   'おの',
       jlpt:      1,
-      primNote:  ['ax'],
+      primNote:  true,
     },
     {
       id:        'k101-1207-chop',
@@ -9831,7 +9836,7 @@ const primerDeck = {
       onyomi:    'セツ',
       kunyomi:   'お.る、おり、お.り、-お.り、お.れる',
       jlpt:      3,
-      primNote:  ['fold'],
+      primNote:  true,
     },
     {
       id:        'k101-1212-philosophy',
@@ -9867,7 +9872,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'executioner', p: 0 }, { c: '車', n: 'car', p: 0 }, { c: '斤', n: 'axe', p: 0 }],
       onyomi:    'ザン、サン、セン、ゼン',
       kunyomi:   'き.る',
-      primNote:  ['chop off'],
+      primNote:  true,
     },
     {
       id:        'k101-1216-temporarily',
@@ -9913,7 +9918,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'しりぞ.ける',
       jlpt:      1,
-      primNote:  ['reject'],
+      primNote:  true,
     },
     {
       id:        'k101-1221-accusation',
@@ -10072,7 +10077,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'あらそ.う、いか.でか',
       jlpt:      3,
-      primNote:  ['contend'],
+      primNote:  true,
     },
     {
       id:        'k101-1239-clean',
@@ -10099,7 +10104,7 @@ const primerDeck = {
       parts:     [{ c: '广', n: 'cave', p: 0 }, { c: '\uE082', n: 'rake', p: 1 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'トウ',
       kunyomi:   'から',
-      primNote:  ['T\'ang'],
+      primNote:  true,
     },
     {
       id:        'k101-1242-sugar',
@@ -10142,7 +10147,7 @@ const primerDeck = {
       onyomi:    'クン',
       kunyomi:   'きみ、-ぎみ',
       jlpt:      3,
-      primNote:  ['old boy'],
+      primNote:  true,
     },
     {
       id:        'k101-1247-flock',
@@ -10169,7 +10174,7 @@ const primerDeck = {
       parts:     [{ c: '雨', n: 'rain', p: 0 }, { c: '几', n: 'weather', p: 0 }, { c: '而', n: 'comb', p: 0 }],
       onyomi:    'ジュ',
       jlpt:      1,
-      primNote:  ['demand'],
+      primNote:  true,
     },
     {
       id:        'k101-1250-confucian',
@@ -10187,7 +10192,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'てる、ふたつ',
       jlpt:      3,
-      primNote:  ['both'],
+      primNote:  true,
     },
     {
       id:        'k101-1253-full',
@@ -10215,7 +10220,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'よわい、は、よわ.い、よわい.する',
       jlpt:      3,
-      primNote:  ['tooth'],
+      primNote:  true,
     },
     {
       id:        'k101-1256-bend',
@@ -10225,7 +10230,7 @@ const primerDeck = {
       onyomi:    'キョク',
       kunyomi:   'ま.がる、ま.げる',
       jlpt:      3,
-      primNote:  ['bend'],
+      primNote:  true,
     },
     {
       id:        'k101-1257-cadet',
@@ -10235,7 +10240,7 @@ const primerDeck = {
       onyomi:    'ソウ、ゾウ',
       kunyomi:   'つかさ、ともがら、へや',
       jlpt:      1,
-      primNote:  ['cadet'],
+      primNote:  true,
     },
     {
       id:        'k101-1258-encounter',
@@ -10358,7 +10363,7 @@ const primerDeck = {
       onyomi:    'セキ、シャク',
       kunyomi:   'むかし',
       jlpt:      3,
-      primNote:  ['once upon a time'],
+      primNote:  true,
     },
     {
       id:        'k101-1269-confused',
@@ -10411,7 +10416,7 @@ const primerDeck = {
       parts:     [],
       onyomi:    'ジュウ、ニュウ',
       kunyomi:   'にじゅう',
-      primNote:  ['twenty'],
+      primNote:  true,
     },
     {
       id:        'k101-0028-generation',
@@ -10421,7 +10426,7 @@ const primerDeck = {
       onyomi:    'セイ、セ、ソウ',
       kunyomi:   'よ、さんじゅう',
       jlpt:      4,
-      primNote:  ['generation', 'buckle'],
+      primNote:  true,
     },
     {
       id:        'k101-0243-leaf',
@@ -10440,7 +10445,7 @@ const primerDeck = {
       onyomi:    'タイ',
       kunyomi:   'お.びる、おび',
       jlpt:      2,
-      primNote:  ['sash'],
+      primNote:  true,
     },
     {
       id:        'k101-0445-stagnate',
@@ -10483,7 +10488,7 @@ const primerDeck = {
       parts:     [{ c: '\uE089', n: 'caverns', p: 1 }, { c: '广', n: 'cave', p: 0 }, { c: '廿', n: 'twenty', p: 0 }, { c: '灬', n: 'oven-fire, barbecue', p: 0 }],
       onyomi:    'ショ',
       jlpt:      1,
-      primNote:  ['commoner'],
+      primNote:  true,
     },
     {
       id:        'k101-1276-intercept',
@@ -10511,7 +10516,7 @@ const primerDeck = {
       onyomi:    'ド、ト、タク',
       kunyomi:   'たび、-た.い',
       jlpt:      4,
-      primNote:  ['degrees'],
+      primNote:  true,
     },
     {
       id:        'k101-1279-transit',
@@ -10530,7 +10535,7 @@ const primerDeck = {
       onyomi:    'ハン',
       kunyomi:   'なか.ば',
       jlpt:      5,
-      primNote:  ['half'],
+      primNote:  true,
     },
     {
       id:        'k101-1287-consort',
@@ -10584,7 +10589,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'ま.く、まき、ま.き',
       jlpt:      2,
-      primNote:  ['scroll'],
+      primNote:  true,
     },
     {
       id:        'k101-1293-sphere',
@@ -10629,7 +10634,7 @@ const primerDeck = {
       onyomi:    'ヘン',
       kunyomi:   'かた-、かた',
       jlpt:      2,
-      primNote:  ['one-sided'],
+      primNote:  true,
     },
     {
       id:        'k101-1298-printing-block',
@@ -10674,7 +10679,7 @@ const primerDeck = {
       parts:     [{ c: '一', n: 'one, ceiling', p: 0 }, { c: '亻', n: 'person', p: 0 }, { c: '丶', n: 'drop', p: 0 }],
       onyomi:    'フ、ブ',
       jlpt:      4,
-      primNote:  ['negative'],
+      primNote:  true,
     },
     {
       id:        'k101-1303-negate',
@@ -10702,7 +10707,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'や',
       jlpt:      1,
-      primNote:  ['dart'],
+      primNote:  true,
     },
     {
       id:        'k101-0530-disturb',
@@ -10754,7 +10759,7 @@ const primerDeck = {
       onyomi:    'ホウ',
       kunyomi:   'はな.す、-っぱな.し、はな.つ、はな.れる、こ.く、ほう.る',
       jlpt:      3,
-      primNote:  ['set free'],
+      primNote:  true,
     },
     {
       id:        'k101-0536-violent',
@@ -10843,7 +10848,7 @@ const primerDeck = {
       onyomi:    'チ',
       kunyomi:   'し.る、し.らせる',
       jlpt:      4,
-      primNote:  ['know'],
+      primNote:  true,
     },
     {
       id:        'k101-1309-wisdom',
@@ -10886,7 +10891,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'ゆみ',
       jlpt:      1,
-      primNote:  ['bow'],
+      primNote:  true,
     },
     {
       id:        'k101-1318-pull',
@@ -10941,7 +10946,7 @@ const primerDeck = {
       onyomi:    'ジャク',
       kunyomi:   'よわ.い、よわ.る、よわ.まる、よわ.める',
       jlpt:      2,
-      primNote:  ['weak'],
+      primNote:  true,
     },
     {
       id:        'k101-1324-drowning',
@@ -11012,7 +11017,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'く.ちる',
       jlpt:      1,
-      primNote:  ['decay'],
+      primNote:  true,
     },
     {
       id:        'k101-1332-boast',
@@ -11048,7 +11053,7 @@ const primerDeck = {
       onyomi:    'ヨ',
       kunyomi:   'あた.える、あずか.る、くみ.する、ともに',
       jlpt:      3,
-      primNote:  ['bestow', 'slingshot'],
+      primNote:  true,
     },
     {
       id:        'k101-1336-copy',
@@ -11066,7 +11071,7 @@ const primerDeck = {
       parts:     [{ c: '自', n: 'nose', p: 0 }],
       onyomi:    'シン',
       kunyomi:   'み',
-      primNote:  ['somebody'],
+      primNote:  true,
     },
     {
       id:        'k101-1338-shoot',
@@ -11094,7 +11099,7 @@ const primerDeck = {
       onyomi:    'ロウ',
       kunyomi:   'お.いる、ふ.ける',
       jlpt:      3,
-      primNote:  ['old man'],
+      primNote:  true,
     },
     {
       id:        'k101-1341-consider',
@@ -11104,7 +11109,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'かんが.える、かんが.え',
       jlpt:      4,
-      primNote:  ['consider'],
+      primNote:  true,
     },
     {
       id:        'k101-1342-filial-piety',
@@ -11112,7 +11117,7 @@ const primerDeck = {
       meaning:   'filial piety',
       parts:     [{ c: '\uE092', n: 'old man', p: 1 }, { c: '子', n: 'child', p: 0 }],
       onyomi:    'コウ、キョウ',
-      primNote:  ['filial piety'],
+      primNote:  true,
     },
     {
       id:        'k101-1343-teach',
@@ -11286,7 +11291,7 @@ const primerDeck = {
       parts:     [{ c: '宀', n: 'house', p: 0 }, { c: null, n: 'maestro without baton', p: 0 }],
       onyomi:    'カン',
       jlpt:      3,
-      primNote:  ['bureaucrat'],
+      primNote:  true,
     },
     {
       id:        'k101-1364-coffin',
@@ -11313,7 +11318,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'ちち',
       jlpt:      5,
-      primNote:  ['father'],
+      primNote:  true,
     },
     {
       id:        'k101-1367-cauldron',
@@ -11331,7 +11336,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'まじ.わる、まじ.える、ま.じる、まじ.る、ま.ざる、ま.ぜる、-か.う、か.わす、かわ.す、こもごも',
       jlpt:      3,
-      primNote:  ['mingle'],
+      primNote:  true,
     },
     {
       id:        'k101-1369-merit',
@@ -11429,7 +11434,7 @@ const primerDeck = {
       onyomi:    'ロ、ル',
       kunyomi:   '-じ、 みち',
       jlpt:      3,
-      primNote:  ['path'],
+      primNote:  true,
     },
     {
       id:        'k101-1377-dew',
@@ -11492,7 +11497,7 @@ const primerDeck = {
       onyomi:    'コツ',
       kunyomi:   'ほね',
       jlpt:      2,
-      primNote:  ['skeleton'],
+      primNote:  true,
     },
     {
       id:        'k101-1384-slippery',
@@ -11639,7 +11644,7 @@ const primerDeck = {
       parts:     [{ c: '\uE096', n: 'pinnacle', p: 1 }, { c: '尚', n: 'parthenon, acropolis', p: 0 }, { c: '\uE00B', n: 'animal horns', p: 1 }, { c: '\uE053', n: 'sow', p: 1 }, { c: '豕', n: 'pig', p: 0 }, { c: null, n: 'wart hog', p: 0 }, { c: null, n: 'regimental mascot', p: 0 }],
       onyomi:    'タイ',
       jlpt:      1,
-      primNote:  ['regiment'],
+      primNote:  true,
     },
     {
       id:        'k101-1404-crash',
@@ -11748,7 +11753,7 @@ const primerDeck = {
       onyomi:    'クウ',
       kunyomi:   'そら、あ.く、あ.き、あ.ける、から、す.く、す.かす、むな.しい',
       jlpt:      4,
-      primNote:  ['empty'],
+      primNote:  true,
     },
     {
       id:        'k101-1415-withdraw',
@@ -11854,7 +11859,7 @@ const primerDeck = {
       onyomi:    'キュウ',
       kunyomi:   'おか',
       jlpt:      1,
-      primNote:  ['hill'],
+      primNote:  true,
     },
     {
       id:        'k101-1428-point',
@@ -11873,7 +11878,7 @@ const primerDeck = {
       onyomi:    'ヘイ、ヒョウ',
       kunyomi:   'つわもの',
       jlpt:      2,
-      primNote:  ['soldier'],
+      primNote:  true,
     },
     {
       id:        'k101-1430-seacoast',
@@ -11892,7 +11897,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'いと',
       jlpt:      2,
-      primNote:  ['thread'],
+      primNote:  true,
     },
     {
       id:        'k101-1433-darning',
@@ -12312,7 +12317,7 @@ const primerDeck = {
       parts:     [{ c: '亠', n: 'top hat', p: 0 }, { c: '幺', n: 'cocoon', p: 0 }],
       onyomi:    'ゲン',
       jlpt:      1,
-      primNote:  ['mysterious'],
+      primNote:  true,
     },
     {
       id:        'k101-1485-livestock',
@@ -12321,7 +12326,7 @@ const primerDeck = {
       parts:     [{ c: '玄', n: 'mysterious', p: 0 }, { c: '田', n: 'rice field, brains', p: 0 }],
       onyomi:    'チク',
       jlpt:      2,
-      primNote:  ['livestock'],
+      primNote:  true,
     },
     {
       id:        'k101-1486-amass',
@@ -12400,7 +12405,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'まご',
       jlpt:      2,
-      primNote:  ['grandchild'],
+      primNote:  true,
     },
     {
       id:        'k101-1495-suspend',
@@ -12427,7 +12432,7 @@ const primerDeck = {
       onyomi:    'キャク',
       kunyomi:   'かえ.って、しりぞ.く、しりぞ.ける',
       jlpt:      1,
-      primNote:  ['instead'],
+      primNote:  true,
     },
     {
       id:        'k101-1498-shins',
@@ -12445,7 +12450,7 @@ const primerDeck = {
       parts:     [{ c: '月', n: 'moon, month, flesh, part of the body', p: 0 }, { c: null, n: 'underpants', p: 0 }, { c: '\uE099', n: 'stamp', p: 1 }, { c: '又', n: 'crotch', p: 0 }],
       onyomi:    'フク',
       jlpt:      4,
-      primNote:  ['clothing'],
+      primNote:  true,
     },
     {
       id:        'k101-0423-garment',
@@ -12534,7 +12539,7 @@ const primerDeck = {
       parts:     [{ c: '\uE023', n: 'meeting', p: 1 }, { c: '\uE09A', n: 'chop-seal, hanko', p: 1 }],
       onyomi:    'レイ',
       jlpt:      2,
-      primNote:  ['orders'],
+      primNote:  true,
     },
     {
       id:        'k101-1504-zero',
@@ -12589,7 +12594,7 @@ const primerDeck = {
       onyomi:    'ユウ',
       kunyomi:   'いさ.む',
       jlpt:      2,
-      primNote:  ['courage'],
+      primNote:  true,
     },
     {
       id:        'k101-1510-bubble-up',
@@ -12626,7 +12631,7 @@ const primerDeck = {
       onyomi:    'ギ',
       kunyomi:   'うたが.う',
       jlpt:      3,
-      primNote:  ['doubt'],
+      primNote:  true,
     },
     {
       id:        'k101-1514-mimic',
@@ -12654,7 +12659,7 @@ const primerDeck = {
       onyomi:    'リュウ、ル',
       kunyomi:   'と.める、と.まる、とど.める、とど.まる、るうぶる',
       jlpt:      3,
-      primNote:  ['detain'],
+      primNote:  true,
     },
     {
       id:        'k101-1528-marine-blue',
@@ -12688,7 +12693,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'back to back staples', p: 0 }],
       onyomi:    'キュウ、グ',
       kunyomi:   'うす、うすづ.く',
-      primNote:  ['mortar'],
+      primNote:  true,
     },
     {
       id:        'k101-1532-break',
@@ -12743,7 +12748,7 @@ const primerDeck = {
       onyomi:    'ホウ、ブ',
       kunyomi:   'ゆた.か、とよ',
       jlpt:      2,
-      primNote:  ['bountiful'],
+      primNote:  true,
     },
     {
       id:        'k101-1552-drum',
@@ -12780,7 +12785,7 @@ const primerDeck = {
       onyomi:    'ベイ',
       kunyomi:   'さら',
       jlpt:      2,
-      primNote:  ['dish'],
+      primNote:  true,
     },
     {
       id:        'k101-1556-blood',
@@ -12790,7 +12795,7 @@ const primerDeck = {
       onyomi:    'ケツ',
       kunyomi:   'ち',
       jlpt:      2,
-      primNote:  ['blood'],
+      primNote:  true,
     },
     {
       id:        'k101-1557-basin',
@@ -12841,7 +12846,7 @@ const primerDeck = {
       parts:     [{ c: '臣', n: 'retainer, slave', p: 0 }, { c: '\uE049', n: 'reclining', p: 1 }, { c: '匕', n: 'lying down', p: 0 }, { c: '一', n: 'one, floor', p: 0 }, { c: '皿', n: 'dish', p: 0 }],
       onyomi:    'カン',
       jlpt:      1,
-      primNote:  ['oversee'],
+      primNote:  true,
     },
     {
       id:        'k101-1563-overflow',
@@ -12913,7 +12918,7 @@ const primerDeck = {
       onyomi:    'コン',
       kunyomi:   'うら.む、うら.めしい',
       jlpt:      1,
-      primNote:  ['resentment'],
+      primNote:  true,
     },
     {
       id:        'k101-1571-root',
@@ -12932,7 +12937,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'つ.く、つ.ける、すなわ.ち',
       jlpt:      1,
-      primNote:  ['instant'],
+      primNote:  true,
     },
     {
       id:        'k101-1573-baron',
@@ -12986,7 +12991,7 @@ const primerDeck = {
       onyomi:    'リョウ',
       kunyomi:   'よ.い、-よ.い、い.い、-い.い',
       jlpt:      3,
-      primNote:  ['good', 'halo', 'silver', 'good alt'],
+      primNote:  ['good', 'halo', 'silver'],
     },
     {
       id:        'k101-1579-melodious',
@@ -13120,7 +13125,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'すで.に',
       jlpt:      1,
-      primNote:  ['previously'],
+      primNote:  true,
     },
     {
       id:        'k101-1594-outline',
@@ -13207,7 +13212,7 @@ const primerDeck = {
       parts:     [{ c: '乂', n: 'sheaf', p: 0 }, { c: '凵', n: 'shovel', p: 0 }],
       onyomi:    'キョウ',
       jlpt:      1,
-      primNote:  ['villain'],
+      primNote:  true,
     },
     {
       id:        'k101-1604-bosom',
@@ -13304,7 +13309,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'いや.しい、いや.しむ、いや.しめる',
       jlpt:      1,
-      primNote:  ['lowly'],
+      primNote:  true,
     },
     {
       id:        'k101-1630-tombstone',
@@ -13314,7 +13319,7 @@ const primerDeck = {
       onyomi:    'ヒ',
       kunyomi:   'いしぶみ',
       jlpt:      1,
-      primNote:  ['tombstone'],
+      primNote:  true,
     },
     {
       id:        'k101-0016-old',
@@ -13378,7 +13383,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'かた.める、かた.まる、かた.まり、かた.い',
       jlpt:      2,
-      primNote:  ['harden'],
+      primNote:  true,
     },
     {
       id:        'k101-1047-individual',
@@ -13396,7 +13401,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'い.る、-い、お.る',
       jlpt:      3,
-      primNote:  ['reside'],
+      primNote:  true,
     },
     {
       id:        'k101-1144-set',
@@ -13458,7 +13463,7 @@ const primerDeck = {
       onyomi:    'ガイ、カイ',
       kunyomi:   'い',
       jlpt:      1,
-      primNote:  ['sign of the hog'],
+      primNote:  true,
     },
     {
       id:        'k101-1638-nucleus',
@@ -13588,7 +13593,7 @@ const primerDeck = {
       onyomi:    'バク',
       kunyomi:   'むぎ',
       jlpt:      2,
-      primNote:  ['barley'],
+      primNote:  true,
     },
     {
       id:        'k101-1654-blue',
@@ -13598,7 +13603,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'あお、あお-、あお.い',
       jlpt:      4,
-      primNote:  ['blue'],
+      primNote:  true,
     },
     {
       id:        'k101-1655-refined',
@@ -13661,7 +13666,7 @@ const primerDeck = {
       onyomi:    'セキ',
       kunyomi:   'せ.める',
       jlpt:      3,
-      primNote:  ['blame'],
+      primNote:  true,
     },
     {
       id:        'k101-1662-exploits',
@@ -13705,7 +13710,7 @@ const primerDeck = {
       onyomi:    'ヒョウ',
       kunyomi:   'おもて、-おもて、あらわ.す、あらわ.れる、あら.わす',
       jlpt:      3,
-      primNote:  ['surface'],
+      primNote:  true,
     },
     {
       id:        'k101-1667-bag',
@@ -13733,7 +13738,7 @@ const primerDeck = {
       onyomi:    'ケイ',
       kunyomi:   'ちぎ.る',
       jlpt:      1,
-      primNote:  ['pledge'],
+      primNote:  true,
     },
     {
       id:        'k101-1670-consume',
@@ -13750,7 +13755,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'mansion', p: 0 }, { c: '宀', n: 'house', p: 0 }, { c: null, n: 'grow up', p: 0 }, { c: '口', n: 'mouth', p: 0 }],
       onyomi:    'ガイ',
       jlpt:      3,
-      primNote:  ['harm'],
+      primNote:  true,
     },
     {
       id:        'k101-1672-control',
@@ -13778,7 +13783,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'い.きる、い.かす、い.ける、う.まれる、う.まれ、うまれ、う.む、お.う、は.える、は.やす、き、なま、なま-、な.る、な.す、む.す、-う',
       jlpt:      5,
-      primNote:  ['life'],
+      primNote:  true,
     },
     {
       id:        'k101-1676-star',
@@ -13788,7 +13793,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'ほし、-ぼし',
       jlpt:      2,
-      primNote:  ['star'],
+      primNote:  true,
     },
     {
       id:        'k101-1678-surname',
@@ -13865,7 +13870,7 @@ const primerDeck = {
       parts:     [{ c: '丰', n: 'bushes', p: 0 }, { c: '寸', n: 'glue', p: 0 }],
       onyomi:    'ジュ、ス、シュウ',
       kunyomi:   'ことぶき、ことぶ.く、ことほ.ぐ',
-      primNote:  ['longevity'],
+      primNote:  true,
     },
     {
       id:        'k101-1688-casting',
@@ -13892,7 +13897,7 @@ const primerDeck = {
       onyomi:    'シュン',
       kunyomi:   'はる',
       jlpt:      4,
-      primNote:  ['springtime'],
+      primNote:  true,
     },
     {
       id:        'k101-1691-camellia',
@@ -13937,7 +13942,7 @@ const primerDeck = {
       onyomi:    'ホウ、ブ',
       kunyomi:   'たてまつ.る、まつ.る、ほう.ずる',
       jlpt:      1,
-      primNote:  ['dedicate'],
+      primNote:  true,
     },
     {
       id:        'k101-1696-stipend',
@@ -14024,7 +14029,7 @@ const primerDeck = {
       onyomi:    'スイ',
       kunyomi:   'た.れる、た.らす、た.れ、-た.れ、なんなんと.す',
       jlpt:      1,
-      primNote:  ['droop'],
+      primNote:  true,
     },
     {
       id:        'k101-1706-saliva',
@@ -14059,7 +14064,7 @@ const primerDeck = {
       onyomi:    'ジョウ、ショウ',
       kunyomi:   'の.る、-の.り、の.せる',
       jlpt:      3,
-      primNote:  ['ride'],
+      primNote:  true,
     },
     {
       id:        'k101-1710-surplus',
@@ -14112,7 +14117,7 @@ const primerDeck = {
       parts:     [{ c: '今', n: 'now, clock', p: 0 }, { c: '心', n: 'heart', p: 0 }],
       onyomi:    'ネン',
       jlpt:      3,
-      primNote:  ['wish'],
+      primNote:  true,
     },
     {
       id:        'k101-1716-wrench',
@@ -14148,7 +14153,7 @@ const primerDeck = {
       onyomi:    'ヨ、シャ',
       kunyomi:   'あらかじ.め',
       jlpt:      3,
-      primNote:  ['beforehand'],
+      primNote:  true,
     },
     {
       id:        'k101-1311-halberd',
@@ -14158,7 +14163,7 @@ const primerDeck = {
       onyomi:    'ム、ボウ',
       kunyomi:   'ほこ',
       jlpt:      1,
-      primNote:  ['halberd'],
+      primNote:  true,
     },
     {
       id:        'k101-0327-dream',
@@ -14309,7 +14314,7 @@ const primerDeck = {
       onyomi:    'ム',
       kunyomi:   'つと.める',
       jlpt:      3,
-      primNote:  ['task'],
+      primNote:  true,
     },
     {
       id:        'k101-1314-fog',
@@ -14380,7 +14385,7 @@ const primerDeck = {
       onyomi:    'ケン',
       kunyomi:   'か.ねる、-か.ねる',
       jlpt:      1,
-      primNote:  ['concurrently'],
+      primNote:  true,
     },
     {
       id:        'k101-1724-dislike',
@@ -14576,7 +14581,7 @@ const primerDeck = {
       onyomi:    'ソン',
       kunyomi:   'たっと.い、とうと.い、たっと.ぶ、とうと.ぶ',
       jlpt:      2,
-      primNote:  ['revered'],
+      primNote:  true,
     },
     {
       id:        'k101-1647-brew',
@@ -14612,7 +14617,7 @@ const primerDeck = {
       onyomi:    'ヨウ',
       kunyomi:   'い.る',
       jlpt:      3,
-      primNote:  ['need'],
+      primNote:  true,
     },
     {
       id:        'k101-1731-loins',
@@ -14630,7 +14635,7 @@ const primerDeck = {
       parts:     [{ c: '西', n: 'old west', p: 0 }, { c: '礻', n: 'altar', p: 0 }, { c: '示', n: 'show', p: 0 }],
       onyomi:    'ヒョウ',
       jlpt:      1,
-      primNote:  ['ballot'],
+      primNote:  true,
     },
     {
       id:        'k101-1733-drift',
@@ -14738,7 +14743,7 @@ const primerDeck = {
       onyomi:    'カン、ケン',
       kunyomi:   'あいだ、ま、あい',
       jlpt:      5,
-      primNote:  ['interval'],
+      primNote:  true,
     },
     {
       id:        'k101-1749-simplicity',
@@ -14826,7 +14831,7 @@ const primerDeck = {
       onyomi:    'ソウ',
       kunyomi:   'くら',
       jlpt:      1,
-      primNote:  ['godown'],
+      primNote:  true,
     },
     {
       id:        'k101-1759-genesis',
@@ -14906,7 +14911,7 @@ const primerDeck = {
       parts:     [{ c: '亻', n: 'person', p: 0 }, { c: '\uE0B8', n: 'key', p: 1 }, { c: '矢', n: 'dart', p: 0 }],
       onyomi:    'コウ',
       jlpt:      1,
-      primNote:  ['marquis'],
+      primNote:  true,
     },
     {
       id:        'k101-1768-throat',
@@ -14994,7 +14999,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'ほ.す、ほ.し-、-ぼ.し、ひ.る',
       jlpt:      2,
-      primNote:  ['dry', 'clothesline', 'potato'],
+      primNote:  ['dry', 'clothesline'],
     },
     {
       id:        'k101-1778-liver',
@@ -15074,7 +15079,7 @@ const primerDeck = {
       onyomi:    'ヨ',
       kunyomi:   'あま.る、あま.り、あま.す、あんま.り',
       jlpt:      3,
-      primNote:  ['too much'],
+      primNote:  true,
     },
     {
       id:        'k101-1787-exclude',
@@ -15138,7 +15143,7 @@ const primerDeck = {
       onyomi:    'ソク',
       kunyomi:   'たば、たば.ねる、つか、つか.ねる',
       jlpt:      3,
-      primNote:  ['bundle'],
+      primNote:  true,
     },
     {
       id:        'k101-1794-trust',
@@ -15148,7 +15153,7 @@ const primerDeck = {
       onyomi:    'ライ',
       kunyomi:   'たの.む、たの.もしい、たよ.る',
       jlpt:      3,
-      primNote:  ['trust'],
+      primNote:  true,
     },
     {
       id:        'k101-1795-rapids',
@@ -15247,7 +15252,7 @@ const primerDeck = {
       onyomi:    'ジュウ、チョウ',
       kunyomi:   'え、おも.い、おも.り、おも.なう、かさ.ねる、かさ.なる、おも',
       jlpt:      4,
-      primNote:  ['heavy'],
+      primNote:  true,
     },
     {
       id:        'k101-1806-move',
@@ -15257,7 +15262,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   'うご.く、うご.かす',
       jlpt:      4,
-      primNote:  ['move'],
+      primNote:  true,
     },
     {
       id:        'k101-1807-tumor',
@@ -15370,7 +15375,7 @@ const primerDeck = {
       onyomi:    'シツ',
       kunyomi:   'はや.い',
       jlpt:      1,
-      primNote:  ['rapidly'],
+      primNote:  true,
     },
     {
       id:        'k101-1820-envy',
@@ -15457,7 +15462,7 @@ const primerDeck = {
       onyomi:    'ヒツ',
       kunyomi:   'ひき',
       jlpt:      2,
-      primNote:  ['equal'],
+      primNote:  true,
     },
     {
       id:        'k101-1831-ward',
@@ -15466,7 +15471,7 @@ const primerDeck = {
       parts:     [{ c: '匚', n: 'box', p: 0 }, { c: '乂', n: 'sheaf', p: 0 }],
       onyomi:    'ク、オウ、コウ',
       jlpt:      2,
-      primNote:  ['ward'],
+      primNote:  true,
     },
     {
       id:        'k101-1832-hinge',
@@ -15530,7 +15535,7 @@ const primerDeck = {
       onyomi:    'トウ、ト、ドウ、ショウ、チョウ',
       kunyomi:   'のぼ.る、あ.がる',
       jlpt:      3,
-      primNote:  ['ascend'],
+      primNote:  true,
     },
     {
       id:        'k101-1839-lucidity',
@@ -15663,7 +15668,7 @@ const primerDeck = {
       onyomi:    'サン、シン',
       kunyomi:   'まい.る、まい-、まじわる、みつ',
       jlpt:      3,
-      primNote:  ['visit'],
+      primNote:  true,
     },
     {
       id:        'k101-1857-wretched',
@@ -15753,7 +15758,7 @@ const primerDeck = {
       onyomi:    'セイ、サイ',
       kunyomi:   'そろ.う、ひと.しい、ひと.しく、あたる、はやい',
       jlpt:      1,
-      primNote:  ['adjusted'],
+      primNote:  true,
     },
     {
       id:        'k101-1867-dose',
@@ -15808,7 +15813,7 @@ const primerDeck = {
       onyomi:    'ガク、ラク、ゴウ',
       kunyomi:   'たの.しい、たの.しむ、この.む',
       jlpt:      4,
-      primNote:  ['music'],
+      primNote:  true,
     },
     {
       id:        'k101-1873-medicine',
@@ -15853,7 +15858,7 @@ const primerDeck = {
       parts:     [{ c: '大', n: 'large', p: 0 }, { c: null, n: 'St. Bernard', p: 0 }, { c: null, n: 'box body', p: 0 }],
       onyomi:    'オウ',
       jlpt:      2,
-      primNote:  ['center'],
+      primNote:  true,
     },
     {
       id:        'k101-1878-england',
@@ -15944,7 +15949,7 @@ const primerDeck = {
       onyomi:    'コウ、オウ',
       kunyomi:   'き、こ-',
       jlpt:      2,
-      primNote:  ['yellow'],
+      primNote:  true,
     },
     {
       id:        'k101-1888-sideways',
@@ -15971,7 +15976,7 @@ const primerDeck = {
       onyomi:    'ショク、シキ',
       kunyomi:   'いろ',
       jlpt:      4,
-      primNote:  ['color'],
+      primNote:  true,
     },
     {
       id:        'k101-1891-discontinue',
@@ -16026,7 +16031,7 @@ const primerDeck = {
       onyomi:    'ボウ',
       kunyomi:   'それがし、なにがし',
       jlpt:      1,
-      primNote:  ['so-and-so'],
+      primNote:  true,
     },
     {
       id:        'k101-1897-conspire',
@@ -16106,7 +16111,7 @@ const primerDeck = {
       onyomi:    'ジン',
       kunyomi:   'はなは.だ、はなは.だしい',
       jlpt:      1,
-      primNote:  ['tremendously'],
+      primNote:  true,
     },
     {
       id:        'k101-1906-intuition',
@@ -16133,7 +16138,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'たっと.い、とうと.い、たっと.ぶ、とうと.ぶ',
       jlpt:      1,
-      primNote:  ['precious'],
+      primNote:  true,
     },
     {
       id:        'k101-1909-bequeath',
@@ -16222,6 +16227,7 @@ const primerDeck = {
       onyomi:    'キョウ',
       kunyomi:   'とも、とも.に、-ども',
       jlpt:      3,
+      primNote:  ['together', 'strung together', 'bushel basket'],
     },
     {
       id:        'k101-1935-submit',
@@ -16240,7 +16246,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'こと、こと.なる、け',
       jlpt:      1,
-      primNote:  ['uncommon'],
+      primNote:  true,
     },
     {
       id:        'k101-1937-wing',
@@ -16266,7 +16272,7 @@ const primerDeck = {
       parts:     [{ c: '氵', n: 'water, water droplets, water pistol', p: 0 }, { c: '串', n: 'strung together', p: 0 }, { c: '\uE087', n: 'salad', p: 1 }, { c: '八', n: 'animal legs', p: 0 }, { c: '入', n: 'eight', p: 0 }],
       onyomi:    'コウ',
       jlpt:      1,
-      primNote:  ['deluge'],
+      primNote:  true,
     },
     {
       id:        'k101-0303-patrol',
@@ -16294,7 +16300,7 @@ const primerDeck = {
       onyomi:    'ボウ、バク',
       kunyomi:   'あば.く、あば.れる',
       jlpt:      2,
-      primNote:  ['outburst'],
+      primNote:  true,
     },
     {
       id:        'k101-1942-bomb',
@@ -16340,7 +16346,7 @@ const primerDeck = {
       onyomi:    'セイ、ショウ',
       kunyomi:   'い',
       jlpt:      1,
-      primNote:  ['well'],
+      primNote:  true,
     },
     {
       id:        'k101-1947-donburi',
@@ -16349,7 +16355,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'domburi', p: 0 }, { c: '井', n: 'well', p: 0 }, { c: '丶', n: 'drop', p: 0 }],
       onyomi:    'トン、タン、ショウ、セイ',
       kunyomi:   'どんぶり',
-      primNote:  ['donburi', 'haystack'],
+      primNote:  true,
     },
     {
       id:        'k101-1280-bustle',
@@ -16430,7 +16436,7 @@ const primerDeck = {
       onyomi:    'ア、アシア',
       kunyomi:   'つ.ぐ',
       jlpt:      1,
-      primNote:  ['Asia', 'row'],
+      primNote:  true,
     },
     {
       id:        'k101-1925-universal',
@@ -16440,7 +16446,7 @@ const primerDeck = {
       onyomi:    'フ',
       kunyomi:   'あまね.く、あまねし',
       jlpt:      2,
-      primNote:  ['universal'],
+      primNote:  true,
     },
     {
       id:        'k101-1926-musical-score',
@@ -16539,7 +16545,7 @@ const primerDeck = {
       onyomi:    'サイ、サ',
       kunyomi:   'ふたた.び',
       jlpt:      2,
-      primNote:  ['again'],
+      primNote:  true,
     },
     {
       id:        'k101-1957-lecture',
@@ -16583,7 +16589,7 @@ const primerDeck = {
       onyomi:    'サツ、サク',
       kunyomi:   'ふみ',
       jlpt:      2,
-      primNote:  ['tome', 'scrapbook'],
+      primNote:  true,
     },
     {
       id:        'k101-1961-argument',
@@ -16661,7 +16667,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'うじ、-うじ',
       jlpt:      1,
-      primNote:  ['family name', 'calling card'],
+      primNote:  true,
     },
     {
       id:        'k101-1971-paper',
@@ -16714,7 +16720,7 @@ const primerDeck = {
       onyomi:    'ミン',
       kunyomi:   'たみ',
       jlpt:      3,
-      primNote:  ['people'],
+      primNote:  true,
     },
     {
       id:        'k101-1977-sleep',
@@ -16750,7 +16756,7 @@ const primerDeck = {
       onyomi:    'ホ',
       kunyomi:   'うら',
       jlpt:      1,
-      primNote:  ['bay'],
+      primNote:  true,
     },
     {
       id:        'k101-1981-bullrush',
@@ -16864,7 +16870,7 @@ const primerDeck = {
       onyomi:    'ロウ、リョウ',
       kunyomi:   'おとこ',
       jlpt:      1,
-      primNote:  ['son'],
+      primNote:  true,
     },
     {
       id:        'k101-1996-corridor',
@@ -16882,7 +16888,7 @@ const primerDeck = {
       onyomi:    'ジュン',
       kunyomi:   'たて',
       jlpt:      1,
-      primNote:  ['shield'],
+      primNote:  true,
     },
     {
       id:        'k101-1998-sequential',
@@ -16934,7 +16940,7 @@ const primerDeck = {
       parts:     [{ c: null, n: 'staple gun', p: 0 }, { c: null, n: 'cruise missile', p: 0 }, { c: '\uE063', n: 'missile', p: 1 }, { c: '風', n: 'wind', p: 0 }, { c: '又', n: 'crotch', p: 0 }],
       onyomi:    'ダン、タン',
       jlpt:      3,
-      primNote:  ['grade'],
+      primNote:  true,
     },
     {
       id:        'k101-2004-forge',
@@ -16971,7 +16977,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'つかさど.る',
       jlpt:      1,
-      primNote:  ['director'],
+      primNote:  true,
     },
     {
       id:        'k101-2008-pay-respects',
@@ -17015,7 +17021,7 @@ const primerDeck = {
       onyomi:    'シュウ',
       kunyomi:   'ふね、ふな-、-ぶね',
       jlpt:      2,
-      primNote:  ['boat'],
+      primNote:  true,
     },
     {
       id:        'k101-2013-liner',
@@ -17048,7 +17054,7 @@ const primerDeck = {
       parts:     [{ c: '舟', n: 'boat', p: 0 }, { c: null, n: 'cruise missile', p: 0 }, { c: '\uE063', n: 'missile', p: 1 }, { c: '風', n: 'wind', p: 0 }, { c: '又', n: 'crotch', p: 0 }],
       onyomi:    'ハン',
       jlpt:      2,
-      primNote:  ['carrier'],
+      primNote:  true,
     },
     {
       id:        'k101-2017-tray',
@@ -17098,7 +17104,7 @@ const primerDeck = {
       parts:     [{ c: '爪', n: 'claw', p: 0 }, { c: '\uE065', n: 'vulture', p: 1 }, { c: '\uE067', n: 'elbow', p: 1 }],
       onyomi:    'カ、ケ',
       kunyomi:   'うり',
-      primNote:  ['melon'],
+      primNote:  true,
     },
     {
       id:        'k101-2023-arc',
@@ -17212,7 +17218,7 @@ const primerDeck = {
       onyomi:    'サイ',
       kunyomi:   'つま',
       jlpt:      3,
-      primNote:  ['wife'],
+      primNote:  true,
     },
     {
       id:        'k101-2036-nifty',
@@ -17247,7 +17253,7 @@ const primerDeck = {
       onyomi:    'メン、ベン',
       kunyomi:   'おも、おもて、つら',
       jlpt:      3,
-      primNote:  ['mask'],
+      primNote:  true,
     },
     {
       id:        'k101-2040-noodles',
@@ -17265,7 +17271,7 @@ const primerDeck = {
       onyomi:    'カク',
       kunyomi:   'かわ',
       jlpt:      2,
-      primNote:  ['leather'],
+      primNote:  true,
     },
     {
       id:        'k101-2042-shoes',
@@ -17311,7 +17317,7 @@ const primerDeck = {
       onyomi:    'ゴ',
       kunyomi:   'く.れる、くれ',
       jlpt:      1,
-      primNote:  ['give'],
+      primNote:  true,
     },
     {
       id:        'k101-2047-recreation',
@@ -17372,7 +17378,7 @@ const primerDeck = {
       parts:     [],
       onyomi:    'ガ、ゲ',
       kunyomi:   'きば、は、きばへん',
-      primNote:  ['tusk'],
+      primNote:  true,
     },
     {
       id:        'k101-2054-bud',
@@ -17454,7 +17460,7 @@ const primerDeck = {
       onyomi:    'モウ',
       kunyomi:   'け',
       jlpt:      2,
-      primNote:  ['fur', 'lock of hair'],
+      primNote:  true,
     },
     {
       id:        'k101-2063-decrease',
@@ -17498,7 +17504,7 @@ const primerDeck = {
       onyomi:    'イ',
       kunyomi:   'ため、な.る、な.す、す.る、たり、つく.る、なり',
       jlpt:      1,
-      primNote:  ['do'],
+      primNote:  true,
     },
     {
       id:        'k101-2068-falsehood',
@@ -17535,7 +17541,7 @@ const primerDeck = {
       onyomi:    'タン',
       kunyomi:   'ひとえ',
       jlpt:      3,
-      primNote:  ['simple'],
+      primNote:  true,
     },
     {
       id:        'k101-2079-war',
@@ -17653,7 +17659,7 @@ const primerDeck = {
       onyomi:    'チョウ',
       kunyomi:   'とり',
       jlpt:      4,
-      primNote:  ['bird'],
+      primNote:  true,
     },
     {
       id:        'k101-2092-chirp',
@@ -17751,7 +17757,7 @@ const primerDeck = {
       onyomi:    'ゾク、ショク',
       kunyomi:   'さかん、つく、やから',
       jlpt:      1,
-      primNote:  ['belong'],
+      primNote:  true,
     },
     {
       id:        'k101-2104-entrust',
@@ -17831,7 +17837,7 @@ const primerDeck = {
       parts:     [{ c: '冖', n: 'glass canopy', p: 0 }, { c: '冂', n: 'hood', p: 0 }, { c: '\uE0DD', n: 'mountain goat', p: 1 }, { c: '\uE00B', n: 'horns', p: 1 }, { c: '山', n: 'mountain', p: 0 }],
       onyomi:    'コウ',
       kunyomi:   'おか',
-      primNote:  ['Mount'],
+      primNote:  true,
     },
     {
       id:        'k101-2113-steel',
@@ -17867,7 +17873,7 @@ const primerDeck = {
       onyomi:    'カン',
       kunyomi:   'かま',
       jlpt:      2,
-      primNote:  ['tin can'],
+      primNote:  true,
     },
     {
       id:        'k101-0027-rising-sun',
@@ -17946,7 +17952,7 @@ const primerDeck = {
       parts:     [{ c: '缶', n: 'vase', p: 0 }, { c: '立', n: 'stand up', p: 0 }, { c: '早', n: 'sunflower, early', p: 0 }],
       onyomi:    'ショウ',
       jlpt:      2,
-      primNote:  ['badge'],
+      primNote:  true,
     },
     {
       id:        'k101-0465-vie',
@@ -17965,7 +17971,7 @@ const primerDeck = {
       onyomi:    'テイ',
       kunyomi:   'みかど',
       jlpt:      1,
-      primNote:  ['sovereign'],
+      primNote:  true,
     },
     {
       id:        'k101-0467-renunciation',
@@ -17983,7 +17989,7 @@ const primerDeck = {
       onyomi:    'ドウ',
       kunyomi:   'わらべ',
       jlpt:      2,
-      primNote:  ['juvenile'],
+      primNote:  true,
     },
     {
       id:        'k101-0469-pupil',
@@ -18011,7 +18017,7 @@ const primerDeck = {
       onyomi:    'ショウ',
       kunyomi:   'あきな.う',
       jlpt:      3,
-      primNote:  ['make a deal', 'antique'],
+      primNote:  true,
     },
     {
       id:        'k101-0472-legitimate-wife',
@@ -18081,7 +18087,7 @@ const primerDeck = {
       onyomi:    'オン、イン、ノン',
       kunyomi:   'おと、ね',
       jlpt:      4,
-      primNote:  ['sound'],
+      primNote:  true,
     },
     {
       id:        'k101-0519-darkness',
@@ -18144,7 +18150,7 @@ const primerDeck = {
       onyomi:    'リュウ、リョウ、ロウ',
       kunyomi:   'たつ、いせ',
       jlpt:      1,
-      primNote:  ['dragon'],
+      primNote:  true,
     },
     {
       id:        'k101-0576-waterfall',
@@ -18179,7 +18185,7 @@ const primerDeck = {
       parts:     [{ c: '音', n: 'sound', p: 0 }, { c: '心', n: 'heart', p: 0 }],
       onyomi:    'イ',
       jlpt:      4,
-      primNote:  ['idea'],
+      primNote:  true,
     },
     {
       id:        'k101-0655-cowardice',
@@ -18432,7 +18438,7 @@ const primerDeck = {
       onyomi:    'シン',
       kunyomi:   'あたら.しい、あら.た、あら-、にい-',
       jlpt:      4,
-      primNote:  ['new'],
+      primNote:  true,
     },
     {
       id:        'k101-1620-firewood',
@@ -18460,7 +18466,7 @@ const primerDeck = {
       onyomi:    'コウ',
       kunyomi:   'さいわ.い、さち、しあわ.せ',
       jlpt:      3,
-      primNote:  ['happiness'],
+      primNote:  true,
     },
     {
       id:        'k101-1623-tenacious',
@@ -18515,7 +18521,7 @@ const primerDeck = {
       onyomi:    'ナン、ナ',
       kunyomi:   'みなみ',
       jlpt:      5,
-      primNote:  ['south'],
+      primNote:  true,
     },
     {
       id:        'k101-1741-camphor-tree',
@@ -18568,7 +18574,7 @@ const primerDeck = {
       onyomi:    'ゲン',
       kunyomi:   'ひこ',
       jlpt:      1,
-      primNote:  ['lad'],
+      primNote:  true,
     },
     {
       id:        'k101-1853-face',
@@ -18648,7 +18654,7 @@ const primerDeck = {
       onyomi:    'シュウ、ジュ',
       kunyomi:   'つ.く、つ.ける',
       jlpt:      1,
-      primNote:  ['concerning'],
+      primNote:  true,
     },
     {
       id:        'k101-2122-kick',
@@ -18727,7 +18733,7 @@ const primerDeck = {
       onyomi:    'ショウ、ゾウ',
       kunyomi:   'かたど.る',
       jlpt:      2,
-      primNote:  ['elephant'],
+      primNote:  true,
     },
     {
       id:        'k101-2131-statue',
@@ -18800,7 +18806,7 @@ const primerDeck = {
       onyomi:    'シャ',
       kunyomi:   'おろ.す、おろし、おろ.し',
       jlpt:      1,
-      primNote:  ['wholesale'],
+      primNote:  true,
     },
     {
       id:        'k101-1500-honorable',
@@ -18921,6 +18927,7 @@ const primerDeck = {
       onyomi:    'コ',
       kunyomi:   'とら',
       jlpt:      1,
+      primNote:  ['tiger', 'human legs'],
     },
     {
       id:        'k101-2146-captive',
@@ -18948,7 +18955,7 @@ const primerDeck = {
       onyomi:    'キョ、コ',
       kunyomi:   'むな.しい、うつ.ろ',
       jlpt:      1,
-      primNote:  ['void'],
+      primNote:  true,
     },
     {
       id:        'k101-2149-frolic',
@@ -19002,6 +19009,7 @@ const primerDeck = {
       onyomi:    'ロク',
       kunyomi:   'しか、か',
       jlpt:      1,
+      primNote:  ['deer', 'tiger', 'painting of a deer'],
     },
     {
       id:        'k101-2155-foot-of-a-mountain',
@@ -19046,7 +19054,7 @@ const primerDeck = {
       onyomi:    'ノウ',
       kunyomi:   'よ.く',
       jlpt:      3,
-      primNote:  ['ability'],
+      primNote:  true,
     },
     {
       id:        'k101-2159-bear',
@@ -19074,7 +19082,7 @@ const primerDeck = {
       onyomi:    'イン',
       kunyomi:   'とら',
       jlpt:      1,
-      primNote:  ['sign of the tiger'],
+      primNote:  true,
     },
     {
       id:        'k101-2163-performance',
@@ -19119,7 +19127,7 @@ const primerDeck = {
       onyomi:    'キ',
       kunyomi:   'おに、おに-',
       jlpt:      1,
-      primNote:  ['ghost'],
+      primNote:  true,
     },
     {
       id:        'k101-2176-ugly',
@@ -19163,7 +19171,7 @@ const primerDeck = {
       onyomi:    'カイ、ケ',
       kunyomi:   'かたまり、つちくれ',
       jlpt:      1,
-      primNote:  ['clod'],
+      primNote:  true,
     },
     {
       id:        'k101-0772-stalk',
@@ -19285,7 +19293,7 @@ const primerDeck = {
       parts:     [{ c: '丶', n: 'drop', p: 0 }, { c: '凵', n: 'shovel', p: 0 }, { c: '亅', n: 'fishhook', p: 0 }],
       onyomi:    'トン',
       jlpt:      1,
-      primNote:  ['barracks', 'earthworm'],
+      primNote:  true,
     },
     {
       id:        'k101-1609-genuine',
@@ -19320,7 +19328,7 @@ const primerDeck = {
       onyomi:    'ショ、ソ、ショウ',
       kunyomi:   'か.つ',
       jlpt:      1,
-      primNote:  ['moreover', 'shelf'],
+      primNote:  true,
     },
     {
       id:        'k101-1914-association',
@@ -19485,7 +19493,7 @@ const primerDeck = {
       onyomi:    'ボウ、モウ',
       kunyomi:   'う',
       jlpt:      1,
-      primNote:  ['sign of the hare'],
+      primNote:  true,
     },
     {
       id:        'k101-1525-willow',
@@ -19513,7 +19521,7 @@ const primerDeck = {
       onyomi:    'シ',
       kunyomi:   'み',
       jlpt:      1,
-      primNote:  ['sign of the snake', 'fingerprint'],
+      primNote:  true,
     },
     {
       id:        'k101-1516-pattern',
@@ -19547,7 +19555,7 @@ const primerDeck = {
       parts:     [{ c: '厂', n: 'cliff', p: 0 }, { c: '巳', n: 'fingerprint', p: 0 }],
       onyomi:    'ヤク',
       jlpt:      1,
-      primNote:  ['unlucky'],
+      primNote:  true,
     },
     {
       id:        'k101-1520-dangerous',
@@ -19565,7 +19573,7 @@ const primerDeck = {
       parts:     [{ c: '宀', n: 'house', p: 0 }, { c: '\uE09D', n: 'mailbox', p: 1 }, { c: '夕', n: 'evening', p: 0 }, { c: '巳', n: 'fingerprint', p: 0 }],
       onyomi:    'エン',
       kunyomi:   'あ.てる、-あて、-づつ、あたか.も',
-      primNote:  ['address'],
+      primNote:  true,
     },
     {
       id:        'k101-1522-arm',
@@ -19663,7 +19671,7 @@ const primerDeck = {
       onyomi:    'シン、ジン',
       kunyomi:   'たつ',
       jlpt:      1,
-      primNote:  ['sign of the dragon'],
+      primNote:  true,
     },
     {
       id:        'k101-2165-embarrass',
@@ -19716,7 +19724,7 @@ const primerDeck = {
       parts:     [{ c: '曲', n: 'bend', p: 0 }, { c: '辰', n: 'sign of the dragon', p: 0 }],
       onyomi:    'ノウ',
       jlpt:      2,
-      primNote:  ['agriculture'],
+      primNote:  true,
     },
     {
       id:        'k101-2171-concentrated',
